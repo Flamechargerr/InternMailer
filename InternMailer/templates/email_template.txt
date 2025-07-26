@@ -1,0 +1,33 @@
+{% if informal %}
+Hi Prof. {{ professor.name }},
+
+I'm {{ student.name }}, currently studying Data Science Engineering at my university. I recently came across your work in {{ professor.research_area }}{{ '—especially your recent paper on ' + professor.recent_paper if professor.recent_paper else '' }}, and I found it truly inspiring.
+
+A bit about me: I have hands-on experience in {{ student.skills | join(', ') }}, and have worked on projects such as {{ student.projects | join('; ') }}. My coursework includes {{ student.courses | join(', ') }}, which has given me a strong foundation in the field.
+
+I'm very interested in your research group and would love to contribute as a research intern. If you have any ongoing projects or upcoming opportunities, I would be excited to discuss how I could add value to your team.
+
+I've attached my resume ({{ student.resume_prefix }}). Please let me know if you need any more information or would like to schedule a call.
+
+Thank you for your time!
+
+Best regards,  
+{{ student.name }}  
+{{ student.email }}
+{% else %}
+Dear Prof. {{ professor.name }},
+
+My name is {{ student.name }}, and I am currently pursuing Data Science Engineering at my university. I am writing to express my keen interest in your research on {{ professor.research_area }}{{ ', particularly your recent work on ' + professor.recent_paper if professor.recent_paper else '' }}.
+
+I have developed strong skills in {{ student.skills | join(', ') }}, and have completed projects such as {{ student.projects | join('; ') }}. My academic background includes coursework in {{ student.courses | join(', ') }}, which has equipped me with a solid understanding of the field.
+
+I am eager to contribute to your research group as an intern. I would be grateful for the opportunity to discuss how my background and interests align with your ongoing work.
+
+Please find my resume ({{ student.resume_prefix }}) attached. I am happy to provide any additional information you may need.
+
+Thank you very much for your consideration.
+
+Sincerely,  
+{{ student.name }}  
+{{ student.email }}
+{% endif %} 

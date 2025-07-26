@@ -1,0 +1,17 @@
+streamlit
+pdfminer.six
+PyMuPDF
+sentence-transformers
+requests
+beautifulsoup4
+python-dotenv
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
+google-api-python-client
+pandas
+scikit-learn
+numpy
+python-dateutil
+pytest
+jinja2

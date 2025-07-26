@@ -1,0 +1,12 @@
+Dear Dr. {{ name }},
+
+I hope this email finds you well. I am writing to express my interest in research opportunities within your research group at {{ university }}.
+
+I am particularly fascinated by your work in {{ research_area }}, and I believe my background in computer science and passion for this field would allow me to contribute meaningfully to your ongoing projects.
+
+I have attached my resume for your review. I would be grateful for the opportunity to discuss potential research internship opportunities with you.
+
+Thank you for your time and consideration.
+
+Best regards,
+[Your Name]

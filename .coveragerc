@@ -1,0 +1,40 @@
+[run]
+source = src, InternMailer
+omit = 
+    */tests/*
+    */test_*
+    */venv/*
+    */venv_dev/*
+    */__pycache__/*
+    */migrations/*
+    */settings/*
+    manage.py
+    */demo_*
+    */check_failed_email.py
+    */extract_emails_*
+    */guess_emails_from_names.py
+    */scrape_csrankings_professors.py
+    */test_ollama_email_scrape.py
+    */verify_emails_mailboxlayer.py
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    if self.debug:
+    if settings.DEBUG
+    raise AssertionError
+    raise NotImplementedError
+    if 0:
+    if __name__ == .__main__.:
+    class .*\bProtocol\):
+    @(abc\.)?abstractmethod
+
+show_missing = True
+precision = 2
+
+[html]
+directory = htmlcov
+
+[xml]
+output = coverage.xml

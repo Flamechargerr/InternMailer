@@ -1,99 +1,114 @@
-import os
 import logging
-import json
-from typing import Dict, Any
 import fitz  # PyMuPDF
-import requests
+from typing import Dict, Any
+import os
+
+try:
+    from .parsing.parser_interface import ResumeParserInterface, ParsingError, ResumeData
+    from .parsing.ollama_parser import OllamaResumeParser
+    from .parsing.gemma3_parser import Gemma3ResumeParser
+    from .parsing.rule_based_parser import RuleBasedParser
+except ImportError:
+    # Fallback for direct execution or testing
+    import sys
+    sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+    from parsing.parser_interface import ResumeParserInterface, ParsingError, ResumeData
+    from parsing.ollama_parser import OllamaResumeParser
+    from parsing.gemma3_parser import Gemma3ResumeParser
+    from parsing.rule_based_parser import RuleBasedParser
 
 logging.basicConfig(level=logging.INFO)
 
+
 class ResumeParser:
     """
-    Parses a resume PDF to extract skills, domains, courses, and experience using Ollama LLM.
+    Orchestrator for resume parsing using different providers.
+    Automatically switches between providers based on availability.
     """
-    def __init__(self, pdf_path: str, ollama_url: str = "http://localhost:11434/api/generate", ollama_model: str = "gemma3"):
+
+    def __init__(self, pdf_path: str):
         self.pdf_path = pdf_path
         self.text = ""
         self.data = {}
-        self.ollama_url = ollama_url
-        self.ollama_model = ollama_model
+        self.providers = [Gemma3ResumeParser(), OllamaResumeParser(), RuleBasedParser()]
 
     def extract_text(self) -> str:
+        """Extracts text from a resume PDF file."""
         try:
             doc = fitz.open(self.pdf_path)
             self.text = "\n".join(page.get_text() for page in doc)
-            logging.info(f"Extracted text from {self.pdf_path}")
+            logging.info(f"Text extracted from {self.pdf_path}")
             return self.text
         except Exception as e:
-            logging.error(f"Failed to extract text: {e}")
-            return ""
-
-    def parse_with_llm(self) -> Dict[str, Any]:
-        if not self.text:
-            self.extract_text()
-        prompt = f"""
-You are an expert resume parser. Extract the following from the resume text below and return as JSON:
-- skills: list of technical and soft skills
-- projects: list of project titles
-- courses: list of relevant courses
-- summary: a 2-3 sentence summary of the candidate
-
-Resume text:
-{self.text}
-
-Return only valid JSON with keys: skills, projects, courses, summary.
-"""
-        payload = {
-            "model": self.ollama_model,
-            "prompt": prompt,
-            "stream": False
-        }
-        try:
-            response = requests.post(self.ollama_url, json=payload, timeout=90)
-            response.raise_for_status()
-            result = response.json().get("response", "")
-            # Find the first valid JSON object in the response
-            json_start = result.find('{')
-            json_end = result.rfind('}') + 1
-            if json_start != -1 and json_end != -1:
-                parsed = json.loads(result[json_start:json_end])
-                logging.info("Parsed resume data with LLM.")
-                return parsed
-            else:
-                logging.warning("LLM did not return valid JSON. Falling back.")
-                return {}
-        except Exception as e:
-            logging.error(f"LLM resume parsing failed: {e}")
-            return {}
+            logging.error(f"Error extracting text: {e}")
+            raise ParsingError("Failed to extract text", original_error=e)
 
     def parse(self) -> Dict[str, Any]:
-        # Try LLM parsing first
-        llm_data = self.parse_with_llm()
-        if llm_data and any(llm_data.get(k) for k in ["skills", "projects", "courses"]):
-            self.data = llm_data
-            return self.data
-        # Fallback: return empty lists and summary
+        """Parses the resume using available providers."""
         if not self.text:
             self.extract_text()
-        self.data = {
-            "skills": [],
-            "projects": [],
-            "courses": [],
-            "domains": [],
-            "experience": [],
-            "summary": self.text[:500] if self.text else ""
-        }
-        logging.info("Fallback: Parsed resume data with empty fields.")
+
+        last_exception = None
+        for provider in self.providers:
+            if provider.is_available():
+                try:
+                    logging.info(f"Attempting to parse with {provider.get_provider_name()}")
+                    resume_data = provider.parse(self.text)
+                    self.data = resume_data.to_dict()  # Store as dict for compatibility
+                    logging.info(f"Parsing successful with {provider.get_provider_name()}")
+                    return self.data
+                except ParsingError as e:
+                    logging.warning(f"Parsing failed with {provider.get_provider_name()}: {e}")
+                    last_exception = e
+
+        if not self.data and last_exception:
+            raise last_exception
+        elif not self.data:
+            raise ParsingError("All parsing attempts failed.")
+
         return self.data
 
     def to_json(self, out_path: str = None) -> str:
+        """Convert parsed data to JSON format."""
         if not self.data:
             self.parse()
+        
+        import json
         json_str = json.dumps(self.data, indent=2)
         if out_path:
-            with open(out_path, 'w', encoding='utf-8') as f:
+            with open(out_path, "w", encoding="utf-8") as f:
                 f.write(json_str)
             logging.info(f"Saved parsed data to {out_path}")
         return json_str
+    
+    # Compatibility methods for existing app code
+    def parse_with_rules(self) -> Dict[str, Any]:
+        """Compatibility method for rule-based parsing."""
+        rule_parser = RuleBasedParser()
+        if not self.text:
+            self.extract_text()
+        result = rule_parser.parse(self.text)
+        return result.to_dict()
+    
+    def parse_with_llm(self) -> Dict[str, Any]:
+        """Compatibility method for LLM parsing."""
+        if not self.text:
+            self.extract_text()
+        
+        # Try Gemma3 first, then Ollama
+        for parser_class in [Gemma3ResumeParser, OllamaResumeParser]:
+            parser = parser_class()
+            if parser.is_available():
+                try:
+                    result = parser.parse(self.text)
+                    return result.to_dict()
+                except ParsingError:
+                    continue
+        
+        return {}
+    
+    def parse_with_template_fallback(self) -> Dict[str, Any]:
+        """Lightweight template-based fallback parser (compatibility)."""
+        return self.parse_with_rules()
 
-# TODO: Add unit tests for ResumeParser 
+    

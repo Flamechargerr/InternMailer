@@ -1,0 +1,140 @@
+{
+  "student_info": {
+    "skills": [
+      "Python",
+      "JavaScript",
+      "C++",
+      "SQL",
+      "HTML/CSS",
+      "React",
+      "Flask",
+      "Node.js",
+      "Express.js",
+      "TailwindCSS",
+      "Scikit-learn",
+      "TensorFlow",
+      "PyTorch",
+      "XGBoost",
+      "Pandas",
+      "NumPy",
+      "Matplotlib",
+      "Seaborn Tools Platforms",
+      "Git",
+      "Docker",
+      "AWS",
+      "GCP",
+      "Jupyter",
+      "Postman",
+      "MongoDB",
+      "Supabase"
+    ],
+    "projects": [
+      "CrimeConnect",
+      "Oct 2024",
+      "VARtificial Intelligence",
+      "HackOps",
+      "Flora Fight Frenzy"
+    ],
+    "courses": [
+      "Machine Learning",
+      "Deep Learning",
+      "Data Analytics",
+      "Algorithms",
+      "Information Security",
+      "Computer Networks",
+      "Op- erating Systems",
+      "Data Visualization",
+      "Data Understanding",
+      "Data Plotting",
+      "High Performance Computing",
+      "Object-Oriented Programming",
+      "Data Structures",
+      "Python Programming",
+      "Database Management Systems",
+      "Cloud Computing"
+    ],
+    "domains": [
+      "Machine Learning",
+      "Deep Learning",
+      "Data Dashboards",
+      "Web Security",
+      "API Development"
+    ],
+    "experience": [
+      "Data Analyst Web Development Intern at Intellect Design Arena",
+      "Technical Head at YaanBarpe",
+      "Executive Member at E-Cell MIT",
+      "Class Representative at MIT Student Council"
+    ],
+    "summary": "Data Science Engineering student excelling in full-stack development, machine learning, and data analysis. Delivered\nscalable web applications and automated workflows, achieving significant time savings and user engagement. Passionate\nabout leveraging technology for real-world impact, demonstrated through leadership in entrepreneurial initiatives.",
+    "name": "Anamay Tripathy",
+    "email": "tripathy.anamay23@gmail.com",
+    "university": "Manipal Institute of Technology",
+    "resume_prefix": "CV_Anamay_Modern"
+  },
+  "generated_emails": [
+    {
+      "professor": {
+        "Name": "Dr. Sarah Johnson",
+        "University": "Stanford University",
+        "Research Area": "Machine Learning and AI",
+        "Email": "tripathy.anamay23@gmail.com"
+      },
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Machine Learning and AI",
+      "body": "\nDear Prof. Dr. Sarah Johnson,\n\nI am Anamay Tripathy, currently pursuing B.Tech in Data Science Engineering at Manipal Institute of Technology (CGPA: 7.6/10). I am writing to express my strong interest in your research on Machine Learning and AI.\n\n\nI bring practical experience as Data Analyst Web Development Intern at Intellect Design Arena, where I automated KPI dashboards using Python and SQL, reducing reporting time by 12+ hours/week, and developed REST APIs that increased user engagement by 22%.\n\n\nMy technical expertise includes Python, JavaScript, C++, SQL, HTML/CSS, React, Flask, Node.js, among other technologies. Notable projects from my portfolio include:\n\n\n• **CrimeConnect**: Engineered an FBI-inspired case management dashboard using MERN stack and Supabase, reducing case processing time by 40%\n\n• **Oct 2024**\n\n• **VARtificial Intelligence**: Developed a machine learning-based football predictor using XGBoost and Pyodide, achieving 89% accuracy\n\n\nMy coursework in Machine Learning, Deep Learning, Data Analytics, Algorithms, Information Security, Computer Networks has provided me with a strong theoretical foundation, while my project work demonstrates practical application of these concepts.\n\nI am eager to contribute to your research group and would welcome the opportunity to discuss how my background aligns with your current projects. I am particularly interested in machine learning and ai and believe I could add value through my experience with Python, JavaScript, C++.\n\nI have attached my resume (CV_Anamay_Modern) for your review. Thank you for considering my application.\n\nSincerely,  \nAnamay Tripathy  \ntripathy.anamay23@gmail.com  \nB.Tech Data Science Engineering  \nManipal Institute of Technology\n",
+      "relevant_skills": [
+        "PyTorch",
+        "NumPy",
+        "Scikit-learn",
+        "Pandas",
+        "TensorFlow",
+        "XGBoost",
+        "Python"
+      ],
+      "relevant_projects": [
+        "VARtificial Intelligence"
+      ]
+    },
+    {
+      "professor": {
+        "Name": "Dr. Michael Chen",
+        "University": "MIT",
+        "Research Area": "Web Security and Cybersecurity",
+        "Email": "tripathy.anamay23@gmail.com"
+      },
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Web Security and Cybersecurity",
+      "body": "\nDear Prof. Dr. Michael Chen,\n\nI am Anamay Tripathy, currently pursuing B.Tech in Data Science Engineering at Manipal Institute of Technology (CGPA: 7.6/10). I am writing to express my strong interest in your research on Web Security and Cybersecurity.\n\n\nI bring practical experience as Data Analyst Web Development Intern at Intellect Design Arena, where I automated KPI dashboards using Python and SQL, reducing reporting time by 12+ hours/week, and developed REST APIs that increased user engagement by 22%.\n\n\nMy technical expertise includes Python, JavaScript, C++, SQL, HTML/CSS, React, Flask, Node.js, among other technologies. Notable projects from my portfolio include:\n\n\n• **CrimeConnect**: Engineered an FBI-inspired case management dashboard using MERN stack and Supabase, reducing case processing time by 40%\n\n• **Oct 2024**\n\n• **VARtificial Intelligence**: Developed a machine learning-based football predictor using XGBoost and Pyodide, achieving 89% accuracy\n\n\nMy coursework in Machine Learning, Deep Learning, Data Analytics, Algorithms, Information Security, Computer Networks has provided me with a strong theoretical foundation, while my project work demonstrates practical application of these concepts.\n\nI am eager to contribute to your research group and would welcome the opportunity to discuss how my background aligns with your current projects. I am particularly interested in web security and cybersecurity and believe I could add value through my experience with Python, JavaScript, C++.\n\nI have attached my resume (CV_Anamay_Modern) for your review. Thank you for considering my application.\n\nSincerely,  \nAnamay Tripathy  \ntripathy.anamay23@gmail.com  \nB.Tech Data Science Engineering  \nManipal Institute of Technology\n",
+      "relevant_skills": [
+        "Node.js",
+        "React",
+        "MongoDB",
+        "JavaScript",
+        "Express.js",
+        "HTML/CSS"
+      ],
+      "relevant_projects": [
+        "CrimeConnect",
+        "HackOps"
+      ]
+    },
+    {
+      "professor": {
+        "Name": "Dr. Emily Rodriguez",
+        "University": "UC Berkeley",
+        "Research Area": "Data Analytics and Visualization",
+        "Email": "tripathy.anamay23@gmail.com"
+      },
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Data Analytics and Visualization",
+      "body": "\nDear Prof. Dr. Emily Rodriguez,\n\nI am Anamay Tripathy, currently pursuing B.Tech in Data Science Engineering at Manipal Institute of Technology (CGPA: 7.6/10). I am writing to express my strong interest in your research on Data Analytics and Visualization.\n\n\nI bring practical experience as Data Analyst Web Development Intern at Intellect Design Arena, where I automated KPI dashboards using Python and SQL, reducing reporting time by 12+ hours/week, and developed REST APIs that increased user engagement by 22%.\n\n\nMy technical expertise includes Python, JavaScript, C++, SQL, HTML/CSS, React, Flask, Node.js, among other technologies. Notable projects from my portfolio include:\n\n\n• **CrimeConnect**: Engineered an FBI-inspired case management dashboard using MERN stack and Supabase, reducing case processing time by 40%\n\n• **Oct 2024**\n\n• **VARtificial Intelligence**: Developed a machine learning-based football predictor using XGBoost and Pyodide, achieving 89% accuracy\n\n\nMy coursework in Machine Learning, Deep Learning, Data Analytics, Algorithms, Information Security, Computer Networks has provided me with a strong theoretical foundation, while my project work demonstrates practical application of these concepts.\n\nI am eager to contribute to your research group and would welcome the opportunity to discuss how my background aligns with your current projects. I am particularly interested in data analytics and visualization and believe I could add value through my experience with Python, JavaScript, C++.\n\nI have attached my resume (CV_Anamay_Modern) for your review. Thank you for considering my application.\n\nSincerely,  \nAnamay Tripathy  \ntripathy.anamay23@gmail.com  \nB.Tech Data Science Engineering  \nManipal Institute of Technology\n",
+      "relevant_skills": [
+        "NumPy",
+        "Python",
+        "Pandas"
+      ],
+      "relevant_projects": [
+        "CrimeConnect",
+        "Oct 2024"
+      ]
+    }
+  ]
+}

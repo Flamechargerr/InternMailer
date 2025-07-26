@@ -1,33 +1,51 @@
 {% if informal %}
 Hi Prof. {{ professor.name }},
 
-I'm {{ student.name }}, currently studying Data Science Engineering at my university. I recently came across your work in {{ professor.research_area }}{{ '—especially your recent paper on ' + professor.recent_paper if professor.recent_paper else '' }}, and I found it truly inspiring.
+I'm {{ student.name }}, a Data Science Engineering student at Manipal Institute of Technology with a CGPA of 7.6/10. I recently came across your fascinating research in {{ professor.research_area }}{{ '—especially your recent work on ' + professor.recent_paper if professor.recent_paper else '' }}, and I'm genuinely excited about the potential to contribute to your team.
 
-A bit about me: I have hands-on experience in {{ student.skills | join(', ') }}, and have worked on projects such as {{ student.projects | join('; ') }}. My coursework includes {{ student.courses | join(', ') }}, which has given me a strong foundation in the field.
+{% if student.experience %}
+My background includes {{ student.experience[0] if student.experience else 'relevant experience' }}, where I {{ 'automated KPI dashboards and developed REST APIs' if 'Data Analyst' in (student.experience[0] if student.experience else '') else 'gained valuable technical experience' }}. 
+{% endif %}
 
-I'm very interested in your research group and would love to contribute as a research intern. If you have any ongoing projects or upcoming opportunities, I would be excited to discuss how I could add value to your team.
+I have hands-on expertise in {{ student.skills[:6] | join(', ') }}{% if student.skills|length > 6 %}, among others{% endif %}. Some of my key projects include:
+{% for project in student.projects[:2] %}
+• {{ project }}{% if project == 'CrimeConnect' %} - An FBI-inspired case management dashboard reducing processing time by 40%{% elif project == 'VARtificial Intelligence' %} - ML-based football predictor achieving 89% accuracy{% elif project == 'HackOps' %} - Cybersecurity training platform improving user awareness by 35%{% endif %}
+{% endfor %}
 
-I've attached my resume ({{ student.resume_prefix }}). Please let me know if you need any more information or would like to schedule a call.
+I believe my background in {{ student.courses[:4] | join(', ') }} and practical experience with {{ student.skills[:3] | join(', ') }} would allow me to make meaningful contributions to your research.
 
-Thank you for your time!
+I've attached my resume ({{ student.resume_prefix }}). Would you be available for a brief call to discuss potential research opportunities?
+
+Thank you for your time and consideration!
 
 Best regards,  
 {{ student.name }}  
-{{ student.email }}
+{{ student.email }}  
+B.Tech Data Science Engineering, MIT
 {% else %}
 Dear Prof. {{ professor.name }},
 
-My name is {{ student.name }}, and I am currently pursuing Data Science Engineering at my university. I am writing to express my keen interest in your research on {{ professor.research_area }}{{ ', particularly your recent work on ' + professor.recent_paper if professor.recent_paper else '' }}.
+I am {{ student.name }}, currently pursuing B.Tech in Data Science Engineering at Manipal Institute of Technology (CGPA: 7.6/10). I am writing to express my strong interest in your research on {{ professor.research_area }}{{ ', particularly your recent contributions to ' + professor.recent_paper if professor.recent_paper else '' }}.
 
-I have developed strong skills in {{ student.skills | join(', ') }}, and have completed projects such as {{ student.projects | join('; ') }}. My academic background includes coursework in {{ student.courses | join(', ') }}, which has equipped me with a solid understanding of the field.
+{% if student.experience %}
+I bring practical experience as {{ student.experience[0] if student.experience else 'a technical professional' }}, where I {{ 'automated KPI dashboards using Python and SQL, reducing reporting time by 12+ hours/week, and developed REST APIs that increased user engagement by 22%' if 'Data Analyst' in (student.experience[0] if student.experience else '') else 'gained valuable hands-on experience in software development and data analysis' }}.
+{% endif %}
 
-I am eager to contribute to your research group as an intern. I would be grateful for the opportunity to discuss how my background and interests align with your ongoing work.
+My technical expertise includes {{ student.skills[:8] | join(', ') }}{% if student.skills|length > 8 %}, among other technologies{% endif %}. Notable projects from my portfolio include:
 
-Please find my resume ({{ student.resume_prefix }}) attached. I am happy to provide any additional information you may need.
+{% for project in student.projects[:3] %}
+• **{{ project }}**{% if project == 'CrimeConnect' %}: Engineered an FBI-inspired case management dashboard using MERN stack and Supabase, reducing case processing time by 40%{% elif project == 'VARtificial Intelligence' %}: Developed a machine learning-based football predictor using XGBoost and Pyodide, achieving 89% accuracy{% elif project == 'HackOps' %}: Built a gamified cybersecurity training platform with 25+ challenges, improving user cyber-awareness by 35%{% elif project == 'Flora Fight Frenzy' %}: Created a Plants vs. Zombies-inspired game achieving 90% UI fidelity and 4.8/5 rating{% endif %}
+{% endfor %}
 
-Thank you very much for your consideration.
+My coursework in {{ student.courses[:6] | join(', ') }} has provided me with a strong theoretical foundation, while my project work demonstrates practical application of these concepts.
+
+I am eager to contribute to your research group and would welcome the opportunity to discuss how my background aligns with your current projects. I am particularly interested in {{ professor.research_area.lower() }} and believe I could add value through my experience with {{ student.skills[:3] | join(', ') }}.
+
+I have attached my resume ({{ student.resume_prefix }}) for your review. Thank you for considering my application.
 
 Sincerely,  
 {{ student.name }}  
-{{ student.email }}
-{% endif %} 
+{{ student.email }}  
+B.Tech Data Science Engineering  
+Manipal Institute of Technology
+{% endif %}

@@ -25,7 +25,9 @@ class GmailSender:
         self.context = ssl.create_default_context()
         self.last_send_time = 0
         self.min_delay = 2  # Minimum delay between emails (seconds)
-        load_dotenv()
+        # Load environment variables from the correct path
+        env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
+        load_dotenv(env_path)
         
         # Create log file with headers if it doesn't exist
         if not os.path.exists(log_path):
@@ -66,7 +68,7 @@ class GmailSender:
             time.sleep(sleep_time)
         self.last_send_time = time.time()
 
-    def send_email(self, to_email: str, subject: str, body: str, attachment_path: str = None) -> bool:
+    def send_email(self, to_email: str, subject: str, body: str, attachment_path: str = None, is_html: bool = True) -> bool:
         """Send email with rate limiting and better error handling"""
         # Validate credentials first
         if not self.user or not self.app_password:
@@ -89,7 +91,10 @@ class GmailSender:
         msg['From'] = self.user
         msg['To'] = to_email
         msg['Subject'] = subject
-        msg.attach(MIMEText(body, 'plain'))
+        
+        # Attach body as HTML or plain text based on content
+        content_type = 'html' if is_html else 'plain'
+        msg.attach(MIMEText(body, content_type))
         
         # Handle attachment
         if attachment_path and os.path.exists(attachment_path):

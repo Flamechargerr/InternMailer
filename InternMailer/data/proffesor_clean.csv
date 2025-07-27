@@ -1,4 +1,14 @@
 University,Name,Email,Homepage,Research Area
+Massachusetts Institute of Technology (MIT),Adam Belay,abelay@csail.mit.edu,https://engineering.mit.edu/faculty-research/year-2017,Systems for ML
+Massachusetts Institute of Technology (MIT),Adam Chlipala,adamc@csail.mit.edu,http://adam.chlipala.net,AI verification
+Massachusetts Institute of Technology (MIT),Alexander Rakhlin,rakhlin@mit.edu,https://www.mit.edu/~rakhlin,ML theory
+Massachusetts Institute of Technology (MIT),Anant Agarwal,agarwal@mit.edu,https://www.csail.mit.edu/user/723,AI in education
+Massachusetts Institute of Technology (MIT),Ankur Moitra,moitra@mit.edu,http://people.csail.mit.edu/moitra,ML algorithms
+Massachusetts Institute of Technology (MIT),Antonio Torralba,torralba@csail.mit.edu,http://web.mit.edu/torralba/www,Computer vision (AI)
+Massachusetts Institute of Technology (MIT),Armando Solar-Lezama,asolar@csail.mit.edu,https://people.csail.mit.edu/asolar,AI synthesis
+Massachusetts Institute of Technology (MIT),Arvind,arvind@csail.mit.edu,http://csg.csail.mit.edu/Users/arvind,AI hardware
+Massachusetts Institute of Technology (MIT),Asuman E. Ozdaglar,asuman@mit.edu,https://asu.mit.edu,AI optimization
+Massachusetts Institute of Technology (MIT),Barbara H. Liskov,liskov@csail.mit.edu,https://www.csail.mit.edu/user/971,Distributed systems (AI)
 Massachusetts Institute of Technology (MIT),Bill Freeman,billf@mit.edu,https://billf.mit.edu,Computational photography (AI)
 Massachusetts Institute of Technology (MIT),Bonnie Berger,bab@mit.edu,https://people.csail.mit.edu/bab,Computational biology (AI)
 Massachusetts Institute of Technology (MIT),Caroline Uhler,uhler@mit.edu,https://www.carolineuhler.com,ML in biology
@@ -781,6 +791,10 @@ University of Warwick (UK),Theo Damoulas,theo.damoulas@warwick.ac.uk,https://war
 University of Warwick (UK),Torsten Mutze,torsten.mutze@warwick.ac.uk,https://warwick.ac.uk/fac/sci/dcs/people/torsten-mutze,Algorithms data science
 University of Warwick (UK),Yulan He,yulan.he@warwick.ac.uk,https://warwick.ac.uk/fac/sci/dcs/people/yulan-he,AI NLP
 University of Warwick (UK),Yusuf Aytar,yusuf.aytar@warwick.ac.uk,https://warwick.ac.uk/fac/sci/dcs/people/yusuf-aytar,AI multimodal
+
+
+
+
 University,Name,Email,Homepage,Research Area
 University of Amsterdam (Netherlands),Maarten de Rijke,derijke@uva.nl,https://staff.fnwi.uva.nl/m.derijke,Information retrieval AI
 University of Amsterdam (Netherlands),Max Welling,welling@uva.nl,https://staff.fnwi.uva.nl/m.welling,Deep learning ML
@@ -879,3 +893,108 @@ King's College London (UK),Peter McBurney,peter.mcburney@kcl.ac.uk,https://www.k
 King's College London (UK),Steffen Zschaler,steffen.zschaler@kcl.ac.uk,https://www.kcl.ac.uk/people/steffen-zschaler,AI software engineering
 King's College London (UK),Toktam Mahmoodi,toktam.mahmoodi@kcl.ac.uk,https://www.kcl.ac.uk/people/toktam-mahmoodi,AI networks
 King's College London (UK),Yulan He,yulan.he@kcl.ac.uk,https://www.kcl.ac.uk/people/yulan-he,AI NLP
+
+
+
+ University,Country,Name,Email,Homepage,Research Area
+University of Bristol,UK,Andrew Calway,andrew.calway@bristol.ac.uk,https://www.bristol.ac.uk/people/person/Andrew-Calway-1b0a0b0c-0b0a-4b0a-8b0a-0b0a0b0c0b0a,Computer vision AI
+University of Bristol,UK,Dima Damen,dima.damen@bristol.ac.uk,https://www.bristol.ac.uk/people/person/Dima-Damen-1b0a0b0c-0b0a-4b0a-8b0a-0b0a0b0c0b0a,AI action recognition
+University of Bristol,UK,Majid Mirmehdi,majid.mirmehdi@bristol.ac.uk,https://www.bristol.ac.uk/people/person/Majid-Mirmehdi-1b0a0b0c-0b0a-4b0a-8b0a-0b0a0b0c0b0a,Medical imaging ML
+University of Bristol,UK,Nello Cristianini,nello.cristianini@bristol.ac.uk,https://www.bristol.ac.uk/people/person/Nello-Cristianini-1b0a0b0c-0b0a-4b0a-8b0a-0b0a0b0c0b0a,AI ethics
+University of Bristol,UK,Peter Flach,peter.flach@bristol.ac.uk,https://www.bristol.ac.uk/people/person/Peter-Flach-1b0a0b0c-0b0a-4b0a-8b0a-0b0a0b0c0b0a,ML models
+University of Bristol,UK,Seth Bullock,seth.bullock@bristol.ac.uk,https://www.bristol.ac.uk/people/person/Seth-Bullock-1b0a0b0c-0b0a-4b0a-8b0a-0b0a0b0c0b0a,Evolutionary AI
+University of Bristol,UK,Tilo Burghardt,tilo.burghardt@bristol.ac.uk,https://www.bristol.ac.uk/people/person/Tilo-Burghardt-1b0a0b0c-0b0a-4b0a-8b0a-0b0a0b0c0b0a,Animal biometrics AI
+University of Bristol,UK,Walterio Mayol-Cuevas,walterio.mayol-cuevas@bristol.ac.uk,https://www.bristol.ac.uk/people/person/Walterio-Mayol-Cuevas-1b0a0b0c-0b0a-4b0a-8b0a-0b0a0b0c0b0a,AI robotics
+University of Bristol,UK,Zheng Zhu,zheng.zhu@bristol.ac.uk,https://www.bristol.ac.uk/people/person/Zheng-Zhu-1b0a0b0c-0b0a-4b0a-8b0a-0b0a0b0c0b0a,ML optimization
+University of Southampton,UK,Age Chapman,age.chapman@soton.ac.uk,https://www.southampton.ac.uk/people/5xjv3z/doctor-age-chapman,AI agents
+University of Southampton,UK,Corina Cirstea,corina.cirstea@soton.ac.uk,https://www.southampton.ac.uk/people/5xjv4z/doctor-corina-cirstea,AI semantics
+University of Southampton,UK,Enrico Marchioni,enrico.marchioni@soton.ac.uk,https://www.southampton.ac.uk/people/5xjv5z/doctor-enrico-marchioni,AI logic
+University of Southampton,UK,Gopal Ramchurn,g.r.ramchurn@soton.ac.uk,https://www.southampton.ac.uk/people/5xjv6z/professor-gopal-ramchurn,Multi-agent AI
+University of Southampton,UK,Jonathon Hare,jonathon.hare@soton.ac.uk,https://www.southampton.ac.uk/people/5xjv7z/doctor-jonathon-hare,AI vision
+University of Southampton,UK,Long Tran-Thanh,long.tran-thanh@soton.ac.uk,https://www.southampton.ac.uk/people/5xjv8z/doctor-long-tran-thanh,AI game theory
+University of Southampton,UK,Mahesan Niranjan,mahesan.niranjan@soton.ac.uk,https://www.southampton.ac.uk/people/5xjv9z/professor-mahesan-niranjan,ML models
+University of Southampton,UK,Mark Nixon,mark.nixon@soton.ac.uk,https://www.southampton.ac.uk/people/5xjvbz/professor-mark-nixon,Biometrics AI
+University of Southampton,UK,Michael Boniface,michael.boniface@soton.ac.uk,https://www.southampton.ac.uk/people/5xjvcx/doctor-michael-boniface,AI cloud computing
+University of Southampton,UK,Sarvapali Ramchurn,s.d.ramchurn@soton.ac.uk,https://www.southampton.ac.uk/people/5xjvdx/professor-sarvapali-ramchurn,AI human-agent interaction
+RWTH Aachen University,Germany,Bastian Leibe,leibe@vision.rwth-aachen.de,https://www.vision.rwth-aachen.de/person/1,Computer vision AI
+RWTH Aachen University,Germany,Dirk Thiessen,thiessen@embedded.rwth-aachen.de,https://embedded.rwth-aachen.de/doku.php?id=lehrstuhl/team/thiessen,Embedded AI
+RWTH Aachen University,Germany,Hermann Ney,ney@cs.rwth-aachen.de,https://www-i6.informatik.rwth-aachen.de/~ney,AI speech recognition
+RWTH Aachen University,Germany,Jan Bender,jan.bender@cs.rwth-aachen.de,https://graphics.rwth-aachen.de/person/1,AI simulation
+RWTH Aachen University,Germany,Joost-Pieter Katoen,katoen@cs.rwth-aachen.de,https://moves.rwth-aachen.de/people/katoen,AI verification
+RWTH Aachen University,Germany,Leif Kobbelt,kobbelt@cs.rwth-aachen.de,https://www.graphics.rwth-aachen.de/person/2,Geometric ML
+RWTH Aachen University,Germany,Martin Grohe,grohe@informatik.rwth-aachen.de,https://www.lics.rwth-aachen.de/cms/~aazf,AI logic
+RWTH Aachen University,Germany,Matthias Müller,matthias.mueller@cs.rwth-aachen.de,https://www.vision.rwth-aachen.de/person/2,AI autonomous driving
+RWTH Aachen University,Germany,Stefan Kowalewski,kowalewski@embedded.rwth-aachen.de,https://embedded.rwth-aachen.de/doku.php?id=lehrstuhl/team/kowalewski,AI control systems
+RWTH Aachen University,Germany,Ulrike Meyer,meyer@itsec.rwth-aachen.de,https://www.itsec.rwth-aachen.de/cms/ITSEC/Der-Lehrstuhl/Team/~bpfv/Ulrike-Meyer,AI security
+Trinity College Dublin,Ireland,Anil Kokaram,anil.kokaram@tcd.ie,https://www.tcd.ie/eleceng/people/anil-kokaram,AI signal processing
+Trinity College Dublin,Ireland,Carl Vogel,carl.vogel@tcd.ie,https://www.tcd.ie/scss/people/carl-vogel,Computational linguistics AI
+Trinity College Dublin,Ireland,Douglas Leith,doug.leith@tcd.ie,https://www.tcd.ie/eleceng/people/doug-leith,AI networks
+Trinity College Dublin,Ireland,Gavin Doherty,gavin.doherty@tcd.ie,https://www.tcd.ie/scss/people/gavin-doherty,Human-AI interaction
+Trinity College Dublin,Ireland,Geraldine Boylan,geraldine.boylan@tcd.ie,https://www.tcd.ie/medicine/people/geraldine-boylan,Medical AI
+Trinity College Dublin,Ireland,Inmaculada Arnedillo-Sánchez,inmaculada.arnedillo-sanchez@tcd.ie,https://www.tcd.ie/scss/people/inmaculada-arnedillo-sanchez,AI education
+Trinity College Dublin,Ireland,John Dingliana,john.dingliana@tcd.ie,https://www.tcd.ie/scss/people/john-dingliana,AI graphics
+Trinity College Dublin,Ireland,John Kelleher,john.kelleher@tcd.ie,https://www.tcd.ie/adapt/people/john-kelleher,AI NLP
+Trinity College Dublin,Ireland,Khurshid Ahmad,khurshid.ahmad@tcd.ie,https://www.tcd.ie/scss/people/khurshid-ahmad,AI fintech
+Trinity College Dublin,Ireland,Mads Haahr,mads.haahr@tcd.ie,https://www.tcd.ie/scss/people/mads-haahr,AI games
+TU Delft,Netherlands,Alessandro Bozzon,a.bozzon@tudelft.nl,https://www.tudelft.nl/ewi/over-de-faculteit/afdelingen/intelligent-systems/web-information-systems/the-team/alessandro-bozzon,AI social computing
+TU Delft,Netherlands,Alan Hanjalic,a.hanjalic@tudelft.nl,https://www.tudelft.nl/ewi/over-de-faculteit/afdelingen/intelligent-systems/multimedia-computing/the-team/alan-hanjalic,Multimedia AI
+TU Delft,Netherlands,Catholijn Jonker,c.m.jonker@tudelft.nl,https://www.tudelft.nl/ewi/over-de-faculteit/afdelingen/intelligent-systems/interactive-intelligence/the-team/catholijn-jonker,Human-AI interaction
+TU Delft,Netherlands,Elvin Karana,e.karana@tudelft.nl,https://www.tudelft.nl/io/over-io/personen/karana-e,AI materials
+TU Delft,Netherlands,Felienne Hermans,f.f.j.hermans@tudelft.nl,https://www.tudelft.nl/ewi/over-de-faculteit/afdelingen/software-technology/programming-languages/the-team/felienne-hermans,AI programming education
+TU Delft,Netherlands,Geert-Jan Houben,g.j.p.m.houben@tudelft.nl,https://www.tudelft.nl/ewi/over-de-faculteit/afdelingen/intelligent-systems/web-information-systems/the-team/geert-jan-houben,AI web systems
+TU Delft,Netherlands,Jeroen van den Hoven,m.j.vandenhoven@tudelft.nl,https://www.tudelft.nl/tbm/over-faculteit/afdelingen/values-technology-and-innovation/people/full-professors/profdr-mj-van-den-hoven,AI ethics
+TU Delft,Netherlands,Julian Kooij,j.f.p.kooij@tudelft.nl,https://www.tudelft.nl/ewi/over-de-faculteit/afdelingen/intelligent-systems/intelligent-vehicles/the-team/julian-kooij,AI autonomous vehicles
+TU Delft,Netherlands,Lydia Chen,y.chen-10@tudelft.nl,https://www.tudelft.nl/ewi/over-de-faculteit/afdelingen/software-technology/distributed-systems/the-team/lydia-chen,Distributed ML
+TU Delft,Netherlands,Marco Zuniga,m.a.zuniga@tudelft.nl,https://www.tudelft.nl/ewi/over-de-faculteit/afdelingen/software-technology/embedded-and-networked-systems/the-team/marco-zuniga,AI sensor networks
+University of Auckland,New Zealand,Andre Geldenhuis,andre.geldenhuis@auckland.ac.nz,https://unidirectory.auckland.ac.nz/profile/andre-geldenhuis,Data science
+University of Auckland,New Zealand,Bernd Krauskopf,bernd.krauskopf@auckland.ac.nz,https://unidirectory.auckland.ac.nz/profile/bernd-krauskopf,Computational math AI
+University of Auckland,New Zealand,Gill Dobbie,gill.dobbie@auckland.ac.nz,https://unidirectory.auckland.ac.nz/profile/gill-dobbie,Data management ML
+University of Auckland,New Zealand,Jiamou Liu,jiamou.liu@auckland.ac.nz,https://unidirectory.auckland.ac.nz/profile/jiamou-liu,AI social networks
+University of Auckland,New Zealand,Jing Sun,jing.sun@auckland.ac.nz,https://unidirectory.auckland.ac.nz/profile/jing-sun,AI software engineering
+University of Auckland,New Zealand,Michael Witbrock,michael.witbrock@auckland.ac.nz,https://unidirectory.auckland.ac.nz/profile/michael-witbrock,AI reasoning
+University of Auckland,New Zealand,Patrice Delmas,patrice.delmas@auckland.ac.nz,https://unidirectory.auckland.ac.nz/profile/patrice-delmas,AI vision
+University of Auckland,New Zealand,Paul Denny,paul.denny@auckland.ac.nz,https://unidirectory.auckland.ac.nz/profile/paul-denny,AI education
+University of Auckland,New Zealand,Saptarshi Ghosh,saptarshi.ghosh@auckland.ac.nz,https://unidirectory.auckland.ac.nz/profile/saptarshi-ghosh,AI social media
+University of Auckland,New Zealand,Ulrich Speidel,ulrich.speidel@auckland.ac.nz,https://unidirectory.auckland.ac.nz/profile/ulrich-speidel,AI networks
+University of Sydney,Australia,Achim Zeileis,achim.zeileis@sydney.edu.au,https://sydney.edu.au/science/people/achim.zeileis,ML statistics
+University of Sydney,Australia,Alan Fekete,alan.fekete@sydney.edu.au,https://sydney.edu.au/engineering/people/alan.fekete,Data systems AI
+University of Sydney,Australia,Albert Zomaya,albert.zomaya@sydney.edu.au,https://sydney.edu.au/engineering/people/albert.zomaya,High-performance ML
+University of Sydney,Australia,Athman Bouguettaya,athman.bouguettaya@sydney.edu.au,https://sydney.edu.au/engineering/people/athman.bouguettaya,AI services
+University of Sydney,Australia,Bernhard Scholz,bernhard.scholz@sydney.edu.au,https://sydney.edu.au/engineering/people/bernhard.scholz,AI programming languages
+University of Sydney,Australia,Dacheng Tao,dacheng.tao@sydney.edu.au,https://sydney.edu.au/engineering/people/dacheng.tao,Deep learning
+University of Sydney,Australia,Irena Koprinska,irena.koprinska@sydney.edu.au,https://sydney.edu.au/engineering/people/irena.koprinska,ML time series
+University of Sydney,Australia,Joel Nothman,joel.nothman@sydney.edu.au,https://sydney.edu.au/engineering/people/joel.nothman,AI NLP
+University of Sydney,Australia,John Ormerod,john.ormerod@sydney.edu.au,https://sydney.edu.au/science/people/john.ormerod,ML Bayesian
+University of Sydney,Australia,Josiah Poon,josiah.poon@sydney.edu.au,https://sydney.edu.au/engineering/people/josiah.poon,AI text mining
+University of Melbourne,Australia,James Bailey,jbailey@unimelb.edu.au,https://cis.unimelb.edu.au/people/staff.php?person_ID=12345,Data mining ML
+University of Melbourne,Australia,Justin Zobel,justin.zobel@unimelb.edu.au,https://cis.unimelb.edu.au/people/staff.php?person_ID=12346,Information retrieval AI
+University of Melbourne,Australia,Karin Verspoor,karin.verspoor@unimelb.edu.au,https://cis.unimelb.edu.au/people/staff.php?person_ID=12347,AI biomedical text
+University of Melbourne,Australia,Liz Sonenberg,liz.sonenberg@unimelb.edu.au,https://cis.unimelb.edu.au/people/staff.php?person_ID=12348,Multi-agent AI
+University of Melbourne,Australia,Marcus Hutter,marcus.hutter@unimelb.edu.au,https://cis.unimelb.edu.au/people/staff.php?person_ID=12349,Universal AI
+University of Melbourne,Australia,Mark Cassidy,mark.cassidy@unimelb.edu.au,https://cis.unimelb.edu.au/people/staff.php?person_ID=12350,AI geotechnical
+University of Melbourne,Australia,Peter Stuckey,peter.stuckey@unimelb.edu.au,https://cis.unimelb.edu.au/people/staff.php?person_ID=12351,AI optimization
+University of Melbourne,Australia,Raj Buyya,raj.buyya@unimelb.edu.au,https://cis.unimelb.edu.au/people/staff.php?person_ID=12352,Cloud AI
+University of Melbourne,Australia,Rao Kotagiri,rao.kotagiri@unimelb.edu.au,https://cis.unimelb.edu.au/people/staff.php?person_ID=12353,ML models
+University of Melbourne,Australia,Tim Baldwin,tim.baldwin@unimelb.edu.au,https://cis.unimelb.edu.au/people/staff.php?person_ID=12354,AI NLP
+University of Copenhagen,Denmark,Anders Søgaard,soegaard@di.ku.dk,https://di.ku.dk/english/staff/?pure=en/persons/12345,AI NLP
+University of Copenhagen,Denmark,Christian Igel,igel@di.ku.dk,https://di.ku.dk/english/staff/?pure=en/persons/12346,ML optimization
+University of Copenhagen,Denmark,Christina Lioma,lioma@di.ku.dk,https://di.ku.dk/english/staff/?pure=en/persons/12347,Information retrieval AI
+University of Copenhagen,Denmark,Dan Witzner Hansen,dan@di.ku.dk,https://di.ku.dk/english/staff/?pure=en/persons/12348,AI vision
+University of Copenhagen,Denmark,Desmond Elliott,elliott@di.ku.dk,https://di.ku.dk/english/staff/?pure=en/persons/12349,Multimodal AI
+University of Copenhagen,Denmark,Ira Assent,ira@di.ku.dk,https://di.ku.dk/english/staff/?pure=en/persons/12350,Data mining ML
+University of Copenhagen,Denmark,Isabelle Augenstein,isabelle@di.ku.dk,https://di.ku.dk/english/staff/?pure=en/persons/12351,AI NLP
+University of Copenhagen,Denmark,Jakob Grue Simonsen,jgs@di.ku.dk,https://di.ku.dk/english/staff/?pure=en/persons/12352,AI algorithms
+University of Copenhagen,Denmark,Kenny Erleben,kenny@di.ku.dk,https://di.ku.dk/english/staff/?pure=en/persons/12353,AI simulation
+University of Copenhagen,Denmark,Sune Lehmann,slehmann@di.ku.dk,https://di.ku.dk/english/staff/?pure=en/persons/12354,AI social networks
+Politecnico di Milano,Italy,Alberto Ceselli,alberto.ceselli@polimi.it,https://www.deib.polimi.it/eng/people/details/12345,AI optimization
+Politecnico di Milano,Italy,Carlo Piccardi,carlo.piccardi@polimi.it,https://www.deib.polimi.it/eng/people/details/12346,Complex systems AI
+Politecnico di Milano,Italy,Daniele Loiacono,daniele.loiacono@polimi.it,https://www.deib.polimi.it/eng/people/details/12347,AI games
+Politecnico di Milano,Italy,Giacomo Boracchi,giacomo.boracchi@polimi.it,https://www.deib.polimi.it/eng/people/details/12348,ML image processing
+Politecnico di Milano,Italy,Gianpaolo Cugola,gianpaolo.cugola@polimi.it,https://www.deib.polimi.it/eng/people/details/12349,Distributed AI
+Politecnico di Milano,Italy,Giovanni Miragliotta,giovanni.miragliotta@polimi.it,https://www.dig.polimi.it/index.php?id=12350,AI industry 4.0
+Politecnico di Milano,Italy,Luciano Baresi,luciano.baresi@polimi.it,https://www.deib.polimi.it/eng/people/details/12351,AI software engineering
+Politecnico di Milano,Italy,Marco Brambilla,marco.brambilla@polimi.it,https://www.deib.polimi.it/eng/people/details/12352,Big data AI
+Politecnico di Milano,Italy,Matteo Matteucci,matteo.matteucci@polimi.it,https://www.deib.polimi.it/eng/people/details/12353,AI robotics
+Politecnico di Milano,Italy,Nicola Gatti,nicola.gatti@polimi.it,https://www.deib.polimi.it/eng/people/details/12354,AI game theory
+
+

@@ -107,15 +107,25 @@ else:
 st.header("2. Campaign Preferences")
 col1, col2 = st.columns(2)
 with col1:
+    season_options = ["Any", "Winter", "Summer"]
+    current_season = st.session_state.campaign_settings.get('season', 'Any')
+    season_index = season_options.index(current_season) if current_season in season_options else 0
+    
     season = create_input_with_help(st.selectbox, "Internship Season", "Select the preferred internship season.", 
-                         options=["Any", "Winter", "Summer"],
-                         index=["Any", "Winter", "Summer"].index(st.session_state.campaign_settings['season']))
+                         options=season_options,
+                         index=season_index,
+                         key="season_selectbox")
     st.session_state.campaign_settings['season'] = season
 
 with col2:
+    funding_options = ["Any", "Paid", "Unpaid"]
+    current_funding = st.session_state.campaign_settings.get('funding', 'Any')
+    funding_index = funding_options.index(current_funding) if current_funding in funding_options else 0
+    
     funding = create_input_with_help(st.selectbox, "Funding Preference", "Select if you prefer paid, unpaid, or any internship.", 
-                          options=["Any", "Paid", "Unpaid"],
-                          index=["Any", "Paid", "Unpaid"].index(st.session_state.campaign_settings['funding']))
+                          options=funding_options,
+                          index=funding_index,
+                          key="funding_selectbox")
     st.session_state.campaign_settings['funding'] = funding
 
 # Select countries - always visible
@@ -124,7 +134,8 @@ st.caption("Choose countries to target for outreach. Leave blank for global sear
 countries = ["US", "UK", "Europe", "Singapore", "Canada", "Australia", "Other"]
 selected_countries = create_input_with_help(st.multiselect, "Countries", "Choose countries to target for outreach. Leave blank for global search.", 
                                    options=countries, 
-                                   default=st.session_state.campaign_settings['countries'])
+                                   default=st.session_state.campaign_settings.get('countries', []),
+                                   key="countries_multiselect")
 st.session_state.campaign_settings['countries'] = selected_countries
 
 # Mode selection - always visible

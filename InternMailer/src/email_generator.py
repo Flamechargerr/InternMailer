@@ -3,11 +3,15 @@ import logging
 import time
 import json
 import hashlib
+import requests
 from typing import Dict, Any
 from jinja2 import Template
-import requests
-from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
+from requests.adapters import HTTPAdapter
+try:
+    from .azure_ai_client import generate_with_azure_ai
+except ImportError:
+    from azure_ai_client import generate_with_azure_ai
 
 logging.basicConfig(level=logging.INFO)
 
@@ -215,8 +219,8 @@ class EmailGenerator:
     def __init__(self, student_info: Dict[str, Any], openai_api_key: str = None, use_ollama: bool = False, ollama_model: str = 'mistral'):
         self.student_info = student_info
         self.openai_api_key = openai_api_key
-        self.use_ollama = use_ollama
-        self.ollama_model = ollama_model
+        self.use_ollama = False  # Disable Ollama integration
+        self.azure_model = 'gpt-4o'  # Set default Azure model
 
     def generate_subject(self, professor: Dict[str, Any], informal: bool = False) -> str:
         research_area = professor.get('Research Area', professor.get('research_area', 'your research'))
@@ -317,16 +321,22 @@ Requirements:
 Email:"""
 
     def generate_body(self, professor: Dict[str, Any], informal: bool = False) -> str:
-        # Use Jinja2 template with updated format
-        template_path = os.path.join(os.path.dirname(__file__), '../../templates/email_template.txt')
+        # Use Jinja2 template with updated format - fix path resolution
+        current_dir = os.path.dirname(os.path.dirname(__file__))  # Go up from src to InternMailer
+        template_path = os.path.join(current_dir, 'templates', 'email_template.txt')
         try:
             with open(template_path, 'r', encoding='utf-8') as f:
                 template_str = f.read()
             template = Template(template_str)
             
             # Map professor data to template variables with proper field names
+            full_name = professor.get('Name', professor.get('name', ''))
+            # Extract last name from full name (take the last word)
+            last_name = full_name.split()[-1] if full_name else 'Professor'
+            
             prof_data = {
-                'name': professor.get('Name', professor.get('name', '')),
+                'name': full_name,
+                'last_name': last_name,
                 'research_area': professor.get('Research Area', professor.get('research_area', 'your research')),
                 'university': professor.get('University', professor.get('university', ''))
             }
@@ -388,10 +398,7 @@ BTech Data Science | MIT Manipal
             prompt = self.build_prompt(professor, informal)
             
         if self.use_ollama:
-            return generate_with_ollama(prompt, self.ollama_model)
-        elif self.openai_api_key:
-            # TODO: Implement OpenAI GPT-4 logic if needed
-            return self.generate_body(professor, informal)
+            return generate_with_azure_ai(prompt, self.azure_model)
         else:
             return self.generate_body(professor, informal)
 

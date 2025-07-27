@@ -66,7 +66,17 @@ class FollowupManager:
     
     def _parse_datetime(self, dt_str: str) -> datetime:
         """Parse ISO datetime string to datetime object."""
-        return datetime.fromisoformat(dt_str.replace('Z', '+00:00'))
+        try:
+            # Try to parse with timezone info
+            if 'T' in dt_str and ('+' in dt_str or 'Z' in dt_str):
+                return datetime.fromisoformat(dt_str.replace('Z', '+00:00'))
+            else:
+                # If no timezone info, assume UTC
+                dt = datetime.fromisoformat(dt_str)
+                return dt.replace(tzinfo=timezone.utc)
+        except:
+            # Fallback: assume UTC
+            return datetime.now(timezone.utc)
     
     def get_analytics(self):
         """Get analytics data for all followups and campaigns."""
@@ -209,6 +219,27 @@ class FollowupManager:
         
         self._write_data(data)
         return True
+    
+    def schedule_followup(self, campaign_id: str, email: str, scheduled_datetime, subject: str) -> str:
+        """Schedule a new followup for a specific email."""
+        data = self._read_data()
+        
+        # Create a new followup record
+        followup_id = str(uuid.uuid4())
+        followup = {
+            'id': followup_id,
+            'campaign_id': campaign_id,
+            'email': email,
+            'subject': subject,
+            'status': 'scheduled',
+            'scheduled_at': scheduled_datetime.isoformat() if hasattr(scheduled_datetime, 'isoformat') else str(scheduled_datetime),
+            'created_at': self._get_utc_now()
+        }
+        
+        data['followups'][followup_id] = followup
+        self._write_data(data)
+        
+        return followup_id
     
     def reschedule_followup(self, followup_id: str, new_datetime: str) -> bool:
         """Reschedule a followup to a new datetime."""

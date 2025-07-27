@@ -1,0 +1,127 @@
+{
+  "professors": [
+    {
+      "email": "liskov@csail.mit.edu",
+      "name": "Barbara H. Liskov",
+      "university": "MIT",
+      "first_emailed": "2025-07-27T14:00:23.956046",
+      "last_emailed": "2025-07-27T14:42:29.107898",
+      "last_subject": "Previously contacted",
+      "status": "sent",
+      "email_count": 1,
+      "notes": "Pre-existing contact"
+    },
+    {
+      "email": "asuman@mit.edu",
+      "name": "Asuman E. Ozdaglar",
+      "university": "MIT",
+      "first_emailed": "2025-07-27T14:00:23.956046",
+      "last_emailed": "2025-07-27T14:42:29.108899",
+      "last_subject": "Previously contacted",
+      "status": "sent",
+      "email_count": 1,
+      "notes": "Pre-existing contact"
+    },
+    {
+      "email": "arvind@csail.mit.edu",
+      "name": "Arvind",
+      "university": "MIT",
+      "first_emailed": "2025-07-27T14:00:23.957312",
+      "last_emailed": "2025-07-27T14:42:29.110183",
+      "last_subject": "Previously contacted",
+      "status": "sent",
+      "email_count": 1,
+      "notes": "Pre-existing contact"
+    },
+    {
+      "email": "asolar@csail.mit.edu",
+      "name": "Armando Solar-Lezama",
+      "university": "MIT",
+      "first_emailed": "2025-07-27T14:00:23.958391",
+      "last_emailed": "2025-07-27T14:42:29.111682",
+      "last_subject": "Previously contacted",
+      "status": "sent",
+      "email_count": 1,
+      "notes": "Pre-existing contact"
+    },
+    {
+      "email": "torralba@csail.mit.edu",
+      "name": "Antonio Torralba",
+      "university": "MIT",
+      "first_emailed": "2025-07-27T14:00:23.959548",
+      "last_emailed": "2025-07-27T14:42:29.111682",
+      "last_subject": "Previously contacted",
+      "status": "sent",
+      "email_count": 1,
+      "notes": "Pre-existing contact"
+    },
+    {
+      "email": "moitra@mit.edu",
+      "name": "Ankur Moitra",
+      "university": "MIT",
+      "first_emailed": "2025-07-27T14:00:23.959548",
+      "last_emailed": "2025-07-27T14:42:29.112693",
+      "last_subject": "Previously contacted",
+      "status": "sent",
+      "email_count": 1,
+      "notes": "Pre-existing contact"
+    },
+    {
+      "email": "anant@csail.mit.edu",
+      "name": "Anant Agarwal",
+      "university": "MIT",
+      "first_emailed": "2025-07-27T14:00:23.960791",
+      "last_emailed": "2025-07-27T14:42:29.113700",
+      "last_subject": "Previously contacted",
+      "status": "sent",
+      "email_count": 1,
+      "notes": "Pre-existing contact"
+    },
+    {
+      "email": "rakhlin@mit.edu",
+      "name": "Alexander Rakhlin",
+      "university": "MIT",
+      "first_emailed": "2025-07-27T14:00:23.960791",
+      "last_emailed": "2025-07-27T14:42:29.113700",
+      "last_subject": "Previously contacted",
+      "status": "sent",
+      "email_count": 1,
+      "notes": "Pre-existing contact"
+    },
+    {
+      "email": "adamc@csail.mit.edu",
+      "name": "Adam Chlipala",
+      "university": "MIT",
+      "first_emailed": "2025-07-27T14:00:23.962129",
+      "last_emailed": "2025-07-27T14:42:29.114884",
+      "last_subject": "Previously contacted",
+      "status": "sent",
+      "email_count": 1,
+      "notes": "Pre-existing contact"
+    },
+    {
+      "email": "abelay@mit.edu",
+      "name": "Adam Belay",
+      "university": "MIT",
+      "first_emailed": "2025-07-27T14:00:23.962129",
+      "last_emailed": "2025-07-27T14:42:29.115890",
+      "last_subject": "Previously contacted",
+      "status": "sent",
+      "email_count": 1,
+      "notes": "Pre-existing contact"
+    }
+  ],
+  "last_updated": "2025-07-27T14:50:22.868612",
+  "emailed_professors": [
+    "ghlee@comp.nus.edu.sg",
+    "christian.holz@inf.ethz.ch",
+    "p.gardner@imperial.ac.uk",
+    "cpiech@stanford.edu",
+    "samuel.kaski@manchester.ac.uk",
+    "prateeks@comp.nus.edu.sg",
+    "beerys@mit.edu",
+    "s.j.l.smets@uva.nl",
+    "d.paccagnan@imperial.ac.uk",
+    "lucas.cordeiro@manchester.ac.uk"
+  ]
+}

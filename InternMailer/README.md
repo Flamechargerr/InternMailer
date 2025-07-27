@@ -39,36 +39,86 @@ InternMailer is a **production-ready**, AI-powered academic outreach platform de
 ## Folder Structure
 ```
 InternMailer/
-├── data/                # CSRankings CSV files
-├── resumes/             # Resume PDFs
-├── templates/           # Email templates
-├── src/
-│   ├── resume_parser.py
-│   ├── professor_scraper.py
-│   ├── semantic_matcher.py
-│   ├── email_generator.py
-│   ├── gmail_sender.py
-│   ├── followup_scheduler.py
-│   └── main.py
-├── app.py               # Streamlit frontend
-├── .env                 # Email credentials and API keys
-├── requirements.txt
-└── README.md
+├── data/
+│   ├── professors_clean_final.csv    # Main professor database
+│   └── sent_emails.json             # Duplicate prevention tracking
+├── resumes/                         # Student CV/resume files
+├── templates/                       # Email templates and assets
+├── logs/                           # Campaign logs and analytics
+├── auto_campaign.py                # Main campaign automation script
+├── app.py                          # Streamlit web interface
+├── .env                            # Environment variables and secrets
+├── requirements.txt                # Python dependencies
+└── README.md                       # This documentation
 ```
 
-## Setup Instructions
-1. **Clone the repository**
-2. **Install dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. **Add your resume:** Place your PDF in `resumes/`.
-4. **Download CSRankings CSVs:** Place them in `data/`.
-5. **Configure secrets:** Create a `.env` file with your Gmail credentials and (optionally) OpenAI API key.
-6. **Run the app:**
-   ```bash
-   streamlit run app.py
-   ```
+## 🚀 Quick Start
+
+### 1. Setup Environment
+```bash
+# Clone the repository
+git clone https://github.com/Flamechargerr/InternMailer.git
+cd InternMailer
+
+# Create virtual environment (recommended)
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### 2. Configure Application
+```bash
+# Create environment file
+cp .env.example .env  # Copy example template
+# Edit .env with your credentials (see Configuration section below)
+```
+
+### 3. Add Required Files
+- **Resume**: Place your CV/resume PDF in `resumes/` folder
+- **Professor Database**: Ensure `data/professors_clean_final.csv` exists with professor information
+
+### 4. Launch Application
+```bash
+# Start the Streamlit interface
+streamlit run app.py
+
+# Or run command-line version
+python auto_campaign.py
+```
+
+## ⚙️ Configuration
+
+Create a `.env` file in the project root with the following variables:
+
+```bash
+# Gmail Configuration (Required)
+GMAIL_USER=your-email@gmail.com
+GMAIL_APP_PASSWORD=your-16-character-app-password
+
+# OpenAI API (Optional - enables enhanced AI email generation)
+OPENAI_API_KEY=sk-your-openai-key-here
+
+# Campaign Settings (Optional)
+MAX_EMAILS_PER_DAY=50
+MIN_DELAY_SECONDS=2
+DRY_RUN_MODE=false
+```
+
+### Gmail App Password Setup
+1. Enable 2-Factor Authentication on your Google Account
+2. Go to [Google Account Settings](https://myaccount.google.com/security)
+3. Navigate to **Security** → **2-Step Verification** → **App passwords**
+4. Select **Mail** as the app and generate password
+5. Copy the 16-character password to your `.env` file
+
+### Professor Database Format
+Your CSV file should contain columns:
+- `Email`: Professor's email address
+- `Name`: Full name
+- `University`: Institution name  
+- `Research Area`: Research interests/specialization
 
 ## Security
 - All secrets are read from `.env` and masked in logs.

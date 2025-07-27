@@ -8,6 +8,7 @@ from gmail_sender import GmailSender
 from professor_scraper import ProfessorScraper
 from scheduler.streamlit_api import get_followup_manager
 from professor_tracker import ProfessorTracker
+from email_validator import validate_email
 
 class OutreachRunner:
     def __init__(self, resume_path: str, season: str, funding: str, selected_countries: list, mode: str, progress_callback, log_callback):
@@ -85,15 +86,8 @@ class OutreachRunner:
                 if pd.isna(email) or not email or email.strip() == '':
                     continue
 
-                try:
-                    is_valid_format = (isinstance(email, str) and 
-                                     email.strip() != '' and
-                                     '@' in email and 
-                                     '.' in email.split('@')[1] and 
-                                     len(email.split('@')[0]) > 0 and  
-                                     len(email.split('@')[1]) > 0)
-                except (IndexError, AttributeError):
-                    is_valid_format = False
+                # Use secure email validator
+                is_valid_format = validate_email(email)
 
                 if is_valid_format:
                     prof_data = {}
@@ -112,9 +106,9 @@ class OutreachRunner:
         except Exception as e:
             raise RuntimeError(f"Error reading CSV file: {e}")
 
-        self.log_callback("Number of professors with valid emails:", len(professors))
+        self.log_callback(f"Number of professors with valid emails: {len(professors)}")
         if len(professors) > 0:
-            self.log_callback("Sample professor record:", professors[0])
+            self.log_callback(f"Sample professor record: {professors[0]}")
 
         if self.selected_countries:
             filtered = []
@@ -168,7 +162,7 @@ My courses: {', '.join(student_info.get('courses', ['Computer Science', 'Mathema
 My email: {student_info['email']}
 The email should be concise, polite, and mention why I am interested in their work.
 """
-            self.log_callback(f"LLM prompt for {professor_name}:", prompt)
+            self.log_callback(f"LLM prompt for {professor_name}: {prompt}")
 
             body = ""
             try:

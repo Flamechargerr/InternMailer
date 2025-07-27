@@ -1,5 +1,236 @@
 {
-  "campaigns": {},
-  "followups": {},
-  "email_logs": []
+  "campaigns": {
+    "5445b88d-43ef-49ba-88eb-eb23619cd514": {
+      "id": "5445b88d-43ef-49ba-88eb-eb23619cd514",
+      "name": "Test Campaign 2025-07-27 14:49",
+      "description": "Test campaign for comprehensive functionality testing",
+      "created_at": "2025-07-27T09:19:26.619471+00:00",
+      "settings": {}
+    },
+    "aeaa9a5c-d173-435d-92e3-1ac1374abbba": {
+      "id": "aeaa9a5c-d173-435d-92e3-1ac1374abbba",
+      "name": "Test Campaign 2025-07-27 14:49",
+      "description": "Test campaign for comprehensive functionality testing",
+      "created_at": "2025-07-27T09:19:59.184249+00:00",
+      "settings": {}
+    },
+    "aab4155c-a3db-4c73-b322-78a45fd9bd99": {
+      "id": "aab4155c-a3db-4c73-b322-78a45fd9bd99",
+      "name": "Test Campaign 2025-07-27 14:50",
+      "description": "Test campaign for comprehensive functionality testing",
+      "created_at": "2025-07-27T09:20:22.808643+00:00",
+      "settings": {}
+    }
+  },
+  "followups": {
+    "7a9682c8-86c3-44d5-91a4-db1afc97652f": {
+      "id": "7a9682c8-86c3-44d5-91a4-db1afc97652f",
+      "campaign_id": "5445b88d-43ef-49ba-88eb-eb23619cd514",
+      "email": "billf@mit.edu",
+      "subject": "Research Internship Inquiry - Computer Vision",
+      "status": "scheduled",
+      "scheduled_at": "2025-07-27T09:19:26.628997+00:00",
+      "created_at": "2025-07-27T09:19:26.628997+00:00",
+      "email_log_id": "4d1bf781-1e04-4824-bed7-e7540746aaa7"
+    },
+    "75b4a40b-2bc1-4416-ba67-70e22b9baf91": {
+      "id": "75b4a40b-2bc1-4416-ba67-70e22b9baf91",
+      "campaign_id": "5445b88d-43ef-49ba-88eb-eb23619cd514",
+      "email": "torralba@csail.mit.edu",
+      "subject": "Research Internship Inquiry - AI Vision",
+      "status": "scheduled",
+      "scheduled_at": "2025-07-27T09:19:26.639987+00:00",
+      "created_at": "2025-07-27T09:19:26.639987+00:00",
+      "email_log_id": "b3c79ec0-325e-4949-b6a9-c084425ce098"
+    },
+    "74028408-dbdb-45e9-ac6f-7f110f4aa2bf": {
+      "id": "74028408-dbdb-45e9-ac6f-7f110f4aa2bf",
+      "campaign_id": "5445b88d-43ef-49ba-88eb-eb23619cd514",
+      "email": "regina@csail.mit.edu",
+      "subject": "Research Internship Inquiry - ML Language",
+      "status": "scheduled",
+      "scheduled_at": "2025-07-27T09:19:26.648494+00:00",
+      "created_at": "2025-07-27T09:19:26.648494+00:00",
+      "email_log_id": "0f109bee-e843-4ff7-9c9b-f1c2ed1178c1"
+    },
+    "85c76afe-4180-4a1c-b6c7-c2e5fc8f79ec": {
+      "id": "85c76afe-4180-4a1c-b6c7-c2e5fc8f79ec",
+      "campaign_id": "aeaa9a5c-d173-435d-92e3-1ac1374abbba",
+      "email": "billf@mit.edu",
+      "subject": "Research Internship Inquiry - Computer Vision",
+      "status": "scheduled",
+      "scheduled_at": "2025-07-27T09:19:59.193503+00:00",
+      "created_at": "2025-07-27T09:19:59.193503+00:00",
+      "email_log_id": "3b8ab6dc-2412-4ce9-801f-e7e9343b5467"
+    },
+    "1d4d3fa6-a264-415e-bf50-124c84c818b7": {
+      "id": "1d4d3fa6-a264-415e-bf50-124c84c818b7",
+      "campaign_id": "aeaa9a5c-d173-435d-92e3-1ac1374abbba",
+      "email": "torralba@csail.mit.edu",
+      "subject": "Research Internship Inquiry - AI Vision",
+      "status": "scheduled",
+      "scheduled_at": "2025-07-27T09:19:59.200530+00:00",
+      "created_at": "2025-07-27T09:19:59.200530+00:00",
+      "email_log_id": "d9e44177-7a8f-4a4a-97c4-2167971a129a"
+    },
+    "3882dc11-9b94-4d6a-99b7-501fd2b13e74": {
+      "id": "3882dc11-9b94-4d6a-99b7-501fd2b13e74",
+      "campaign_id": "aeaa9a5c-d173-435d-92e3-1ac1374abbba",
+      "email": "regina@csail.mit.edu",
+      "subject": "Research Internship Inquiry - ML Language",
+      "status": "scheduled",
+      "scheduled_at": "2025-07-27T09:19:59.209530+00:00",
+      "created_at": "2025-07-27T09:19:59.209530+00:00",
+      "email_log_id": "4a9fbc94-0cd1-4c9b-886b-69d89701b08a"
+    },
+    "3b06b8c6-6a41-47eb-b930-b37be0daa952": {
+      "id": "3b06b8c6-6a41-47eb-b930-b37be0daa952",
+      "campaign_id": "aeaa9a5c-d173-435d-92e3-1ac1374abbba",
+      "email": "billf@mit.edu",
+      "subject": "Follow-up: Research Internship Inquiry - Computer Vision",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-03T14:49:59.213088",
+      "created_at": "2025-07-27T09:19:59.220586+00:00"
+    },
+    "48ed234a-fd8a-4149-b4e6-e8952ae1b532": {
+      "id": "48ed234a-fd8a-4149-b4e6-e8952ae1b532",
+      "campaign_id": "aeaa9a5c-d173-435d-92e3-1ac1374abbba",
+      "email": "torralba@csail.mit.edu",
+      "subject": "Follow-up: Research Internship Inquiry - AI Vision",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-03T14:49:59.213088",
+      "created_at": "2025-07-27T09:19:59.227612+00:00"
+    },
+    "2237373a-3b77-4cbc-9d56-70fb7f9e2889": {
+      "id": "2237373a-3b77-4cbc-9d56-70fb7f9e2889",
+      "campaign_id": "aeaa9a5c-d173-435d-92e3-1ac1374abbba",
+      "email": "regina@csail.mit.edu",
+      "subject": "Follow-up: Research Internship Inquiry - ML Language",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-03T14:49:59.213088",
+      "created_at": "2025-07-27T09:19:59.236598+00:00"
+    },
+    "9c238e46-8a39-4d02-b82c-6522b33be22f": {
+      "id": "9c238e46-8a39-4d02-b82c-6522b33be22f",
+      "campaign_id": "aab4155c-a3db-4c73-b322-78a45fd9bd99",
+      "email": "billf@mit.edu",
+      "subject": "Research Internship Inquiry - Computer Vision",
+      "status": "scheduled",
+      "scheduled_at": "2025-07-27T09:20:22.818746+00:00",
+      "created_at": "2025-07-27T09:20:22.818746+00:00",
+      "email_log_id": "f0fea98b-4758-47fb-838f-1f0b529ca9f6"
+    },
+    "cf2ff53e-0af4-4b29-84ac-fa74a76bda12": {
+      "id": "cf2ff53e-0af4-4b29-84ac-fa74a76bda12",
+      "campaign_id": "aab4155c-a3db-4c73-b322-78a45fd9bd99",
+      "email": "torralba@csail.mit.edu",
+      "subject": "Research Internship Inquiry - AI Vision",
+      "status": "scheduled",
+      "scheduled_at": "2025-07-27T09:20:22.827722+00:00",
+      "created_at": "2025-07-27T09:20:22.827722+00:00",
+      "email_log_id": "c8b8cf0b-19fb-4ce1-a832-f9a444f15727"
+    },
+    "4670d881-8bf9-4aa2-b3a1-080ef6012b1d": {
+      "id": "4670d881-8bf9-4aa2-b3a1-080ef6012b1d",
+      "campaign_id": "aab4155c-a3db-4c73-b322-78a45fd9bd99",
+      "email": "regina@csail.mit.edu",
+      "subject": "Research Internship Inquiry - ML Language",
+      "status": "scheduled",
+      "scheduled_at": "2025-07-27T09:20:22.834723+00:00",
+      "created_at": "2025-07-27T09:20:22.834723+00:00",
+      "email_log_id": "16225329-7395-41e9-acc6-f1d37425e955"
+    },
+    "37a00359-4fdd-4601-83db-c5607b515147": {
+      "id": "37a00359-4fdd-4601-83db-c5607b515147",
+      "campaign_id": "aab4155c-a3db-4c73-b322-78a45fd9bd99",
+      "email": "billf@mit.edu",
+      "subject": "Follow-up: Research Internship Inquiry - Computer Vision",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-03T14:50:22.836722",
+      "created_at": "2025-07-27T09:20:22.843724+00:00"
+    },
+    "5b98cee7-d600-4361-9f44-5436d7dd18d6": {
+      "id": "5b98cee7-d600-4361-9f44-5436d7dd18d6",
+      "campaign_id": "aab4155c-a3db-4c73-b322-78a45fd9bd99",
+      "email": "torralba@csail.mit.edu",
+      "subject": "Follow-up: Research Internship Inquiry - AI Vision",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-03T14:50:22.836722",
+      "created_at": "2025-07-27T09:20:22.850721+00:00"
+    },
+    "45317f0e-bf32-4bef-ae4b-8cf54ef355a5": {
+      "id": "45317f0e-bf32-4bef-ae4b-8cf54ef355a5",
+      "campaign_id": "aab4155c-a3db-4c73-b322-78a45fd9bd99",
+      "email": "regina@csail.mit.edu",
+      "subject": "Follow-up: Research Internship Inquiry - ML Language",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-03T14:50:22.836722",
+      "created_at": "2025-07-27T09:20:22.859736+00:00"
+    }
+  },
+  "email_logs": [
+    {
+      "id": "4d1bf781-1e04-4824-bed7-e7540746aaa7",
+      "campaign_id": "5445b88d-43ef-49ba-88eb-eb23619cd514",
+      "email": "billf@mit.edu",
+      "subject": "Research Internship Inquiry - Computer Vision",
+      "sent_at": "2025-07-27T09:19:26.628997+00:00"
+    },
+    {
+      "id": "b3c79ec0-325e-4949-b6a9-c084425ce098",
+      "campaign_id": "5445b88d-43ef-49ba-88eb-eb23619cd514",
+      "email": "torralba@csail.mit.edu",
+      "subject": "Research Internship Inquiry - AI Vision",
+      "sent_at": "2025-07-27T09:19:26.639987+00:00"
+    },
+    {
+      "id": "0f109bee-e843-4ff7-9c9b-f1c2ed1178c1",
+      "campaign_id": "5445b88d-43ef-49ba-88eb-eb23619cd514",
+      "email": "regina@csail.mit.edu",
+      "subject": "Research Internship Inquiry - ML Language",
+      "sent_at": "2025-07-27T09:19:26.648494+00:00"
+    },
+    {
+      "id": "3b8ab6dc-2412-4ce9-801f-e7e9343b5467",
+      "campaign_id": "aeaa9a5c-d173-435d-92e3-1ac1374abbba",
+      "email": "billf@mit.edu",
+      "subject": "Research Internship Inquiry - Computer Vision",
+      "sent_at": "2025-07-27T09:19:59.193503+00:00"
+    },
+    {
+      "id": "d9e44177-7a8f-4a4a-97c4-2167971a129a",
+      "campaign_id": "aeaa9a5c-d173-435d-92e3-1ac1374abbba",
+      "email": "torralba@csail.mit.edu",
+      "subject": "Research Internship Inquiry - AI Vision",
+      "sent_at": "2025-07-27T09:19:59.200530+00:00"
+    },
+    {
+      "id": "4a9fbc94-0cd1-4c9b-886b-69d89701b08a",
+      "campaign_id": "aeaa9a5c-d173-435d-92e3-1ac1374abbba",
+      "email": "regina@csail.mit.edu",
+      "subject": "Research Internship Inquiry - ML Language",
+      "sent_at": "2025-07-27T09:19:59.209530+00:00"
+    },
+    {
+      "id": "f0fea98b-4758-47fb-838f-1f0b529ca9f6",
+      "campaign_id": "aab4155c-a3db-4c73-b322-78a45fd9bd99",
+      "email": "billf@mit.edu",
+      "subject": "Research Internship Inquiry - Computer Vision",
+      "sent_at": "2025-07-27T09:20:22.818746+00:00"
+    },
+    {
+      "id": "c8b8cf0b-19fb-4ce1-a832-f9a444f15727",
+      "campaign_id": "aab4155c-a3db-4c73-b322-78a45fd9bd99",
+      "email": "torralba@csail.mit.edu",
+      "subject": "Research Internship Inquiry - AI Vision",
+      "sent_at": "2025-07-27T09:20:22.826736+00:00"
+    },
+    {
+      "id": "16225329-7395-41e9-acc6-f1d37425e955",
+      "campaign_id": "aab4155c-a3db-4c73-b322-78a45fd9bd99",
+      "email": "regina@csail.mit.edu",
+      "subject": "Research Internship Inquiry - ML Language",
+      "sent_at": "2025-07-27T09:20:22.834723+00:00"
+    }
+  ]
 }

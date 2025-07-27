@@ -1,51 +1,54 @@
-{% if informal %}
-Hi Prof. {{ professor.name }},
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body style="margin: 0; padding: 0; background-color: #f8f8f8;">
+    <div style="max-width: 800px; margin: auto; background: #ffffff; padding: 30px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; line-height: 1.6; color: #333;">
+      
+      <p>Dear Prof. {{ professor.last_name }},</p>
 
-I'm {{ student.name }}, a Data Science Engineering student at Manipal Institute of Technology with a CGPA of 7.6/10. I recently came across your fascinating research in {{ professor.research_area }}{{ '—especially your recent work on ' + professor.recent_paper if professor.recent_paper else '' }}, and I'm genuinely excited about the potential to contribute to your team.
+      <p>
+        I am <strong>Anamay Tripathy</strong>, a third-year B.Tech Data Science student at MIT Manipal, India (CGPA: 7.6/10). I am writing to express my strong interest in a research internship with your esteemed group, particularly in the areas of <strong>{{ professor.research_area }}</strong> and <strong>Artificial Intelligence</strong>.
+      </p>
 
-{% if student.experience %}
-My background includes {{ student.experience[0] if student.experience else 'relevant experience' }}, where I {{ 'automated KPI dashboards and developed REST APIs' if 'Data Analyst' in (student.experience[0] if student.experience else '') else 'gained valuable technical experience' }}. 
-{% endif %}
+      <p>
+        Your pioneering contributions to distributed computing and AI have been a significant inspiration for me. I am eager to contribute meaningfully to your ongoing work and deepen my understanding under your guidance.
+      </p>
 
-I have hands-on expertise in {{ student.skills[:6] | join(', ') }}{% if student.skills|length > 6 %}, among others{% endif %}. Some of my key projects include:
-{% for project in student.projects[:2] %}
-• {{ project }}{% if project == 'CrimeConnect' %} - An FBI-inspired case management dashboard reducing processing time by 40%{% elif project == 'VARtificial Intelligence' %} - ML-based football predictor achieving 89% accuracy{% elif project == 'HackOps' %} - Cybersecurity training platform improving user awareness by 35%{% endif %}
-{% endfor %}
+      <p>
+        Currently, I serve as the <strong>Technical Head</strong> at <a href="https://www.yaanbarpe.in/" target="_blank">YaanBarpe</a>, a Karnataka Government-incubated startup, where I lead product development and technical strategy. Previously, I completed a <strong>Data Analyst Internship</strong> at Intellect Design Arena, Mumbai, where I automated KPI dashboards using Python and SQL (saving 12+ hours weekly) and developed REST APIs that improved user engagement by 22%.
+      </p>
 
-I believe my background in {{ student.courses[:4] | join(', ') }} and practical experience with {{ student.skills[:3] | join(', ') }} would allow me to make meaningful contributions to your research.
+      <p>
+        My passion for research is reflected in several innovative projects I've developed. I created <a href="https://crime-connect-fbi.lovable.app/login" target="_blank"><strong>CrimeConnect</strong></a>, an FBI-inspired case management dashboard built with the MERN stack and Supabase, which achieved a 40% reduction in case processing time through AI-powered analytics. Another significant project, <a href="https://match-predictor-genie-66.lovable.app/" target="_blank"><strong>VARtificial Intelligence</strong></a>, is an ML-based football match predictor using XGBoost and Pyodide that achieves 89% accuracy by incorporating real-time player statistics and historical data analysis.
+      </p>
 
-I've attached my resume ({{ student.resume_prefix }}). Would you be available for a brief call to discuss potential research opportunities?
+      <p>
+        In the cybersecurity domain, I developed <a href="https://flamechargerr.github.io/" target="_blank"><strong>HackOps</strong></a>, a comprehensive simulation and training platform featuring 25+ security challenges covering penetration testing, network security, and incident response, which improved user cyber-awareness by 35%. I also created <a href="https://github.com/Flamechargerr/flora-fight-frenzy" target="_blank"><strong>Flora Fight Frenzy</strong></a>, a tower defense game inspired by Plant vs Zombies but with original gameplay mechanics, demonstrating my versatility in software development.
+      </p>
 
-Thank you for your time and consideration!
+      <p>
+        My technical expertise spans multiple domains including <strong>programming languages</strong> (Python, JavaScript, Java, C++, SQL), <strong>AI/ML frameworks</strong> (TensorFlow, PyTorch, Scikit-learn, XGBoost, OpenCV), <strong>web technologies</strong> (React, Node.js, MongoDB, Next.js), and <strong>cloud platforms</strong> (AWS, GCP, Docker, Supabase, Firebase). Through coursework in Data Structures & Algorithms, Machine Learning, DBMS, Computer Networks, and Software Engineering, I have built a solid theoretical foundation to complement my practical experience.
+      </p>
 
-Best regards,  
-{{ student.name }}  
-{{ student.email }}  
-B.Tech Data Science Engineering, MIT
-{% else %}
-Dear Prof. {{ professor.name }},
+      <p>
+        I am confident that my academic foundation, hands-on experience, and enthusiasm for research align well with your group's goals. I would be grateful for the opportunity to contribute as a research intern—remotely or on-site, funded or voluntary. I believe my background in distributed systems, AI applications, and data science would allow me to make meaningful contributions to your ongoing research while learning from your expertise.
+      </p>
 
-I am {{ student.name }}, currently pursuing B.Tech in Data Science Engineering at Manipal Institute of Technology (CGPA: 7.6/10). I am writing to express my strong interest in your research on {{ professor.research_area }}{{ ', particularly your recent contributions to ' + professor.recent_paper if professor.recent_paper else '' }}.
+      <p>
+        I would be delighted to discuss how my experience and passion for research can contribute to your lab's work. Please find my detailed CV attached, and feel free to explore my <a href="https://anamay.vercel.app/" target="_blank">portfolio</a> and <a href="https://github.com/Flamechargerr" target="_blank">GitHub</a> for a comprehensive view of my projects.
+      </p>
 
-{% if student.experience %}
-I bring practical experience as {{ student.experience[0] if student.experience else 'a technical professional' }}, where I {{ 'automated KPI dashboards using Python and SQL, reducing reporting time by 12+ hours/week, and developed REST APIs that increased user engagement by 22%' if 'Data Analyst' in (student.experience[0] if student.experience else '') else 'gained valuable hands-on experience in software development and data analysis' }}.
-{% endif %}
+      <p>Thank you for your time and consideration.</p>
 
-My technical expertise includes {{ student.skills[:8] | join(', ') }}{% if student.skills|length > 8 %}, among other technologies{% endif %}. Notable projects from my portfolio include:
+      <p style="margin-top: 20px;">
+        Warm regards,<br />
+        <strong>Anamay Tripathy</strong><br />
+        <a href="mailto:tripathy.anamay23@gmail.com">tripathy.anamay23@gmail.com</a> | <a href="tel:+919877454747">+91-9877454747</a><br />
+        <a href="https://linkedin.com/in/anamay-tripathy" target="_blank">LinkedIn</a> | <a href="https://anamay.vercel.app/" target="_blank">Portfolio</a> | <a href="https://github.com/Flamechargerr/Flamechargerr/blob/main/README.md" target="_blank">GitHub Profile</a>
+      </p>
 
-{% for project in student.projects[:3] %}
-• **{{ project }}**{% if project == 'CrimeConnect' %}: Engineered an FBI-inspired case management dashboard using MERN stack and Supabase, reducing case processing time by 40%{% elif project == 'VARtificial Intelligence' %}: Developed a machine learning-based football predictor using XGBoost and Pyodide, achieving 89% accuracy{% elif project == 'HackOps' %}: Built a gamified cybersecurity training platform with 25+ challenges, improving user cyber-awareness by 35%{% elif project == 'Flora Fight Frenzy' %}: Created a Plants vs. Zombies-inspired game achieving 90% UI fidelity and 4.8/5 rating{% endif %}
-{% endfor %}
-
-My coursework in {{ student.courses[:6] | join(', ') }} has provided me with a strong theoretical foundation, while my project work demonstrates practical application of these concepts.
-
-I am eager to contribute to your research group and would welcome the opportunity to discuss how my background aligns with your current projects. I am particularly interested in {{ professor.research_area.lower() }} and believe I could add value through my experience with {{ student.skills[:3] | join(', ') }}.
-
-I have attached my resume ({{ student.resume_prefix }}) for your review. Thank you for considering my application.
-
-Sincerely,  
-{{ student.name }}  
-{{ student.email }}  
-B.Tech Data Science Engineering  
-Manipal Institute of Technology
-{% endif %}
+    </div>
+  </body>
+</html>

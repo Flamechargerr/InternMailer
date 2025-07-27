@@ -1,0 +1,63 @@
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Authentication tokens and credentials
+token.json
+credentials.json
+*.pem
+*.key
+
+# Logs
+*.log
+logs/
+send_log.csv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test files (keep main test files but exclude temporary ones)
+test_*.py
+*_test.py
+security_audit.py
+
+# Data files (if they contain sensitive information)
+data/professors_*.csv
+data/sent_emails.json

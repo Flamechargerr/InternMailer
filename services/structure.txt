@@ -1,0 +1,15 @@
+# Email-sending, database, and analytics components are now refactored into services.
+
+# Major Changes:
+# - Async-first design with mock adapters for local development.
+# - Simple Streamlit-compatible interfaces (`send_email`, `fetch_metrics`, `list_contacts`).
+
+services/
+├── __init__.py
+├── analytics.py
+├── base.py
+├── database.py
+├── email.py
+├── factory.py
+└── interfaces.py
+

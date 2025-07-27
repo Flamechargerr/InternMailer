@@ -1,0 +1,45 @@
+Dear Prof. {{ professor.name }},
+
+I hope this message finds you in good health and spirits.
+
+My name is {{ student.name }}, and I am currently pursuing my Bachelor of Technology in Data Science and Engineering at Manipal Institute of Technology, Manipal Academy of Higher Education, India. I am in my third year with a CGPA of 7.6/10, which reflects consistent academic performance within our institute's rigorous evaluation framework.
+
+I am writing to express my sincere interest in contributing to your esteemed research group at {{ professor.university }}. Having extensively reviewed your publications and research contributions in {{ professor.research_area }}, I am particularly drawn to the innovative methodologies and impactful outcomes of your work. Your research aligns remarkably well with my academic pursuits and long-term career aspirations in computational sciences and artificial intelligence.
+
+My academic and professional background encompasses several relevant dimensions:
+
+**Research Interests & Academic Foundation:**
+• Deep engagement with {{ professor.research_area | lower }}, machine learning algorithms, and statistical modeling
+• Coursework in Advanced Data Structures, Machine Learning, Statistical Methods, and Computational Mathematics
+• Strong mathematical foundation in Linear Algebra, Probability Theory, and Discrete Mathematics
+
+**Professional Experience:**
+• Research Intern at Intellect Design Arena Ltd., Mumbai, focusing on data analytics pipeline development and predictive modeling
+• Technical Lead at YaanBarpe (Government of Karnataka incubated startup), overseeing product architecture and algorithm development
+• {% if student.projects %}Experience in {{ student.projects[:2] | join(' and ') }}, demonstrating practical application of theoretical concepts{% endif %}
+
+**Technical Proficiencies:**
+{% if student.skills %}
+• Programming and Frameworks: {{ student.skills | join(', ') }}
+{% else %}
+• Programming Languages: Python, R, JavaScript, SQL
+• Machine Learning: TensorFlow, PyTorch, Scikit-learn, Pandas, NumPy
+• Development: React.js, Node.js, MongoDB, Git
+{% endif %}
+• Research Tools: Jupyter, LaTeX, MATLAB, Statistical Analysis
+
+I am particularly interested in exploring research opportunities during the {{ student.season | default('Winter 2025 or Summer 2026') }} period. Given my financial circumstances, I am especially keen on fully-funded positions or remote research collaborations. However, I am highly motivated and would be grateful for any opportunity to contribute to your research endeavors, regardless of the format or duration.
+
+My immediate research interests include exploring the intersection of {{ professor.research_area | lower }} with practical applications in industry settings. I am eager to contribute to ongoing projects while developing my research methodology and analytical skills under your mentorship.
+
+I have enclosed my detailed curriculum vitae for your review. I would be honored to discuss how my background and enthusiasm can contribute to your research objectives, and I am happy to provide additional documentation, including academic transcripts, project portfolios, or writing samples.
+
+Thank you for considering my application. I look forward to the possibility of contributing to your research group and learning from your expertise.
+
+With sincere regards,
+
+{{ student.name }}
+Bachelor of Technology - Data Science & Engineering
+Manipal Institute of Technology, Manipal Academy of Higher Education
+📧 {{ student.email }} | 📱 +91 98774 54747
+🔗 LinkedIn: linkedin.com/in/anamay-tripathy | GitHub: github.com/anamay-tripathy

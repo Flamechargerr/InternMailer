@@ -317,26 +317,69 @@ Requirements:
 Email:"""
 
     def generate_body(self, professor: Dict[str, Any], informal: bool = False) -> str:
-        # Offline fallback: use Jinja2 template
-        template_path = os.path.join(os.path.dirname(__file__), '../templates/email_template.txt')
+        # Use Jinja2 template with updated format
+        template_path = os.path.join(os.path.dirname(__file__), '../../templates/email_template.txt')
         try:
             with open(template_path, 'r', encoding='utf-8') as f:
                 template_str = f.read()
             template = Template(template_str)
             
-            # Map professor data to template variables
+            # Map professor data to template variables with proper field names
             prof_data = {
                 'name': professor.get('Name', professor.get('name', '')),
                 'research_area': professor.get('Research Area', professor.get('research_area', 'your research')),
-                'recent_paper': professor.get('recent_paper', ''),
                 'university': professor.get('University', professor.get('university', ''))
             }
             
-            body = template.render(student=self.student_info, professor=prof_data, informal=informal)
+            # Ensure student info has required fields
+            student_data = self.student_info.copy()
+            if 'season' not in student_data:
+                student_data['season'] = 'Winter of 2025 or Summer of 2026'
+            
+            body = template.render(student=student_data, professor=prof_data, informal=informal)
             return body
         except Exception as e:
             logging.error(f"Failed to generate email body: {e}")
-            return ""
+            # Fallback template
+            return self.generate_fallback_body(professor)
+
+    def generate_fallback_body(self, professor: Dict[str, Any]) -> str:
+        """Generate fallback email body when template fails"""
+        prof_name = professor.get('Name', professor.get('name', 'Professor'))
+        research_area = professor.get('Research Area', professor.get('research_area', 'your research'))
+        university = professor.get('University', professor.get('university', 'your university'))
+        student_name = self.student_info.get('name', 'Anamay Tripathy')
+        student_email = self.student_info.get('email', 'tripathy.anamay23@gmail.com')
+        skills = self.student_info.get('skills', ['Python', 'Machine Learning', 'React.js', 'Node.js'])
+        
+        return f"""Dear Prof. {prof_name},
+
+I hope this message finds you well.
+
+My name is {student_name}, and I'm currently in my third year of a BTech in Data Science at MIT Manipal, India. I currently hold a CGPA of 7.6, which, under our institute's rigorous evaluation system, is considered a solid performance and one that I am confident will continue to improve in the coming semesters.
+
+I'm writing to express my keen interest in contributing to your research group at {university} through a remote or on-site research internship, ideally during the Winter of 2025 or Summer of 2026. I'm deeply interested in {research_area.lower()}, data science, and artificial intelligence, and I'm actively preparing to pursue higher studies in this field.
+
+A brief overview of my current experience:
+
+• I'm interning at Intellect Design Arena, Mumbai, working on data analytics and web development.
+
+• I serve as the Technical Head at YaanBarpe, a startup incubated under the Karnataka Government and E-Cell MIT Manipal, where I lead the product's technical development.
+
+• I have hands-on experience with {', '.join(skills[:5])}, and various data science tools.
+
+Due to financial constraints, I am particularly exploring fully funded or remote opportunities. I would be truly grateful for any chance to learn, contribute, and grow under your guidance — even in a short-term or flexible format.
+
+I have attached my CV for your review. I'd be happy to provide any additional documents or information if needed.
+
+Thank you very much for your time and consideration. I sincerely look forward to the opportunity to connect.
+
+Warm regards,
+{student_name}
+BTech Data Science | MIT Manipal
+📧 {student_email}
+📱 +91 98774 54747
+🔗 LinkedIn: linkedin.com/in/anamay-tripathy | GitHub: github.com/anamay-tripathy"""
 
     def generate_with_llm(self, professor: Dict[str, Any], informal: bool = False, custom_prompt: str = None) -> str:
         if custom_prompt:
@@ -352,4 +395,4 @@ Email:"""
         else:
             return self.generate_body(professor, informal)
 
-# TODO: Add unit tests for EmailGenerator 
+# TODO: Add unit tests for EmailGenerator

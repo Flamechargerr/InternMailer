@@ -17,26 +17,46 @@ def extract_email_with_ollama(url, ollama_url="http://localhost:11434/api/genera
         resp = requests.get(url, timeout=10)
         soup = BeautifulSoup(resp.text, 'html.parser')
         text = soup.get_text(separator=' ', strip=True)
+        
+        # Use shorter, more focused prompt for email extraction
         prompt = f"""
-Extract all email addresses from the following webpage text. Return only a JSON list of emails.
+Find email addresses in this webpage text. Return only a JSON array of emails.
 
-Webpage text:
-{text[:3000]}
+Text (first 2000 chars):
+{text[:2000]}
+
+Return: ["email1@domain.com", "email2@domain.com"]
 """
-        payload = {
-            "model": ollama_model,
-            "prompt": prompt,
-            "stream": False
-        }
-        llm_resp = requests.post(ollama_url, json=payload, timeout=60)
-        llm_resp.raise_for_status()
-        result = llm_resp.json().get("response", "")
+        
+        # Import enhanced client
+        import sys
+        import os
+        sys.path.append(os.path.join(os.path.dirname(__file__), 'InternMailer', 'src'))
+        
+        try:
+            from email_generator import get_ollama_client
+            client = get_ollama_client()
+            result = client.generate_with_fallback(prompt, ollama_model)
+        except ImportError:
+            # Fallback to original method if enhanced client not available
+            payload = {
+                "model": ollama_model,
+                "prompt": prompt,
+                "stream": False
+            }
+            llm_resp = requests.post(ollama_url, json=payload, timeout=120)  # Increased timeout
+            llm_resp.raise_for_status()
+            result = llm_resp.json().get("response", "")
+        
+        if not result:
+            return ''
+            
         json_start = result.find('[')
         json_end = result.rfind(']') + 1
         if json_start != -1 and json_end != -1:
             emails = json.loads(result[json_start:json_end])
             if emails and isinstance(emails, list):
-                return emails[0]
+                return emails[0] if emails else ''
         return ''
     except Exception as e:
         print(f"Ollama scraping failed for {url}: {e}")

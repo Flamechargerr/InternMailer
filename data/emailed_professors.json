@@ -1,0 +1,115 @@
+{
+  "professors": [
+    {
+      "email": "liskov@csail.mit.edu",
+      "name": "Barbara H. Liskov",
+      "university": "MIT",
+      "first_emailed": "2025-07-27T11:29:43.800854",
+      "last_emailed": "2025-07-27T12:34:32.024612",
+      "last_subject": "Previously contacted",
+      "status": "sent",
+      "email_count": 1,
+      "notes": "Pre-existing contact"
+    },
+    {
+      "email": "asuman@mit.edu",
+      "name": "Asuman E. Ozdaglar",
+      "university": "MIT",
+      "first_emailed": "2025-07-27T11:29:43.802348",
+      "last_emailed": "2025-07-27T12:34:32.024612",
+      "last_subject": "Previously contacted",
+      "status": "sent",
+      "email_count": 1,
+      "notes": "Pre-existing contact"
+    },
+    {
+      "email": "arvind@csail.mit.edu",
+      "name": "Arvind",
+      "university": "MIT",
+      "first_emailed": "2025-07-27T11:29:43.803820",
+      "last_emailed": "2025-07-27T12:34:32.025974",
+      "last_subject": "Previously contacted",
+      "status": "sent",
+      "email_count": 1,
+      "notes": "Pre-existing contact"
+    },
+    {
+      "email": "asolar@csail.mit.edu",
+      "name": "Armando Solar-Lezama",
+      "university": "MIT",
+      "first_emailed": "2025-07-27T11:29:43.804825",
+      "last_emailed": "2025-07-27T12:34:32.025974",
+      "last_subject": "Previously contacted",
+      "status": "sent",
+      "email_count": 1,
+      "notes": "Pre-existing contact"
+    },
+    {
+      "email": "torralba@csail.mit.edu",
+      "name": "Antonio Torralba",
+      "university": "MIT",
+      "first_emailed": "2025-07-27T11:29:43.804825",
+      "last_emailed": "2025-07-27T12:34:32.026980",
+      "last_subject": "Previously contacted",
+      "status": "sent",
+      "email_count": 1,
+      "notes": "Pre-existing contact"
+    },
+    {
+      "email": "moitra@mit.edu",
+      "name": "Ankur Moitra",
+      "university": "MIT",
+      "first_emailed": "2025-07-27T11:29:43.805894",
+      "last_emailed": "2025-07-27T12:34:32.028064",
+      "last_subject": "Previously contacted",
+      "status": "sent",
+      "email_count": 1,
+      "notes": "Pre-existing contact"
+    },
+    {
+      "email": "anant@csail.mit.edu",
+      "name": "Anant Agarwal",
+      "university": "MIT",
+      "first_emailed": "2025-07-27T11:29:43.805894",
+      "last_emailed": "2025-07-27T12:34:32.028064",
+      "last_subject": "Previously contacted",
+      "status": "sent",
+      "email_count": 1,
+      "notes": "Pre-existing contact"
+    },
+    {
+      "email": "rakhlin@mit.edu",
+      "name": "Alexander Rakhlin",
+      "university": "MIT",
+      "first_emailed": "2025-07-27T11:29:43.806917",
+      "last_emailed": "2025-07-27T12:34:32.029441",
+      "last_subject": "Previously contacted",
+      "status": "sent",
+      "email_count": 1,
+      "notes": "Pre-existing contact"
+    },
+    {
+      "email": "adamc@csail.mit.edu",
+      "name": "Adam Chlipala",
+      "university": "MIT",
+      "first_emailed": "2025-07-27T11:29:43.806917",
+      "last_emailed": "2025-07-27T12:34:32.029441",
+      "last_subject": "Previously contacted",
+      "status": "sent",
+      "email_count": 1,
+      "notes": "Pre-existing contact"
+    },
+    {
+      "email": "abelay@mit.edu",
+      "name": "Adam Belay",
+      "university": "MIT",
+      "first_emailed": "2025-07-27T11:29:43.807899",
+      "last_emailed": "2025-07-27T12:34:32.030447",
+      "last_subject": "Previously contacted",
+      "status": "sent",
+      "email_count": 1,
+      "notes": "Pre-existing contact"
+    }
+  ],
+  "last_updated": "2025-07-27T12:34:32.030447"
+}

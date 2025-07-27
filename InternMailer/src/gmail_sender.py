@@ -33,6 +33,13 @@ class GmailSender:
                 writer = csv.writer(f)
                 writer.writerow(['Email', 'Subject', 'Status', 'Timestamp', 'Error'])
 
+    def send_test_email(self, to_email: str) -> bool:
+        """Send a test email to verify SMTP configuration."""
+        subject = "Test Email from InternMailer"
+        body = "This is a test email to verify SMTP configuration."
+        logging.info("Sending test email...")
+        return self.send_email(to_email, subject, body)
+
     def validate_email(self, email: str) -> bool:
         """Basic email validation"""
         if not email or not isinstance(email, str):

@@ -51,6 +51,48 @@ Thumbs.db
 
 # Log files
 *.log
+campaign_*.log
+email_log.csv
+test_*.csv
 
 # Database files
 *.db
+*.sqlite
+*.sqlite3
+followups.db
+
+# Security & Sensitive Files
+credentials.json
+token.json
+*.pem
+*.key
+*.crt
+*.p12
+resumes/
+
+# Email Data
+email_*.csv
+professors_*.csv
+*.backup
+
+# Temporary Files
+*.tmp
+*.temp
+*.cache
+.coverage
+coverage.json
+htmlcov/
+
+# System specific
+*.lnk
+desktop.ini
+
+# Email attachments
+*.pdf
+*.doc
+*.docx
+
+# Config backups
+*.env.backup
+*.env.local
+*.env.production

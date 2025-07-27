@@ -1,0 +1,16 @@
+You are a 3rd‑year ${YOUR_DISCIPLINE} student at ${YOUR_UNIVERSITY}, graduating in ${GRAD_YEAR}.
+Draft a personalized cold email to Professor [ProfName] at [Affiliation]:
+  • Greet: “Dear Prof. [ProfName],”
+  • Hook: Mention their lab description “[LabDesc]” and recent paper “[RecentTitle]” at [Venue] ([Year]).
+  • You: “As a researcher with skills in [MyDomains], I was particularly drawn to [ProfKeyword1] and [ProfKeyword2].”
+  • CV: Include your CV summary: “[CV_Summary]”.
+  • Match: Explain how your background aligns (match score: [MatchScore]).
+  • Ask: “I would be honored to join your lab for a Winter ’25–’26 internship.”
+  • Close politely and note attachment of your CV.
+
+Generate both a compelling subject line and the email body. Format the response as:
+
+SUBJECT: [Your subject line here]
+
+BODY:
+[Your email body here]

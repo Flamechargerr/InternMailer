@@ -7,16 +7,22 @@ env/
 
 # Environment variables
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # Python cache files
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+*.py[cod]
+*$py.class
+*.so
 .Python
 
 # Distribution / packaging
-.Python
 build/
 develop-eggs/
 dist/
@@ -32,6 +38,22 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+
+# Authentication tokens and credentials
+token.json
+credentials.json
+*.pem
+*.key
+*.crt
+*.p12
+
+# Logs
+*.log
+logs/
+send_log.csv
+campaign_*.log
+email_log.csv
+test_*.csv
 
 # IDE files
 .vscode/
@@ -49,12 +71,6 @@ wheels/
 ehthumbs.db
 Thumbs.db
 
-# Log files
-*.log
-campaign_*.log
-email_log.csv
-test_*.csv
-
 # Database files
 *.db
 *.sqlite
@@ -62,12 +78,6 @@ test_*.csv
 followups.db
 
 # Security & Sensitive Files
-credentials.json
-token.json
-*.pem
-*.key
-*.crt
-*.p12
 resumes/
 
 # Email Data
@@ -94,5 +104,13 @@ desktop.ini
 
 # Config backups
 *.env.backup
-*.env.local
 *.env.production
+
+# Test files (keep main test files but exclude temporary ones)
+test_*.py
+*_test.py
+security_audit.py
+
+# Data files (if they contain sensitive information)
+data/professors_*.csv
+data/sent_emails.json

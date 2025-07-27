@@ -1,0 +1,23 @@
+{
+  "project_name": "InternMailer Winter '25-'26 MVP",
+  "repository": "https://github.com/Flamechargerr/InternMailer",
+  "main_app": "ui/app_fixed.py",
+  "test_command": "python full_flow_test.py",
+  "run_command": "streamlit run ui/app_fixed.py",
+  "dependencies": "requirements.txt",
+  "environment": ".env.example",
+  "security_features": [
+    "Pinned dependencies",
+    "Environment variables",
+    "OAuth authentication",
+    "Comprehensive .gitignore"
+  ],
+  "key_features": [
+    "Smart professor discovery",
+    "AI-powered email generation",
+    "Skill matching",
+    "Gmail integration",
+    "Campaign tracking",
+    "Follow-up scheduling"
+  ]
+}

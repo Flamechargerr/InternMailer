@@ -131,7 +131,32 @@ class AzureAIClient:
         Provide a mock response when Azure AI is not available.
         This is for development/testing purposes.
         """
-        if "resume" in prompt.lower() or "skills" in prompt.lower():
+        if "email" in prompt.lower() and "professor" in prompt.lower():
+            # Extract professor name from prompt if possible
+            prof_name = "Professor"
+            if "Prof." in prompt:
+                try:
+                    prof_name = prompt.split("Prof.")[1].split("at")[0].strip()
+                except:
+                    prof_name = "Professor"
+            
+            return f"""Dear {prof_name},
+
+I hope this email finds you well. My name is Anamay Tripathy, and I am a B.Tech Data Science student at MIT Manipal, India.
+
+I am writing to express my interest in potential research opportunities within your group. Your work in the field has caught my attention, and I would be honored to contribute to your research efforts as an intern.
+
+I have experience with Python, machine learning, and web development through various projects including CrimeConnect and VARtificial Intelligence. Currently, I serve as Technical Head at YaanBarpe, a government-incubated startup.
+
+I would be grateful for the opportunity to discuss potential research internship positions, whether remote or on-site, for Winter 2025 or Summer 2026.
+
+Thank you for your time and consideration. Please find my CV attached.
+
+Best regards,
+Anamay Tripathy
+B.Tech Data Science | MIT Manipal, India
+Email: tripathy.anamay23@gmail.com"""
+        elif "resume" in prompt.lower() or "skills" in prompt.lower():
             return '''
             {
                 "skills": ["Python", "JavaScript", "React", "Node.js", "Machine Learning"],

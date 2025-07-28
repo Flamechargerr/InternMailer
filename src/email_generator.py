@@ -347,17 +347,17 @@ Requirements:
 Email:"""
 
     def generate_body(self, professor: Dict[str, Any], informal: bool = False) -> str:
-        # Use academic research-focused template with serious, professional formatting
-        current_dir = os.path.dirname(os.path.dirname(__file__))  # Go up from src to InternMailer
-        template_path = os.path.join(current_dir, 'templates', 'academic_research_template.html')
+        # Use motivation-focused research template with crisp, professional formatting
+        current_dir = os.path.dirname(os.path.dirname(__file__))  # Go up from src to main directory
+        template_path = os.path.join(current_dir, 'InternMailer', 'templates', 'motivation_research_template.html')
         
-        # Fallback to concise template if academic version doesn't exist
+        # Fallback to academic template if motivation version doesn't exist
+        if not os.path.exists(template_path):
+            template_path = os.path.join(current_dir, 'templates', 'academic_research_template.html')
+            
+        # Fallback to concise template if academic doesn't exist
         if not os.path.exists(template_path):
             template_path = os.path.join(current_dir, 'templates', 'concise_research_template.html')
-            
-        # Fallback to enhanced template if concise doesn't exist
-        if not os.path.exists(template_path):
-            template_path = os.path.join(current_dir, 'templates', 'enhanced_email_template.html')
             
         # Final fallback to original template
         if not os.path.exists(template_path):

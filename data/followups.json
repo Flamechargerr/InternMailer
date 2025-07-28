@@ -20,6 +20,13 @@
       "description": "Academic outreach for Any internships",
       "created_at": "2025-07-28T09:45:42.854884+00:00",
       "settings": {}
+    },
+    "400cc53c-0999-40f1-ad45-5d95febfd125": {
+      "id": "400cc53c-0999-40f1-ad45-5d95febfd125",
+      "name": "Outreach 2025-07-28 15:55 (Live Send)",
+      "description": "Academic outreach for Any internships",
+      "created_at": "2025-07-28T10:25:31.520016+00:00",
+      "settings": {}
     }
   },
   "followups": {
@@ -142,6 +149,16 @@
       "scheduled_at": "2025-08-04T09:45:42.992329+00:00",
       "created_at": "2025-07-28T09:45:42.992329+00:00",
       "email_log_id": "fce480b0-d308-4b47-9789-1f1fa1426728"
+    },
+    "c4ee8850-f394-4e73-a80e-7435d488ca3d": {
+      "id": "c4ee8850-f394-4e73-a80e-7435d488ca3d",
+      "campaign_id": "400cc53c-0999-40f1-ad45-5d95febfd125",
+      "email": "abelay@csail.mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Systems for ML",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-04T10:25:36.833719+00:00",
+      "created_at": "2025-07-28T10:25:36.833719+00:00",
+      "email_log_id": "038227b6-bba1-4ddb-94da-90306df6d232"
     }
   },
   "email_logs": [
@@ -228,6 +245,13 @@
       "email": "abelay@csail.mit.edu",
       "subject": "Research Internship Inquiry – Anamay Tripathy re: Systems for ML",
       "sent_at": "2025-07-28T09:45:42.992329+00:00"
+    },
+    {
+      "id": "038227b6-bba1-4ddb-94da-90306df6d232",
+      "campaign_id": "400cc53c-0999-40f1-ad45-5d95febfd125",
+      "email": "abelay@csail.mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Systems for ML",
+      "sent_at": "2025-07-28T10:25:36.833719+00:00"
     }
   ]
 }

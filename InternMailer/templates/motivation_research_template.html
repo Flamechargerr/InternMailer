@@ -1,5 +1,3 @@
-Subject: Research Internship Inquiry – Anamay Tripathy re: Distributed Systems and Programming Languages
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +19,7 @@ Subject: Research Internship Inquiry – Anamay Tripathy re: Distributed Systems
         
         <!-- Greeting -->
         <p style="margin: 0 0 20px 0; font-size: 16px; color: #000000;">
-            Dear Prof. Liskov,
+            Dear Prof. {{ professor.last_name }},
         </p>
 
         <!-- Opening Paragraph -->
@@ -30,7 +28,7 @@ Subject: Research Internship Inquiry – Anamay Tripathy re: Distributed Systems
         </p>
         
         <p style="margin: 0 0 20px 0; font-size: 16px; color: #000000; text-align: justify;">
-            My name is <strong>Anamay Tripathy</strong>, a third-year B.Tech student in Data Science and Engineering at <strong>MIT Manipal, India</strong>. I am reaching out to express my keen interest in joining your research group as an intern. I am particularly inspired by your pioneering work in <strong>Distributed Systems and Programming Languages</strong>, and the impact these systems can have at scale.
+            My name is <strong>Anamay Tripathy</strong>, a third-year B.Tech student in Data Science and Engineering at <strong>MIT Manipal, India</strong>. I am reaching out to express my keen interest in joining your research group as an intern. I am particularly inspired by your pioneering work in <strong>{{ professor.research_area }}</strong>, and the impact these systems can have at scale.
         </p>
 
         <!-- Why Your Work Resonates -->
@@ -40,7 +38,7 @@ Subject: Research Internship Inquiry – Anamay Tripathy re: Distributed Systems
             </h2>
             
             <p style="margin: 0 0 15px 0; font-size: 16px; color: #000000; text-align: justify;">
-                Your research has shaped my understanding of how reliable and secure systems in <strong>distributed systems and programming languages</strong> can drive societal change. I am deeply interested in the <strong>intersection of distributed systems and programming languages and AI</strong>, especially in how they can together build systems that are both intelligent and resilient.
+                Your research has shaped my understanding of how reliable and secure systems in <strong>{{ professor.research_area.lower() }}</strong> can drive societal change. I am deeply interested in the <strong>intersection of {{ professor.research_area.lower() }} and AI</strong>, especially in how they can together build systems that are both intelligent and resilient.
             </p>
         </div>
         
@@ -85,7 +83,7 @@ Subject: Research Internship Inquiry – Anamay Tripathy re: Distributed Systems
             </p>
             
             <p style="margin: 0 0 15px 0; font-size: 16px; color: #000000;">
-                <strong>Technical Skills:</strong> Python, TensorFlow, PyTorch, JavaScript, AWS, Docker, distributed systems, and machine learning frameworks aligned with distributed systems and programming languages applications.
+                <strong>Technical Skills:</strong> Python, TensorFlow, PyTorch, JavaScript, AWS, Docker, distributed systems, and machine learning frameworks aligned with {{ professor.research_area.lower() }} applications.
             </p>
         </div>
 
@@ -96,11 +94,11 @@ Subject: Research Internship Inquiry – Anamay Tripathy re: Distributed Systems
             </h2>
             
             <p style="margin: 0 0 15px 0; font-size: 16px; color: #000000; text-align: justify;">
-                I am particularly excited about advancing <strong>distributed systems and programming languages</strong> research that can scale to address global challenges. My background in distributed systems, combined with practical AI/ML experience, positions me to contribute meaningfully to research projects that bridge theoretical foundations with real-world applications.
+                I am particularly excited about advancing <strong>{{ professor.research_area.lower() }}</strong> research that can scale to address global challenges. My background in distributed systems, combined with practical AI/ML experience, positions me to contribute meaningfully to research projects that bridge theoretical foundations with real-world applications.
             </p>
             
             <p style="margin: 0 0 15px 0; font-size: 16px; color: #000000; text-align: justify;">
-                I envision a future where advances in distributed systems and programming languages can democratize access to computational resources, enhance system reliability, and enable breakthrough applications in healthcare, education, and sustainable development. Contributing to your research would be an invaluable step toward my goal of pursuing graduate studies and eventually developing technologies that create positive societal impact.
+                I envision a future where advances in {{ professor.research_area.lower() }} can democratize access to computational resources, enhance system reliability, and enable breakthrough applications in healthcare, education, and sustainable development. Contributing to your research would be an invaluable step toward my goal of pursuing graduate studies and eventually developing technologies that create positive societal impact.
             </p>
         </div>
 

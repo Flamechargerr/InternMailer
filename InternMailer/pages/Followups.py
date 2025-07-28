@@ -74,7 +74,8 @@ with tab2:
     col1, col2 = st.columns(2)
     with col1:
         status_filter = st.selectbox("Filter by Status", 
-                                   ["All", "scheduled", "sent", "cancelled"])
+                                   ["All", "scheduled", "sent", "cancelled"], 
+                                   help="Select the status of follow-ups to display", label_visibility="visible")
     with col2:
         if st.button("🔄 Refresh"):
             st.rerun()
@@ -109,19 +110,19 @@ with tab2:
                             if followup.get('scheduled_at_parsed'):
                                 new_date = st.date_input(f"New Date", 
                                                         value=followup['scheduled_at_parsed'].date(),
-                                                        key=f"date_{followup['id']}")
+                                                        key=f"date_{followup['id']}", help="Select a new date for the follow-up")
                                 new_time = st.time_input(f"New Time", 
                                                         value=followup['scheduled_at_parsed'].time(),
-                                                        key=f"time_{followup['id']}")
+                                                        key=f"time_{followup['id']}", help="Select a new time for the follow-up")
                             else:
                                 new_date = st.date_input(f"New Date", 
                                                         value=datetime.now().date(),
-                                                        key=f"date_{followup['id']}")
+                                                        key=f"date_{followup['id']}", help="Select a new date for the follow-up")
                                 new_time = st.time_input(f"New Time", 
                                                         value=datetime.now().time(),
-                                                        key=f"time_{followup['id']}")
+                                                        key=f"time_{followup['id']}", help="Select a new time for the follow-up")
                             
-                            if st.button(f"📅 Reschedule", key=f"reschedule_{followup['id']}"):
+                            if st.button(f"📅 Reschedule", key=f"reschedule_{followup['id']}", help="Reschedule this follow-up"):
                                 new_datetime = datetime.combine(new_date, new_time)
                                 if followup_manager.reschedule_followup(followup['id'], new_datetime):
                                     st.success("✅ Rescheduled successfully!")
@@ -131,7 +132,7 @@ with tab2:
                     
                     with col3:
                         if followup.get('status') == 'scheduled':
-                            if st.button(f"❌ Cancel", key=f"cancel_{followup['id']}"):
+                            if st.button(f"❌ Cancel", key=f"cancel_{followup['id']}", help="Cancel this follow-up"):
                                 if followup_manager.cancel_followup(followup['id'], "Cancelled by user"):
                                     st.success("✅ Cancelled successfully!")
                                     st.rerun()
@@ -157,7 +158,8 @@ with tab3:
                                            format_func=lambda x: campaign_options[x],
                                            index=0 if not st.session_state.selected_campaign else 
                                                  list(campaign_options.keys()).index(st.session_state.selected_campaign) 
-                                                 if st.session_state.selected_campaign in campaign_options else 0)
+                                                 if st.session_state.selected_campaign in campaign_options else 0,
+                                           help="Choose a campaign to manage")
             
             st.session_state.selected_campaign = selected_campaign_id
             
@@ -177,11 +179,13 @@ with tab3:
                 
                 followup_delay = st.slider("Follow-up Delay (days)", 
                                          min_value=1, max_value=30, 
-                                         value=campaign_data.get('followup_delay_days', 7))
+                                         value=campaign_data.get('followup_delay_days', 7),
+                                         help="Number of days to wait before sending follow-up")
                 
                 max_followups = st.slider("Maximum Follow-ups", 
                                         min_value=1, max_value=5, 
-                                        value=campaign_data.get('max_followups', 3))
+                                        value=campaign_data.get('max_followups', 3),
+                                        help="Maximum number of follow-ups to send per contact")
                 
                 if st.form_submit_button("💾 Save Settings"):
                     settings = {
@@ -220,11 +224,11 @@ with tab3:
                 col1, col2 = st.columns(2)
                 
                 with col1:
-                    if st.button("📅 Reschedule All Pending"):
+                    if st.button("📅 Reschedule All Pending", help="Reschedule all pending follow-ups"):
                         st.info("💡 Bulk reschedule feature - coming soon!")
                 
                 with col2:
-                    if st.button("❌ Cancel All Pending"):
+                    if st.button("❌ Cancel All Pending", help="Cancel all pending follow-ups"):
                         pending_count = len([f for f in campaign_followups if f.get('status') == 'scheduled'])
                         st.warning(f"⚠️ This would cancel {pending_count} pending follow-ups. Feature coming soon.")
             else:

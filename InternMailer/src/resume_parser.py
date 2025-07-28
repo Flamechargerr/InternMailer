@@ -6,8 +6,6 @@ import os
 try:
     from .parsing.parser_interface import ResumeParserInterface, ParsingError, ResumeData
     from .parsing.azure_ai_parser import AzureAIResumeParser
-    from .parsing.ollama_parser import OllamaResumeParser
-    from .parsing.gemma3_parser import Gemma3ResumeParser
     from .parsing.rule_based_parser import RuleBasedParser
 except ImportError:
     # Fallback for direct execution or testing
@@ -15,8 +13,6 @@ except ImportError:
     sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
     from parsing.parser_interface import ResumeParserInterface, ParsingError, ResumeData
     from parsing.azure_ai_parser import AzureAIResumeParser
-    from parsing.ollama_parser import OllamaResumeParser
-    from parsing.gemma3_parser import Gemma3ResumeParser
     from parsing.rule_based_parser import RuleBasedParser
 
 logging.basicConfig(level=logging.INFO)
@@ -32,8 +28,8 @@ class ResumeParser:
         self.pdf_path = pdf_path
         self.text = ""
         self.data = {}
-        # Prioritize Azure AI first, then fallback to others
-        self.providers = [AzureAIResumeParser(), Gemma3ResumeParser(), OllamaResumeParser(), RuleBasedParser()]
+        # Use only Azure AI and rule-based parser (removed Ollama/Gemma3)
+        self.providers = [AzureAIResumeParser(), RuleBasedParser()]
 
     def extract_text(self) -> str:
         """Extracts text from a resume PDF file."""
@@ -98,8 +94,8 @@ class ResumeParser:
         if not self.text:
             self.extract_text()
         
-        # Try Azure AI first, then Gemma3, then Ollama
-        for parser_class in [AzureAIResumeParser, Gemma3ResumeParser, OllamaResumeParser]:
+        # Try Azure AI first, then rule-based fallback
+        for parser_class in [AzureAIResumeParser]:
             parser = parser_class()
             if parser.is_available():
                 try:

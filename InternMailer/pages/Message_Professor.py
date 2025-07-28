@@ -158,7 +158,9 @@ with col1:
     # Text search
     search_query = st.text_input(
         "🔍 Search by name, university, or research area",
-        placeholder="e.g., machine learning, Stanford, John Smith"
+        placeholder="e.g., machine learning, Stanford, John Smith",
+        help="Enter keywords to filter professors by name, university, or research area",
+        label_visibility="visible"
     )
     
     # University filter
@@ -246,7 +248,7 @@ for idx, row in display_df.iterrows():
     col1, col2 = st.columns([0.1, 0.9])
     
     with col1:
-        is_selected = st.checkbox("", key=f"select_{idx}", value=idx in st.session_state.selected_professors)
+        is_selected = st.checkbox("Select", key=f"select_{idx}", value=idx in st.session_state.selected_professors, label_visibility="visible")
         
         if is_selected and idx not in st.session_state.selected_professors:
             st.session_state.selected_professors.append(idx)
@@ -310,8 +312,8 @@ if resume_path and selected_count > 0:
                 # Initialize EmailGenerator
                 email_gen = EmailGenerator(
                     student_info, 
-                    use_ollama=True,  # Try to use Ollama if available
-                    ollama_model='mistral'
+                    use_azure_ai=True,  # Use Azure AI for better results
+                    azure_ai_model='openai/gpt-4.1'
                 )
                 
                 # Generate emails for each selected professor
@@ -374,18 +376,20 @@ Anamay Tripathy"""
 common_subject = st.text_input(
     "📧 Email Subject (will be used for all selected professors)",
     value=default_subject,
-    help="This subject will be used for all emails unless customized individually"
+    help="This subject will be used for all emails unless customized individually",
+    label_visibility="visible"
 )
 
 common_body = st.text_area(
     "📝 Email Body Template",
     value=default_body,
     height=300,
-    help="Use [Name], [University], [Research Area] as placeholders that will be replaced for each professor"
+    help="Use [Name], [University], [Research Area] as placeholders that will be replaced for each professor",
+    label_visibility="visible"
 )
 
 # Resume attachment option
-attach_resume = st.checkbox("📎 Attach Resume", value=True, help="Attach your resume to the emails")
+attach_resume = st.checkbox("📎 Attach Resume", value=True, help="Attach your resume to the emails", label_visibility="visible")
 
 # 4. Send Section
 st.header("🚀 4. Send Emails")
@@ -480,7 +484,7 @@ if st.button("🚀 Send Emails", type="primary", disabled=selected_count == 0):
                 st.write(f"**To:** {prof.get('Email', 'No email')}")
                 st.write(f"**Subject:** {email_subject}")
                 st.write(f"**Attachment:** {'Yes' if attachment_path else 'No'}")
-                st.text_area("Body", email_body, height=150, key=f"dry_run_body_{i}")
+                st.text_area("Body Preview", email_body, height=150, key=f"dry_run_body_{i}")
         
         else:  # Live Send
             try:

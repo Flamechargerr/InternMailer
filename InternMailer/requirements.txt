@@ -13,4 +13,5 @@ pandas
 scikit-learn
 numpy
 python-dateutil
-pytest 
+pytest
+azure-ai-inference

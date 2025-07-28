@@ -1,4 +1,5 @@
 import os
+import sys
 import pandas as pd
 import time
 from datetime import datetime
@@ -6,12 +7,14 @@ from resume_parser import ResumeParser
 from email_generator import EmailGenerator
 from gmail_sender import GmailSender
 from professor_scraper import ProfessorScraper
-from scheduler.streamlit_api import get_followup_manager
+# Fix import path for followup manager
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'scheduler'))
+from streamlit_api import get_followup_manager
 from professor_tracker import ProfessorTracker
 from email_validator import validate_email
 
 class OutreachRunner:
-    def __init__(self, resume_path: str, season: str, funding: str, selected_countries: list, mode: str, progress_callback, log_callback):
+    def __init__(self, resume_path: str, season: str, funding: str, selected_countries: list, mode: str, progress_callback, log_callback, batch_size: int = None):
         self.resume_path = resume_path
         self.season = season
         self.funding = funding
@@ -19,6 +22,7 @@ class OutreachRunner:
         self.mode = mode
         self.progress_callback = progress_callback
         self.log_callback = log_callback
+        self.batch_size = batch_size
 
     def run(self):
         self.log_callback(":mag: **Initializing professor tracker...**")
@@ -133,6 +137,11 @@ class OutreachRunner:
 
         self.log_callback(f":mag: **Total professors after deduplication: {len(professors)}**")
 
+        # Apply batch size limit if specified
+        if self.batch_size and self.batch_size > 0:
+            professors = professors[:self.batch_size]
+            self.log_callback(f":mag: **Limiting to batch size of {self.batch_size} professors**")
+
         matches = professors
         professors_matched = len(matches)
         self.progress_callback(50)
@@ -145,7 +154,9 @@ class OutreachRunner:
         student_info['resume_prefix'] = os.path.splitext(os.path.basename(self.resume_path))[0]
         student_info['season'] = self.season
         student_info['funding'] = self.funding
-        email_gen = EmailGenerator(student_info, use_ollama=True, ollama_model='gemma3:latest')
+        # Use Azure AI for email generation instead of Ollama
+        use_azure_ai_mode = True  # Always use Azure AI for better performance
+        email_gen = EmailGenerator(student_info, use_azure_ai=use_azure_ai_mode)
         emails = []
         for prof in professors:
             subject = email_gen.generate_subject(prof)
@@ -185,6 +196,11 @@ The email should be concise, polite, and mention why I am interested in their wo
 
         self.progress_callback(60)
 
+        # Create campaign and schedule follow-ups for both modes
+        followup_manager = get_followup_manager()
+        campaign_name = f"Outreach {datetime.now().strftime('%Y-%m-%d %H:%M')} ({'Dry Run' if self.mode == 'Dry Run' else 'Live Send'})"
+        campaign_id = followup_manager.create_campaign(campaign_name, f"Academic outreach for {self.season} internships")
+
         if self.mode == "Dry Run":
             self.log_callback(":mag: **DRY RUN MODE - No emails will be sent**")
             message = "🔍 **DRY RUN MODE ACTIVE** - Emails are being generated and displayed but not sent."
@@ -199,6 +215,8 @@ The email should be concise, polite, and mention why I am interested in their wo
                     time.sleep(0.1)
                     sent_count += 1
                     self.log_callback(f"[DRY RUN] Would send to {email['to']} - ✅ (Email prepared)")
+                    # Log email as if it was sent to create follow-up tracking
+                    followup_manager.log_email_sent(campaign_id, email['to'], email['subject'])
 
                 self.progress_callback(60 + int(30 * (i+1) / max(1, len(emails))))
 
@@ -207,33 +225,43 @@ The email should be concise, polite, and mention why I am interested in their wo
                 'success': True,
                 'professors_matched': professors_matched,
                 'emails_sent': sent_count,
-                'followups_scheduled': len(emails),
-                'email_previews': emails[:3]  # Only return first 3 for preview
+                'followups_scheduled': sent_count,  # Use sent_count since we only create follow-ups for non-skipped emails
+                'email_previews': emails[:3],  # Only return first 3 for preview
+                'campaign_id': campaign_id
             }
 
         else:  # Live Send mode
             sender = GmailSender(os.getenv('GMAIL_USER'), os.getenv('GMAIL_APP_PASSWORD'))
             sent_count = 0
+            skipped_count = 0
             for i, email in enumerate(emails):
-                sent = sender.send_email(email['to'], email['subject'], email['body'], self.resume_path)
-                if sent:
-                    sent_count += 1
-                self.log_callback(f"Sent to {email['to']} - {'✅' if sent else '❌'}")
+                if tracker.is_professor_emailed(email['to']):
+                    skipped_count += 1
+                    self.log_callback(f"[LIVE] Skipping {email['to']} - Already contacted ⏭️")
+                else:
+                    sent = sender.send_email(email['to'], email['subject'], email['body'], self.resume_path)
+                    if sent:
+                        sent_count += 1
+                        # Log email to follow-up system only if actually sent
+                        followup_manager.log_email_sent(campaign_id, email['to'], email['subject'])
+                        # Add to tracker to prevent future duplicates
+                        tracker.add_emailed_professor(
+                            email=email['to'],
+                            name=next((prof.get('Name', 'Unknown') for prof in professors if prof.get('Email') == email['to']), 'Unknown'),
+                            university=next((prof.get('University', 'Unknown') for prof in professors if prof.get('Email') == email['to']), 'Unknown'),
+                            subject=email['subject'],
+                            status="sent",
+                            notes=f"Live send - {datetime.now().strftime('%Y-%m-%d %H:%M')}"
+                        )
+                    self.log_callback(f"Sent to {email['to']} - {'✅' if sent else '❌'}")
                 self.progress_callback(60 + int(30 * (i+1) / max(1, len(emails))))
 
             self.progress_callback(90)
-
-            followup_manager = get_followup_manager()
-            campaign_name = f"Outreach {datetime.now().strftime('%Y-%m-%d %H:%M')}"
-            campaign_id = followup_manager.create_campaign(campaign_name, f"Academic outreach for {self.season} internships")
-
-            for email in emails:
-                followup_manager.log_email_sent(campaign_id, email['to'], email['subject'])
 
             return {
                 'success': True,
                 'professors_matched': professors_matched,
                 'emails_sent': sent_count,
-                'followups_scheduled': len(emails),
+                'followups_scheduled': sent_count,  # Only count actually sent emails
                 'campaign_id': campaign_id
             }

@@ -67,15 +67,29 @@ class FollowupManager:
     def _parse_datetime(self, dt_str: str) -> datetime:
         """Parse ISO datetime string to datetime object."""
         try:
-            # Try to parse with timezone info
-            if 'T' in dt_str and ('+' in dt_str or 'Z' in dt_str):
-                return datetime.fromisoformat(dt_str.replace('Z', '+00:00'))
+            # Handle different date formats
+            if 'T' in dt_str:
+                if '+' in dt_str or 'Z' in dt_str:
+                    # Has timezone info
+                    return datetime.fromisoformat(dt_str.replace('Z', '+00:00'))
+                else:
+                    # No timezone, assume UTC
+                    dt = datetime.fromisoformat(dt_str)
+                    return dt.replace(tzinfo=timezone.utc)
             else:
-                # If no timezone info, assume UTC
-                dt = datetime.fromisoformat(dt_str)
-                return dt.replace(tzinfo=timezone.utc)
-        except:
-            # Fallback: assume UTC
+                # Simple date format - assume it's in the future relative to now
+                try:
+                    dt = datetime.fromisoformat(dt_str)
+                    # If it's a naive datetime, make it timezone-aware (UTC)
+                    if dt.tzinfo is None:
+                        dt = dt.replace(tzinfo=timezone.utc)
+                    return dt
+                except:
+                    # If all else fails, assume it's a future date
+                    return datetime.now(timezone.utc)
+        except Exception as e:
+            print(f"Warning: Could not parse date '{dt_str}': {e}")
+            # Return current time as fallback
             return datetime.now(timezone.utc)
     
     def get_analytics(self):
@@ -95,11 +109,29 @@ class FollowupManager:
         
         for followup in followups.values():
             if followup.get('status') == 'scheduled':
-                if (followup.get('scheduled_at') and
-                    self._parse_datetime(followup['scheduled_at']) < now):
-                    overdue_followups += 1
+                if followup.get('scheduled_at'):
+                    try:
+                        scheduled_dt = self._parse_datetime(followup['scheduled_at'])
+                        # Check if the follow-up is more than 24 hours overdue
+                        time_diff = (now - scheduled_dt).total_seconds()
+                        if time_diff > 86400:  # More than 24 hours overdue
+                            overdue_followups += 1
+                        else:
+                            scheduled_followups += 1
+                    except:
+                        # If we can't parse the date, assume it's scheduled
+                        scheduled_followups += 1
                 else:
                     scheduled_followups += 1
+        
+        # Count followups per campaign and add to campaign data
+        campaigns_with_counts = []
+        for campaign in campaigns.values():
+            campaign_copy = campaign.copy()
+            # Count followups for this campaign
+            followup_count = len([f for f in followups.values() if f.get('campaign_id') == campaign['id']])
+            campaign_copy['followup_count'] = followup_count
+            campaigns_with_counts.append(campaign_copy)
         
         return {
             'total_followups': total_followups,
@@ -107,7 +139,7 @@ class FollowupManager:
             'sent_followups': sent_followups,
             'overdue_followups': overdue_followups,
             'cancelled_followups': cancelled_followups,
-            'campaigns': list(campaigns.values())
+            'campaigns': campaigns_with_counts
         }
     
     def create_campaign(self, name: str, description: str) -> str:
@@ -142,7 +174,11 @@ class FollowupManager:
         }
         data['email_logs'].append(email_log)
         
-        # Create a followup record (initially scheduled)
+        # Create a followup record (scheduled for 7 days later by default)
+        from datetime import timedelta
+        followup_delay_days = 7  # default delay
+        scheduled_time = datetime.now(timezone.utc) + timedelta(days=followup_delay_days)
+        
         followup_id = str(uuid.uuid4())
         followup = {
             'id': followup_id,
@@ -150,7 +186,7 @@ class FollowupManager:
             'email': email,
             'subject': subject,
             'status': 'scheduled',
-            'scheduled_at': self._get_utc_now(),  # For now, schedule immediately
+            'scheduled_at': scheduled_time.isoformat(),
             'created_at': self._get_utc_now(),
             'email_log_id': email_log['id']
         }
@@ -276,6 +312,65 @@ class FollowupManager:
                 overdue.append(followup)
         
         return overdue
+    
+    def cleanup_test_campaigns(self) -> int:
+        """Remove test campaigns and their associated data."""
+        data = self._read_data()
+        campaigns = data.get('campaigns', {})
+        followups = data.get('followups', {})
+        email_logs = data.get('email_logs', [])
+        
+        # Find test campaign IDs
+        test_campaign_ids = []
+        for campaign_id, campaign in campaigns.items():
+            if 'Test Campaign' in campaign.get('name', ''):
+                test_campaign_ids.append(campaign_id)
+        
+        if not test_campaign_ids:
+            return 0
+        
+        # Remove test campaigns
+        for campaign_id in test_campaign_ids:
+            del campaigns[campaign_id]
+        
+        # Remove associated followups
+        followups_to_remove = []
+        for followup_id, followup in followups.items():
+            if followup.get('campaign_id') in test_campaign_ids:
+                followups_to_remove.append(followup_id)
+        
+        for followup_id in followups_to_remove:
+            del followups[followup_id]
+        
+        # Remove associated email logs
+        email_logs[:] = [log for log in email_logs if log.get('campaign_id') not in test_campaign_ids]
+        
+        self._write_data(data)
+        return len(test_campaign_ids)
+    
+    def get_campaign_summary(self) -> Dict[str, Any]:
+        """Get a summary of all campaigns with their status."""
+        data = self._read_data()
+        campaigns = data.get('campaigns', {})
+        followups = data.get('followups', {})
+        email_logs = data.get('email_logs', [])
+        
+        summary = []
+        for campaign in campaigns.values():
+            campaign_followups = [f for f in followups.values() if f.get('campaign_id') == campaign['id']]
+            campaign_emails = [log for log in email_logs if log.get('campaign_id') == campaign['id']]
+            
+            summary.append({
+                'id': campaign['id'],
+                'name': campaign['name'],
+                'description': campaign['description'],
+                'created_at': campaign['created_at'],
+                'total_followups': len(campaign_followups),
+                'total_emails': len(campaign_emails),
+                'is_test': 'Test Campaign' in campaign['name']
+            })
+        
+        return {'campaigns': summary, 'total_campaigns': len(campaigns)}
 
 
 def get_followup_manager(data_dir='data'):

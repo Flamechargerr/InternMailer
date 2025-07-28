@@ -15,15 +15,14 @@ except ImportError:
 
 logging.basicConfig(level=logging.INFO)
 
-class OllamaClient:
+class AzureAIClient:
     """
-    Enhanced Ollama client with timeout fixes, streaming, retries, and connection pooling.
+    Azure AI client for GPT-4.1 integration with enhanced error handling.
     """
-    def __init__(self, base_url="http://localhost:11434", timeout=180):
-        self.base_url = base_url
+    def __init__(self, endpoint="https://models.github.ai/inference", timeout=60):
+        self.endpoint = endpoint
         self.timeout = timeout
-        self.session = requests.Session()
-        self.cache = {}  # Cache for identical resume segments
+        self.cache = {}  # Cache for identical prompts
         
         # Configure retry strategy with exponential backoff
         retry_strategy = Retry(
@@ -192,35 +191,20 @@ class OllamaClient:
         response.raise_for_status()
         return response.json().get("response", "")
 
-# Global client instance
-_ollama_client = None
-
-def get_ollama_client():
-    global _ollama_client
-    if _ollama_client is None:
-        _ollama_client = OllamaClient()
-    return _ollama_client
-
-def generate_with_ollama(prompt, model='mistral'):
-    """
-    Enhanced generate function with comprehensive timeout fixes.
-    """
-    client = get_ollama_client()
-    try:
-        return client.generate_with_fallback(prompt, model)
-    except Exception as e:
-        logging.error(f"All Ollama strategies failed: {e}")
-        return ""
+# Import Azure AI client for LLM generation
+try:
+    from .azure_ai_client import generate_with_azure_ai  
+except ImportError:
+    from azure_ai_client import generate_with_azure_ai
 
 class EmailGenerator:
     """
-    Generates personalized email subjects and bodies for professor outreach.
+    Generates personalized email subjects and bodies for professor outreach using Azure AI.
     """
-    def __init__(self, student_info: Dict[str, Any], openai_api_key: str = None, use_ollama: bool = False, ollama_model: str = 'mistral'):
+    def __init__(self, student_info: Dict[str, Any], use_azure_ai: bool = True, azure_ai_model: str = 'openai/gpt-4.1'):
         self.student_info = student_info
-        self.openai_api_key = openai_api_key
-        self.use_ollama = False  # Disable Ollama integration
-        self.azure_model = 'gpt-4o'  # Set default Azure model
+        self.use_azure_ai = use_azure_ai  # Always default to Azure AI
+        self.azure_model = azure_ai_model  # Use provided Azure AI model
 
     def generate_subject(self, professor: Dict[str, Any], informal: bool = False) -> str:
         research_area = professor.get('Research Area', professor.get('research_area', 'your research'))
@@ -321,9 +305,14 @@ Requirements:
 Email:"""
 
     def generate_body(self, professor: Dict[str, Any], informal: bool = False) -> str:
-        # Use Jinja2 template with updated format - fix path resolution
+        # Use enhanced Jinja2 template with professional HTML formatting
         current_dir = os.path.dirname(os.path.dirname(__file__))  # Go up from src to InternMailer
-        template_path = os.path.join(current_dir, 'templates', 'email_template.txt')
+        template_path = os.path.join(current_dir, 'templates', 'academic_email_template.html')
+        
+        # Fallback to original template if enhanced version doesn't exist
+        if not os.path.exists(template_path):
+            template_path = os.path.join(current_dir, 'templates', 'email_template.txt')
+            
         try:
             with open(template_path, 'r', encoding='utf-8') as f:
                 template_str = f.read()
@@ -350,8 +339,69 @@ Email:"""
             return body
         except Exception as e:
             logging.error(f"Failed to generate email body: {e}")
-            # Fallback template
-            return self.generate_fallback_body(professor)
+            # Fallback to enhanced HTML template
+            return self.generate_enhanced_fallback_body(professor)
+
+    def generate_enhanced_fallback_body(self, professor: Dict[str, Any]) -> str:
+        """Generate enhanced HTML fallback email body when template fails"""
+        prof_name = professor.get('Name', professor.get('name', 'Professor'))
+        last_name = prof_name.split()[-1] if prof_name else 'Professor'
+        research_area = professor.get('Research Area', professor.get('research_area', 'your research'))
+        university = professor.get('University', professor.get('university', 'your university'))
+        
+        return f"""<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+  </head>
+  <body style="margin: 0; padding: 0; background-color: #f5f7fa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;">
+    
+    <div style="max-width: 720px; margin: 20px auto; background: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 35px;">
+      
+      <p style="margin: 0 0 18px 0; font-size: 16px; color: #2c3e50;">
+        Dear <strong>Prof. {last_name}</strong>,
+      </p>
+
+      <p style="margin: 0 0 20px 0; font-size: 16px; color: #34495e; line-height: 1.6;">
+        I am <strong style="color: #2c3e50;">Anamay Tripathy</strong>, a third-year B.Tech Data Science student at <strong>MIT Manipal, India</strong> (CGPA: 7.6/10). I am writing to express my strong interest in joining your research group as an intern, particularly drawn to your work in <strong style="color: #667eea;">{research_area}</strong>.
+      </p>
+
+      <p style="margin: 0 0 20px 0; font-size: 16px; color: #34495e; line-height: 1.6;">
+        Your contributions to {research_area.lower()} have been inspiring for my academic journey. I am eager to contribute meaningfully to your research while learning under your mentorship.
+      </p>
+
+      <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
+        <h3 style="margin: 0 0 15px 0; color: #2c3e50; font-size: 18px;">Current Experience</h3>
+        <ul style="margin: 0; padding-left: 20px; color: #5a6c7d; line-height: 1.6;">
+          <li><strong>Technical Head</strong> at <a href="https://www.yaanbarpe.in/" style="color: #667eea;">YaanBarpe</a> (Karnataka Government-incubated startup)</li>
+          <li><strong>Data Analyst Intern</strong> at Intellect Design Arena, Mumbai</li>
+          <li>Experience with Python, TensorFlow, React.js, AWS, and data science tools</li>
+        </ul>
+      </div>
+
+      <p style="margin: 20px 0; font-size: 16px; color: #34495e; line-height: 1.6;">
+        I would be grateful for the opportunity to contribute as a research intern—<strong>remotely or on-site, funded or voluntary</strong>. Please find my CV attached.
+      </p>
+
+      <div style="background: #f8fafc; padding: 15px; border-radius: 6px; margin: 20px 0;">
+        <p style="margin: 0; font-size: 15px; color: #34495e;">
+          <strong>Email:</strong> <a href="mailto:tripathy.anamay23@gmail.com" style="color: #667eea;">tripathy.anamay23@gmail.com</a><br>
+          <strong>Portfolio:</strong> <a href="https://anamay.vercel.app/" style="color: #667eea;">anamay.vercel.app</a><br>
+          <strong>GitHub:</strong> <a href="https://github.com/Flamechargerr" style="color: #667eea;">github.com/Flamechargerr</a>
+        </p>
+      </div>
+
+      <p style="margin: 20px 0 0 0; font-size: 16px; color: #2c3e50;">
+        Thank you for your time and consideration.<br><br>
+        Warm regards,<br>
+        <strong style="color: #667eea;">Anamay Tripathy</strong><br>
+        <em>B.Tech Data Science | MIT Manipal, India</em>
+      </p>
+      
+    </div>
+  </body>
+</html>"""
 
     def generate_fallback_body(self, professor: Dict[str, Any]) -> str:
         """Generate fallback email body when template fails"""
@@ -397,7 +447,7 @@ BTech Data Science | MIT Manipal
         else:
             prompt = self.build_prompt(professor, informal)
             
-        if self.use_ollama:
+        if self.use_azure_ai:
             return generate_with_azure_ai(prompt, self.azure_model)
         else:
             return self.generate_body(professor, informal)

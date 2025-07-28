@@ -30,6 +30,16 @@ if 'campaign_settings' not in st.session_state:
         'countries': []
     }
 
+# Initialize widget keys to prevent KeyError
+if 'season_selectbox' not in st.session_state:
+    st.session_state.season_selectbox = 'Any'
+if 'funding_selectbox' not in st.session_state:
+    st.session_state.funding_selectbox = 'Any'
+if 'countries_multiselect' not in st.session_state:
+    st.session_state.countries_multiselect = []
+if 'outreach_mode' not in st.session_state:
+    st.session_state.outreach_mode = 'Dry Run'
+
 load_dotenv()
 
 # Configuration validation
@@ -56,11 +66,12 @@ def check_configuration():
     
     return issues
 
-# Check if Ollama is running
-def is_ollama_running():
+# Check if Azure AI is available
+def is_azure_ai_available():
     try:
-        r = requests.get("http://localhost:11434")
-        return r.status_code == 200
+        from azure_ai_client import get_azure_ai_client
+        client = get_azure_ai_client()
+        return client.is_available()
     except Exception:
         return False
 
@@ -71,12 +82,12 @@ st.title("🚀 Academic Outreach")
 config_issues = check_configuration()
 show_config_status(config_issues)
 
-ollama_available = handle_network_call(is_ollama_running, "check Ollama server status")
+azure_ai_available = handle_network_call(is_azure_ai_available, "check Azure AI status")
 
-if ollama_available:
-    st.success("✅ Ollama server detected! Using Gemma3 for AI-powered email generation.")
+if azure_ai_available:
+    st.success("✅ Azure AI (GPT-4.1) enabled! Using advanced AI for intelligent email generation.")
 else:
-    st.warning("Ollama server is not running. Please start Ollama with a model (e.g., 'ollama run gemma3') for LLM-powered email generation. Fallback to template-based emails will be used.")
+    st.info("Using template-based email generation with fallback when Azure AI is unavailable.")
 
 # Upload resume section - always visible
 st.header("1. Upload Your Resume")
@@ -155,10 +166,10 @@ st.caption("Send a test email to yourself to verify your Gmail configuration wor
 
 test_email_col1, test_email_col2 = st.columns([2, 1])
 with test_email_col1:
-    test_email = st.text_input("Test Email Address", value=os.getenv('GMAIL_USER', ''), help="Enter your email to receive a test message")
+    test_email = st.text_input("Test Email Address", value=os.getenv('GMAIL_USER', ''), help="Enter your email to receive a test message", label_visibility="visible")
 with test_email_col2:
     st.write("")
-    if st.button("Send Test Email", disabled=not test_email):
+    if st.button("Send Test Email", disabled=not test_email, help="Send a test email to verify your configuration"):
         if test_email:
             try:
                 gmail_user = os.getenv('GMAIL_USER')
@@ -184,10 +195,25 @@ st.header("5. Launch Outreach")
 if mode == "Live Send":
     st.warning("⚠️ **Live Send Mode**: Emails will be sent to real professors. Please review your settings carefully.")
     
-    approval_checkbox = st.checkbox(
-        "I confirm that I have:", 
-        help="Please confirm all items before proceeding with live sending"
+    # Multiple confirmation checkboxes for safety
+    st.subheader("Live Send Confirmation")
+    
+    confirmation_1 = st.checkbox(
+        "✅ I have sent a test email and confirmed Gmail configuration works",
+        help="Test email functionality before sending to professors"
     )
+    
+    confirmation_2 = st.checkbox(
+        "✅ I have reviewed my resume and campaign settings",
+        help="Ensure all information is current and accurate"
+    )
+    
+    confirmation_3 = st.checkbox(
+        "✅ I understand that real emails will be sent to professors",
+        help="This is not a simulation - actual emails will be delivered"
+    )
+    
+    approval_checkbox = confirmation_1 and confirmation_2 and confirmation_3
     
     with st.expander("Pre-send Checklist", expanded=not approval_checkbox):
         st.markdown("""
@@ -200,11 +226,36 @@ if mode == "Live Send":
         ✅ **Follow-up system ready** - You can manage responses through the Follow-ups page  
         """)
     
+    # Add batch size slider for live mode
+    col1, col2 = st.columns([3, 1])
+    with col1:
+        batch_size = st.slider("Batch Size", min_value=1, max_value=100, value=10, step=1,
+                             help="Select how many emails to send in this batch (1-100)")
+    with col2:
+        unlimited_batch = st.checkbox("Unlimited", help="Send to all matching professors")
+    
+    if unlimited_batch:
+        batch_size = 'Unlimited'
+        st.info("⚠️ All matching professors will be contacted in this batch.")
+    
     run_button = st.button("🚀 Send Emails to Professors", 
                           disabled=not (resume_path and approval_checkbox), 
                           type="primary")
 else:
     st.info("🔍 Dry Run Mode: No emails will be sent. This will generate and preview emails only.")
+    
+    # Add batch size slider for dry run mode too
+    col1, col2 = st.columns([3, 1])
+    with col1:
+        batch_size = st.slider("Preview Batch Size", min_value=1, max_value=100, value=10, step=1,
+                             help="Select how many emails to generate and preview (1-100)")
+    with col2:
+        unlimited_preview = st.checkbox("Preview All", help="Preview all matching professors")
+    
+    if unlimited_preview:
+        batch_size = 'Unlimited'
+        st.info("⚠️ All matching professors will be previewed.")
+    
     run_button = st.button("🔍 Start Dry Run", disabled=not resume_path, type="primary")
 
 # Progress tracking
@@ -234,7 +285,8 @@ if run_button and resume_path:
         selected_countries=selected_countries,
         mode=mode,
         progress_callback=progress_bar.progress,
-        log_callback=log_placeholder.write
+        log_callback=log_placeholder.write,
+        batch_size=None if batch_size == 'Unlimited' else batch_size
     )
     
     try:
@@ -302,8 +354,8 @@ if 'outreach_results' in st.session_state and st.session_state.outreach_results:
         with st.expander("📧 Generated Emails", expanded=False):
             for i, email in enumerate(results['email_previews'][:3]):  # Show first 3
                 st.subheader(f"Email {i+1}: {email['to']}")
-                st.text_area(f"Subject", email['subject'], key=f"subject_{i}")
-                st.text_area(f"Body", email['body'], height=200, key=f"body_{i}")
+                st.text_area(f"Subject {i+1}", email['subject'], key=f"subject_{i}", label_visibility="visible")
+                st.text_area(f"Body {i+1}", email['body'], height=200, key=f"body_{i}", label_visibility="visible")
                 st.divider()
 
 # Navigation hint

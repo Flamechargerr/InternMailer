@@ -1,5 +1,87 @@
 {
-  "campaigns": {},
-  "followups": {},
-  "email_logs": []
+  "campaigns": {
+    "d8c6b83f-d5a9-40c4-8088-6cbd384548d8": {
+      "id": "d8c6b83f-d5a9-40c4-8088-6cbd384548d8",
+      "name": "Test Campaign",
+      "description": "Integration test",
+      "created_at": "2025-07-27T18:07:50.507359+00:00",
+      "settings": {}
+    },
+    "4ca6600b-5b54-487c-ad82-dccceb62fb83": {
+      "id": "4ca6600b-5b54-487c-ad82-dccceb62fb83",
+      "name": "Test Campaign",
+      "description": "Testing integration",
+      "created_at": "2025-07-27T18:08:13.258455+00:00",
+      "settings": {}
+    },
+    "e16d3561-6f11-4353-a8f0-9ba18ea57035": {
+      "id": "e16d3561-6f11-4353-a8f0-9ba18ea57035",
+      "name": "Test Integration",
+      "description": "Testing the integrated system",
+      "created_at": "2025-07-27T18:14:42.621587+00:00",
+      "settings": {}
+    },
+    "0f6aea10-8e7c-40ef-85b2-d72370d319ad": {
+      "id": "0f6aea10-8e7c-40ef-85b2-d72370d319ad",
+      "name": "Test Campaign",
+      "description": "Testing integration",
+      "created_at": "2025-07-27T18:15:30.517880+00:00",
+      "settings": {}
+    }
+  },
+  "followups": {
+    "400bcd41-8971-4674-833e-506a599570b7": {
+      "id": "400bcd41-8971-4674-833e-506a599570b7",
+      "campaign_id": "4ca6600b-5b54-487c-ad82-dccceb62fb83",
+      "email": "test@example.com",
+      "subject": "Test Subject",
+      "status": "scheduled",
+      "scheduled_at": "2025-07-27T18:08:13.272471+00:00",
+      "created_at": "2025-07-27T18:08:13.272471+00:00",
+      "email_log_id": "61b8f12d-9c8a-43a1-acb7-ce4753064a87"
+    },
+    "f1581a6d-bb51-4835-b9cd-102dea460939": {
+      "id": "f1581a6d-bb51-4835-b9cd-102dea460939",
+      "campaign_id": "e16d3561-6f11-4353-a8f0-9ba18ea57035",
+      "email": "test@example.com",
+      "subject": "Test Subject",
+      "status": "scheduled",
+      "scheduled_at": "2025-07-27T18:14:42.638588+00:00",
+      "created_at": "2025-07-27T18:14:42.638588+00:00",
+      "email_log_id": "739fc93e-80c1-4f5d-a3a7-7ab6ed9a1362"
+    },
+    "d264d960-3669-4d7e-9727-409b6c0198cf": {
+      "id": "d264d960-3669-4d7e-9727-409b6c0198cf",
+      "campaign_id": "0f6aea10-8e7c-40ef-85b2-d72370d319ad",
+      "email": "test@example.com",
+      "subject": "Test Subject",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-03T18:15:30.537429+00:00",
+      "created_at": "2025-07-27T18:15:30.537429+00:00",
+      "email_log_id": "94e727e3-a944-4387-8587-c020acd56cc5"
+    }
+  },
+  "email_logs": [
+    {
+      "id": "61b8f12d-9c8a-43a1-acb7-ce4753064a87",
+      "campaign_id": "4ca6600b-5b54-487c-ad82-dccceb62fb83",
+      "email": "test@example.com",
+      "subject": "Test Subject",
+      "sent_at": "2025-07-27T18:08:13.272471+00:00"
+    },
+    {
+      "id": "739fc93e-80c1-4f5d-a3a7-7ab6ed9a1362",
+      "campaign_id": "e16d3561-6f11-4353-a8f0-9ba18ea57035",
+      "email": "test@example.com",
+      "subject": "Test Subject",
+      "sent_at": "2025-07-27T18:14:42.638588+00:00"
+    },
+    {
+      "id": "94e727e3-a944-4387-8587-c020acd56cc5",
+      "campaign_id": "0f6aea10-8e7c-40ef-85b2-d72370d319ad",
+      "email": "test@example.com",
+      "subject": "Test Subject",
+      "sent_at": "2025-07-27T18:15:30.537429+00:00"
+    }
+  ]
 }

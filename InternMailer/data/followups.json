@@ -1,236 +1,233 @@
 {
   "campaigns": {
-    "5445b88d-43ef-49ba-88eb-eb23619cd514": {
-      "id": "5445b88d-43ef-49ba-88eb-eb23619cd514",
-      "name": "Test Campaign 2025-07-27 14:49",
-      "description": "Test campaign for comprehensive functionality testing",
-      "created_at": "2025-07-27T09:19:26.619471+00:00",
+    "30ef20ce-0f07-48fd-94dc-ebf89a7fe203": {
+      "id": "30ef20ce-0f07-48fd-94dc-ebf89a7fe203",
+      "name": "Outreach 2025-07-28 07:15 (Live Send)",
+      "description": "Academic outreach for Any internships",
+      "created_at": "2025-07-28T01:45:29.331539+00:00",
       "settings": {}
     },
-    "aeaa9a5c-d173-435d-92e3-1ac1374abbba": {
-      "id": "aeaa9a5c-d173-435d-92e3-1ac1374abbba",
-      "name": "Test Campaign 2025-07-27 14:49",
-      "description": "Test campaign for comprehensive functionality testing",
-      "created_at": "2025-07-27T09:19:59.184249+00:00",
+    "c7e34f89-486c-4d97-921e-7084a3bf5ad3": {
+      "id": "c7e34f89-486c-4d97-921e-7084a3bf5ad3",
+      "name": "Outreach 2025-07-28 15:13 (Dry Run)",
+      "description": "Academic outreach for Any internships",
+      "created_at": "2025-07-28T09:43:41.630970+00:00",
       "settings": {}
     },
-    "aab4155c-a3db-4c73-b322-78a45fd9bd99": {
-      "id": "aab4155c-a3db-4c73-b322-78a45fd9bd99",
-      "name": "Test Campaign 2025-07-27 14:50",
-      "description": "Test campaign for comprehensive functionality testing",
-      "created_at": "2025-07-27T09:20:22.808643+00:00",
+    "f205a3c0-5044-4e36-921f-355062c6f776": {
+      "id": "f205a3c0-5044-4e36-921f-355062c6f776",
+      "name": "Outreach 2025-07-28 15:15 (Dry Run)",
+      "description": "Academic outreach for Any internships",
+      "created_at": "2025-07-28T09:45:42.854884+00:00",
       "settings": {}
     }
   },
   "followups": {
-    "7a9682c8-86c3-44d5-91a4-db1afc97652f": {
-      "id": "7a9682c8-86c3-44d5-91a4-db1afc97652f",
-      "campaign_id": "5445b88d-43ef-49ba-88eb-eb23619cd514",
-      "email": "billf@mit.edu",
-      "subject": "Research Internship Inquiry - Computer Vision",
+    "86a53eb0-b4bc-45da-9580-4c12787d3b1f": {
+      "id": "86a53eb0-b4bc-45da-9580-4c12787d3b1f",
+      "campaign_id": "30ef20ce-0f07-48fd-94dc-ebf89a7fe203",
+      "email": "abelay@csail.mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Systems for ML",
       "status": "scheduled",
-      "scheduled_at": "2025-07-27T09:19:26.628997+00:00",
-      "created_at": "2025-07-27T09:19:26.628997+00:00",
-      "email_log_id": "4d1bf781-1e04-4824-bed7-e7540746aaa7"
+      "scheduled_at": "2025-08-04T01:45:35.188453+00:00",
+      "created_at": "2025-07-28T01:45:35.188453+00:00",
+      "email_log_id": "b1d2ac51-22e9-4b32-8628-5af11d9b64cf"
     },
-    "75b4a40b-2bc1-4416-ba67-70e22b9baf91": {
-      "id": "75b4a40b-2bc1-4416-ba67-70e22b9baf91",
-      "campaign_id": "5445b88d-43ef-49ba-88eb-eb23619cd514",
+    "2ea87993-e3b6-4ed9-a8fe-3594f1c4a56f": {
+      "id": "2ea87993-e3b6-4ed9-a8fe-3594f1c4a56f",
+      "campaign_id": "30ef20ce-0f07-48fd-94dc-ebf89a7fe203",
+      "email": "adamc@csail.mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI verification",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-04T01:45:40.308118+00:00",
+      "created_at": "2025-07-28T01:45:40.308118+00:00",
+      "email_log_id": "e281d3ba-200a-4b14-ac63-3908c54510a9"
+    },
+    "a8adca13-5199-4537-a345-ad5c6ad27a9d": {
+      "id": "a8adca13-5199-4537-a345-ad5c6ad27a9d",
+      "campaign_id": "30ef20ce-0f07-48fd-94dc-ebf89a7fe203",
+      "email": "rakhlin@mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML theory",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-04T01:45:45.319704+00:00",
+      "created_at": "2025-07-28T01:45:45.319704+00:00",
+      "email_log_id": "760af7cc-9ca1-4559-8f2f-5262067b0632"
+    },
+    "3885f2e4-8157-49cb-944f-4fa659bfb613": {
+      "id": "3885f2e4-8157-49cb-944f-4fa659bfb613",
+      "campaign_id": "30ef20ce-0f07-48fd-94dc-ebf89a7fe203",
+      "email": "agarwal@mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI in education",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-04T01:45:50.359327+00:00",
+      "created_at": "2025-07-28T01:45:50.359327+00:00",
+      "email_log_id": "a59565bc-7bd0-4ec7-b28b-76d9c262ecce"
+    },
+    "c29b6bc2-4361-421a-ba55-dbd266f06552": {
+      "id": "c29b6bc2-4361-421a-ba55-dbd266f06552",
+      "campaign_id": "30ef20ce-0f07-48fd-94dc-ebf89a7fe203",
+      "email": "moitra@mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML algorithms",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-04T01:45:55.126809+00:00",
+      "created_at": "2025-07-28T01:45:55.126809+00:00",
+      "email_log_id": "e66d3e06-7f28-431a-9b8a-49c98a644f03"
+    },
+    "d31cc610-63ee-4c8c-9844-f40ab1c4d9a9": {
+      "id": "d31cc610-63ee-4c8c-9844-f40ab1c4d9a9",
+      "campaign_id": "30ef20ce-0f07-48fd-94dc-ebf89a7fe203",
       "email": "torralba@csail.mit.edu",
-      "subject": "Research Internship Inquiry - AI Vision",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Computer vision (AI)",
       "status": "scheduled",
-      "scheduled_at": "2025-07-27T09:19:26.639987+00:00",
-      "created_at": "2025-07-27T09:19:26.639987+00:00",
-      "email_log_id": "b3c79ec0-325e-4949-b6a9-c084425ce098"
+      "scheduled_at": "2025-08-04T01:45:59.984149+00:00",
+      "created_at": "2025-07-28T01:45:59.984149+00:00",
+      "email_log_id": "a214b95b-dc86-464f-b6ab-b6e2bf91b6a2"
     },
-    "74028408-dbdb-45e9-ac6f-7f110f4aa2bf": {
-      "id": "74028408-dbdb-45e9-ac6f-7f110f4aa2bf",
-      "campaign_id": "5445b88d-43ef-49ba-88eb-eb23619cd514",
-      "email": "regina@csail.mit.edu",
-      "subject": "Research Internship Inquiry - ML Language",
+    "1d17fb79-04d4-4a61-b0c1-ac15f22c0252": {
+      "id": "1d17fb79-04d4-4a61-b0c1-ac15f22c0252",
+      "campaign_id": "30ef20ce-0f07-48fd-94dc-ebf89a7fe203",
+      "email": "asolar@csail.mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI synthesis",
       "status": "scheduled",
-      "scheduled_at": "2025-07-27T09:19:26.648494+00:00",
-      "created_at": "2025-07-27T09:19:26.648494+00:00",
-      "email_log_id": "0f109bee-e843-4ff7-9c9b-f1c2ed1178c1"
+      "scheduled_at": "2025-08-04T01:46:05.389740+00:00",
+      "created_at": "2025-07-28T01:46:05.389740+00:00",
+      "email_log_id": "db203332-aa01-468a-86e9-c8282d050c72"
     },
-    "85c76afe-4180-4a1c-b6c7-c2e5fc8f79ec": {
-      "id": "85c76afe-4180-4a1c-b6c7-c2e5fc8f79ec",
-      "campaign_id": "aeaa9a5c-d173-435d-92e3-1ac1374abbba",
-      "email": "billf@mit.edu",
-      "subject": "Research Internship Inquiry - Computer Vision",
+    "a4598440-3f13-472e-9f5a-25e3b62771b6": {
+      "id": "a4598440-3f13-472e-9f5a-25e3b62771b6",
+      "campaign_id": "30ef20ce-0f07-48fd-94dc-ebf89a7fe203",
+      "email": "arvind@csail.mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI hardware",
       "status": "scheduled",
-      "scheduled_at": "2025-07-27T09:19:59.193503+00:00",
-      "created_at": "2025-07-27T09:19:59.193503+00:00",
-      "email_log_id": "3b8ab6dc-2412-4ce9-801f-e7e9343b5467"
+      "scheduled_at": "2025-08-04T01:46:10.700962+00:00",
+      "created_at": "2025-07-28T01:46:10.700962+00:00",
+      "email_log_id": "0a957d6e-29a2-430a-a0cb-b08fef178329"
     },
-    "1d4d3fa6-a264-415e-bf50-124c84c818b7": {
-      "id": "1d4d3fa6-a264-415e-bf50-124c84c818b7",
-      "campaign_id": "aeaa9a5c-d173-435d-92e3-1ac1374abbba",
-      "email": "torralba@csail.mit.edu",
-      "subject": "Research Internship Inquiry - AI Vision",
+    "c36b4f9d-433d-4578-ae8c-88f7651fd34a": {
+      "id": "c36b4f9d-433d-4578-ae8c-88f7651fd34a",
+      "campaign_id": "30ef20ce-0f07-48fd-94dc-ebf89a7fe203",
+      "email": "asuman@mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI optimization",
       "status": "scheduled",
-      "scheduled_at": "2025-07-27T09:19:59.200530+00:00",
-      "created_at": "2025-07-27T09:19:59.200530+00:00",
-      "email_log_id": "d9e44177-7a8f-4a4a-97c4-2167971a129a"
+      "scheduled_at": "2025-08-04T01:46:15.960530+00:00",
+      "created_at": "2025-07-28T01:46:15.960530+00:00",
+      "email_log_id": "b7bda212-3d8e-4eb9-8f8a-6fd8f0529d11"
     },
-    "3882dc11-9b94-4d6a-99b7-501fd2b13e74": {
-      "id": "3882dc11-9b94-4d6a-99b7-501fd2b13e74",
-      "campaign_id": "aeaa9a5c-d173-435d-92e3-1ac1374abbba",
-      "email": "regina@csail.mit.edu",
-      "subject": "Research Internship Inquiry - ML Language",
+    "b884f451-838a-4500-95f5-21e43c657fed": {
+      "id": "b884f451-838a-4500-95f5-21e43c657fed",
+      "campaign_id": "30ef20ce-0f07-48fd-94dc-ebf89a7fe203",
+      "email": "liskov@csail.mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Distributed systems (AI)",
       "status": "scheduled",
-      "scheduled_at": "2025-07-27T09:19:59.209530+00:00",
-      "created_at": "2025-07-27T09:19:59.209530+00:00",
-      "email_log_id": "4a9fbc94-0cd1-4c9b-886b-69d89701b08a"
+      "scheduled_at": "2025-08-04T01:46:21.291796+00:00",
+      "created_at": "2025-07-28T01:46:21.291796+00:00",
+      "email_log_id": "c7ea6708-198b-450f-9ac9-6c0d3728b579"
     },
-    "3b06b8c6-6a41-47eb-b930-b37be0daa952": {
-      "id": "3b06b8c6-6a41-47eb-b930-b37be0daa952",
-      "campaign_id": "aeaa9a5c-d173-435d-92e3-1ac1374abbba",
-      "email": "billf@mit.edu",
-      "subject": "Follow-up: Research Internship Inquiry - Computer Vision",
+    "4ce87db8-d901-4b59-9f3e-f751853fa479": {
+      "id": "4ce87db8-d901-4b59-9f3e-f751853fa479",
+      "campaign_id": "c7e34f89-486c-4d97-921e-7084a3bf5ad3",
+      "email": "abelay@csail.mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Systems for ML",
       "status": "scheduled",
-      "scheduled_at": "2025-08-03T14:49:59.213088",
-      "created_at": "2025-07-27T09:19:59.220586+00:00"
+      "scheduled_at": "2025-08-04T09:43:41.762431+00:00",
+      "created_at": "2025-07-28T09:43:41.762431+00:00",
+      "email_log_id": "75119a59-1a17-4632-92b5-8a87707abfaf"
     },
-    "48ed234a-fd8a-4149-b4e6-e8952ae1b532": {
-      "id": "48ed234a-fd8a-4149-b4e6-e8952ae1b532",
-      "campaign_id": "aeaa9a5c-d173-435d-92e3-1ac1374abbba",
-      "email": "torralba@csail.mit.edu",
-      "subject": "Follow-up: Research Internship Inquiry - AI Vision",
+    "55a44a67-8b8a-4b51-8643-45cb01c23642": {
+      "id": "55a44a67-8b8a-4b51-8643-45cb01c23642",
+      "campaign_id": "f205a3c0-5044-4e36-921f-355062c6f776",
+      "email": "abelay@csail.mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Systems for ML",
       "status": "scheduled",
-      "scheduled_at": "2025-08-03T14:49:59.213088",
-      "created_at": "2025-07-27T09:19:59.227612+00:00"
-    },
-    "2237373a-3b77-4cbc-9d56-70fb7f9e2889": {
-      "id": "2237373a-3b77-4cbc-9d56-70fb7f9e2889",
-      "campaign_id": "aeaa9a5c-d173-435d-92e3-1ac1374abbba",
-      "email": "regina@csail.mit.edu",
-      "subject": "Follow-up: Research Internship Inquiry - ML Language",
-      "status": "scheduled",
-      "scheduled_at": "2025-08-03T14:49:59.213088",
-      "created_at": "2025-07-27T09:19:59.236598+00:00"
-    },
-    "9c238e46-8a39-4d02-b82c-6522b33be22f": {
-      "id": "9c238e46-8a39-4d02-b82c-6522b33be22f",
-      "campaign_id": "aab4155c-a3db-4c73-b322-78a45fd9bd99",
-      "email": "billf@mit.edu",
-      "subject": "Research Internship Inquiry - Computer Vision",
-      "status": "scheduled",
-      "scheduled_at": "2025-07-27T09:20:22.818746+00:00",
-      "created_at": "2025-07-27T09:20:22.818746+00:00",
-      "email_log_id": "f0fea98b-4758-47fb-838f-1f0b529ca9f6"
-    },
-    "cf2ff53e-0af4-4b29-84ac-fa74a76bda12": {
-      "id": "cf2ff53e-0af4-4b29-84ac-fa74a76bda12",
-      "campaign_id": "aab4155c-a3db-4c73-b322-78a45fd9bd99",
-      "email": "torralba@csail.mit.edu",
-      "subject": "Research Internship Inquiry - AI Vision",
-      "status": "scheduled",
-      "scheduled_at": "2025-07-27T09:20:22.827722+00:00",
-      "created_at": "2025-07-27T09:20:22.827722+00:00",
-      "email_log_id": "c8b8cf0b-19fb-4ce1-a832-f9a444f15727"
-    },
-    "4670d881-8bf9-4aa2-b3a1-080ef6012b1d": {
-      "id": "4670d881-8bf9-4aa2-b3a1-080ef6012b1d",
-      "campaign_id": "aab4155c-a3db-4c73-b322-78a45fd9bd99",
-      "email": "regina@csail.mit.edu",
-      "subject": "Research Internship Inquiry - ML Language",
-      "status": "scheduled",
-      "scheduled_at": "2025-07-27T09:20:22.834723+00:00",
-      "created_at": "2025-07-27T09:20:22.834723+00:00",
-      "email_log_id": "16225329-7395-41e9-acc6-f1d37425e955"
-    },
-    "37a00359-4fdd-4601-83db-c5607b515147": {
-      "id": "37a00359-4fdd-4601-83db-c5607b515147",
-      "campaign_id": "aab4155c-a3db-4c73-b322-78a45fd9bd99",
-      "email": "billf@mit.edu",
-      "subject": "Follow-up: Research Internship Inquiry - Computer Vision",
-      "status": "scheduled",
-      "scheduled_at": "2025-08-03T14:50:22.836722",
-      "created_at": "2025-07-27T09:20:22.843724+00:00"
-    },
-    "5b98cee7-d600-4361-9f44-5436d7dd18d6": {
-      "id": "5b98cee7-d600-4361-9f44-5436d7dd18d6",
-      "campaign_id": "aab4155c-a3db-4c73-b322-78a45fd9bd99",
-      "email": "torralba@csail.mit.edu",
-      "subject": "Follow-up: Research Internship Inquiry - AI Vision",
-      "status": "scheduled",
-      "scheduled_at": "2025-08-03T14:50:22.836722",
-      "created_at": "2025-07-27T09:20:22.850721+00:00"
-    },
-    "45317f0e-bf32-4bef-ae4b-8cf54ef355a5": {
-      "id": "45317f0e-bf32-4bef-ae4b-8cf54ef355a5",
-      "campaign_id": "aab4155c-a3db-4c73-b322-78a45fd9bd99",
-      "email": "regina@csail.mit.edu",
-      "subject": "Follow-up: Research Internship Inquiry - ML Language",
-      "status": "scheduled",
-      "scheduled_at": "2025-08-03T14:50:22.836722",
-      "created_at": "2025-07-27T09:20:22.859736+00:00"
+      "scheduled_at": "2025-08-04T09:45:42.992329+00:00",
+      "created_at": "2025-07-28T09:45:42.992329+00:00",
+      "email_log_id": "fce480b0-d308-4b47-9789-1f1fa1426728"
     }
   },
   "email_logs": [
     {
-      "id": "4d1bf781-1e04-4824-bed7-e7540746aaa7",
-      "campaign_id": "5445b88d-43ef-49ba-88eb-eb23619cd514",
-      "email": "billf@mit.edu",
-      "subject": "Research Internship Inquiry - Computer Vision",
-      "sent_at": "2025-07-27T09:19:26.628997+00:00"
+      "id": "b1d2ac51-22e9-4b32-8628-5af11d9b64cf",
+      "campaign_id": "30ef20ce-0f07-48fd-94dc-ebf89a7fe203",
+      "email": "abelay@csail.mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Systems for ML",
+      "sent_at": "2025-07-28T01:45:35.188453+00:00"
     },
     {
-      "id": "b3c79ec0-325e-4949-b6a9-c084425ce098",
-      "campaign_id": "5445b88d-43ef-49ba-88eb-eb23619cd514",
+      "id": "e281d3ba-200a-4b14-ac63-3908c54510a9",
+      "campaign_id": "30ef20ce-0f07-48fd-94dc-ebf89a7fe203",
+      "email": "adamc@csail.mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI verification",
+      "sent_at": "2025-07-28T01:45:40.308118+00:00"
+    },
+    {
+      "id": "760af7cc-9ca1-4559-8f2f-5262067b0632",
+      "campaign_id": "30ef20ce-0f07-48fd-94dc-ebf89a7fe203",
+      "email": "rakhlin@mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML theory",
+      "sent_at": "2025-07-28T01:45:45.319704+00:00"
+    },
+    {
+      "id": "a59565bc-7bd0-4ec7-b28b-76d9c262ecce",
+      "campaign_id": "30ef20ce-0f07-48fd-94dc-ebf89a7fe203",
+      "email": "agarwal@mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI in education",
+      "sent_at": "2025-07-28T01:45:50.359327+00:00"
+    },
+    {
+      "id": "e66d3e06-7f28-431a-9b8a-49c98a644f03",
+      "campaign_id": "30ef20ce-0f07-48fd-94dc-ebf89a7fe203",
+      "email": "moitra@mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML algorithms",
+      "sent_at": "2025-07-28T01:45:55.126809+00:00"
+    },
+    {
+      "id": "a214b95b-dc86-464f-b6ab-b6e2bf91b6a2",
+      "campaign_id": "30ef20ce-0f07-48fd-94dc-ebf89a7fe203",
       "email": "torralba@csail.mit.edu",
-      "subject": "Research Internship Inquiry - AI Vision",
-      "sent_at": "2025-07-27T09:19:26.639987+00:00"
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Computer vision (AI)",
+      "sent_at": "2025-07-28T01:45:59.983082+00:00"
     },
     {
-      "id": "0f109bee-e843-4ff7-9c9b-f1c2ed1178c1",
-      "campaign_id": "5445b88d-43ef-49ba-88eb-eb23619cd514",
-      "email": "regina@csail.mit.edu",
-      "subject": "Research Internship Inquiry - ML Language",
-      "sent_at": "2025-07-27T09:19:26.648494+00:00"
+      "id": "db203332-aa01-468a-86e9-c8282d050c72",
+      "campaign_id": "30ef20ce-0f07-48fd-94dc-ebf89a7fe203",
+      "email": "asolar@csail.mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI synthesis",
+      "sent_at": "2025-07-28T01:46:05.389740+00:00"
     },
     {
-      "id": "3b8ab6dc-2412-4ce9-801f-e7e9343b5467",
-      "campaign_id": "aeaa9a5c-d173-435d-92e3-1ac1374abbba",
-      "email": "billf@mit.edu",
-      "subject": "Research Internship Inquiry - Computer Vision",
-      "sent_at": "2025-07-27T09:19:59.193503+00:00"
+      "id": "0a957d6e-29a2-430a-a0cb-b08fef178329",
+      "campaign_id": "30ef20ce-0f07-48fd-94dc-ebf89a7fe203",
+      "email": "arvind@csail.mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI hardware",
+      "sent_at": "2025-07-28T01:46:10.700962+00:00"
     },
     {
-      "id": "d9e44177-7a8f-4a4a-97c4-2167971a129a",
-      "campaign_id": "aeaa9a5c-d173-435d-92e3-1ac1374abbba",
-      "email": "torralba@csail.mit.edu",
-      "subject": "Research Internship Inquiry - AI Vision",
-      "sent_at": "2025-07-27T09:19:59.200530+00:00"
+      "id": "b7bda212-3d8e-4eb9-8f8a-6fd8f0529d11",
+      "campaign_id": "30ef20ce-0f07-48fd-94dc-ebf89a7fe203",
+      "email": "asuman@mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI optimization",
+      "sent_at": "2025-07-28T01:46:15.960530+00:00"
     },
     {
-      "id": "4a9fbc94-0cd1-4c9b-886b-69d89701b08a",
-      "campaign_id": "aeaa9a5c-d173-435d-92e3-1ac1374abbba",
-      "email": "regina@csail.mit.edu",
-      "subject": "Research Internship Inquiry - ML Language",
-      "sent_at": "2025-07-27T09:19:59.209530+00:00"
+      "id": "c7ea6708-198b-450f-9ac9-6c0d3728b579",
+      "campaign_id": "30ef20ce-0f07-48fd-94dc-ebf89a7fe203",
+      "email": "liskov@csail.mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Distributed systems (AI)",
+      "sent_at": "2025-07-28T01:46:21.290786+00:00"
     },
     {
-      "id": "f0fea98b-4758-47fb-838f-1f0b529ca9f6",
-      "campaign_id": "aab4155c-a3db-4c73-b322-78a45fd9bd99",
-      "email": "billf@mit.edu",
-      "subject": "Research Internship Inquiry - Computer Vision",
-      "sent_at": "2025-07-27T09:20:22.818746+00:00"
+      "id": "75119a59-1a17-4632-92b5-8a87707abfaf",
+      "campaign_id": "c7e34f89-486c-4d97-921e-7084a3bf5ad3",
+      "email": "abelay@csail.mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Systems for ML",
+      "sent_at": "2025-07-28T09:43:41.762431+00:00"
     },
     {
-      "id": "c8b8cf0b-19fb-4ce1-a832-f9a444f15727",
-      "campaign_id": "aab4155c-a3db-4c73-b322-78a45fd9bd99",
-      "email": "torralba@csail.mit.edu",
-      "subject": "Research Internship Inquiry - AI Vision",
-      "sent_at": "2025-07-27T09:20:22.826736+00:00"
-    },
-    {
-      "id": "16225329-7395-41e9-acc6-f1d37425e955",
-      "campaign_id": "aab4155c-a3db-4c73-b322-78a45fd9bd99",
-      "email": "regina@csail.mit.edu",
-      "subject": "Research Internship Inquiry - ML Language",
-      "sent_at": "2025-07-27T09:20:22.834723+00:00"
+      "id": "fce480b0-d308-4b47-9789-1f1fa1426728",
+      "campaign_id": "f205a3c0-5044-4e36-921f-355062c6f776",
+      "email": "abelay@csail.mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Systems for ML",
+      "sent_at": "2025-07-28T09:45:42.992329+00:00"
     }
   ]
 }

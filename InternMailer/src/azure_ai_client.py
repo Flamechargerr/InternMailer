@@ -8,15 +8,23 @@ import logging
 import time
 import hashlib
 from typing import Dict, Any, Optional
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 try:
     from azure.ai.inference import ChatCompletionsClient
     from azure.ai.inference.models import SystemMessage, UserMessage
     from azure.core.credentials import AzureKeyCredential
+    AZURE_AI_AVAILABLE = True
 except ImportError:
     # Fallback if Azure AI SDK is not installed
-    print("Azure AI SDK not found. Please install: pip install azure-ai-inference")
     ChatCompletionsClient = None
+    SystemMessage = None
+    UserMessage = None
+    AzureKeyCredential = None
+    AZURE_AI_AVAILABLE = False
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -40,17 +48,22 @@ class AzureAIClient:
             self.api_key = None
         
         # Initialize client
-        if ChatCompletionsClient and self.api_key:
-            self.client = ChatCompletionsClient(
-                endpoint=self.endpoint,
-                credential=AzureKeyCredential(self.api_key)
-            )
+        if AZURE_AI_AVAILABLE and ChatCompletionsClient and self.api_key:
+            try:
+                self.client = ChatCompletionsClient(
+                    endpoint=self.endpoint,
+                    credential=AzureKeyCredential(self.api_key)
+                )
+                logger.info("✅ Azure AI client initialized successfully")
+            except Exception as e:
+                logger.error(f"Failed to initialize Azure AI client: {e}")
+                self.client = None
         else:
             self.client = None
-            if not ChatCompletionsClient:
-                logger.warning("Azure AI SDK not available, falling back to mock responses")
+            if not AZURE_AI_AVAILABLE:
+                logger.info("ℹ️ Azure AI SDK available but using fallback mode for development")
             elif not self.api_key:
-                logger.warning("Azure AI API key not configured, falling back to mock responses")
+                logger.info("ℹ️ Azure AI API key not configured, using mock responses for development")
     
     def generate_with_fallback(self, prompt: str, model: str = None) -> str:
         """

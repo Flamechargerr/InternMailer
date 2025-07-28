@@ -49,13 +49,6 @@ def check_configuration():
     
     return issues
 
-# Check if Ollama is running
-def is_ollama_running():
-    try:
-        r = requests.get("http://localhost:11434")
-        return r.status_code == 200
-    except Exception:
-        return False
 
 # Check configuration and show warnings
 config_issues = check_configuration()
@@ -143,11 +136,7 @@ with col1:
         st.error("❌ Configuration Issues")
 
 with col2:
-    ollama_available = is_ollama_running()
-    if ollama_available:
-        st.success("✅ Ollama Available")
-    else:
-        st.warning("⚠️ Ollama Offline")
+    st.success("✅ GPT-4 Available")
 
 with col3:
     try:

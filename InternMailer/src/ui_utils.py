@@ -291,9 +291,20 @@ def create_input_with_help(input_func, label: str, help_text: str, **kwargs):
         help_text: Help text to display
         **kwargs: Additional arguments for the input function
     """
+    # Ensure label is not empty
+    if not label or label.strip() == "":
+        label = "Input"
+    
     # Add help parameter to kwargs
     kwargs['help'] = help_text
-    return input_func(label, **kwargs)
+    
+    # Handle different input functions that may have different parameter requirements
+    try:
+        return input_func(label, **kwargs)
+    except Exception as e:
+        # Fallback without help if there's an issue
+        kwargs_without_help = {k: v for k, v in kwargs.items() if k != 'help'}
+        return input_func(label, **kwargs_without_help)
 
 def safe_execute(func, error_message: str = "An error occurred", 
                 show_error: bool = True, default_return=None):

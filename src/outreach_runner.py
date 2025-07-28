@@ -7,6 +7,9 @@ from resume_parser import ResumeParser
 from email_generator import EmailGenerator
 from gmail_sender import GmailSender
 from professor_scraper import ProfessorScraper
+# Import enhanced email generation system
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from enhanced_personalized_email import generate_deeply_personalized_email
 # Fix import path for followup manager
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'scheduler'))
 from streamlit_api import get_followup_manager
@@ -55,8 +58,27 @@ class OutreachRunner:
         self.log_callback(f":mag: **Professor tracker initialized - {stats['total_emailed']} professors already contacted**")
 
         self.log_callback(":mag: **Parsing resume...**")
-        parser = ResumeParser(self.resume_path)
-        student_info = parser.parse()
+        try:
+            # Add explicit environment loading and debugging
+            from dotenv import load_dotenv
+            load_dotenv()
+            
+            import os
+            github_token = os.getenv('GITHUB_TOKEN')
+            self.log_callback(f"🔑 GITHUB_TOKEN loaded: {'Yes' if github_token and 'ghp_' in github_token else 'No'}")
+            
+            parser = ResumeParser(self.resume_path)
+            self.log_callback(f"📄 Parser initialized with providers: {[p.get_provider_name() for p in parser.providers]}")
+            self.log_callback(f"🔍 Azure AI available: {parser.providers[0].is_available() if parser.providers else 'No providers'}")
+            
+            student_info = parser.parse()
+            self.log_callback(f"✅ Resume parsed successfully with {len(student_info.get('skills', []))} skills")
+        except Exception as e:
+            self.log_callback(f"❌ Resume parsing failed: {str(e)}")
+            import traceback
+            self.log_callback(f"❌ Full traceback: {traceback.format_exc()}")
+            raise RuntimeError(f"Resume parsing failed: {str(e)}")
+        
         student_info['name'] = "Anamay Tripathy"
         student_info['email'] = "tripathy.anamay23@gmail.com"
         student_info['resume_prefix'] = os.path.splitext(os.path.basename(self.resume_path))[0]
@@ -69,7 +91,7 @@ class OutreachRunner:
 
         try:
             # Read CSV with error handling for malformed lines
-            df = pd.read_csv('data/proffesor.csv', on_bad_lines='skip', encoding='utf-8', 
+            df = pd.read_csv('professors_final.csv', on_bad_lines='skip', encoding='utf-8', 
                            names=['University', 'Name', 'Email', 'Homepage', 'Research Area'], 
                            header=None, skiprows=1)
             
@@ -147,51 +169,38 @@ class OutreachRunner:
         self.progress_callback(50)
 
         self.log_callback(":email: **Generating personalized emails...**")
-        parser = ResumeParser(self.resume_path)
-        student_info = parser.parse()
-        student_info['name'] = "Anamay Tripathy"
-        student_info['email'] = "tripathy.anamay23@gmail.com"
-        student_info['resume_prefix'] = os.path.splitext(os.path.basename(self.resume_path))[0]
-        student_info['season'] = self.season
-        student_info['funding'] = self.funding
-        # Use Azure AI for email generation instead of Ollama
-        use_azure_ai_mode = True  # Always use Azure AI for better performance
-        email_gen = EmailGenerator(student_info, use_azure_ai=use_azure_ai_mode)
+        # Reuse already parsed student_info from above
+        self.log_callback(f"📄 Using parsed resume data: {len(student_info.get('skills', []))} skills, {len(student_info.get('projects', []))} projects")
+        
+        # Integrate enhanced personalized email generation
         emails = []
         for prof in professors:
-            subject = email_gen.generate_subject(prof)
-            research_area = prof.get('Research Area', '')
-            professor_name = prof.get('Name', '')
-            university = prof.get('University', '')
-            prompt = f"""
-Write a professional, personalized research internship inquiry email from Anamay Tripathy to Prof. {professor_name} at {university}.
-Their research area is: {research_area}.
-My background: {student_info.get('summary', 'Data Science Engineering student with strong technical skills')}
-My skills: {', '.join(student_info.get('skills', ['Python', 'Machine Learning', 'Data Analysis']))}
-My projects: {', '.join(student_info.get('projects', ['Web applications', 'Data analysis projects']))}
-My courses: {', '.join(student_info.get('courses', ['Computer Science', 'Mathematics', 'Statistics']))}
-My email: {student_info['email']}
-The email should be concise, polite, and mention why I am interested in their work.
-"""
-            self.log_callback(f"LLM prompt for {professor_name}: {prompt}")
-
-            body = ""
+            professor_data = {
+                'name': prof['Name'],
+                'university': prof['University'],
+                'research_area': prof['Research Area'],
+                'notable_papers': [
+                    f"Research in {prof['Research Area']}",
+                    f"Advanced work in {prof['Research Area']} at {prof['University']}",
+                    f"Pioneering studies in {prof['Research Area']}"
+                ],
+                'current_projects': [
+                    f"{prof['Research Area']} research",
+                    f"Advanced {prof['Research Area']} applications",
+                    f"Collaborative {prof['Research Area']} initiatives"
+                ],
+                'homepage_text': prof.get('homepage_text', '')
+            }
+            
             try:
-                body = email_gen.generate_with_llm(prof, custom_prompt=prompt)
-                if body and body.strip():
-                    self.log_callback("✅ LLM generated email successfully")
-                else:
-                    self.log_callback("LLM returned empty response, using template fallback.")
-                    body = email_gen.generate_body(prof)
+                # Use the enhanced email generation system
+                body = generate_deeply_personalized_email(professor_data)
+                subject = f"Research Internship Inquiry – Anamay Tripathy re: {prof['Research Area']}"
+                self.log_callback("✅ Enhanced email generated successfully")
             except Exception as e:
-                self.log_callback(f"LLM error for {professor_name}: {e}")
-                self.log_callback("Using template fallback due to LLM error.")
-                body = email_gen.generate_body(prof)
-
-            if not body or body.strip() == "":
-                self.log_callback(f"Failed to generate email for {professor_name}")
+                self.log_callback(f"Error generating email for {prof['Name']}: {e}")
                 continue
-
+            
             emails.append({'to': prof['Email'], 'subject': subject, 'body': body})
 
         self.progress_callback(60)

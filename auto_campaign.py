@@ -22,6 +22,7 @@ from email.mime.base import MIMEBase
 from email import encoders
 from pathlib import Path
 import os
+from enhanced_personalized_email import generate_deeply_personalized_email
 
 # Configuration
 SMTP_SERVER = "smtp.gmail.com"
@@ -30,7 +31,7 @@ EMAIL_ADDRESS = "tripathy.anamay23@gmail.com"
 EMAIL_PASSWORD = "qzxw bjqs wgqk wqtt"  # App password
 
 CV_PATH = "../resumes/CV_Anamay_Modern.pdf"
-PROFESSORS_DB = "data/professors_clean_final.csv"
+PROFESSORS_DB = "data/proffesor_clean.csv"
 EMAIL_LOG = "email_log.csv"
 TRACKER_JSON = "data/emailed_professors.json"
 
@@ -193,12 +194,8 @@ class AutoCampaignRunner:
             msg['To'] = professor['Email']
             msg['Subject'] = f"Research Internship Inquiry – Anamay Tripathy re: {professor.get('Research Area', 'AI Research')}"
             
-            # Generate personalized content
-            html_body = HTML_TEMPLATE.format(
-                professor_name=professor.get('Name', 'Professor'),
-                research_area=professor.get('Research Area', 'your field of expertise'),
-                university=professor.get('University', 'your institution')
-            )
+# Generate personalized content
+            html_body = generate_deeply_personalized_email(professor)
             
             msg.attach(MIMEText(html_body, 'html'))
             

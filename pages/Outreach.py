@@ -69,10 +69,21 @@ def check_configuration():
 # Check if Azure AI is available
 def is_azure_ai_available():
     try:
+        # Ensure environment variables are loaded
+        from dotenv import load_dotenv
+        load_dotenv()
+        
+        # Add src to path if not already there
+        import sys
+        src_path = os.path.join(os.path.dirname(__file__), '..', 'src')
+        if src_path not in sys.path:
+            sys.path.append(src_path)
+        
         from azure_ai_client import get_azure_ai_client
         client = get_azure_ai_client()
         return client.is_available()
-    except Exception:
+    except Exception as e:
+        print(f"Azure AI availability check failed: {e}")
         return False
 
 apply_theme_styles()

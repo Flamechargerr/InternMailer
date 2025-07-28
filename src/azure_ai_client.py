@@ -36,7 +36,11 @@ class AzureAIClient:
     Provides faster and more reliable responses than local Ollama.
     """
     
-    def __init__(self, endpoint: str = "https://models.github.ai/inference", model: str = "openai/gpt-4.1"):
+    def __init__(self, endpoint: str = "https://models.inference.ai.azure.com", model: str = "gpt-4o"):
+        # Ensure environment variables are loaded first
+        from dotenv import load_dotenv
+        load_dotenv()
+        
         self.endpoint = endpoint
         self.model = model
         self.cache = {}  # Cache for identical prompts
@@ -61,7 +65,7 @@ class AzureAIClient:
         else:
             self.client = None
             if not AZURE_AI_AVAILABLE:
-                logger.info("ℹ️ Azure AI SDK available but using fallback mode for development")
+                logger.info("ℹ️ Azure AI SDK not available, using fallback mode for development")
             elif not self.api_key:
                 logger.info("ℹ️ Azure AI API key not configured, using mock responses for development")
     
@@ -196,7 +200,7 @@ def get_azure_ai_client() -> AzureAIClient:
     return _azure_ai_client
 
 
-def generate_with_azure_ai(prompt: str, model: str = "openai/gpt-4.1") -> str:
+def generate_with_azure_ai(prompt: str, model: str = "gpt-4o") -> str:
     """
     Generate response using Azure AI client.
     

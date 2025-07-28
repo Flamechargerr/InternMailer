@@ -27,6 +27,13 @@
       "description": "Academic outreach for Any internships",
       "created_at": "2025-07-28T10:25:31.520016+00:00",
       "settings": {}
+    },
+    "9bcdb14b-85cc-4867-8b5c-7d14f2b1a381": {
+      "id": "9bcdb14b-85cc-4867-8b5c-7d14f2b1a381",
+      "name": "Outreach 2025-07-28 17:01 (Dry Run)",
+      "description": "Academic outreach for Any internships",
+      "created_at": "2025-07-28T11:31:14.332874+00:00",
+      "settings": {}
     }
   },
   "followups": {
@@ -159,6 +166,56 @@
       "scheduled_at": "2025-08-04T10:25:36.833719+00:00",
       "created_at": "2025-07-28T10:25:36.833719+00:00",
       "email_log_id": "038227b6-bba1-4ddb-94da-90306df6d232"
+    },
+    "81b121c9-f4b8-4b4e-ab63-4c3ab5499437": {
+      "id": "81b121c9-f4b8-4b4e-ab63-4c3ab5499437",
+      "campaign_id": "9bcdb14b-85cc-4867-8b5c-7d14f2b1a381",
+      "email": "billf@mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Computational photography (AI)",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-04T11:31:14.464354+00:00",
+      "created_at": "2025-07-28T11:31:14.464354+00:00",
+      "email_log_id": "1141b087-da9e-495d-a2eb-1d8397d58325"
+    },
+    "524cdd61-fc74-4c83-86f3-612d761af2e5": {
+      "id": "524cdd61-fc74-4c83-86f3-612d761af2e5",
+      "campaign_id": "9bcdb14b-85cc-4867-8b5c-7d14f2b1a381",
+      "email": "bab@mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Computational biology (AI)",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-04T11:31:14.588029+00:00",
+      "created_at": "2025-07-28T11:31:14.588029+00:00",
+      "email_log_id": "816161d0-8087-4d57-96d2-3b9030a587a2"
+    },
+    "b194f230-149d-4f68-9270-83f690a09e04": {
+      "id": "b194f230-149d-4f68-9270-83f690a09e04",
+      "campaign_id": "9bcdb14b-85cc-4867-8b5c-7d14f2b1a381",
+      "email": "uhler@mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML in biology",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-04T11:31:14.710583+00:00",
+      "created_at": "2025-07-28T11:31:14.710583+00:00",
+      "email_log_id": "523d2e22-cd53-4170-96be-78b771053ea4"
+    },
+    "de7c5b83-7373-4768-ab7e-f859e46043fe": {
+      "id": "de7c5b83-7373-4768-ab7e-f859e46043fe",
+      "campaign_id": "9bcdb14b-85cc-4867-8b5c-7d14f2b1a381",
+      "email": "cel@mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Parallel computing for ML",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-04T11:31:14.832177+00:00",
+      "created_at": "2025-07-28T11:31:14.832177+00:00",
+      "email_log_id": "69e739f3-2e12-4d20-be63-69ba0611279d"
+    },
+    "d5f3ea14-618a-446f-8cda-ccb3da3e5f52": {
+      "id": "d5f3ea14-618a-446f-8cda-ccb3da3e5f52",
+      "campaign_id": "9bcdb14b-85cc-4867-8b5c-7d14f2b1a381",
+      "email": "delimitrou@csail.mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML for systems",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-04T11:31:14.951484+00:00",
+      "created_at": "2025-07-28T11:31:14.951484+00:00",
+      "email_log_id": "bdf9ac07-42d7-4782-829c-fd28207d14c4"
     }
   },
   "email_logs": [
@@ -252,6 +309,41 @@
       "email": "abelay@csail.mit.edu",
       "subject": "Research Internship Inquiry – Anamay Tripathy re: Systems for ML",
       "sent_at": "2025-07-28T10:25:36.833719+00:00"
+    },
+    {
+      "id": "1141b087-da9e-495d-a2eb-1d8397d58325",
+      "campaign_id": "9bcdb14b-85cc-4867-8b5c-7d14f2b1a381",
+      "email": "billf@mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Computational photography (AI)",
+      "sent_at": "2025-07-28T11:31:14.464354+00:00"
+    },
+    {
+      "id": "816161d0-8087-4d57-96d2-3b9030a587a2",
+      "campaign_id": "9bcdb14b-85cc-4867-8b5c-7d14f2b1a381",
+      "email": "bab@mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Computational biology (AI)",
+      "sent_at": "2025-07-28T11:31:14.588029+00:00"
+    },
+    {
+      "id": "523d2e22-cd53-4170-96be-78b771053ea4",
+      "campaign_id": "9bcdb14b-85cc-4867-8b5c-7d14f2b1a381",
+      "email": "uhler@mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML in biology",
+      "sent_at": "2025-07-28T11:31:14.710583+00:00"
+    },
+    {
+      "id": "69e739f3-2e12-4d20-be63-69ba0611279d",
+      "campaign_id": "9bcdb14b-85cc-4867-8b5c-7d14f2b1a381",
+      "email": "cel@mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Parallel computing for ML",
+      "sent_at": "2025-07-28T11:31:14.832177+00:00"
+    },
+    {
+      "id": "bdf9ac07-42d7-4782-829c-fd28207d14c4",
+      "campaign_id": "9bcdb14b-85cc-4867-8b5c-7d14f2b1a381",
+      "email": "delimitrou@csail.mit.edu",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML for systems",
+      "sent_at": "2025-07-28T11:31:14.951484+00:00"
     }
   ]
 }

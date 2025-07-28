@@ -28,7 +28,7 @@ class ResumeParser:
         self.pdf_path = pdf_path
         self.text = ""
         self.data = {}
-        # Use only Azure AI and rule-based parser (removed Ollama/Gemma3)
+        # Prioritize Azure AI but keep rule-based as fallback with explicit logging
         self.providers = [AzureAIResumeParser(), RuleBasedParser()]
 
     def extract_text(self) -> str:

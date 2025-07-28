@@ -274,7 +274,49 @@ class EmailGenerator:
             'projects': relevant_projects[:3]  # Limit to top 3 projects
         }
 
+    def build_enhanced_prompt(self, professor: Dict[str, Any], informal: bool = False) -> str:
+        """Build AI prompt with enhanced personalization based on research area"""
+        research_area = professor.get('Research Area', professor.get('research_area', ''))
+        professor_name = professor.get('Name', professor.get('name', ''))
+        university = professor.get('University', professor.get('university', ''))
+        
+        # Get relevant skills and projects
+        relevant = self.find_relevant_skills_and_projects(professor)
+        
+        # Enhanced AI personalization prompt
+        tone = 'warm and professional but concise' if informal else 'formal and research-focused'
+        
+        return f"""You are an AI assistant helping craft a personalized research internship email. 
+
+Professor Details:
+- Name: Prof. {professor_name}
+- Research Area: {research_area}
+- University: {university}
+
+Student Profile (Anamay Tripathy):
+- Background: B.Tech Data Science, MIT Manipal, India
+- Relevant Skills: {', '.join(relevant['skills'][:6])}
+- Key Projects: {', '.join(relevant['projects'][:3])}
+- Current Role: Technical Head at YaanBarpe (govt-incubated startup)
+
+Task: Write a {tone} email that:
+1. Shows genuine interest in the professor's specific research area
+2. Demonstrates how student's background aligns with their research
+3. Highlights relevant projects and technical skills
+4. Requests research internship opportunity (remote/on-site, funded/voluntary)
+5. Keeps content concise but impactful (under 200 words)
+6. Uses professional academic tone
+
+Personalization Instructions:
+- Connect student's AI/ML experience to professor's research area
+- Mention specific technical skills relevant to their work
+- Show enthusiasm for contributing to their research objectives
+- Include brief mention of graduate study aspirations
+
+Email content:"""
+
     def build_prompt(self, professor: Dict[str, Any], informal: bool = False) -> str:
+        """Fallback to simpler prompt if enhanced version fails"""
         research_area = professor.get('Research Area', professor.get('research_area', ''))
         professor_name = professor.get('Name', professor.get('name', ''))
         university = professor.get('University', professor.get('university', ''))
@@ -286,7 +328,7 @@ class EmailGenerator:
         experience = self.student_info.get('experience', [])
         relevant_exp = [exp for exp in experience if any(keyword in exp.lower() for keyword in ['data', 'technical', 'development', 'analyst'])]
         
-        # Optimized concise prompt for Gemma3
+        # Optimized concise prompt for AI models
         tone = 'informal professional' if informal else 'formal'
         return f"""Write {tone} internship email from Anamay to Prof. {professor_name}.
 
@@ -305,11 +347,19 @@ Requirements:
 Email:"""
 
     def generate_body(self, professor: Dict[str, Any], informal: bool = False) -> str:
-        # Use enhanced Jinja2 template with professional HTML formatting
+        # Use academic research-focused template with serious, professional formatting
         current_dir = os.path.dirname(os.path.dirname(__file__))  # Go up from src to InternMailer
-        template_path = os.path.join(current_dir, 'templates', 'academic_email_template.html')
+        template_path = os.path.join(current_dir, 'templates', 'academic_research_template.html')
         
-        # Fallback to original template if enhanced version doesn't exist
+        # Fallback to concise template if academic version doesn't exist
+        if not os.path.exists(template_path):
+            template_path = os.path.join(current_dir, 'templates', 'concise_research_template.html')
+            
+        # Fallback to enhanced template if concise doesn't exist
+        if not os.path.exists(template_path):
+            template_path = os.path.join(current_dir, 'templates', 'enhanced_email_template.html')
+            
+        # Final fallback to original template
         if not os.path.exists(template_path):
             template_path = os.path.join(current_dir, 'templates', 'email_template.txt')
             

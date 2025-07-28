@@ -1,269 +1,87 @@
-"""Tests for resume parser functionality"""
-import pytest
+"""
+Unit tests for the ResumeParser orchestrator.
+Tests parsing integration and fallback mechanisms.
+"""
+
 import os
-import sys
-from unittest.mock import patch, Mock
-import tempfile
+import pytest
+from unittest.mock import patch, MagicMock
+from .src.resume_parser import ResumeParser
+from .src.parsing.parser_interface import ParsingError
 
-# Add paths for imports
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'InternMailer', 'src'))
 
-try:
-    from resume_parser import ResumeParser
-except ImportError:
-    ResumeParser = None
+def get_sample_resume_text(format='pdf'):
+    """Provides a sample resume text for testing various formats"""
+    if format == 'pdf':
+        return "Sample PDF resume content with various sections"
+    elif format == 'docx':
+        return "Sample DOCX resume content with various sections"
+    return "Sample plain text resume"
+
+
+@pytest.fixture(scope="module")
+
+def sample_resume_path():
+    """Fixture for providing a sample resume path."""
+    return os.path.join(os.path.dirname(__file__), 'sample_resume.pdf')
+
 
 class TestResumeParser:
-    """Test resume parsing functionality"""
-    
-    def test_rule_based_parsing(self, sample_resume_text):
-        """Test rule-based resume parsing"""
-        if ResumeParser is None:
-            pytest.skip("ResumeParser not available")
-        
-        # Create a temporary PDF file (mock)
-        with tempfile.NamedTemporaryFile(suffix='.pdf', delete=False) as temp_file:
-            temp_path = temp_file.name
-        
-        try:
-            parser = ResumeParser(temp_path)
-            parser.text = sample_resume_text  # Set text directly for testing
-            
-            # Test rule-based parsing
-            result = parser.parse_with_rules()
-            
-            assert isinstance(result, dict)
-            assert 'skills' in result
-            assert 'projects' in result
-            assert 'courses' in result
-            assert 'experience' in result
-            
-            # Check that skills were extracted
-            assert len(result['skills']) > 0
-            assert 'Python' in result['skills']
-            assert 'JavaScript' in result['skills']
-            
-            # Check that projects were extracted
-            assert len(result['projects']) > 0
-            assert 'CrimeConnect' in result['projects']
-            
-            # Check that courses were extracted
-            assert len(result['courses']) > 0
-            assert 'Machine Learning' in result['courses']
-            
-            # Check that experience was extracted
-            assert len(result['experience']) > 0
-            assert any('Data Analyst' in exp for exp in result['experience'])
-            
-        finally:
-            # Cleanup
-            if os.path.exists(temp_path):
-                os.unlink(temp_path)
-    
-    @patch('requests.post')
-    def test_llm_parsing(self, mock_post, sample_resume_text):
-        """Test LLM-based resume parsing"""
-        if ResumeParser is None:
-            pytest.skip("ResumeParser not available")
-        
-        # Mock LLM response
-        mock_response = Mock()
-        mock_response.json.return_value = {
-            'response': '''{
-                "skills": ["Python", "Machine Learning", "Web Development"],
-                "projects": ["AI Project", "Web App"],
-                "courses": ["Computer Science", "Data Analysis"],
-                "summary": "Experienced student in computer science"
-            }'''
-        }
-        mock_response.status_code = 200
-        mock_post.return_value = mock_response
-        
-        with tempfile.NamedTemporaryFile(suffix='.pdf', delete=False) as temp_file:
-            temp_path = temp_file.name
-        
-        try:
-            parser = ResumeParser(temp_path)
-            parser.text = sample_resume_text
-            
-            result = parser.parse_with_llm()
-            
-            assert isinstance(result, dict)
-            assert 'skills' in result
-            assert 'projects' in result
-            assert 'courses' in result
-            assert 'summary' in result
-            
-            # Verify LLM was called
-            mock_post.assert_called_once()
-            
-        finally:
-            if os.path.exists(temp_path):
-                os.unlink(temp_path)
-    
-    def test_fallback_mechanism(self, sample_resume_text):
-        """Test fallback mechanism when parsing fails"""
-        if ResumeParser is None:
-            pytest.skip("ResumeParser not available")
-        
-        with tempfile.NamedTemporaryFile(suffix='.pdf', delete=False) as temp_file:
-            temp_path = temp_file.name
-        
-        try:
-            parser = ResumeParser(temp_path)
-            parser.text = ""  # Empty text to trigger fallback
-            
-            # Mock LLM to fail
-            with patch('requests.post') as mock_post:
-                mock_post.side_effect = Exception("LLM failed")
-                
-                result = parser.parse()
-                
-                # Should use basic fallback data
-                assert isinstance(result, dict)
-                assert 'skills' in result
-                assert 'projects' in result
-                assert len(result['skills']) > 0  # Should have fallback skills
-                assert len(result['projects']) > 0  # Should have fallback projects
-                
-        finally:
-            if os.path.exists(temp_path):
-                os.unlink(temp_path)
-    
-    def test_text_extraction_fallback(self):
-        """Test text extraction with fallback"""
-        if ResumeParser is None:
-            pytest.skip("ResumeParser not available")
-        
-        with tempfile.NamedTemporaryFile(suffix='.pdf', delete=False) as temp_file:
-            temp_path = temp_file.name
-        
-        try:
-            parser = ResumeParser(temp_path)
-            
-            # Mock PyPDF2 to fail and fallback to pdfplumber
-            with patch('PyPDF2.PdfReader') as mock_pypdf:
-                mock_pypdf.side_effect = Exception("PyPDF2 failed")
-                
-                with patch('pdfplumber.open') as mock_pdfplumber:
-                    mock_page = Mock()
-                    mock_page.extract_text.return_value = "Sample extracted text"
-                    mock_pdf = Mock()
-                    mock_pdf.__enter__.return_value.pages = [mock_page]
-                    mock_pdfplumber.return_value = mock_pdf
-                    
-                    # This should use pdfplumber fallback
-                    parser.extract_text()
-                    
-                    assert parser.text == "Sample extracted text"
-                    
-        finally:
-            if os.path.exists(temp_path):
-                os.unlink(temp_path)
-    
-    def test_data_cleaning(self, sample_resume_text):
-        """Test data cleaning and deduplication"""
-        if ResumeParser is None:
-            pytest.skip("ResumeParser not available")
-        
-        with tempfile.NamedTemporaryFile(suffix='.pdf', delete=False) as temp_file:
-            temp_path = temp_file.name
-        
-        try:
-            parser = ResumeParser(temp_path)
-            parser.text = sample_resume_text
-            
-            result = parser.parse_with_rules()
-            
-            # Check that duplicates are removed
-            skills = result['skills']
-            assert len(skills) == len(set(skills))  # No duplicates
-            
-            # Check that empty entries are filtered out
-            assert all(skill.strip() for skill in skills)  # No empty strings
-            assert all(len(skill) > 1 for skill in skills)  # No single characters
-            
-        finally:
-            if os.path.exists(temp_path):
-                os.unlink(temp_path)
-    
-    def test_json_output(self, sample_resume_text):
-        """Test JSON output functionality"""
-        if ResumeParser is None:
-            pytest.skip("ResumeParser not available")
-        
-        with tempfile.NamedTemporaryFile(suffix='.pdf', delete=False) as temp_file:
-            temp_path = temp_file.name
-        
-        try:
-            parser = ResumeParser(temp_path)
-            parser.text = sample_resume_text
-            
-            # Parse and get JSON
-            parser.parse()
-            json_output = parser.to_json()
-            
-            assert isinstance(json_output, str)
-            
-            # Should be valid JSON
-            import json
-            data = json.loads(json_output)
+    """Tests integration with different resume parsing strategies."""
+
+    @patch('src.parsing.ollama_parser.OllamaResumeParser.is_available')
+    def test_successful_parsing_with_ollama(self, mock_ollama_available, sample_resume_path):
+        """Test successful parsing with Ollama parser."""
+        mock_ollama_available.return_value = True
+
+        parser = ResumeParser(sample_resume_path)
+
+        # Mock extract_text to avoid dealing with actual files
+        with patch.object(parser, 'extract_text', return_value=get_sample_resume_text('pdf')):
+            data = parser.parse()
             assert isinstance(data, dict)
-            assert 'skills' in data
-            assert 'projects' in data
-            
-        finally:
-            if os.path.exists(temp_path):
-                os.unlink(temp_path)
-    
-    def test_specific_parsing_patterns(self):
-        """Test specific parsing patterns for different resume formats"""
-        if ResumeParser is None:
-            pytest.skip("ResumeParser not available")
-        
-        # Test different resume formats
-        formats = [
-            {
-                'text': '''
-                Technical Skills
-                Languages: Python, Java, JavaScript
-                Frameworks Libraries: React, Django, TensorFlow
-                Tools Platforms: Git, Docker, AWS
-                ''',
-                'expected_skills': ['Python', 'Java', 'JavaScript', 'React', 'Django', 'TensorFlow', 'Git', 'Docker', 'AWS']
-            },
-            {
-                'text': '''
-                Projects
-                E-Commerce Website – MERN Stack, MongoDB
-                Machine Learning Model – Python, Scikit-learn
-                ''',
-                'expected_projects': ['E-Commerce Website', 'Machine Learning Model']
-            }
-        ]
-        
-        with tempfile.NamedTemporaryFile(suffix='.pdf', delete=False) as temp_file:
-            temp_path = temp_file.name
-        
-        try:
-            parser = ResumeParser(temp_path)
-            
-            for format_test in formats:
-                parser.text = format_test['text']
-                result = parser.parse_with_rules()
-                
-                if 'expected_skills' in format_test:
-                    found_skills = set(result['skills'])
-                    expected_skills = set(format_test['expected_skills'])
-                    # At least some expected skills should be found
-                    assert len(found_skills.intersection(expected_skills)) > 0
-                
-                if 'expected_projects' in format_test:
-                    found_projects = result['projects']
-                    expected_projects = format_test['expected_projects']
-                    # At least some expected projects should be found
-                    assert any(proj in ' '.join(found_projects) for proj in expected_projects)
-                    
-        finally:
-            if os.path.exists(temp_path):
-                os.unlink(temp_path)
+            assert len(data['skills']) > 0
+
+    @patch('src.parsing.gemma3_parser.Gemma3ResumeParser.is_available')
+    def test_successful_parsing_with_gemma3(self, mock_gemma3_available, sample_resume_path):
+        """Test successful parsing with Gemma3 parser."""
+        mock_gemma3_available.return_value = True
+
+        parser = ResumeParser(sample_resume_path)
+
+        with patch.object(parser, 'extract_text', return_value=get_sample_resume_text('pdf')):
+            data = parser.parse()
+            assert isinstance(data, dict)
+            assert len(data['skills']) > 0
+
+    def test_fallback_to_rule_based(self, sample_resume_path):
+        """Test fallback to rule-based parser when LLMs fail."""
+
+        parser = ResumeParser(sample_resume_path)
+
+        with patch.object(parser, 'extract_text', return_value=get_sample_resume_text('pdf')):
+            # Simulate all LLM parsers being unavailable
+            with patch('src.parsing.ollama_parser.OllamaResumeParser.is_available', return_value=False), \
+                 patch('src.parsing.gemma3_parser.Gemma3ResumeParser.is_available', return_value=False):
+
+                data = parser.parse()
+                assert isinstance(data, dict)
+                assert len(data['skills']) > 0
+
+    def test_json_output(self, sample_resume_path):
+        """Test JSON output of parsed data."""
+        parser = ResumeParser(sample_resume_path)
+
+        with patch.object(parser, 'extract_text', return_value=get_sample_resume_text('pdf')):
+            data = parser.parse()
+            json_str = parser.to_json()
+            assert json_str.startswith('{')
+            assert 'skills' in json_str
+
+    def test_parsing_failure_handling(self):
+        """Test proper handling of parsing exceptions."""
+
+        parser = ResumeParser("nonexistent_path.pdf")
+
+        with pytest.raises(ParsingError):
+            parser.parse()

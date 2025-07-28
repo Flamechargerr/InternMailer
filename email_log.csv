@@ -1,3 +1,31 @@
-Email,Subject,Status,Timestamp,Error
-tripathy.anamay23@gmail.com,Test Email from InternMailer,auth_error,2025-07-27 13:11:04,"Gmail authentication failed: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials 41be03b00d2f7-b3f7f6af84fsm2617767a12.50 - gsmtp')"
-tripathy.anamay23@gmail.com,[TEST EMAIL FOR APPROVAL] Research Internship Inquiry – Anamay Tripathy re: Distributed systems (AI),auth_error,2025-07-27 13:21:54,"Gmail authentication failed: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-23ffa37f11bsm10906215ad.181 - gsmtp')"
+timestamp,email,name,university,status,error
+2025-07-27 20:05:41,Alan Fekete,Australia,University of Sydney,failed,"(535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials 98e67ed59e1d1-31e62246f8bsm5105756a91.1 - gsmtp')"
+2025-07-27 20:05:46,pjb48@cam.ac.uk,Paula Buttery,University of Cambridge,failed,"(535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials 98e67ed59e1d1-31e83545002sm3692735a91.27 - gsmtp')"
+2025-07-27 20:05:52,patrick.decausmaecker@kuleuven.be,Patrick De Causmaecker,KU Leuven (Belgium),failed,"(535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2402ea85da7sm1472185ad.37 - gsmtp')"
+2025-07-27 20:08:46,ghlee@comp.nus.edu.sg,Gim Hee Lee,National University of Singapore (NUS),sent,
+2025-07-27 20:08:52,christian.holz@inf.ethz.ch,Christian Holz,ETH Zurich,sent,
+2025-07-27 20:08:58,Catholijn Jonker,Netherlands,TU Delft,failed,"{'Catholijn Jonker': (553, b'5.1.3 The recipient address <Catholijn> is not a valid RFC 5321 address. For\n5.1.3 more information, go to\n5.1.3  https://support.google.com/a/answer/3221692 and review RFC 5321\n5.1.3 specifications. d2e1a72fcca58-7640adfbf87sm3581925b3a.71 - gsmtp')}"
+2025-07-27 20:15:54,p.gardner@imperial.ac.uk,Philippa Gardner,Imperial College London,sent,
+2025-07-27 20:19:46,cpiech@stanford.edu,Chris Piech,Stanford University,sent,
+2025-07-27 20:19:54,samuel.kaski@manchester.ac.uk,Samuel Kaski,University of Manchester (UK),sent,
+2025-07-27 20:20:01,prateeks@comp.nus.edu.sg,Prateek Saxena,National University of Singapore (NUS),sent,
+2025-07-27 20:35:41,beerys@mit.edu,Sara Beery,Massachusetts Institute of Technology (MIT),sent,
+2025-07-27 20:35:46,Athman Bouguettaya,Australia,University of Sydney,failed,"{'Athman Bouguettaya': (553, b'5.1.3 The recipient address <Athman> is not a valid RFC 5321 address. For\n5.1.3 more information, go to\n5.1.3  https://support.google.com/a/answer/3221692 and review RFC 5321\n5.1.3 specifications. 98e67ed59e1d1-31ee4c99309sm315050a91.1 - gsmtp')}"
+2025-07-27 20:35:54,s.j.l.smets@uva.nl,Sonja Smets,University of Amsterdam (Netherlands),sent,
+2025-07-27 20:36:01,d.paccagnan@imperial.ac.uk,Dario Paccagnan,Imperial College London,sent,
+2025-07-27 20:36:08,lucas.cordeiro@manchester.ac.uk,Lucas Cordeiro,University of Manchester (UK),sent,
+abelay@csail.mit.edu,Research Internship Inquiry – Anamay Tripathy re: Systems for ML,sent,2025-07-28 07:15:35,
+adamc@csail.mit.edu,Research Internship Inquiry – Anamay Tripathy re: AI verification,sent,2025-07-28 07:15:40,
+rakhlin@mit.edu,Research Internship Inquiry – Anamay Tripathy re: ML theory,sent,2025-07-28 07:15:45,
+agarwal@mit.edu,Research Internship Inquiry – Anamay Tripathy re: AI in education,sent,2025-07-28 07:15:50,
+moitra@mit.edu,Research Internship Inquiry – Anamay Tripathy re: ML algorithms,sent,2025-07-28 07:15:55,
+torralba@csail.mit.edu,Research Internship Inquiry – Anamay Tripathy re: Computer vision (AI),sent,2025-07-28 07:15:59,
+asolar@csail.mit.edu,Research Internship Inquiry – Anamay Tripathy re: AI synthesis,sent,2025-07-28 07:16:05,
+arvind@csail.mit.edu,Research Internship Inquiry – Anamay Tripathy re: AI hardware,sent,2025-07-28 07:16:10,
+asuman@mit.edu,Research Internship Inquiry – Anamay Tripathy re: AI optimization,sent,2025-07-28 07:16:15,
+liskov@csail.mit.edu,Research Internship Inquiry – Anamay Tripathy re: Distributed systems (AI),sent,2025-07-28 07:16:21,
+tripathy.anamay23@gmail.com,Test Email from InternMailer,sent,2025-07-28 15:17:52,
+tripathy.anamay23@gmail.com,[TEST] InternMailer System Verification - Research Internship Inquiry,sent,2025-07-28 15:24:27,
+tripathy.anamay23@gmail.com,"Research Internship Opportunity - Anamay Tripathy (B.Tech Data Science, MIT Manipal)",sent,2025-07-28 15:27:07,
+tripathy.anamay23@gmail.com,Research Internship Inquiry – Anamay Tripathy re: Distributed systems (AI),sent,2025-07-28 15:30:27,
+tripathy.anamay23@gmail.com,Research Internship Inquiry – Anamay Tripathy re: Distributed systems (AI),sent,2025-07-28 15:33:43,

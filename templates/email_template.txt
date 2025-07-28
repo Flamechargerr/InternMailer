@@ -1,45 +1,54 @@
-Dear Prof. {{ professor.name }},
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body style="margin: 0; padding: 0; background-color: #f8f8f8;">
+    <div style="max-width: 800px; margin: auto; background: #ffffff; padding: 30px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; line-height: 1.6; color: #333;">
+      
+      <p>Dear Prof. {{ professor.last_name }},</p>
 
-I hope this message finds you in good health and spirits.
+      <p>
+        I am <strong>Anamay Tripathy</strong>, a third-year B.Tech Data Science student at MIT Manipal, India (CGPA: 7.6/10). I am writing to express my strong interest in a research internship with your esteemed group, particularly in the areas of <strong>{{ professor.research_area }}</strong> and <strong>Artificial Intelligence</strong>.
+      </p>
 
-My name is {{ student.name }}, and I am currently pursuing my Bachelor of Technology in Data Science and Engineering at Manipal Institute of Technology, Manipal Academy of Higher Education, India. I am in my third year with a CGPA of 7.6/10, which reflects consistent academic performance within our institute's rigorous evaluation framework.
+      <p>
+        Your pioneering contributions to distributed computing and AI have been a significant inspiration for me. I am eager to contribute meaningfully to your ongoing work and deepen my understanding under your guidance.
+      </p>
 
-I am writing to express my sincere interest in contributing to your esteemed research group at {{ professor.university }}. Having extensively reviewed your publications and research contributions in {{ professor.research_area }}, I am particularly drawn to the innovative methodologies and impactful outcomes of your work. Your research aligns remarkably well with my academic pursuits and long-term career aspirations in computational sciences and artificial intelligence.
+      <p>
+        Currently, I serve as the <strong>Technical Head</strong> at <a href="https://www.yaanbarpe.in/" target="_blank">YaanBarpe</a>, a Karnataka Government-incubated startup, where I lead product development and technical strategy. Previously, I completed a <strong>Data Analyst Internship</strong> at Intellect Design Arena, Mumbai, where I automated KPI dashboards using Python and SQL (saving 12+ hours weekly) and developed REST APIs that improved user engagement by 22%.
+      </p>
 
-My academic and professional background encompasses several relevant dimensions:
+      <p>
+        My passion for research is reflected in several innovative projects I've developed. I created <a href="https://crime-connect-fbi.lovable.app/login" target="_blank"><strong>CrimeConnect</strong></a>, an FBI-inspired case management dashboard built with the MERN stack and Supabase, which achieved a 40% reduction in case processing time through AI-powered analytics. Another significant project, <a href="https://match-predictor-genie-66.lovable.app/" target="_blank"><strong>VARtificial Intelligence</strong></a>, is an ML-based football match predictor using XGBoost and Pyodide that achieves 89% accuracy by incorporating real-time player statistics and historical data analysis.
+      </p>
 
-**Research Interests & Academic Foundation:**
-• Deep engagement with {{ professor.research_area | lower }}, machine learning algorithms, and statistical modeling
-• Coursework in Advanced Data Structures, Machine Learning, Statistical Methods, and Computational Mathematics
-• Strong mathematical foundation in Linear Algebra, Probability Theory, and Discrete Mathematics
+      <p>
+        In the cybersecurity domain, I developed <a href="https://flamechargerr.github.io/" target="_blank"><strong>HackOps</strong></a>, a comprehensive simulation and training platform featuring 25+ security challenges covering penetration testing, network security, and incident response, which improved user cyber-awareness by 35%. I also created <a href="https://github.com/Flamechargerr/flora-fight-frenzy" target="_blank"><strong>Flora Fight Frenzy</strong></a>, a tower defense game inspired by Plant vs Zombies but with original gameplay mechanics, demonstrating my versatility in software development.
+      </p>
 
-**Professional Experience:**
-• Research Intern at Intellect Design Arena Ltd., Mumbai, focusing on data analytics pipeline development and predictive modeling
-• Technical Lead at YaanBarpe (Government of Karnataka incubated startup), overseeing product architecture and algorithm development
-• {% if student.projects %}Experience in {{ student.projects[:2] | join(' and ') }}, demonstrating practical application of theoretical concepts{% endif %}
+      <p>
+        My technical expertise spans multiple domains including <strong>programming languages</strong> (Python, JavaScript, Java, C++, SQL), <strong>AI/ML frameworks</strong> (TensorFlow, PyTorch, Scikit-learn, XGBoost, OpenCV), <strong>web technologies</strong> (React, Node.js, MongoDB, Next.js), and <strong>cloud platforms</strong> (AWS, GCP, Docker, Supabase, Firebase). Through coursework in Data Structures & Algorithms, Machine Learning, DBMS, Computer Networks, and Software Engineering, I have built a solid theoretical foundation to complement my practical experience.
+      </p>
 
-**Technical Proficiencies:**
-{% if student.skills %}
-• Programming and Frameworks: {{ student.skills | join(', ') }}
-{% else %}
-• Programming Languages: Python, R, JavaScript, SQL
-• Machine Learning: TensorFlow, PyTorch, Scikit-learn, Pandas, NumPy
-• Development: React.js, Node.js, MongoDB, Git
-{% endif %}
-• Research Tools: Jupyter, LaTeX, MATLAB, Statistical Analysis
+      <p>
+        I am confident that my academic foundation, hands-on experience, and enthusiasm for research align well with your group's goals. I would be grateful for the opportunity to contribute as a research intern—remotely or on-site, funded or voluntary. I believe my background in distributed systems, AI applications, and data science would allow me to make meaningful contributions to your ongoing research while learning from your expertise.
+      </p>
 
-I am particularly interested in exploring research opportunities during the {{ student.season | default('Winter 2025 or Summer 2026') }} period. Given my financial circumstances, I am especially keen on fully-funded positions or remote research collaborations. However, I am highly motivated and would be grateful for any opportunity to contribute to your research endeavors, regardless of the format or duration.
+      <p>
+        I would be delighted to discuss how my experience and passion for research can contribute to your lab's work. Please find my detailed CV attached, and feel free to explore my <a href="https://anamay.vercel.app/" target="_blank">portfolio</a> and <a href="https://github.com/Flamechargerr" target="_blank">GitHub</a> for a comprehensive view of my projects.
+      </p>
 
-My immediate research interests include exploring the intersection of {{ professor.research_area | lower }} with practical applications in industry settings. I am eager to contribute to ongoing projects while developing my research methodology and analytical skills under your mentorship.
+      <p>Thank you for your time and consideration.</p>
 
-I have enclosed my detailed curriculum vitae for your review. I would be honored to discuss how my background and enthusiasm can contribute to your research objectives, and I am happy to provide additional documentation, including academic transcripts, project portfolios, or writing samples.
+      <p style="margin-top: 20px;">
+        Warm regards,<br />
+        <strong>Anamay Tripathy</strong><br />
+        <a href="mailto:tripathy.anamay23@gmail.com">tripathy.anamay23@gmail.com</a> | <a href="tel:+919877454747">+91-9877454747</a><br />
+        <a href="https://linkedin.com/in/anamay-tripathy" target="_blank">LinkedIn</a> | <a href="https://anamay.vercel.app/" target="_blank">Portfolio</a> | <a href="https://github.com/Flamechargerr/Flamechargerr/blob/main/README.md" target="_blank">GitHub Profile</a>
+      </p>
 
-Thank you for considering my application. I look forward to the possibility of contributing to your research group and learning from your expertise.
-
-With sincere regards,
-
-{{ student.name }}
-Bachelor of Technology - Data Science & Engineering
-Manipal Institute of Technology, Manipal Academy of Higher Education
-📧 {{ student.email }} | 📱 +91 98774 54747
-🔗 LinkedIn: linkedin.com/in/anamay-tripathy | GitHub: github.com/anamay-tripathy
+    </div>
+  </body>
+</html>

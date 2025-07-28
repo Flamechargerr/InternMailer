@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <title>Research Internship Inquiry</title>
+  </head>
+  <body style="margin: 0; padding: 0; background-color: #ffffff; font-family: 'Georgia', serif; line-height: 1.6; color: #333;">
+    
+    <!-- Main Container -->
+    <div style="max-width: 650px; margin: 40px auto; background: #ffffff; padding: 20px;">
+      
+      <!-- Header -->
+      <div style="border-bottom: 1px solid #dddddd; padding-bottom: 15px; margin-bottom: 20px;">
+        <p style="margin: 0; font-size: 14px; color: #555555;">
+          Dear <strong>Prof. {{ professor.last_name }}</strong>,
+        </p>
+      </div>
+
+      <!-- Introduction -->
+      <p style="margin: 0 0 15px 0; font-size: 14px; text-align: justify;">
+        I am <strong>Anamay Tripathy</strong>, a third-year B.Tech Data Science student at MIT Manipal, India. I am interested in a research internship with your group, focusing on <strong>{{ professor.research_area }}</strong> and its applications in AI.
+      </p>
+
+      <!-- Research Interests -->
+      <p style="margin: 0 0 15px 0; font-size: 14px; text-align: justify;">
+        Your work in {{ professor.research_area.lower() }} has inspired my academic pursuits. I aim to contribute to your research on {{ professor.research_focus.upper() }} and enhance my understanding under your guidance.
+      </p>
+
+      <!-- Academic & Experience Summary -->
+      <div style="margin-bottom: 20px;">
+        <h3 style="margin: 0 0 10px 0; font-size: 14px; font-weight: bold;">Academic Background & Experience</h3>
+        <ul style="margin: 0; padding-left: 20px; font-size: 13px;">
+          <li><strong>CGPA:</strong> 7.6 / 10, <strong>Degree:</strong> B.Tech Data Science</li>
+          <li><strong>Technical Head</strong> at YaanBarpe: Leading sustainable tech initiatives</li>
+          <li><strong>Data Analyst Intern</strong> at Intellect Design Arena: Improved analytics by automating dashboard</li>
+        </ul>
+      </div>
+
+      <!-- Selected Projects -->
+      <div style="margin-bottom: 20px;">
+        <h3 style="margin: 0 0 10px 0; font-size: 14px; font-weight: bold;">Selected Projects</h3>
+        <ul style="margin: 0; padding-left: 20px; font-size: 13px;">
+          <li><strong>CrimeConnect</strong>: AI-driven case management reducing process time by 40%</li>
+          <li><strong>VARtificial Intelligence</strong>: Sports prediction model with 89% accuracy</li>
+          <li><strong>HackOps</strong>: Cybersecurity platform with effective training modules</li>
+        </ul>
+      </div>
+      
+      <!-- Closing -->
+      <p style="margin: 0 0 20px 0; font-size: 14px; text-align: justify;">
+        I am eager to explore more about my research interests under your mentorship. Please find my CV attached.
+      </p>
+
+      <!-- Contact Information -->
+      <div style="margin-top: 20px;">
+        <p style="margin: 0; font-size: 13px;">
+          Sincerely,<br>
+          <strong>Anamay Tripathy</strong><br>
+          Email: <a href="mailto:tripathy.anamay23@gmail.com" style="color: #0066cc;">tripathy.anamay23@gmail.com</a> | Phone: <a href="tel:+919877454747" style="color: #0066cc;">+91-9877454747</a><br>
+          <a href="https://anamay.vercel.app/" target="_blank" style="color: #0066cc;">Portfolio</a> | <a href="https://linkedin.com/in/anamay-tripathy" target="_blank" style="color: #0066cc;">LinkedIn</a> | <a href="https://github.com/Flamechargerr" target="_blank" style="color: #0066cc;">GitHub</a>
+        </p>
+      </div>
+
+    </div>
+
+  </body>
+</html>

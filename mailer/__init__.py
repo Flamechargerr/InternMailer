@@ -1,1 +1,0 @@
-# Mailer module for InternMailer

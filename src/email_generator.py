@@ -213,9 +213,103 @@ class EmailGenerator:
         else:
             return f"Research Internship Inquiry – {self.student_info.get('name', '')} re: {research_area}"
 
-    def find_relevant_skills_and_projects(self, professor: Dict[str, Any]) -> Dict[str, Any]:
-        """Find skills and projects most relevant to professor's research area"""
+    def build_research_specific_context(self, professor: Dict[str, Any]) -> Dict[str, Any]:
+        """Build comprehensive research-specific context for deep personalization"""
         research_area = professor.get('Research Area', professor.get('research_area', '')).lower()
+        recent_papers = professor.get('Recent Papers', professor.get('recent_papers', []))
+        current_projects = professor.get('Current Projects', professor.get('current_projects', []))
+        research_keywords = professor.get('Research Keywords', professor.get('research_keywords', []))
+        lab_focus = professor.get('Lab Focus', professor.get('lab_focus', ''))
+        
+        # Enhanced research area mappings with specific techniques and methodologies
+        research_mappings = {
+            'machine learning': {
+                'skills': ['Python', 'TensorFlow', 'PyTorch', 'Scikit-learn', 'XGBoost', 'Pandas', 'NumPy'],
+                'techniques': ['deep learning', 'neural networks', 'ensemble methods', 'feature engineering', 'model optimization'],
+                'applications': ['predictive modeling', 'classification', 'regression', 'clustering', 'dimensionality reduction'],
+                'projects': ['VARtificial Intelligence', 'CrimeConnect']
+            },
+            'distributed systems': {
+                'skills': ['Python', 'Java', 'Docker', 'AWS', 'GCP', 'JavaScript', 'SQL'],
+                'techniques': ['fault tolerance', 'consensus algorithms', 'load balancing', 'microservices', 'containerization'],
+                'applications': ['scalable architectures', 'cloud computing', 'system reliability', 'performance optimization'],
+                'projects': ['CrimeConnect', 'YaanBarpe system architecture']
+            },
+            'programming languages': {
+                'skills': ['Python', 'JavaScript', 'Java', 'C++', 'Git', 'Docker'],
+                'techniques': ['compiler design', 'language semantics', 'type systems', 'program verification', 'static analysis'],
+                'applications': ['language implementation', 'developer tools', 'code analysis', 'program synthesis'],
+                'projects': ['HackOps', 'CrimeConnect']
+            },
+            'computer vision': {
+                'skills': ['Python', 'TensorFlow', 'PyTorch', 'OpenCV', 'NumPy'],
+                'techniques': ['convolutional neural networks', 'image processing', 'object detection', 'feature extraction'],
+                'applications': ['image classification', 'computer graphics', 'augmented reality', 'medical imaging'],
+                'projects': ['VARtificial Intelligence', 'CrimeConnect']
+            },
+            'natural language processing': {
+                'skills': ['Python', 'TensorFlow', 'PyTorch', 'Scikit-learn', 'NumPy'],
+                'techniques': ['transformer models', 'text processing', 'sentiment analysis', 'language modeling'],
+                'applications': ['chatbots', 'text analysis', 'machine translation', 'information extraction'],
+                'projects': ['CrimeConnect', 'VARtificial Intelligence']
+            },
+            'cybersecurity': {
+                'skills': ['Python', 'JavaScript', 'SQL', 'Docker', 'AWS'],
+                'techniques': ['penetration testing', 'vulnerability assessment', 'security protocols', 'encryption'],
+                'applications': ['network security', 'web security', 'incident response', 'security automation'],
+                'projects': ['HackOps', 'CrimeConnect']
+            },
+            'database systems': {
+                'skills': ['SQL', 'MongoDB', 'Python', 'Java', 'Docker'],
+                'techniques': ['query optimization', 'indexing', 'transaction processing', 'data modeling'],
+                'applications': ['data management', 'performance tuning', 'distributed databases', 'data analytics'],
+                'projects': ['CrimeConnect', 'Intellect Design Arena work']
+            },
+            'human-computer interaction': {
+                'skills': ['JavaScript', 'Python', 'React.js', 'HTML/CSS'],
+                'techniques': ['user experience design', 'interface design', 'usability testing', 'accessibility'],
+                'applications': ['web interfaces', 'mobile apps', 'user research', 'design systems'],
+                'projects': ['HackOps', 'YaanBarpe interface design']
+            }
+        }
+        
+        # Find the most relevant research mapping
+        relevant_context = {'skills': [], 'techniques': [], 'applications': [], 'projects': []}
+        
+        for area, context in research_mappings.items():
+            if area in research_area or any(keyword.lower() in research_area for keyword in research_keywords):
+                relevant_context['skills'].extend(context['skills'])
+                relevant_context['techniques'].extend(context['techniques'])
+                relevant_context['applications'].extend(context['applications'])
+                relevant_context['projects'].extend(context['projects'])
+        
+        # Remove duplicates and limit results
+        for key in relevant_context:
+            relevant_context[key] = list(dict.fromkeys(relevant_context[key]))[:5]
+        
+        # If no specific matches, use general CS skills
+        if not relevant_context['skills']:
+            relevant_context['skills'] = ['Python', 'JavaScript', 'TensorFlow', 'AWS', 'Docker'][:5]
+            relevant_context['projects'] = ['CrimeConnect', 'VARtificial Intelligence'][:2]
+        
+        return {
+            'relevant_skills': relevant_context['skills'],
+            'relevant_techniques': relevant_context['techniques'],
+            'relevant_applications': relevant_context['applications'],
+            'relevant_projects': relevant_context['projects'],
+            'recent_papers': recent_papers,
+            'current_projects': current_projects,
+            'research_keywords': research_keywords,
+            'lab_focus': lab_focus
+        }
+    
+    def find_relevant_skills_and_projects(self, professor: Dict[str, Any]) -> Dict[str, Any]:
+        """Legacy method for backward compatibility"""
+        context = self.build_research_specific_context(professor)
+        return {
+            'skills': context['relevant_skills'],
+            'projects': context['relevant_projects']
+        }
         
         # Define research area keywords and their related skills/projects
         area_mappings = {
@@ -273,6 +367,73 @@ class EmailGenerator:
             'skills': list(relevant_skills)[:8],  # Limit to top 8 skills
             'projects': relevant_projects[:3]  # Limit to top 3 projects
         }
+
+    def build_research_aware_prompt(self, professor: Dict[str, Any], informal: bool = False) -> str:
+        """Build advanced AI prompt with deep research personalization"""
+        research_context = self.build_research_specific_context(professor)
+        
+        research_area = professor.get('Research Area', professor.get('research_area', ''))
+        professor_name = professor.get('Name', professor.get('name', ''))
+        university = professor.get('University', professor.get('university', ''))
+        
+        # Build comprehensive research context
+        recent_papers = research_context.get('recent_papers', [])
+        current_projects = research_context.get('current_projects', [])
+        research_keywords = research_context.get('research_keywords', [])
+        relevant_techniques = research_context.get('relevant_techniques', [])
+        relevant_applications = research_context.get('relevant_applications', [])
+        
+        tone = 'warm and professional but research-aware' if informal else 'formal and deeply research-focused'
+        
+        # Build papers context
+        papers_context = ""
+        if recent_papers:
+            papers_context = f"\n- Recent Papers: {', '.join(recent_papers[:3])}"
+        
+        # Build projects context
+        projects_context = ""
+        if current_projects:
+            projects_context = f"\n- Current Research Projects: {', '.join(current_projects[:3])}"
+        
+        # Build techniques context
+        techniques_context = ""
+        if relevant_techniques:
+            techniques_context = f"\n- Key Research Techniques: {', '.join(relevant_techniques[:5])}"
+        
+        return f"""You are an AI research communication specialist crafting a highly personalized internship email that demonstrates deep understanding of the professor's work.
+
+Professor Profile:
+- Name: Prof. {professor_name}
+- Research Area: {research_area}
+- University: {university}{papers_context}{projects_context}{techniques_context}
+- Research Keywords: {', '.join(research_keywords[:5]) if research_keywords else 'general ' + research_area}
+
+Student Profile (Anamay Tripathy):
+- Background: B.Tech Data Science & Engineering, MIT Manipal, India
+- Relevant Technical Skills: {', '.join(research_context['relevant_skills'][:6])}
+- Research-Aligned Projects: {', '.join(research_context['relevant_projects'][:3])}
+- Current Role: Technical Head at YaanBarpe (Karnataka Govt-incubated startup)
+- Research Applications Experience: {', '.join(relevant_applications[:4])}
+
+TASK: Write a {tone} email that:
+
+1. **Research Awareness**: Reference specific aspects of their research (papers, projects, or techniques if available)
+2. **Technical Alignment**: Connect student's skills to professor's specific methodologies 
+3. **Project Relevance**: Highlight how student's projects relate to their research applications
+4. **Future Vision**: Show understanding of where their research is heading and societal impact
+5. **Genuine Interest**: Demonstrate that this isn't a mass email but targeted interest
+6. **Concise Impact**: Under 250 words but information-dense
+
+PERSONALIZATION REQUIREMENTS:
+- If recent papers available, briefly mention alignment with their research direction
+- If current projects known, express interest in contributing to specific areas
+- Connect student's experience with {', '.join(relevant_techniques[:3]) if relevant_techniques else research_area} to their work
+- Show how student's background in {', '.join(research_context['relevant_skills'][:3])} directly supports their research
+- Emphasize societal impact and real-world applications
+
+TONE: Professional academic correspondence that shows research sophistication
+
+Generate the email content:"""
 
     def build_enhanced_prompt(self, professor: Dict[str, Any], informal: bool = False) -> str:
         """Build AI prompt with enhanced personalization based on research area"""
@@ -347,9 +508,13 @@ Requirements:
 Email:"""
 
     def generate_body(self, professor: Dict[str, Any], informal: bool = False) -> str:
-        # Use motivation-focused research template with crisp, professional formatting
+        # Use research-aware template with specific work references
         current_dir = os.path.dirname(os.path.dirname(__file__))  # Go up from src to main directory
-        template_path = os.path.join(current_dir, 'InternMailer', 'templates', 'motivation_research_template.html')
+        template_path = os.path.join(current_dir, 'InternMailer', 'templates', 'research_aware_template.html')
+        
+        # Fallback to motivation template if research-aware doesn't exist
+        if not os.path.exists(template_path):
+            template_path = os.path.join(current_dir, 'InternMailer', 'templates', 'motivation_research_template.html')
         
         # Fallback to academic template if motivation version doesn't exist
         if not os.path.exists(template_path):
@@ -492,13 +657,35 @@ BTech Data Science | MIT Manipal
 🔗 LinkedIn: linkedin.com/in/anamay-tripathy | GitHub: github.com/anamay-tripathy"""
 
     def generate_with_llm(self, professor: Dict[str, Any], informal: bool = False, custom_prompt: str = None) -> str:
+        """Generate email using LLM with advanced research-aware prompting"""
         if custom_prompt:
             prompt = custom_prompt
         else:
-            prompt = self.build_prompt(professor, informal)
+            # Try advanced research-aware prompt first
+            try:
+                prompt = self.build_research_aware_prompt(professor, informal)
+            except Exception as e:
+                logging.warning(f"Failed to build research-aware prompt: {e}")
+                # Fallback to enhanced prompt
+                try:
+                    prompt = self.build_enhanced_prompt(professor, informal)
+                except Exception as e2:
+                    logging.warning(f"Failed to build enhanced prompt: {e2}")
+                    # Final fallback to basic prompt
+                    prompt = self.build_prompt(professor, informal)
             
         if self.use_azure_ai:
-            return generate_with_azure_ai(prompt, self.azure_model)
+            try:
+                result = generate_with_azure_ai(prompt, self.azure_model)
+                # Validate the result
+                if result and len(result.strip()) > 50:
+                    return result
+                else:
+                    logging.warning("Azure AI returned insufficient content, falling back to template")
+                    return self.generate_body(professor, informal)
+            except Exception as e:
+                logging.error(f"Azure AI generation failed: {e}")
+                return self.generate_body(professor, informal)
         else:
             return self.generate_body(professor, informal)
 

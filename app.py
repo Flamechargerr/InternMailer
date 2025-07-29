@@ -8,6 +8,9 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'scheduler'))
 from scheduler.streamlit_api import get_followup_manager
 import requests
 
+# Import shared components
+from shared import config_manager, professor_manager, ui_components
+
 # Page configuration
 st.set_page_config(
     page_title="InternMailer 🚀", 
@@ -149,9 +152,26 @@ with col3:
 # Navigation Section
 st.header("🗺️ Navigation")
 
-col1, col2 = st.columns(2)
+col1, col2, col3 = st.columns(3)
 
 with col1:
+    st.markdown("""
+    <div class="feature-card">
+        <h3>📧 Email with CV</h3>
+        <p>Send personalized emails with automatic CV attachment. Perfect for individual outreach to specific professors.</p>
+        <ul>
+            <li>AI-powered personalization</li>
+            <li>Automatic CV attachment</li>
+            <li>Real-time email preview</li>
+            <li>Test mode available</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    if st.button("📧 Send Email with CV", key="email_cv_btn", type="primary"):
+        st.info("💡 Navigate to the **Email With CV** page using the sidebar to send personalized emails.")
+
+with col2:
     st.markdown("""
     <div class="feature-card">
         <h3>🚀 Start Outreach</h3>
@@ -169,7 +189,7 @@ with col1:
     if st.button("🚀 Go to Outreach", key="outreach_btn", type="primary"):
         st.info("💡 Navigate to the **Outreach** page using the sidebar to start your campaign.")
 
-with col2:
+with col3:
     st.markdown("""
     <div class="feature-card">
         <h3>📅 Manage Follow-ups</h3>
@@ -251,20 +271,26 @@ with st.expander("📝 Step-by-Step Guide", expanded=False):
     - Ensure professor CSV data is available
     - Start Ollama service for AI features
     
-    ### 2. **Start Your First Outreach**
+    ### 2. **Send Individual Emails (Recommended Start)**
+    - Navigate to the **Email with CV** page
+    - Enter professor details (name, university, research area)
+    - Use Test Mode to send to yourself first
+    - Review and send personalized emails with CV attachment
+    
+    ### 3. **Launch Bulk Campaigns**
     - Navigate to the **Outreach** page
     - Upload your resume (PDF format)
     - Configure campaign preferences
     - Choose target countries (optional)
     - Select run mode (Dry Run recommended first)
     
-    ### 3. **Monitor & Manage**
+    ### 4. **Monitor & Manage**
     - Use the **Follow-ups** page to track responses
     - Schedule additional follow-ups
     - Analyze campaign performance
     - Adjust settings as needed
     
-    ### 4. **Best Practices**
+    ### 5. **Best Practices**
     - Always test with Dry Run first
     - Review generated emails before sending
     - Monitor response rates and adjust approach

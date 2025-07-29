@@ -15,6 +15,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'scheduler'))
 from streamlit_api import get_followup_manager
 from professor_tracker import ProfessorTracker
 from email_validator import validate_email
+from enhanced_campaign_system import EnhancedCampaignSystem, EmailCandidate, CampaignMode
 
 class OutreachRunner:
     def __init__(self, resume_path: str, season: str, funding: str, selected_countries: list, mode: str, progress_callback, log_callback, batch_size: int = None):
@@ -159,118 +160,175 @@ class OutreachRunner:
 
         self.log_callback(f":mag: **Total professors after deduplication: {len(professors)}**")
 
+        matches = professors
+
         # Apply batch size limit if specified
         if self.batch_size and self.batch_size > 0:
-            professors = professors[:self.batch_size]
+            matches = matches[:self.batch_size]
             self.log_callback(f":mag: **Limiting to batch size of {self.batch_size} professors**")
-
-        matches = professors
         professors_matched = len(matches)
         self.progress_callback(50)
 
-        self.log_callback(":email: **Generating personalized emails...**")
-        # Reuse already parsed student_info from above
-        self.log_callback(f"📄 Using parsed resume data: {len(student_info.get('skills', []))} skills, {len(student_info.get('projects', []))} projects")
+        # Initialize enhanced campaign system
+        self.log_callback(":rocket: **Initializing Enhanced Campaign System...**")
+        enhanced_campaign = EnhancedCampaignSystem(
+            data_dir='data',
+            cooldown_days=30,
+            pending_expires_hours=24,
+            email_delay_seconds=30
+        )
         
-        # Integrate enhanced personalized email generation
-        emails = []
+        # Convert professors to EmailCandidate objects
+        self.log_callback(":email: **Preparing email candidates...**")
+        candidates = []
         for prof in professors:
-            professor_data = {
-                'name': prof['Name'],
-                'university': prof['University'],
-                'research_area': prof['Research Area'],
-                'notable_papers': [
-                    f"Research in {prof['Research Area']}",
-                    f"Advanced work in {prof['Research Area']} at {prof['University']}",
-                    f"Pioneering studies in {prof['Research Area']}"
-                ],
-                'current_projects': [
-                    f"{prof['Research Area']} research",
-                    f"Advanced {prof['Research Area']} applications",
-                    f"Collaborative {prof['Research Area']} initiatives"
-                ],
-                'homepage_text': prof.get('homepage_text', '')
-            }
-            
-            try:
-                # Use the enhanced email generation system
-                body = generate_deeply_personalized_email(professor_data)
-                subject = f"Research Internship Inquiry – Anamay Tripathy re: {prof['Research Area']}"
-                self.log_callback("✅ Enhanced email generated successfully")
-            except Exception as e:
-                self.log_callback(f"Error generating email for {prof['Name']}: {e}")
-                continue
-            
-            emails.append({'to': prof['Email'], 'subject': subject, 'body': body})
-
+            candidate = EmailCandidate(
+                email=prof['Email'],
+                name=prof['Name'], 
+                university=prof['University'],
+                research_area=prof['Research Area'],
+                homepage_text=prof.get('homepage_text', '')
+            )
+            candidates.append(candidate)
+        
+        self.log_callback(f"📋 Created {len(candidates)} email candidates")
+        
+        # Generate eligibility report
+        self.log_callback(":mag: **Analyzing candidate eligibility...**")
+        eligibility_report = enhanced_campaign.get_campaign_eligibility_report(candidates)
+        analysis = eligibility_report['candidate_analysis']
+        
+        self.log_callback(f"📊 Smart Eligibility Analysis:")
+        self.log_callback(f"   • Total candidates: {analysis['total_candidates']}")
+        self.log_callback(f"   • Eligible: {analysis['eligible']['count']}")
+        
+        # Show prioritization breakdown
+        if 'prioritization' in analysis:
+            prioritization = analysis['prioritization']
+            if prioritization['dry_run_upgrades'] > 0:
+                self.log_callback(f"     🎆 Priority: {prioritization['dry_run_upgrades']} dry run upgrades")
+            if prioritization['new_professors'] > 0:
+                self.log_callback(f"     ✨ New: {prioritization['new_professors']} new professors")
+            if prioritization['cooldown_expired'] > 0:
+                self.log_callback(f"     ⏰ Expired: {prioritization['cooldown_expired']} cooldown expired")
+        
+        self.log_callback(f"   • Already contacted: {analysis['ineligible']['count']}")
+        self.log_callback(f"   • In cooldown: {analysis['cooldown']['count']}")
+        self.log_callback(f"   • Currently pending: {analysis['pending']['count']}")
+        self.log_callback(f"   • Eligibility rate: {analysis['eligibility_rate']:.1f}%")
+        
+        if eligibility_report['recommendations']:
+            self.log_callback(":bulb: **Recommendations:**")
+            for rec in eligibility_report['recommendations']:
+                self.log_callback(f"   - {rec}")
+        
         self.progress_callback(60)
-
-        # Create campaign and schedule follow-ups for both modes
+        
+        # Determine campaign mode
+        campaign_mode = CampaignMode.DRY_RUN if self.mode == "Dry Run" else CampaignMode.LIVE_SEND
+        
+        # Create campaign and schedule follow-ups 
         followup_manager = get_followup_manager()
-        campaign_name = f"Outreach {datetime.now().strftime('%Y-%m-%d %H:%M')} ({'Dry Run' if self.mode == 'Dry Run' else 'Live Send'})"
-        campaign_id = followup_manager.create_campaign(campaign_name, f"Academic outreach for {self.season} internships")
-
-        if self.mode == "Dry Run":
-            self.log_callback(":mag: **DRY RUN MODE - No emails will be sent**")
-            message = "🔍 **DRY RUN MODE ACTIVE** - Emails are being generated and displayed but not sent."
-
-            sent_count = 0
-            skipped_count = 0
-            for i, email in enumerate(emails):
-                if tracker.is_professor_emailed(email['to']):
-                    skipped_count += 1
-                    self.log_callback(f"[DRY RUN] Skipping {email['to']} - Already contacted ⏭️")
-                else:
-                    time.sleep(0.1)
-                    sent_count += 1
-                    self.log_callback(f"[DRY RUN] Would send to {email['to']} - ✅ (Email prepared)")
-                    # Log email as if it was sent to create follow-up tracking
-                    followup_manager.log_email_sent(campaign_id, email['to'], email['subject'])
-
-                self.progress_callback(60 + int(30 * (i+1) / max(1, len(emails))))
-
-            self.progress_callback(90)
-            return {
-                'success': True,
-                'professors_matched': professors_matched,
-                'emails_sent': sent_count,
-                'followups_scheduled': sent_count,  # Use sent_count since we only create follow-ups for non-skipped emails
-                'email_previews': emails[:3],  # Only return first 3 for preview
-                'campaign_id': campaign_id
-            }
-
-        else:  # Live Send mode
-            sender = GmailSender(os.getenv('GMAIL_USER'), os.getenv('GMAIL_APP_PASSWORD'))
-            sent_count = 0
-            skipped_count = 0
-            for i, email in enumerate(emails):
-                if tracker.is_professor_emailed(email['to']):
-                    skipped_count += 1
-                    self.log_callback(f"[LIVE] Skipping {email['to']} - Already contacted ⏭️")
-                else:
-                    sent = sender.send_email(email['to'], email['subject'], email['body'], self.resume_path)
-                    if sent:
-                        sent_count += 1
-                        # Log email to follow-up system only if actually sent
-                        followup_manager.log_email_sent(campaign_id, email['to'], email['subject'])
-                        # Add to tracker to prevent future duplicates
-                        tracker.add_emailed_professor(
-                            email=email['to'],
-                            name=next((prof.get('Name', 'Unknown') for prof in professors if prof.get('Email') == email['to']), 'Unknown'),
-                            university=next((prof.get('University', 'Unknown') for prof in professors if prof.get('Email') == email['to']), 'Unknown'),
-                            subject=email['subject'],
-                            status="sent",
-                            notes=f"Live send - {datetime.now().strftime('%Y-%m-%d %H:%M')}"
-                        )
-                    self.log_callback(f"Sent to {email['to']} - {'✅' if sent else '❌'}")
-                self.progress_callback(60 + int(30 * (i+1) / max(1, len(emails))))
-
-            self.progress_callback(90)
-
-            return {
-                'success': True,
-                'professors_matched': professors_matched,
-                'emails_sent': sent_count,
-                'followups_scheduled': sent_count,  # Only count actually sent emails
-                'campaign_id': campaign_id
-            }
+        campaign_name = f"Outreach {datetime.now().strftime('%Y-%m-%d %H:%M')} ({self.mode})"
+        followup_campaign_id = followup_manager.create_campaign(campaign_name, f"Academic outreach for {self.season} internships")
+        
+        # Prepare enhanced campaign
+        self.log_callback(f":gear: **Preparing {campaign_mode.value} campaign...**")
+        campaign_id, prep_results = enhanced_campaign.prepare_campaign(
+            candidates=candidates,
+            campaign_name=campaign_name,
+            mode=campaign_mode,
+            respect_cooldown=True
+        )
+        
+        self.log_callback(f"✅ Campaign prepared: {prep_results['eligible_for_sending']} emails ready")
+        
+        # Define email generator function
+        def email_generator(professor_data):
+            """Generate personalized email using existing system."""
+            try:
+                # Convert back to expected format
+                prof_data = {
+                    'name': professor_data['name'],
+                    'university': professor_data['university'],
+                    'research_area': professor_data['research_area'],
+                    'notable_papers': [
+                        f"Research in {professor_data['research_area']}",
+                        f"Advanced work in {professor_data['research_area']} at {professor_data['university']}",
+                        f"Pioneering studies in {professor_data['research_area']}"
+                    ],
+                    'current_projects': [
+                        f"{professor_data['research_area']} research",
+                        f"Advanced {professor_data['research_area']} applications",
+                        f"Collaborative {professor_data['research_area']} initiatives"
+                    ],
+                    'homepage_text': professor_data.get('homepage_text', '')
+                }
+                
+                # Use existing enhanced email generation
+                body = generate_deeply_personalized_email(prof_data)
+                subject = f"Research Internship Inquiry – Anamay Tripathy re: {professor_data['research_area']}"
+                
+                return {
+                    'subject': subject,
+                    'body': body
+                }
+            except Exception as e:
+                self.log_callback(f"❌ Error generating email: {e}")
+                return None
+        
+        # Define email sender function for live mode
+        def email_sender(email, subject, body):
+            """Send email using existing Gmail sender."""
+            try:
+                sender = GmailSender(os.getenv('GMAIL_USER'), os.getenv('GMAIL_APP_PASSWORD'))
+                success = sender.send_email(email, subject, body, self.resume_path)
+                if success:
+                    # Log to followup system
+                    followup_manager.log_email_sent(followup_campaign_id, email, subject)
+                return success
+            except Exception as e:
+                self.log_callback(f"❌ Error sending email to {email}: {e}")
+                return False
+        
+        self.progress_callback(70)
+        
+        # Execute campaign
+        self.log_callback(f":rocket: **Executing {campaign_mode.value} campaign...**")
+        result = enhanced_campaign.execute_campaign(
+            campaign_id=campaign_id,
+            candidates=candidates,
+            email_generator_func=email_generator,
+            email_sender_func=email_sender if campaign_mode == CampaignMode.LIVE_SEND else None,
+            mode=campaign_mode,
+            max_emails=self.batch_size if self.batch_size else None
+        )
+        
+        # Log results
+        self.log_callback(f"✅ Campaign completed!")
+        self.log_callback(f"   • Processed: {result.emails_prepared}")
+        self.log_callback(f"   • {'Sent' if campaign_mode == CampaignMode.LIVE_SEND else 'Simulated'}: {result.emails_sent}")
+        self.log_callback(f"   • Failed: {result.failed_count}")
+        self.log_callback(f"   • Success rate: {result.success_rate:.1f}%")
+        self.log_callback(f"   • Duration: {result.duration_seconds:.2f}s")
+        
+        if result.errors:
+            self.log_callback(f"⚠️ Errors encountered:")
+            for error in result.errors[:3]:  # Show first 3 errors
+                self.log_callback(f"   - {error}")
+        
+        self.progress_callback(90)
+        
+        # Return results in expected format
+        return {
+            'success': True,
+            'professors_matched': professors_matched,
+            'emails_sent': result.emails_sent,
+            'followups_scheduled': result.emails_sent,
+            'email_previews': result.email_previews,
+            'campaign_id': followup_campaign_id,
+            'enhanced_campaign_id': campaign_id,
+            'eligibility_analysis': analysis,
+            'success_rate': result.success_rate,
+            'duration_seconds': result.duration_seconds
+        }

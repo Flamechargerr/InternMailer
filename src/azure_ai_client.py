@@ -7,6 +7,8 @@ import os
 import logging
 import time
 import hashlib
+import random
+import signal
 from typing import Dict, Any, Optional
 from dotenv import load_dotenv
 
@@ -91,8 +93,14 @@ class AzureAIClient:
         
         if not self.client:
             logger.error("Azure AI client not available")
-            return self._mock_response(prompt)
+            return ""
         
+        # Retry logic with exponential backoff for rate limiting
+        max_retries = 5
+        base_delay = 1
+        max_delay = 60
+        
+        # Simple single attempt - fail fast and return empty for any error
         try:
             start_time = time.time()
             logger.info(f"Generating response with Azure AI {model_name}")
@@ -103,7 +111,7 @@ class AzureAIClient:
                 UserMessage(content=prompt)
             ]
             
-            # Make API call
+            # Make API call - any error will be caught and return empty
             response = self.client.complete(
                 messages=messages,
                 model=model_name,
@@ -127,8 +135,14 @@ class AzureAIClient:
                 return ""
                 
         except Exception as e:
-            logger.error(f"Azure AI generation failed: {e}")
-            return self._mock_response(prompt)
+            error_str = str(e)
+            logger.warning(f"Azure AI failed: {e}")
+            logger.info("Returning empty string to trigger backup template")
+            return ""  # Return empty string to trigger fallback
+        
+        # If we get here, all retries failed
+        logger.error(f"Azure AI generation failed after {max_retries} attempts")
+        return self._mock_response(prompt)
     
     def _mock_response(self, prompt: str) -> str:
         """

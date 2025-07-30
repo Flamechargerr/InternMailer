@@ -315,17 +315,66 @@ if run_button and resume_path:
             # Display success state
             if results.get('success', False):
                 from ui_utils import show_status_banner
-                show_status_banner("Outreach completed successfully!", "success")
+                show_status_banner("🎉 Enhanced Campaign completed successfully!", "success")
                 
-                # Show results summary
-                with st.expander("📊 Campaign Results", expanded=True):
-                    col1, col2, col3 = st.columns(3)
+                # Show enhanced results summary
+                with st.expander("📊 Enhanced Campaign Results", expanded=True):
+                    col1, col2, col3, col4 = st.columns(4)
                     with col1:
                         st.metric("Professors Matched", results.get('professors_matched', 0), help="Number of professors found matching your criteria")
                     with col2:
                         st.metric("Emails Sent", results.get('emails_sent', 0), help="Number of emails successfully sent")
                     with col3:
-                        st.metric("Follow-ups Scheduled", results.get('followups_scheduled', 0), help="Number of follow-up emails scheduled")
+                        st.metric("Success Rate", f"{results.get('success_rate', 0):.1f}%", help="Campaign success rate")
+                    with col4:
+                        st.metric("Duration", f"{results.get('duration_seconds', 0):.1f}s", help="Campaign execution time")
+                    
+                    # Show eligibility analysis if available
+                    if 'eligibility_analysis' in results:
+                        st.subheader("🔍 Smart Eligibility Analysis")
+                        analysis = results['eligibility_analysis']
+                        
+                        col1, col2, col3, col4 = st.columns(4)
+                        with col1:
+                            st.metric("Total Candidates", analysis.get('total_candidates', 0))
+                        with col2:
+                            st.metric("Eligible", analysis.get('eligible', {}).get('count', 0))
+                        with col3:
+                            st.metric("In Cooldown", analysis.get('cooldown', {}).get('count', 0))
+                        with col4:
+                            st.metric("Already Contacted", analysis.get('ineligible', {}).get('count', 0))
+                        
+                        # Show prioritization breakdown
+                        if 'prioritization' in analysis:
+                            st.subheader("🎯 Smart Prioritization")
+                            prioritization = analysis['prioritization']
+                            
+                            col1, col2, col3 = st.columns(3)
+                            with col1:
+                                if prioritization.get('dry_run_upgrades', 0) > 0:
+                                    st.metric("🎆 Dry Run Upgrades", prioritization['dry_run_upgrades'], 
+                                             help="Professors from dry runs, prioritized for live sending")
+                            with col2:
+                                if prioritization.get('new_professors', 0) > 0:
+                                    st.metric("✨ New Professors", prioritization['new_professors'],
+                                             help="Professors never contacted before")
+                            with col3:
+                                if prioritization.get('cooldown_expired', 0) > 0:
+                                    st.metric("⏰ Cooldown Expired", prioritization['cooldown_expired'],
+                                             help="Professors whose cooldown period has expired")
+                            
+                            # Show prioritization explanation
+                            if prioritization.get('dry_run_upgrades', 0) > 0:
+                                st.info("🎆 **Smart Prioritization Active**: Dry run professors are being prioritized for live sending!")
+                        
+                        # Show eligibility rate with color coding
+                        eligibility_rate = analysis.get('eligibility_rate', 0)
+                        if eligibility_rate >= 80:
+                            st.success(f"✅ Excellent eligibility rate: {eligibility_rate:.1f}%")
+                        elif eligibility_rate >= 50:
+                            st.info(f"ℹ️ Good eligibility rate: {eligibility_rate:.1f}%")
+                        else:
+                            st.warning(f"⚠️ Low eligibility rate: {eligibility_rate:.1f}% - Consider expanding your professor list")
                 
                 # Store campaign ID for follow-ups
                 if results.get('campaign_id'):
@@ -364,9 +413,9 @@ if 'outreach_results' in st.session_state and st.session_state.outreach_results:
         st.header("7. Email Previews")
         with st.expander("📧 Generated Emails", expanded=False):
             for i, email in enumerate(results['email_previews'][:3]):  # Show first 3
-                st.subheader(f"Email {i+1}: {email['to']}")
-                st.text_area(f"Subject {i+1}", email['subject'], key=f"subject_{i}", label_visibility="visible")
-                st.text_area(f"Body {i+1}", email['body'], height=200, key=f"body_{i}", label_visibility="visible")
+                st.subheader(f"Email {i+1}: {email.get('email', email.get('to', 'Unknown'))}")
+                st.text_area(f"Subject {i+1}", email.get('subject', 'No subject'), key=f"subject_{i}", label_visibility="visible")
+                st.text_area(f"Body {i+1}", email.get('body_preview', email.get('body', 'No content')), height=200, key=f"body_{i}", label_visibility="visible")
                 st.divider()
 
 # Navigation hint

@@ -1,26 +1,31 @@
 """
 Complete Email Campaign System for InternMailer
-Integrates CSV reading, template engine, and email sending
+Integrates CSV reading, automated research, AI personalization, and email sending
 """
 
 import pandas as pd
 import os
 import time
 import logging
-from typing import Dict, List, Any, Optional
+import requests
+import json
+from typing import Dict, List, Any, Optional, Tuple
 from datetime import datetime
 from dotenv import load_dotenv
 import random
+from dataclasses import dataclass
 
 # Import our custom modules
 from template_manager import TemplateManager
 from email_sender import EmailSender
+from email_generator import EmailGenerator
+from automated_research_system import AutomatedResearchSystem, ProfessorResearch
 
 # Load environment variables
 load_dotenv()
 
 class EmailCampaignSystem:
-    """Complete system for running email campaigns from CSV data"""
+    """Complete system for running AI-powered email campaigns with automated research"""
     
     def __init__(self, csv_path: str):
         self.csv_path = csv_path
@@ -34,6 +39,9 @@ class EmailCampaignSystem:
             raise ValueError("Gmail credentials not found in environment variables")
         
         self.email_sender = EmailSender(gmail_user, gmail_password)
+        
+        # Initialize automated research system
+        self.research_system = AutomatedResearchSystem()
         
         # Setup logging
         self.setup_logging()
@@ -220,91 +228,143 @@ class EmailCampaignSystem:
         else:
             return 'research_inquiry_concise'
     
+    def run_ai_campaign(self, student_info: Dict[str, Any], 
+                       max_emails: int = 10,
+                       delay_seconds: int = 30,
+                       dry_run: bool = True,
+                       use_ai_research: bool = True):
+        """Run AI-powered email campaign with automated research for ALL professors."""
+        
+        self.logger.info(f"🚀 Starting AI-powered 'Personalize-All' email campaign - Max emails: {max_emails}")
+        self.logger.info(f"📊 Using automated research for personalization: {use_ai_research}")
+        
+        if dry_run:
+            self.logger.info("🧪 DRY RUN MODE - No emails will be sent")
+        
+        sent_count = 0
+        failed_count = 0
+        researched_count = 0
+        emails_to_send = []
+        
+        # Initialize AI email generator with your profile
+        email_generator = EmailGenerator(student_info, use_azure_ai=True)
+        
+        # Process a sample of professors from the list
+        professors_sample = self.professors_df.sample(n=min(max_emails, len(self.professors_df)))
+        
+        for index, professor in professors_sample.iterrows():
+            email_content = None
+            subject = None
+            try:
+                self.logger.info(f"\n🔍 Processing {professor['Name']} ({professor['University']})...")
+                
+                professor_data = {
+                    'name': professor['Name'],
+                    'university': professor['University'],
+                    'email': professor['Email'],
+                    'research_area': professor['Research Area']
+                }
+                
+                if use_ai_research:
+                    # Step 1: Attempt deep research for personalization
+                    self.logger.info("Attempting deep research for specific personalization...")
+                    research_result = self.research_system.research_professor_automatically(professor_data)
+                    researched_count += 1
+                    
+                    if research_result and research_result.personalization_points:
+                        self.logger.info(f"✅ Research successful! Score: {research_result.research_quality_score}. Generating deeply personalized email.")
+                        email_content = self.research_system.generate_personalized_email(research_result)
+                    else:
+                        self.logger.warning("⚠️ Deep research did not yield specific papers. Falling back to AI-powered general personalization.")
+
+                # Step 2: If deep research fails or is disabled, use AI-powered generation with available info
+                if not email_content:
+                    email_content = email_generator.generate_with_llm(professor_data)
+
+                # Step 3: Final fallback to a standard template if AI generation also fails
+                if not email_content or len(email_content) < 100:
+                    self.logger.error("AI generation failed. Using standard template as final fallback.")
+                    context = self.create_personalized_context(professor, student_info)
+                    email_content = self.template_manager.generate_email('research_inquiry_concise', context)
+                    
+                # Generate subject line
+                subject = email_generator.generate_subject(professor_data)
+
+                if email_content and subject:
+                    emails_to_send.append({
+                        'professor': professor,
+                        'email_content': email_content,
+                        'subject': subject
+                    })
+                else:
+                    failed_count += 1
+
+            except Exception as e:
+                self.logger.error(f"❌ Error processing {professor['Name']}: {e}")
+                failed_count += 1
+                continue
+
+        # Send all prepared emails
+        self.logger.info(f"\n📧 Sending {len(emails_to_send)} personalized emails...")
+        
+        for match in emails_to_send:
+            try:
+                professor = match['professor']
+                email_content = match['email_content']
+                subject = match['subject']
+                
+                self.logger.info(f"\n{'='*80}")
+                self.logger.info(f"📬 SENDING TO: {professor['Name']} ({professor['Email']})")
+                self.logger.info(f"📨 SUBJECT: {subject}")
+                self.logger.info(f"{'-'*80}")
+                self.logger.info(f"{email_content[:800]}...")
+                self.logger.info(f"{'='*80}")
+
+                if not dry_run:
+                    success = self.email_sender.send_email(professor['Email'], subject, email_content)
+                    if success:
+                        sent_count += 1
+                        self.logger.info(f"✅ Email sent successfully to {professor['Name']}")
+                    else:
+                        failed_count += 1
+                        self.logger.error(f"❌ Failed to send email to {professor['Name']}")
+                    if sent_count < len(emails_to_send):
+                        self.logger.info(f"⏱️ Waiting {delay_seconds} seconds...")
+                        time.sleep(delay_seconds)
+                else:
+                    sent_count += 1
+                    self.logger.info(f"✅ (DRY RUN) Would send email to {professor['Name']}")
+
+            except Exception as e:
+                self.logger.error(f"❌ Error sending email to {professor['Name']}: {e}")
+                failed_count += 1
+                continue
+
+        self.logger.info(f"\n{'='*80}")
+        self.logger.info("🎯 CAMPAIGN COMPLETE")
+        self.logger.info(f"{'='*80}")
+        self.logger.info(f"🔍 Professors Researched: {researched_count}")
+        self.logger.info(f"📧 Total Emails Processed: {len(emails_to_send)}")
+        self.logger.info(f"✅ Successfully Sent: {sent_count}")
+        self.logger.info(f"❌ Failed: {failed_count}")
+        if dry_run:
+            self.logger.info("🧪 Mode: DRY RUN")
+        self.logger.info(f"{'='*80}")
+    
     def run_campaign(self, student_info: Dict[str, Any], 
                     template_name: str = 'research_inquiry_concise',
                     max_emails: int = 10,
                     delay_seconds: int = 30,
                     dry_run: bool = True):
-        """Run the email campaign"""
-        
-        self.logger.info(f"Starting email campaign - Template: {template_name}, Max emails: {max_emails}")
-        
-        if dry_run:
-            self.logger.info("DRY RUN MODE - No emails will be sent")
-        
-        sent_count = 0
-        failed_count = 0
-        
-        # Shuffle professors for random selection
-        professors_sample = self.professors_df.sample(n=min(max_emails, len(self.professors_df)))
-        
-        for index, professor in professors_sample.iterrows():
-            try:
-                # Create personalized context
-                context = self.create_personalized_context(professor, student_info)
-                
-                # Generate email content
-                email_content = self.template_manager.generate_email(template_name, context)
-                
-                if not email_content:
-                    self.logger.error(f"Failed to generate email for {professor['Name']}")
-                    failed_count += 1
-                    continue
-                
-                # Extract subject from email content (first line)
-                lines = email_content.split('\n')
-                subject = lines[0].replace('Subject: ', '') if lines[0].startswith('Subject: ') else f"Research Opportunity Inquiry - {student_info['name']}"
-                email_body = '\n'.join(lines[2:]) if lines[0].startswith('Subject: ') else email_content
-                
-                # Log email preview
-                self.logger.info(f"\n{'='*60}")
-                self.logger.info(f"EMAIL TO: {professor['Name']} ({professor['Email']})")
-                self.logger.info(f"SUBJECT: {subject}")
-                self.logger.info(f"UNIVERSITY: {professor['University']}")
-                self.logger.info(f"RESEARCH: {professor['Research Area']}")
-                self.logger.info(f"{'='*60}")
-                self.logger.info(f"CONTENT:\n{email_body[:500]}...")
-                self.logger.info(f"{'='*60}")
-                
-                # Send email (if not dry run)
-                if not dry_run:
-                    success = self.email_sender.send_email(
-                        professor['Email'], 
-                        subject, 
-                        email_body
-                    )
-                    
-                    if success:
-                        sent_count += 1
-                        self.logger.info(f"✓ Email sent to {professor['Name']}")
-                    else:
-                        failed_count += 1
-                        self.logger.error(f"✗ Failed to send email to {professor['Name']}")
-                    
-                    # Add delay between emails
-                    if sent_count < max_emails:
-                        self.logger.info(f"Waiting {delay_seconds} seconds before next email...")
-                        time.sleep(delay_seconds)
-                else:
-                    sent_count += 1
-                    self.logger.info(f"✓ (DRY RUN) Would send email to {professor['Name']}")
-                
-            except Exception as e:
-                self.logger.error(f"Error processing {professor['Name']}: {e}")
-                failed_count += 1
-                continue
-        
-        # Campaign summary
-        self.logger.info(f"\n{'='*60}")
-        self.logger.info("CAMPAIGN SUMMARY")
-        self.logger.info(f"{'='*60}")
-        self.logger.info(f"Total processed: {sent_count + failed_count}")
-        self.logger.info(f"Successfully sent: {sent_count}")
-        self.logger.info(f"Failed: {failed_count}")
-        self.logger.info(f"Template used: {template_name}")
-        if dry_run:
-            self.logger.info("Mode: DRY RUN (no emails actually sent)")
-        self.logger.info(f"{'='*60}")
+        """Legacy campaign method - now redirects to AI-powered version"""
+        self.logger.info("🔄 Redirecting to AI-powered 'Personalize-All' campaign system...")
+        return self.run_ai_campaign(
+            student_info=student_info,
+            max_emails=max_emails,
+            delay_seconds=delay_seconds,
+            dry_run=dry_run,
+            use_ai_research=True
+        )
 
 # Demo and testing
 if __name__ == "__main__":

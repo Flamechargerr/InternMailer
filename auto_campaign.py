@@ -22,7 +22,11 @@ from email.mime.base import MIMEBase
 from email import encoders
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 from enhanced_personalized_email import generate_deeply_personalized_email
+
+# Load environment variables
+load_dotenv()
 
 # Configuration
 SMTP_SERVER = "smtp.gmail.com"
@@ -30,7 +34,7 @@ SMTP_PORT = 587
 EMAIL_ADDRESS = "tripathy.anamay23@gmail.com"
 EMAIL_PASSWORD = "qzxw bjqs wgqk wqtt"  # App password
 
-CV_PATH = "../resumes/CV_Anamay_Modern.pdf"
+CV_PATH = "resumes/CV_Anamay_Modern.pdf"
 PROFESSORS_DB = "data/proffesor_clean.csv"
 EMAIL_LOG = "email_log.csv"
 TRACKER_JSON = "data/emailed_professors.json"
@@ -127,6 +131,11 @@ class AutoCampaignRunner:
         self.professors_contacted = set()
         self.email_log_data = []
         self.tracker_data = {}
+        self.test_mode = os.getenv("TEST_MODE", "false").lower() == "true"
+        self.test_email = os.getenv("TEST_EMAIL", "tripathy.anamay23@gmail.com")
+        
+        if self.test_mode:
+            print(f"🧪 TEST MODE ENABLED - All emails will be sent to: {self.test_email}")
         
     def load_tracking_data(self):
         """Load and sync all tracking data"""
@@ -191,11 +200,34 @@ class AutoCampaignRunner:
             # Create email
             msg = MIMEMultipart()
             msg['From'] = EMAIL_ADDRESS
-            msg['To'] = professor['Email']
-            msg['Subject'] = f"Research Internship Inquiry – Anamay Tripathy re: {professor.get('Research Area', 'AI Research')}"
             
-# Generate personalized content
+            # Use test email if in test mode, otherwise use professor's email
+            recipient_email = self.test_email if self.test_mode else professor['Email']
+            msg['To'] = recipient_email
+            
+            # Modify subject in test mode to indicate it's a test
+            base_subject = f"Research Internship Inquiry – Anamay Tripathy re: {professor.get('Research Area', 'AI Research')}"
+            if self.test_mode:
+                msg['Subject'] = f"[TEST MODE] {base_subject} - Original Target: {professor['Email']}"
+            else:
+                msg['Subject'] = base_subject
+            
+            # Generate personalized content
             html_body = generate_deeply_personalized_email(professor)
+            
+            # Add test mode header if in test mode
+            if self.test_mode:
+                test_header = f"""
+                <div style="background-color: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; margin-bottom: 20px; border-radius: 5px;">
+                    <h3 style="color: #856404; margin: 0 0 10px 0;">🧪 TEST MODE EMAIL</h3>
+                    <p style="margin: 0; color: #856404;">
+                        <strong>Original Target:</strong> {professor.get('Name', 'Unknown')} ({professor['Email']})<br>
+                        <strong>University:</strong> {professor.get('University', 'Unknown')}<br>
+                        <strong>Research Area:</strong> {professor.get('Research Area', 'Unknown')}
+                    </p>
+                </div>
+                """
+                html_body = test_header + html_body
             
             msg.attach(MIMEText(html_body, 'html'))
             
@@ -207,7 +239,7 @@ class AutoCampaignRunner:
                     encoders.encode_base64(part)
                     part.add_header(
                         'Content-Disposition',
-                        f'attachment; filename= {os.path.basename(CV_PATH)}'
+                        f'attachment; filename="{os.path.basename(CV_PATH)}"'
                     )
                     msg.attach(part)
             
@@ -216,7 +248,7 @@ class AutoCampaignRunner:
             server.starttls()
             server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
             text = msg.as_string()
-            server.sendmail(EMAIL_ADDRESS, professor['Email'], text)
+            server.sendmail(EMAIL_ADDRESS, recipient_email, text)
             server.quit()
             
             return True, "sent"

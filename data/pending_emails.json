@@ -1,0 +1,995 @@
+{
+  "pending": [
+    {
+      "email": "jane.sinclair@warwick.ac.uk",
+      "name": "Jane Sinclair",
+      "university": "University of Warwick (UK)",
+      "subject": "Research Inquiry - AI education",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.145540",
+      "expires_at": "2025-07-31T18:47:04.145540"
+    },
+    {
+      "email": "matthew.leeke@warwick.ac.uk",
+      "name": "Matthew Leeke",
+      "university": "University of Warwick (UK)",
+      "subject": "Research Inquiry - Dependable systems AI",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.149725",
+      "expires_at": "2025-07-31T18:47:04.149725"
+    },
+    {
+      "email": "nasir.rajpoot@warwick.ac.uk",
+      "name": "Nasir Rajpoot",
+      "university": "University of Warwick (UK)",
+      "subject": "Research Inquiry - Medical AI imaging",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.152724",
+      "expires_at": "2025-07-31T18:47:04.152724"
+    },
+    {
+      "email": "nathan.griffiths@warwick.ac.uk",
+      "name": "Nathan Griffiths",
+      "university": "University of Warwick (UK)",
+      "subject": "Research Inquiry - Multi-agent AI",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.156236",
+      "expires_at": "2025-07-31T18:47:04.156236"
+    },
+    {
+      "email": "ranko.lazic@warwick.ac.uk",
+      "name": "Ranko Lazic",
+      "university": "University of Warwick (UK)",
+      "subject": "Research Inquiry - AI verification",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.160714",
+      "expires_at": "2025-07-31T18:47:04.160714"
+    },
+    {
+      "email": "richard.kirk@warwick.ac.uk",
+      "name": "Richard Kirk",
+      "university": "University of Warwick (UK)",
+      "subject": "Research Inquiry - AI graphics",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.163476",
+      "expires_at": "2025-07-31T18:47:04.163476"
+    },
+    {
+      "email": "rob.procter@warwick.ac.uk",
+      "name": "Rob Procter",
+      "university": "University of Warwick (UK)",
+      "subject": "Research Inquiry - AI social computing",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.166849",
+      "expires_at": "2025-07-31T18:47:04.166849"
+    },
+    {
+      "email": "rossella.arcucci@warwick.ac.uk",
+      "name": "Rossella Arcucci",
+      "university": "University of Warwick (UK)",
+      "subject": "Research Inquiry - Data assimilation ML",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.171874",
+      "expires_at": "2025-07-31T18:47:04.171874"
+    },
+    {
+      "email": "sayan.mukherjee@warwick.ac.uk",
+      "name": "Sayan Mukherjee",
+      "university": "University of Warwick (UK)",
+      "subject": "Research Inquiry - ML statistics",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.175380",
+      "expires_at": "2025-07-31T18:47:04.175380"
+    },
+    {
+      "email": "theo.damoulas@warwick.ac.uk",
+      "name": "Theo Damoulas",
+      "university": "University of Warwick (UK)",
+      "subject": "Research Inquiry - ML probabilistic",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.178380",
+      "expires_at": "2025-07-31T18:47:04.178380"
+    },
+    {
+      "email": "torsten.mutze@warwick.ac.uk",
+      "name": "Torsten Mutze",
+      "university": "University of Warwick (UK)",
+      "subject": "Research Inquiry - Algorithms data science",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.181481",
+      "expires_at": "2025-07-31T18:47:04.181481"
+    },
+    {
+      "email": "yulan.he@warwick.ac.uk",
+      "name": "Yulan He",
+      "university": "University of Warwick (UK)",
+      "subject": "Research Inquiry - AI NLP",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.184572",
+      "expires_at": "2025-07-31T18:47:04.184572"
+    },
+    {
+      "email": "yusuf.aytar@warwick.ac.uk",
+      "name": "Yusuf Aytar",
+      "university": "University of Warwick (UK)",
+      "subject": "Research Inquiry - AI multimodal",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.187572",
+      "expires_at": "2025-07-31T18:47:04.187572"
+    },
+    {
+      "email": "derijke@uva.nl",
+      "name": "Maarten de Rijke",
+      "university": "University of Amsterdam (Netherlands)",
+      "subject": "Research Inquiry - Information retrieval AI",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.191077",
+      "expires_at": "2025-07-31T18:47:04.191077"
+    },
+    {
+      "email": "welling@uva.nl",
+      "name": "Max Welling",
+      "university": "University of Amsterdam (Netherlands)",
+      "subject": "Research Inquiry - Deep learning ML",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.194477",
+      "expires_at": "2025-07-31T18:47:04.194477"
+    },
+    {
+      "email": "worring@uva.nl",
+      "name": "Marcel Worring",
+      "university": "University of Amsterdam (Netherlands)",
+      "subject": "Research Inquiry - Multimedia AI",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.197472",
+      "expires_at": "2025-07-31T18:47:04.197472"
+    },
+    {
+      "email": "c.g.m.snoek@uva.nl",
+      "name": "Cees Snoek",
+      "university": "University of Amsterdam (Netherlands)",
+      "subject": "Research Inquiry - AI vision",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.199473",
+      "expires_at": "2025-07-31T18:47:04.199473"
+    },
+    {
+      "email": "a.w.m.smeulders@uva.nl",
+      "name": "Arnold Smeulders",
+      "university": "University of Amsterdam (Netherlands)",
+      "subject": "Research Inquiry - Computer vision ML",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.202466",
+      "expires_at": "2025-07-31T18:47:04.202466"
+    },
+    {
+      "email": "p.t.groth@uva.nl",
+      "name": "Paul Groth",
+      "university": "University of Amsterdam (Netherlands)",
+      "subject": "Research Inquiry - Knowledge graphs AI",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.206702",
+      "expires_at": "2025-07-31T18:47:04.206702"
+    },
+    {
+      "email": "n.helberger@uva.nl",
+      "name": "Natali Helberger",
+      "university": "University of Amsterdam (Netherlands)",
+      "subject": "Research Inquiry - AI ethics",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.209698",
+      "expires_at": "2025-07-31T18:47:04.209698"
+    },
+    {
+      "email": "e.gavves@uva.nl",
+      "name": "Efstratios Gavves",
+      "university": "University of Amsterdam (Netherlands)",
+      "subject": "Research Inquiry - AI computer vision",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.211696",
+      "expires_at": "2025-07-31T18:47:04.211696"
+    },
+    {
+      "email": "s.ghebreab@uva.nl",
+      "name": "Sennay Ghebreab",
+      "university": "University of Amsterdam (Netherlands)",
+      "subject": "Research Inquiry - AI fairness",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.215119",
+      "expires_at": "2025-07-31T18:47:04.215119"
+    },
+    {
+      "email": "j.m.mooij@uva.nl",
+      "name": "Joris Mooij",
+      "university": "University of Amsterdam (Netherlands)",
+      "subject": "Research Inquiry - ML causality",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.217126",
+      "expires_at": "2025-07-31T18:47:04.217126"
+    },
+    {
+      "email": "j.w.van.hentenryck@uva.nl",
+      "name": "Jan Willem van Hentenryck",
+      "university": "University of Amsterdam (Netherlands)",
+      "subject": "Research Inquiry - AI optimization",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.221129",
+      "expires_at": "2025-07-31T18:47:04.221129"
+    },
+    {
+      "email": "k.simaan@uva.nl",
+      "name": "Khalil Sima'an",
+      "university": "University of Amsterdam (Netherlands)",
+      "subject": "Research Inquiry - AI NLP",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.224130",
+      "expires_at": "2025-07-31T18:47:04.224130"
+    },
+    {
+      "email": "r.a.m.vanrooij@uva.nl",
+      "name": "Robert van Rooij",
+      "university": "University of Amsterdam (Netherlands)",
+      "subject": "Research Inquiry - AI semantics",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.227128",
+      "expires_at": "2025-07-31T18:47:04.227128"
+    },
+    {
+      "email": "s.j.l.smets@uva.nl",
+      "name": "Sonja Smets",
+      "university": "University of Amsterdam (Netherlands)",
+      "subject": "Research Inquiry - AI logic",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.230131",
+      "expires_at": "2025-07-31T18:47:04.230131"
+    },
+    {
+      "email": "t.gevers@uva.nl",
+      "name": "Theo Gevers",
+      "university": "University of Amsterdam (Netherlands)",
+      "subject": "Research Inquiry - AI vision",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.233129",
+      "expires_at": "2025-07-31T18:47:04.233129"
+    },
+    {
+      "email": "u.brandt@uva.nl",
+      "name": "Ulrich Brandt",
+      "university": "University of Amsterdam (Netherlands)",
+      "subject": "Research Inquiry - Computational biology AI",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.238339",
+      "expires_at": "2025-07-31T18:47:04.238339"
+    },
+    {
+      "email": "v.dehaan@uva.nl",
+      "name": "Victor de Haan",
+      "university": "University of Amsterdam (Netherlands)",
+      "subject": "Research Inquiry - Quantum AI",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.241760",
+      "expires_at": "2025-07-31T18:47:04.241760"
+    },
+    {
+      "email": "z.ivezic@uva.nl",
+      "name": "Zeljko Ivezic",
+      "university": "University of Amsterdam (Netherlands)",
+      "subject": "Research Inquiry - Data science astronomy",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.244977",
+      "expires_at": "2025-07-31T18:47:04.244977"
+    },
+    {
+      "email": "a.visser@uva.nl",
+      "name": "Arnoud Visser",
+      "university": "University of Amsterdam (Netherlands)",
+      "subject": "Research Inquiry - AI robotics",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.249460",
+      "expires_at": "2025-07-31T18:47:04.249460"
+    },
+    {
+      "email": "b.j.a.krose@uva.nl",
+      "name": "Ben Kröse",
+      "university": "University of Amsterdam (Netherlands)",
+      "subject": "Research Inquiry - AI ambient intelligence",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.253729",
+      "expires_at": "2025-07-31T18:47:04.253729"
+    },
+    {
+      "email": "bart.demoor@kuleuven.be",
+      "name": "Bart De Moor",
+      "university": "KU Leuven (Belgium)",
+      "subject": "Research Inquiry - Data science ML",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.258307",
+      "expires_at": "2025-07-31T18:47:04.258307"
+    },
+    {
+      "email": "jesse.davis@cs.kuleuven.be",
+      "name": "Jesse Davis",
+      "university": "KU Leuven (Belgium)",
+      "subject": "Research Inquiry - ML sports analytics",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.261317",
+      "expires_at": "2025-07-31T18:47:04.261317"
+    },
+    {
+      "email": "luc.deraedt@cs.kuleuven.be",
+      "name": "Luc De Raedt",
+      "university": "KU Leuven (Belgium)",
+      "subject": "Research Inquiry - AI inductive logic",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.264370",
+      "expires_at": "2025-07-31T18:47:04.264370"
+    },
+    {
+      "email": "matthew.blaschko@esat.kuleuven.be",
+      "name": "Matthew Blaschko",
+      "university": "KU Leuven (Belgium)",
+      "subject": "Research Inquiry - AI vision",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.268735",
+      "expires_at": "2025-07-31T18:47:04.268735"
+    },
+    {
+      "email": "tinne.tuytelaars@esat.kuleuven.be",
+      "name": "Tinne Tuytelaars",
+      "university": "KU Leuven (Belgium)",
+      "subject": "Research Inquiry - Computer vision ML",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.272142",
+      "expires_at": "2025-07-31T18:47:04.272142"
+    },
+    {
+      "email": "bart.preneel@esat.kuleuven.be",
+      "name": "Bart Preneel",
+      "university": "KU Leuven (Belgium)",
+      "subject": "Research Inquiry - Cryptography fintech",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.277647",
+      "expires_at": "2025-07-31T18:47:04.277647"
+    },
+    {
+      "email": "bernard.vanacker@kuleuven.be",
+      "name": "Bernard Van Acker",
+      "university": "KU Leuven (Belgium)",
+      "subject": "Research Inquiry - AI robotics",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.281073",
+      "expires_at": "2025-07-31T18:47:04.281073"
+    },
+    {
+      "email": "daan.christiaens@kuleuven.be",
+      "name": "Daan Christiaens",
+      "university": "KU Leuven (Belgium)",
+      "subject": "Research Inquiry - Medical imaging AI",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.287477",
+      "expires_at": "2025-07-31T18:47:04.287477"
+    },
+    {
+      "email": "dirk.vandermeulen@kuleuven.be",
+      "name": "Dirk Vandermeulen",
+      "university": "KU Leuven (Belgium)",
+      "subject": "Research Inquiry - AI medical imaging",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.292044",
+      "expires_at": "2025-07-31T18:47:04.292044"
+    },
+    {
+      "email": "frank.piessens@cs.kuleuven.be",
+      "name": "Frank Piessens",
+      "university": "KU Leuven (Belgium)",
+      "subject": "Research Inquiry - Secure AI",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.296628",
+      "expires_at": "2025-07-31T18:47:04.296628"
+    },
+    {
+      "email": "hugo.vanhamme@esat.kuleuven.be",
+      "name": "Hugo Van hamme",
+      "university": "KU Leuven (Belgium)",
+      "subject": "Research Inquiry - AI speech processing",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.302638",
+      "expires_at": "2025-07-31T18:47:04.302638"
+    },
+    {
+      "email": "jan.ramon@cs.kuleuven.be",
+      "name": "Jan Ramon",
+      "university": "KU Leuven (Belgium)",
+      "subject": "Research Inquiry - ML graphs",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.306818",
+      "expires_at": "2025-07-31T18:47:04.306818"
+    },
+    {
+      "email": "johan.suykens@esat.kuleuven.be",
+      "name": "Johan Suykens",
+      "university": "KU Leuven (Belgium)",
+      "subject": "Research Inquiry - ML kernel methods",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.310822",
+      "expires_at": "2025-07-31T18:47:04.310822"
+    },
+    {
+      "email": "lieven.delathauwer@kuleuven.be",
+      "name": "Lieven De Lathauwer",
+      "university": "KU Leuven (Belgium)",
+      "subject": "Research Inquiry - Signal processing ML",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.314817",
+      "expires_at": "2025-07-31T18:47:04.314817"
+    },
+    {
+      "email": "marc.vanhulle@kuleuven.be",
+      "name": "Marc Van Hulle",
+      "university": "KU Leuven (Belgium)",
+      "subject": "Research Inquiry - Computational neuroscience AI",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.317819",
+      "expires_at": "2025-07-31T18:47:04.317819"
+    },
+    {
+      "email": "maurice.bruynooghe@cs.kuleuven.be",
+      "name": "Maurice Bruynooghe",
+      "university": "KU Leuven (Belgium)",
+      "subject": "Research Inquiry - AI logic programming",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.321817",
+      "expires_at": "2025-07-31T18:47:04.321817"
+    },
+    {
+      "email": "patrick.decausmaecker@kuleuven.be",
+      "name": "Patrick De Causmaecker",
+      "university": "KU Leuven (Belgium)",
+      "subject": "Research Inquiry - AI optimization",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.324820",
+      "expires_at": "2025-07-31T18:47:04.324820"
+    },
+    {
+      "email": "sien.moens@cs.kuleuven.be",
+      "name": "Sien Moens",
+      "university": "KU Leuven (Belgium)",
+      "subject": "Research Inquiry - AI NLP",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.327826",
+      "expires_at": "2025-07-31T18:47:04.327826"
+    },
+    {
+      "email": "toon.vanwaterschoot@esat.kuleuven.be",
+      "name": "Toon van Waterschoot",
+      "university": "KU Leuven (Belgium)",
+      "subject": "Research Inquiry - AI audio processing",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.330814",
+      "expires_at": "2025-07-31T18:47:04.330814"
+    },
+    {
+      "email": "wannes.meert@cs.kuleuven.be",
+      "name": "Wannes Meert",
+      "university": "KU Leuven (Belgium)",
+      "subject": "Research Inquiry - ML time series",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.333830",
+      "expires_at": "2025-07-31T18:47:04.333830"
+    },
+    {
+      "email": "albert.bifet@sorbonne-universite.fr",
+      "name": "Albert Bifet",
+      "university": "Sorbonne University (France)",
+      "subject": "Research Inquiry - Data streams ML",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.337816",
+      "expires_at": "2025-07-31T18:47:04.337816"
+    },
+    {
+      "email": "alessio.sakr@sorbonne-universite.fr",
+      "name": "Alessio Sakr",
+      "university": "Sorbonne University (France)",
+      "subject": "Research Inquiry - AI verification",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.342843",
+      "expires_at": "2025-07-31T18:47:04.342843"
+    },
+    {
+      "email": "antoine.cornuejols@sorbonne-universite.fr",
+      "name": "Antoine Cornuéjols",
+      "university": "Sorbonne University (France)",
+      "subject": "Research Inquiry - ML algorithms",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.345843",
+      "expires_at": "2025-07-31T18:47:04.345843"
+    },
+    {
+      "email": "christophe.marsala@sorbonne-universite.fr",
+      "name": "Christophe Marsala",
+      "university": "Sorbonne University (France)",
+      "subject": "Research Inquiry - Fuzzy ML",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.350817",
+      "expires_at": "2025-07-31T18:47:04.350817"
+    },
+    {
+      "email": "fabrice.kordon@sorbonne-universite.fr",
+      "name": "Fabrice Kordon",
+      "university": "Sorbonne University (France)",
+      "subject": "Research Inquiry - AI distributed systems",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.356174",
+      "expires_at": "2025-07-31T18:47:04.356174"
+    },
+    {
+      "email": "gianluca.pollastri@sorbonne-universite.fr",
+      "name": "Gianluca Pollastri",
+      "university": "Sorbonne University (France)",
+      "subject": "Research Inquiry - Computational biology AI",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.361186",
+      "expires_at": "2025-07-31T18:47:04.361186"
+    },
+    {
+      "email": "jean-daniel.zucker@sorbonne-universite.fr",
+      "name": "Jean-Daniel Zucker",
+      "university": "Sorbonne University (France)",
+      "subject": "Research Inquiry - ML in biology",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.365535",
+      "expires_at": "2025-07-31T18:47:04.364534"
+    },
+    {
+      "email": "matthieu.cord@sorbonne-universite.fr",
+      "name": "Matthieu Cord",
+      "university": "Sorbonne University (France)",
+      "subject": "Research Inquiry - AI vision",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.368534",
+      "expires_at": "2025-07-31T18:47:04.368534"
+    },
+    {
+      "email": "mohamed.chetouani@sorbonne-universite.fr",
+      "name": "Mohamed Chetouani",
+      "university": "Sorbonne University (France)",
+      "subject": "Research Inquiry - Human-AI interaction",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.372536",
+      "expires_at": "2025-07-31T18:47:04.372536"
+    },
+    {
+      "email": "nicolas.baskiotis@sorbonne-universite.fr",
+      "name": "Nicolas Baskiotis",
+      "university": "Sorbonne University (France)",
+      "subject": "Research Inquiry - ML unsupervised",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.376535",
+      "expires_at": "2025-07-31T18:47:04.376535"
+    },
+    {
+      "email": "olivier.schwander@sorbonne-universite.fr",
+      "name": "Olivier Schwander",
+      "university": "Sorbonne University (France)",
+      "subject": "Research Inquiry - AI optimization",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.381901",
+      "expires_at": "2025-07-31T18:47:04.381901"
+    },
+    {
+      "email": "patrick.gallinari@sorbonne-universite.fr",
+      "name": "Patrick Gallinari",
+      "university": "Sorbonne University (France)",
+      "subject": "Research Inquiry - Deep learning",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.386378",
+      "expires_at": "2025-07-31T18:47:04.386378"
+    },
+    {
+      "email": "sylvain.lamprier@sorbonne-universite.fr",
+      "name": "Sylvain Lamprier",
+      "university": "Sorbonne University (France)",
+      "subject": "Research Inquiry - RL",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.389405",
+      "expires_at": "2025-07-31T18:47:04.389405"
+    },
+    {
+      "email": "talel.abdessalem@sorbonne-universite.fr",
+      "name": "Talel Abdessalem",
+      "university": "Sorbonne University (France)",
+      "subject": "Research Inquiry - Big data AI",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.394375",
+      "expires_at": "2025-07-31T18:47:04.394375"
+    },
+    {
+      "email": "theodore.lim@sorbonne-universite.fr",
+      "name": "Theodore Lim",
+      "university": "Sorbonne University (France)",
+      "subject": "Research Inquiry - AI graphs",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.398887",
+      "expires_at": "2025-07-31T18:47:04.398887"
+    },
+    {
+      "email": "thomas.bonald@sorbonne-universite.fr",
+      "name": "Thomas Bonald",
+      "university": "Sorbonne University (France)",
+      "subject": "Research Inquiry - Network ML",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.403899",
+      "expires_at": "2025-07-31T18:47:04.403899"
+    },
+    {
+      "email": "vanda.luengo@sorbonne-universite.fr",
+      "name": "Vanda Luengo",
+      "university": "Sorbonne University (France)",
+      "subject": "Research Inquiry - AI education",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.407901",
+      "expires_at": "2025-07-31T18:47:04.407901"
+    },
+    {
+      "email": "virginie.do@sorbonne-universite.fr",
+      "name": "Virginie Do",
+      "university": "Sorbonne University (France)",
+      "subject": "Research Inquiry - AI knowledge representation",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.412993",
+      "expires_at": "2025-07-31T18:47:04.412993"
+    },
+    {
+      "email": "zahia.guessoum@sorbonne-universite.fr",
+      "name": "Zahia Guessoum",
+      "university": "Sorbonne University (France)",
+      "subject": "Research Inquiry - Multi-agent AI",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.416992",
+      "expires_at": "2025-07-31T18:47:04.416992"
+    },
+    {
+      "email": "barry.smyth@ucd.ie",
+      "name": "Barry Smyth",
+      "university": "University College Dublin (Ireland)",
+      "subject": "Research Inquiry - AI recommendation",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.420996",
+      "expires_at": "2025-07-31T18:47:04.420996"
+    },
+    {
+      "email": "brett.houlding@ucd.ie",
+      "name": "Brett Houlding",
+      "university": "University College Dublin (Ireland)",
+      "subject": "Research Inquiry - ML decision theory",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.424994",
+      "expires_at": "2025-07-31T18:47:04.424994"
+    },
+    {
+      "email": "chris.bleakley@ucd.ie",
+      "name": "Chris Bleakley",
+      "university": "University College Dublin (Ireland)",
+      "subject": "Research Inquiry - AI embedded systems",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.428995",
+      "expires_at": "2025-07-31T18:47:04.428995"
+    },
+    {
+      "email": "david.coyle@ucd.ie",
+      "name": "David Coyle",
+      "university": "University College Dublin (Ireland)",
+      "subject": "Research Inquiry - Human-AI interaction",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.433995",
+      "expires_at": "2025-07-31T18:47:04.433995"
+    },
+    {
+      "email": "derek.greene@ucd.ie",
+      "name": "Derek Greene",
+      "university": "University College Dublin (Ireland)",
+      "subject": "Research Inquiry - ML clustering",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.438995",
+      "expires_at": "2025-07-31T18:47:04.438995"
+    },
+    {
+      "email": "elaine.uidhonnchadha@ucd.ie",
+      "name": "Elaine Uí Dhonnchadha",
+      "university": "University College Dublin (Ireland)",
+      "subject": "Research Inquiry - AI NLP",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.445480",
+      "expires_at": "2025-07-31T18:47:04.445480"
+    },
+    {
+      "email": "fionnuala.murphy@ucd.ie",
+      "name": "Fionnuala Murphy",
+      "university": "University College Dublin (Ireland)",
+      "subject": "Research Inquiry - Fintech AI",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.450910",
+      "expires_at": "2025-07-31T18:47:04.450910"
+    },
+    {
+      "email": "georgiana.ifrim@ucd.ie",
+      "name": "Georgiana Ifrim",
+      "university": "University College Dublin (Ireland)",
+      "subject": "Research Inquiry - ML time series",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.457453",
+      "expires_at": "2025-07-31T18:47:04.457453"
+    },
+    {
+      "email": "giuseppe.difatta@ucd.ie",
+      "name": "Giuseppe Di Fatta",
+      "university": "University College Dublin (Ireland)",
+      "subject": "Research Inquiry - Big data AI",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.463462",
+      "expires_at": "2025-07-31T18:47:04.463462"
+    },
+    {
+      "email": "john.dunnion@ucd.ie",
+      "name": "John Dunnion",
+      "university": "University College Dublin (Ireland)",
+      "subject": "Research Inquiry - AI search",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.468469",
+      "expires_at": "2025-07-31T18:47:04.468469"
+    },
+    {
+      "email": "liam.murphy@ucd.ie",
+      "name": "Liam Murphy",
+      "university": "University College Dublin (Ireland)",
+      "subject": "Research Inquiry - AI networks",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.474622",
+      "expires_at": "2025-07-31T18:47:04.474622"
+    },
+    {
+      "email": "mark.scanlon@ucd.ie",
+      "name": "Mark Scanlon",
+      "university": "University College Dublin (Ireland)",
+      "subject": "Research Inquiry - Digital forensics AI",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.478972",
+      "expires_at": "2025-07-31T18:47:04.478972"
+    },
+    {
+      "email": "michael.oneill@ucd.ie",
+      "name": "Michael O'Neill",
+      "university": "University College Dublin (Ireland)",
+      "subject": "Research Inquiry - Evolutionary AI",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.486294",
+      "expires_at": "2025-07-31T18:47:04.486294"
+    },
+    {
+      "email": "neil.hurley@ucd.ie",
+      "name": "Neil Hurley",
+      "university": "University College Dublin (Ireland)",
+      "subject": "Research Inquiry - AI recommender systems",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.492284",
+      "expires_at": "2025-07-31T18:47:04.492284"
+    },
+    {
+      "email": "padraig.cunningham@ucd.ie",
+      "name": "Pádraig Cunningham",
+      "university": "University College Dublin (Ireland)",
+      "subject": "Research Inquiry - ML case-based reasoning",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.498480",
+      "expires_at": "2025-07-31T18:47:04.498480"
+    },
+    {
+      "email": "ramanujan.kashi@ucd.ie",
+      "name": "Ramanujan Kashi",
+      "university": "University College Dublin (Ireland)",
+      "subject": "Research Inquiry - AI optimization",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.503500",
+      "expires_at": "2025-07-31T18:47:04.503500"
+    },
+    {
+      "email": "rem.collier@ucd.ie",
+      "name": "Rem Collier",
+      "university": "University College Dublin (Ireland)",
+      "subject": "Research Inquiry - Multi-agent AI",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.508803",
+      "expires_at": "2025-07-31T18:47:04.508803"
+    },
+    {
+      "email": "tahereh.dehdarirad@ucd.ie",
+      "name": "Tahereh Dehdarirad",
+      "university": "University College Dublin (Ireland)",
+      "subject": "Research Inquiry - Data science scientometrics",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.514982",
+      "expires_at": "2025-07-31T18:47:04.514982"
+    },
+    {
+      "email": "vivek.nallur@ucd.ie",
+      "name": "Vivek Nallur",
+      "university": "University College Dublin (Ireland)",
+      "subject": "Research Inquiry - AI ethics",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.521318",
+      "expires_at": "2025-07-31T18:47:04.521318"
+    },
+    {
+      "email": "anatoly.zayats@kcl.ac.uk",
+      "name": "Anatoly Zayats",
+      "university": "King's College London (UK)",
+      "subject": "Research Inquiry - AI photonics",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.528078",
+      "expires_at": "2025-07-31T18:47:04.528078"
+    },
+    {
+      "email": "elena.simperl@kcl.ac.uk",
+      "name": "Elena Simperl",
+      "university": "King's College London (UK)",
+      "subject": "Research Inquiry - AI knowledge engineering",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.535088",
+      "expires_at": "2025-07-31T18:47:04.535088"
+    },
+    {
+      "email": "fabio.cuzzolin@kcl.ac.uk",
+      "name": "Fabio Cuzzolin",
+      "university": "King's College London (UK)",
+      "subject": "Research Inquiry - AI uncertainty",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.541068",
+      "expires_at": "2025-07-31T18:47:04.541068"
+    },
+    {
+      "email": "freddie.hepburn@kcl.ac.uk",
+      "name": "Freddie Hepburn",
+      "university": "King's College London (UK)",
+      "subject": "Research Inquiry - Data science",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.547627",
+      "expires_at": "2025-07-31T18:47:04.547627"
+    },
+    {
+      "email": "hana.chockler@kcl.ac.uk",
+      "name": "Hana Chockler",
+      "university": "King's College London (UK)",
+      "subject": "Research Inquiry - AI causality",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.553878",
+      "expires_at": "2025-07-31T18:47:04.553878"
+    },
+    {
+      "email": "jeroen.keppens@kcl.ac.uk",
+      "name": "Jeroen Keppens",
+      "university": "King's College London (UK)",
+      "subject": "Research Inquiry - AI argumentation",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.559684",
+      "expires_at": "2025-07-31T18:47:04.559684"
+    },
+    {
+      "email": "luca.vigano@kcl.ac.uk",
+      "name": "Luca Viganò",
+      "university": "King's College London (UK)",
+      "subject": "Research Inquiry - AI security",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.569372",
+      "expires_at": "2025-07-31T18:47:04.569372"
+    },
+    {
+      "email": "maria.polukarov@kcl.ac.uk",
+      "name": "Maria Polukarov",
+      "university": "King's College London (UK)",
+      "subject": "Research Inquiry - AI game theory",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.574590",
+      "expires_at": "2025-07-31T18:47:04.574590"
+    },
+    {
+      "email": "michael.luck@kcl.ac.uk",
+      "name": "Michael Luck",
+      "university": "King's College London (UK)",
+      "subject": "Research Inquiry - Multi-agent AI",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.581518",
+      "expires_at": "2025-07-31T18:47:04.581518"
+    },
+    {
+      "email": "michael.spratling@kcl.ac.uk",
+      "name": "Michael Spratling",
+      "university": "King's College London (UK)",
+      "subject": "Research Inquiry - Computational neuroscience AI",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.587123",
+      "expires_at": "2025-07-31T18:47:04.587123"
+    },
+    {
+      "email": "mischa.dohler@kcl.ac.uk",
+      "name": "Mischa Dohler",
+      "university": "King's College London (UK)",
+      "subject": "Research Inquiry - AI wireless",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.592900",
+      "expires_at": "2025-07-31T18:47:04.592900"
+    },
+    {
+      "email": "mohammad.shikh-bahaei@kcl.ac.uk",
+      "name": "Mohammad Shikh-Bahaei",
+      "university": "King's College London (UK)",
+      "subject": "Research Inquiry - AI communications",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.599182",
+      "expires_at": "2025-07-31T18:47:04.599182"
+    },
+    {
+      "email": "nishanth.sastry@kcl.ac.uk",
+      "name": "Nishanth Sastry",
+      "university": "King's College London (UK)",
+      "subject": "Research Inquiry - AI social networks",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.606392",
+      "expires_at": "2025-07-31T18:47:04.606392"
+    },
+    {
+      "email": "oded.lachish@kcl.ac.uk",
+      "name": "Oded Lachish",
+      "university": "King's College London (UK)",
+      "subject": "Research Inquiry - AI complexity",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.612639",
+      "expires_at": "2025-07-31T18:47:04.612639"
+    },
+    {
+      "email": "osvaldo.simeone@kcl.ac.uk",
+      "name": "Osvaldo Simeone",
+      "university": "King's College London (UK)",
+      "subject": "Research Inquiry - ML communications",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.620717",
+      "expires_at": "2025-07-31T18:47:04.620717"
+    },
+    {
+      "email": "peter.mcburney@kcl.ac.uk",
+      "name": "Peter McBurney",
+      "university": "King's College London (UK)",
+      "subject": "Research Inquiry - AI multi-agent",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.626879",
+      "expires_at": "2025-07-31T18:47:04.626879"
+    },
+    {
+      "email": "steffen.zschaler@kcl.ac.uk",
+      "name": "Steffen Zschaler",
+      "university": "King's College London (UK)",
+      "subject": "Research Inquiry - AI software engineering",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.633413",
+      "expires_at": "2025-07-31T18:47:04.633413"
+    },
+    {
+      "email": "toktam.mahmoodi@kcl.ac.uk",
+      "name": "Toktam Mahmoodi",
+      "university": "King's College London (UK)",
+      "subject": "Research Inquiry - AI networks",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.638845",
+      "expires_at": "2025-07-31T18:47:04.638845"
+    },
+    {
+      "email": "yulan.he@kcl.ac.uk",
+      "name": "Yulan He",
+      "university": "King's College London (UK)",
+      "subject": "Research Inquiry - AI NLP",
+      "campaign_id": "60e11024-e0bf-42d9-a465-7c92d8862484",
+      "added_at": "2025-07-30T18:47:04.644537",
+      "expires_at": "2025-07-31T18:47:04.644537"
+    }
+  ],
+  "last_updated": "2025-07-30T21:58:48.406660"
+}

@@ -5,6 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 from typing import List, Dict, Any
 import re
+import time
 
 logging.basicConfig(level=logging.INFO)
 
@@ -27,17 +28,38 @@ class ProfessorScraper:
         logging.info(f"Parsed {len(self.professors)} professors from CSRankings CSVs.")
         return self.professors
 
-    def scrape_homepage(self, url: str) -> str:
-        """Scrape homepage for research area text."""
+    def scrape_email_from_homepage(self, url: str) -> str:
+        """Scrape homepage for email address."""
+        if not url or not url.startswith('http'):
+            return ""
         try:
-            resp = requests.get(url, timeout=10)
+            time.sleep(1) # Be a good web citizen
+            resp = requests.get(url, timeout=10, headers={'User-Agent': 'Mozilla/5.0'})
             soup = BeautifulSoup(resp.text, 'html.parser')
-            # Simple heuristic: get all text
-            text = soup.get_text(separator=' ', strip=True)
-            return text[:2000]  # Limit to 2000 chars
+            email_pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
+            emails = re.findall(email_pattern, soup.get_text())
+            
+            for email in emails:
+                # Filter out common false positives
+                if not any(domain in email for domain in ['.png', '.jpg', '.gif', 'example.com']):
+                    return email
+            return ""
+
         except Exception as e:
             logging.warning(f"Failed to scrape {url}: {e}")
             return ""
+
+    def enrich_with_emails(self):
+        """Enrich professor data with emails from their homepages."""
+        for prof in self.professors:
+            homepage = prof.get('homepage')
+            email = self.scrape_email_from_homepage(homepage)
+            prof['email'] = email
+            if email:
+                logging.info(f"Found email {email} for {prof['name']} at {homepage}")
+            else:
+                logging.info(f"No email found for {prof['name']} at {homepage}")
+        return self.professors
 
     def deduplicate_and_filter(self) -> List[Dict[str, Any]]:
         """Deduplicate by email and filter for valid emails."""
@@ -53,6 +75,4 @@ class ProfessorScraper:
 
     @staticmethod
     def is_valid_email(email: str) -> bool:
-        return re.match(r"[^@\s]+@[^@\s]+\.[a-zA-Z0-9]+$", email) is not None
-
-# TODO: Add unit tests for ProfessorScraper 
+        return re.match(r"[^@\s]+@[^@\s]+\.[a-zA-Z0-9]+", email) is not None

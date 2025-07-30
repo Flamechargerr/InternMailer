@@ -152,7 +152,7 @@ with col3:
 # Navigation Section
 st.header("🗺️ Navigation")
 
-col1, col2, col3 = st.columns(3)
+col1, col2, col3, col4 = st.columns(4)
 
 with col1:
     st.markdown("""
@@ -205,6 +205,23 @@ with col3:
     
     if st.button("📅 Go to Follow-ups", key="followups_btn", type="primary"):
         st.info("💡 Navigate to the **Follow-ups** page using the sidebar to manage your campaigns.")
+
+with col4:
+    st.markdown("""
+    <div class="feature-card">
+        <h3>🤖 Job Applications</h3>
+        <p>Automate job applications to companies and HR departments. Scrape job postings, customize your CV, and send personalized application emails.</p>
+        <ul>
+            <li>Job posting scraping</li>
+            <li>CV customization per role</li>
+            <li>Automated email generation</li>
+            <li>Application tracking</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    if st.button("🤖 Job Applications", key="job_apps_btn", type="primary"):
+        st.info("💡 Navigate to the **Job Applications** page using the sidebar to automate your job search.")
 
 # Quick Stats Dashboard
 st.header("📈 Quick Statistics")

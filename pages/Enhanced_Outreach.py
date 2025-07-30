@@ -11,6 +11,7 @@ import time
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from enhanced_personalized_email import generate_deeply_personalized_email
 from src.azure_ai_client import get_azure_ai_client
+from src.llama_client import get_llama_client
 
 load_dotenv()
 
@@ -125,6 +126,14 @@ def check_azure_ai():
     except Exception as e:
         return False
 
+# Check Llama status
+def check_llama():
+    try:
+        client = get_llama_client()
+        return client.is_available()
+    except Exception as e:
+        return False
+
 # Main header
 st.markdown("""
 <div class="main-header">
@@ -136,7 +145,7 @@ st.markdown("""
 
 # System status
 st.header("🔧 System Status")
-col1, col2 = st.columns(2)
+col1, col2, col3 = st.columns(3)
 
 with col1:
     config_issues = check_configuration()
@@ -152,7 +161,14 @@ with col2:
     if azure_status:
         st.success("✅ Azure AI (GPT-4o) Available")
     else:
-        st.error("❌ Azure AI Unavailable")
+        st.warning("⚠️ Azure AI Unavailable - Using Fallback")
+
+with col3:
+    llama_status = check_llama()
+    if llama_status:
+        st.success("✅ Llama Fallback Ready")
+    else:
+        st.info("📝 Llama Not Configured")
 
 # Professor selection section
 st.header("👨‍🎓 Select Professor")
@@ -161,7 +177,7 @@ st.header("👨‍🎓 Select Professor")
 @st.cache_data
 def load_professors_data():
     try:
-        df = pd.read_csv('professors_final.csv')
+        df = pd.read_csv('data/proffesor_clean.csv')
         return df
     except Exception as e:
         st.error(f"Error loading professors data: {e}")
@@ -246,10 +262,7 @@ if not professors_df.empty:
         
         # Generate email
         if generate_button:
-            if not check_azure_ai():
-                st.error("❌ Azure AI is not available. Please check your configuration.")
-            else:
-                with st.spinner("🤖 Generating personalized email..."):
+            with st.spinner("🤖 Generating personalized email..."):
                     try:
                         # Add progress tracking
                         progress_bar = st.progress(0)

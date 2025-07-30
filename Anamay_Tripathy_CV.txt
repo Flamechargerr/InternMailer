@@ -1,0 +1,35 @@
+
+ANAMAY TRIPATHY
+Data Science & Engineering Student
+
+Contact Information:
+📧 tripathy.anamay23@gmail.com
+📞 +91-9877454747
+🌐 anamay.vercel.app | github.com/Flamechargerr
+🎓 MIT Manipal, India
+
+EDUCATION:
+B.Tech in Data Science & Engineering
+Manipal Institute of Technology (MIT Manipal), India
+Current: Third Year Student
+Focus: Machine Learning, AI Systems, Data Analytics
+
+PROFESSIONAL EXPERIENCE:
+Technical Head | YaanBarpe (Government of Karnataka-incubated startup)
+• Leading AI-driven system architecture and sustainable technology solutions
+• Developing innovative tech solutions for environmental sustainability
+
+Data Analyst Intern | Intellect Design Arena, Mumbai
+• Built ML pipelines and scalable APIs, achieving 22% engagement increase
+• Developed data processing workflows and analytical dashboards
+
+KEY PROJECTS:
+• VARtificial Intelligence - ML prediction system with 89% accuracy
+• CrimeConnect - Data-driven case management and analysis platform
+• HackOps - Cybersecurity gamification platform
+
+TECHNICAL SKILLS:
+Programming: Python, JavaScript, Java, SQL
+ML/AI: TensorFlow, PyTorch, Scikit-learn, Pandas, NumPy
+Systems: Docker, Kubernetes, AWS, System Architecture
+Data: Data Analysis, Feature Engineering, Data Visualization

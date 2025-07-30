@@ -10,10 +10,155 @@ import os
 import logging
 sys.path.append('src')
 from jinja2 import Template
-from azure_ai_client import generate_with_azure_ai
+from azure_ai_client import generate_with_azure_ai, get_azure_ai_client
+from llama_client import generate_with_llama, get_llama_client
 from datetime import datetime
 
 logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+def generate_backup_email_content() -> str:
+    """
+    Generate backup email content when both AI systems fail.
+    Returns empty string - we use detailed backup sections instead.
+    """
+    logger.info("🔄 Using detailed backup template sections (AI systems unavailable)")
+    return ""
+
+def get_research_specific_backup(research_area: str, professor_name: str, university: str) -> dict:
+    """
+    Generate research-area specific backup content that's actually tailored to the professor's work.
+    This replaces generic templates with targeted content based on research domain.
+    """
+    research_area_lower = research_area.lower()
+    
+    # AI Ethics and Robotics (like Professor Kuipers)
+    if any(term in research_area_lower for term in ['ethics', 'robotics', 'ai ethics', 'robot ethics']):
+        return {
+            'specific_research_interest': f"""
+Your pioneering work in AI ethics and robotics particularly resonates with me because it addresses one of the most critical challenges facing our field today. As AI systems become increasingly integrated into society, your research on foundational domains of knowledge - especially ethics as a core domain for robots and AI agents - represents exactly the kind of forward-thinking approach I want to contribute to. Your focus on enabling AI systems to act as responsible members of human society aligns perfectly with my belief that technical excellence must be paired with ethical responsibility. I am especially drawn to how your work bridges the gap between abstract ethical principles and concrete implementations in robotic systems.
+            """,
+            
+            'technical_alignment': f"""
+My technical background in AI systems development, combined with my philosophical interest in responsible technology, positions me well to contribute to your ethics-focused robotics research. Through my leadership role at YaanBarpe, I've grappled with real-world ethical considerations in AI deployment, while my data science training provides the technical foundation to implement ethical reasoning systems. My experience building scalable AI architectures could support your work on foundational knowledge domains, particularly in developing computational frameworks that can represent and reason about ethical principles in robotic decision-making systems.
+            """,
+            
+            'research_contribution_ideas': f"""
+I could contribute to your research by developing computational frameworks for ethical reasoning in robotic systems, building on my experience with decision-making algorithms and knowledge representation. My background in scalable system architecture would be valuable for implementing your foundational domains approach, particularly in creating robust frameworks that can handle the complexity of ethical reasoning in real-time robotic applications. Additionally, I could help develop empirical methodologies to evaluate the effectiveness of ethical reasoning systems, drawing on my data analysis experience to create metrics and benchmarks for measuring ethical behavior in AI agents.
+            """
+        }
+    
+    # Machine Learning / AI Vision
+    elif any(term in research_area_lower for term in ['machine learning', 'computer vision', 'deep learning', 'neural networks']):
+        return {
+            'specific_research_interest': f"""
+Your research in {research_area} particularly excites me because it represents the cutting edge of AI systems that can understand and interact with the visual world. The intersection of theoretical ML advances with practical computer vision applications aligns perfectly with my interests in both algorithmic innovation and real-world problem solving. Your work demonstrates how rigorous mathematical foundations can be translated into systems that meaningfully impact how machines perceive and understand visual information, which is exactly the kind of research I want to contribute to during my career.
+            """,
+            
+            'technical_alignment': f"""
+My hands-on experience building ML pipelines and computer vision systems at Intellect Design Arena, combined with my theoretical foundation in data science, positions me well to contribute to your {research_area} research. I've worked extensively with neural network architectures and optimization algorithms, and my experience scaling ML systems in production environments could support your work on developing robust vision systems. My background in both the mathematical foundations and practical implementation challenges of ML makes me well-suited to advance your research objectives.
+            """,
+            
+            'research_contribution_ideas': f"""
+I could contribute by developing and optimizing neural network architectures for your vision research, leveraging my experience with ML pipeline development and performance optimization. My background in scalable system design would be valuable for implementing efficient training and inference frameworks for large-scale vision models. Additionally, I could help develop novel evaluation methodologies and benchmarking systems for vision algorithms, drawing on my data analysis expertise to create comprehensive assessment frameworks that measure both accuracy and computational efficiency.
+            """
+        }
+    
+    # Systems/Distributed Computing
+    elif any(term in research_area_lower for term in ['systems', 'distributed', 'networks', 'security', 'databases']):
+        return {
+            'specific_research_interest': f"""
+Your work in {research_area} particularly resonates with me because it tackles the fundamental challenges of building reliable, scalable computing infrastructure that underpins all modern applications. The complexity of designing systems that can handle massive scale while maintaining reliability and security aligns with my passion for solving complex technical challenges. Your research approach, which balances theoretical rigor with practical considerations, represents exactly the kind of systems thinking I want to develop further in my career.
+            """,
+            
+            'technical_alignment': f"""
+My experience as Technical Head at YaanBarpe, where I've architected scalable AI systems and dealt with real-world deployment challenges, directly aligns with your {research_area} research. I've worked extensively with distributed architectures, performance optimization, and system reliability - challenges that are central to your work. My combination of hands-on system building experience and theoretical computer science background positions me well to contribute to research that requires both deep technical knowledge and practical implementation skills.
+            """,
+            
+            'research_contribution_ideas': f"""
+I could contribute to your systems research by developing and implementing novel distributed algorithms and system architectures, leveraging my experience with scalable system design and performance optimization. My background in both theoretical analysis and practical system building would be valuable for prototyping and evaluating new system approaches. Additionally, I could help develop comprehensive benchmarking and evaluation frameworks for distributed systems, drawing on my data analysis expertise to create metrics that capture both performance and reliability characteristics.
+            """
+        }
+    
+    # Natural Language Processing
+    elif any(term in research_area_lower for term in ['nlp', 'natural language', 'language model', 'text']):
+        return {
+            'specific_research_interest': f"""
+Your research in {research_area} particularly fascinates me because it addresses the fundamental challenge of enabling machines to understand and generate human language meaningfully. The intersection of computational linguistics, machine learning, and cognitive science in your work represents exactly the kind of interdisciplinary approach I'm passionate about. Your focus on developing systems that can truly comprehend language, rather than just process it statistically, aligns with my interest in building AI systems that can engage with human knowledge and reasoning in sophisticated ways.
+            """,
+            
+            'technical_alignment': f"""
+My background in machine learning and data science, particularly my experience with large-scale text processing and analysis systems, aligns well with your {research_area} research. Through my work at Intellect Design Arena, I've developed ML pipelines for processing and analyzing textual data, while my theoretical foundation in algorithms and statistics provides the mathematical background necessary for advancing NLP research. My experience with both the engineering challenges and theoretical aspects of language processing positions me well to contribute to your research group.
+            """,
+            
+            'research_contribution_ideas': f"""
+I could contribute to your NLP research by developing and optimizing language processing algorithms and neural architectures, leveraging my experience with ML systems and performance optimization. My background in data analysis would be valuable for developing novel evaluation methodologies and linguistic analysis frameworks. Additionally, I could help build scalable infrastructure for training and deploying large language models, drawing on my systems experience to address the computational challenges inherent in modern NLP research.
+            """
+        }
+    
+    # Generic fallback (but still better than the old generic version)
+    else:
+        return {
+            'specific_research_interest': f"""
+Your research in {research_area} at {university} particularly excites me because it represents cutting-edge work that pushes the boundaries of our field. The innovative approaches you've developed demonstrate a deep understanding of both theoretical foundations and practical applications, which strongly resonates with my own interests in bridging academic research with real-world impact. Your work addresses fundamental questions in {research_area} while maintaining relevance to current technological challenges, which is exactly the kind of research environment where I believe I can make meaningful contributions and grow as a researcher.
+            """,
+            
+            'technical_alignment': f"""
+My technical background in data science and machine learning, developed through my roles at YaanBarpe and Intellect Design Arena, aligns well with the computational and analytical demands of your {research_area} research. My experience with scalable system architecture, algorithm implementation, and data analysis provides a strong foundation for contributing to research projects that require both theoretical understanding and practical implementation skills. The combination of my academic training and industry experience offers a unique perspective that I believe would be valuable for advancing your research objectives.
+            """,
+            
+            'research_contribution_ideas': f"""
+I could contribute to your {research_area} research by applying my experience in machine learning algorithm development and system optimization to advance your current projects. My background in data analysis and computational methods would be valuable for developing novel approaches to research challenges in your field. Additionally, my experience with scalable system implementation could help translate theoretical advances into practical, deployable solutions that demonstrate the real-world impact of your research.
+            """
+        }
+
+def generate_with_fallback(prompt: str) -> str:
+    """
+    Generate text using Azure AI first (most reliable), then Llama as fallback.
+    
+    Args:
+        prompt: The prompt to send to the model
+        
+    Returns:
+        Generated response text
+    """
+    # First, try Azure AI (most reliable for personalization)
+    azure_client = get_azure_ai_client()
+    if azure_client.is_available():
+        try:
+            logger.info("Attempting generation with Azure AI...")
+            result = generate_with_azure_ai(prompt)
+            if result and result.strip():
+                logger.info("✅ Successfully generated with Azure AI")
+                return result
+            else:
+                logger.warning("Azure AI returned empty response, trying Llama...")
+        except Exception as e:
+            logger.warning(f"Azure AI generation failed: {e}, trying Llama...")
+    else:
+        logger.info("Azure AI not available, trying Llama...")
+    
+    # Second, try Llama
+    llama_client = get_llama_client()
+    if llama_client.is_available():
+        try:
+            logger.info("Attempting generation with Llama...")
+            result = generate_with_llama(prompt)
+            if result and result.strip():
+                logger.info("✅ Successfully generated with Llama")
+                return result
+            else:
+                logger.warning("Llama returned empty response, using backup template...")
+        except Exception as e:
+            logger.warning(f"Llama generation failed: {e}, using backup template...")
+    else:
+        logger.info("Llama not available, using backup template...")
+    
+    # Final fallback - use backup template with professor-specific data
+    logger.error("Both Azure AI and Llama failed, using backup template")
+    return generate_backup_email_content()
+
+
 
 HTML_TEMPLATE = '''
 <!DOCTYPE html>
@@ -99,7 +244,7 @@ HTML_TEMPLATE = '''
         </div>
 
         <p style="margin: 0 0 15px 0; font-size: 16px; color: #000000; text-align: justify;">
-            I am available for internships in <strong>Winter 2025</strong> or <strong>Summer 2026</strong>, and welcome <strong>remote or on-site</strong>, <strong>funded or volunteer</strong> opportunities. I've attached my <strong>CV</strong> and would be grateful for the opportunity to discuss how my background and interests align with your ongoing projects.
+            I am available for internships in <strong>Winter 2025</strong> or <strong>Summer 2026</strong>, and welcome <strong>remote or on-site</strong>, <strong>funded or volunteer</strong> opportunities. I have attached my detailed CV for your review and would be grateful for the opportunity to discuss how my background and interests align with your ongoing projects.
         </p>
 
         <p style="margin: 0 0 25px 0; font-size: 16px; color: #000000;">
@@ -169,69 +314,79 @@ def generate_deeply_personalized_email(professor_data):
     
     # Generate highly specific research interest discussion with advanced AI reasoning
     specific_research_prompt = f"""
-    You are Anamay Tripathy, a Data Science student, writing directly to Professor {full_name} about your deep interest in their research in {research_area} at {university}.
+    Write ONE PARAGRAPH ONLY (100-120 words) from MY perspective as Anamay Tripathy expressing interest in Professor {full_name}'s research.
     
-    Write a compelling, highly personalized paragraph in FIRST PERSON that demonstrates:
-    1. Deep understanding of their specific research contributions in {research_area}
-    2. How their innovative methodologies inspire your academic interests
-    3. The real-world impact and applications of their work that motivate you
-    4. Why their approach is particularly groundbreaking in advancing the field
-    5. How their work opens new possibilities for your own research interests
+    Context:
+    - Professor: {full_name} at {university}
+    - Research Area: {research_area}
+    - I am: Anamay, Data Science & Engineering student at MIT Manipal
     
-    CRITICAL: Write ONLY in first person from Anamay's perspective. Use "I", "my", "me" throughout.
-    Examples: "I am deeply inspired by your work on..." "Your approach to... resonates with me because..." "I find your methodology particularly compelling because..."
+    CRITICAL REQUIREMENTS:
+    - Write ENTIRELY in FIRST PERSON (I, my, me) throughout
+    - Address professor as "you" and "your"
+    - NO third-person references like "the professor" or "their work"
+    - Be specific about why YOUR work in {research_area} excites ME personally
+    - Connect YOUR research to MY career aspirations in AI/data science
     
-    Make it specific to {research_area} and {university}, avoiding generic statements. 120-150 words.
+    Start with: "I am deeply inspired by your work in {research_area}..." or "Your research in {research_area} particularly excites me because..."
+    
+    Return ONLY the paragraph text, nothing else.
     """
     
-    specific_research_interest = generate_with_azure_ai(specific_research_prompt)
+    specific_research_interest = generate_with_fallback(specific_research_prompt)
     
     # Generate paper discussion if papers are available
     paper_discussion = ""
     if notable_papers:
         paper_prompt = f"""
-        You are Anamay Tripathy writing to Professor {full_name} about how their research contributions have influenced you, specifically mentioning their work in {research_area}. 
+        Write ONE PARAGRAPH ONLY (80-100 words) from MY perspective as Anamay Tripathy discussing Professor {full_name}'s specific research contributions.
         
         Key papers/work to reference: {', '.join(notable_papers[:3])}
         
-        CRITICAL: Write ONLY in FIRST PERSON from Anamay's perspective. Use "I", "my", "me" throughout. Address the professor as "you" and "your".
+        CRITICAL REQUIREMENTS:
+        - Write ENTIRELY in FIRST PERSON (I, my, me) throughout
+        - Address professor as "you" and "your"
+        - NO third-person references whatsoever
+        - Be specific about how YOUR papers have influenced MY understanding
+        
         Use phrases like:
-        - "Your work on [paper] has shown me..."
+        - "Your work on [specific paper] has shown me..."
         - "I was particularly impressed by your approach in..."
-        - "I find your research in [area] demonstrates..."
+        - "Your research demonstrates to me..."
         
-        Discuss from Anamay's perspective:
-        1. How you (the professor's) specific research contributions have influenced the field in my view
-        2. What makes your approach unique or groundbreaking from my perspective
-        3. How your work connects to current challenges I'm interested in
+        Focus on how YOUR specific contributions have shaped MY perspective on the field.
         
-        Write from my perspective as a student who has studied your work. Keep it under 100 words and be specific, not generic.
+        Return ONLY the paragraph text, nothing else.
         """
-        paper_discussion = generate_with_azure_ai(paper_prompt)
+        paper_discussion = generate_with_fallback(paper_prompt)
     
     # Generate technical alignment with sophisticated reasoning
     technical_alignment_prompt = f"""
-    You are Anamay Tripathy writing to Professor {full_name}, explaining how your technical background uniquely aligns with their research in {research_area} at {university}.
+    Write ONE PARAGRAPH ONLY (100-120 words) from MY perspective as Anamay Tripathy explaining technical alignment with Professor {full_name}'s research.
     
-    Your technical profile:
-    - B.Tech Data Science & Engineering, MIT Manipal (advanced coursework in ML, statistics, distributed systems)
-    - Technical Head at YaanBarpe (govt-incubated startup) - leading AI architecture and scalable solutions
-    - Data Analyst Intern at Intellect Design Arena - built ML pipelines, scalable APIs (22% engagement boost)
-    - Key projects: VARtificial Intelligence (89% accuracy ML prediction), CrimeConnect (distributed case management)
-    - Tech stack: Python, TensorFlow, PyTorch, JavaScript, React, advanced ML algorithms
+    Context:
+    - I am: Anamay, B.Tech Data Science & Engineering at MIT Manipal
+    - Professor researches: {research_area} at {university}
+    - My background: Technical Head at YaanBarpe (startup), Data Analyst at Intellect Design Arena, ML projects
     
-    CRITICAL: Write ONLY in FIRST PERSON from Anamay's perspective. Use "I", "my", "me" throughout.
-    Write a compelling paragraph demonstrating:
-    1. How my specific technical skills directly complement their research methodology in {research_area}
-    2. How my hands-on experience with scalable ML systems relates to their work
-    3. How my startup leadership experience brings practical implementation perspective
-    4. Specific ways my technical background enables meaningful contributions to their research
+    CRITICAL REQUIREMENTS:
+    - Write ENTIRELY in FIRST PERSON (I, my, me) throughout
+    - Address professor as "you" and "your"
+    - NO third-person references like "the student" or "their work"
+    - Be specific about how MY skills support YOUR {research_area} work
     
-    Use phrases like "My experience with..." "I believe my expertise in... would enable me to contribute..." 
-    Be highly specific to {research_area} research needs. 100-120 words.
+    Include:
+    1. How MY ML/systems experience supports YOUR research
+    2. MY specific technical skills valuable for YOUR projects
+    3. How MY startup experience brings implementation perspective
+    4. Why MY theory + hands-on combination is ideal for YOUR work
+    
+    Start with: "My experience with..." or "I believe my background in..."
+    
+    Return ONLY the paragraph text, nothing else.
     """
     
-    technical_alignment = generate_with_azure_ai(technical_alignment_prompt)
+    technical_alignment = generate_with_fallback(technical_alignment_prompt)
     
     # Generate sophisticated research contribution ideas
     contribution_prompt = f"""
@@ -253,7 +408,33 @@ def generate_deeply_personalized_email(professor_data):
     Make each contribution concrete and valuable to {research_area} research. 90-100 words.
     """
     
-    research_contribution_ideas = generate_with_azure_ai(contribution_prompt)
+    research_contribution_ideas = generate_with_fallback(contribution_prompt)
+    
+    # Use research-specific backup template if AI generation failed
+    backup_sections = get_research_specific_backup(research_area, full_name, university)
+    
+    # Replace empty/generic responses with research-specific backup content
+    # Check if AI failed by looking for generic backup content
+    if (not specific_research_interest or specific_research_interest.strip() == "" or 
+        "Thank you for considering" in specific_research_interest or
+        "I am deeply inspired by your groundbreaking research work" in specific_research_interest or
+        len(specific_research_interest.strip()) < 50):
+        specific_research_interest = backup_sections['specific_research_interest'].strip()
+        logger.info(f"Using research-specific backup template for {research_area} research interest section")
+        
+    if (not technical_alignment or technical_alignment.strip() == "" or 
+        "Thank you for considering" in technical_alignment or
+        "I am deeply inspired by your groundbreaking research work" in technical_alignment or
+        len(technical_alignment.strip()) < 50):
+        technical_alignment = backup_sections['technical_alignment'].strip()
+        logger.info(f"Using research-specific backup template for {research_area} technical alignment section")
+        
+    if (not research_contribution_ideas or research_contribution_ideas.strip() == "" or 
+        "Thank you for considering" in research_contribution_ideas or
+        "I am deeply inspired by your groundbreaking research work" in research_contribution_ideas or
+        len(research_contribution_ideas.strip()) < 50):
+        research_contribution_ideas = backup_sections['research_contribution_ideas'].strip()
+        logger.info(f"Using research-specific backup template for {research_area} research contributions section")
     
     # Determine relevant projects based on research area
     relevant_projects = "CrimeConnect (distributed case management system), VARtificial Intelligence (ML prediction platform)"

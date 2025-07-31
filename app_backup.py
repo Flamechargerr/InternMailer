@@ -29,7 +29,7 @@ except ImportError:
         return None
 
 try:
-    from src.shared import config_manager, professor_manager, ui_components
+    from shared import config_manager, professor_manager, ui_components
 except ImportError:
     config_manager = professor_manager = ui_components = None
 
@@ -142,6 +142,7 @@ def check_configuration():
     
     return issues
 
+
 # Check configuration and show warnings
 config_issues = check_configuration()
 if config_issues:
@@ -228,16 +229,13 @@ with col1:
         st.error("❌ Configuration Issues")
 
 with col2:
-    st.success("✅ System Operational") 
+    st.success("✅ GPT-4 Available")
 
 with col3:
     try:
         followup_manager = get_followup_manager()
-        if followup_manager:
-            analytics = followup_manager.get_analytics()
-            st.info(f"📈 {analytics.get('total_followups', 0)} Total Follow-ups")
-        else:
-            st.info("📈 Follow-up System Ready")
+        analytics = followup_manager.get_analytics()
+        st.info(f"📈 {analytics.get('total_followups', 0)} Total Follow-ups")
     except Exception:
         st.error("❌ Follow-up System Error")
 
@@ -433,13 +431,13 @@ with st.expander("📝 Step-by-Step Guide", expanded=False):
     - Start Ollama service for AI features
     
     ### 2. **Send Individual Emails (Recommended Start)**
-    - Navigate to the **Professor Outreach** page
+    - Navigate to the **Email with CV** page
     - Enter professor details (name, university, research area)
     - Use Test Mode to send to yourself first
     - Review and send personalized emails with CV attachment
     
     ### 3. **Launch Bulk Campaigns**
-    - Navigate to the **Professor Outreach** page
+    - Navigate to the **Outreach** page
     - Upload your resume (PDF format)
     - Configure campaign preferences
     - Choose target countries (optional)
@@ -457,7 +455,7 @@ with st.expander("📝 Step-by-Step Guide", expanded=False):
     - Track application statuses in the dashboard
     
     ### 5. **Monitor & Manage**
-    - Use the follow-up features to track responses
+    - Use the **Follow-ups** page to track responses
     - Schedule additional follow-ups
     - Analyze campaign performance
     - Adjust settings as needed
@@ -472,4 +470,4 @@ with st.expander("📝 Step-by-Step Guide", expanded=False):
 # Footer
 st.markdown("---")
 st.caption("InternMailer © 2024 | Built by Anamay Tripathy")
-st.caption("💡 **Tip:** Use the sidebar to navigate between different features.")
+st.caption("💡 **Tip:** Use the sidebar to navigate between Outreach and Follow-ups pages.")

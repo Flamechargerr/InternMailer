@@ -1,8 +1,11 @@
 
-from job_harvester import scrape_jobs, save_jobs_to_json
+from enhanced_job_scraper import EnhancedJobScraper
 from job_parser import process_job_postings
 from cv_customizer import CVCustomizer, load_json, save_customized_cvs
 from application_tracker import ApplicationTracker
+from hr_finder import HRFinder
+from send_email_with_cv import send_email_with_cv
+import os
 
 class JobApplicationOrchestrator:
     def __init__(self, base_cv_path: str, job_board_url: str):
@@ -11,6 +14,7 @@ class JobApplicationOrchestrator:
         self.tracker = ApplicationTracker()
 
     def run_pipeline(self):
+        self.hr_finder = HRFinder(api_key=os.getenv('HUNTER_API_KEY'))
         """
         Executes the full job application pipeline:
         1. Scrapes job postings
@@ -20,11 +24,12 @@ class JobApplicationOrchestrator:
         """
         # Step 1: Scrape job postings
         print("--- Step 1: Scraping Jobs ---")
-        scraped_jobs = scrape_jobs(self.job_board_url)
+        scraper = EnhancedJobScraper()
+        scraped_jobs = scraper.scrape_all_jobs(max_jobs_per_board=10)
         if not scraped_jobs:
             print("No jobs were scraped. Exiting pipeline.")
             return
-        save_jobs_to_json(scraped_jobs)
+        scraper.save_jobs_to_json(scraped_jobs, "job_postings.json")
         print(f"Successfully scraped {len(scraped_jobs)} jobs.")
 
         # Step 2: Parse job postings
@@ -40,7 +45,7 @@ class JobApplicationOrchestrator:
             print("Parsed jobs or base CV not found. Exiting.")
             return
 
-        customizer = CVCustomizer(base_cv=base_cv[0])  # Assuming single CV in JSON
+        customizer = CVCustomizer(base_cv_file=self.base_cv_path)
         customized_resumes = []
 
         for job in parsed_jobs:
@@ -60,6 +65,19 @@ class JobApplicationOrchestrator:
             self.tracker.log_application(job, status="ready_to_apply")
         
         self.tracker.display_summary()
+        
+        # Step 5: Find HR emails and send emails
+        print("\n--- Step 5: Sending Emails ---")
+        for job in parsed_jobs:
+            company = job.get('company')
+            if company:
+                hr_emails = self.hr_finder.find_hr_emails(company)
+                for email in hr_emails:
+                    email_address = email.get('value')
+                    if email_address:
+                        print(f"Sending email to {email_address} for {company}...")
+                        send_email_with_cv(job)
+                        print(f"Email sent to {email_address}.")
 
 if __name__ == "__main__":
     # Configuration

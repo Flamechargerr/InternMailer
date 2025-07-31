@@ -1,28 +1,13 @@
-# Virtual environments
-venv/
-venv_dev/
-env/
-.venv/
-.env/
-
-# Environment variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# Python cache files
+# Byte-compiled / optimized / DLL files
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
 *.py[cod]
 *$py.class
+
+# C extensions
 *.so
-.Python
 
 # Distribution / packaging
+.Python
 build/
 develop-eggs/
 dist/
@@ -35,32 +20,169 @@ parts/
 sdist/
 var/
 wheels/
+share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
 
-# Authentication tokens and credentials
-token.json
-credentials.json
-*.pem
-*.key
-*.crt
-*.p12
+# PyInstaller
+*.manifest
+*.spec
 
-# Logs
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
 *.log
-logs/
-send_log.csv
-campaign_*.log
-email_log.csv
-test_*.csv
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
 
-# IDE files
-.vscode/
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# poetry
+poetry.lock
+
+# pdm
+.pdm.toml
+
+# PEP 582
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# PyCharm
 .idea/
-*.swp
-*.swo
-*~
+
+# VS Code
+.vscode/
+
+# Project-specific ignores
+# Sensitive data
+*.csv
+*.json
+!requirements.txt
+!package.json
+!package-lock.json
+!data/csrankings-*.csv
+!tests/schemas/*.json
+!src/templates/template_metadata.json
+
+# Resume files (contain personal information)
+resumes/
+!resumes/.gitkeep
+
+# Email logs and tracking
+email_log.csv
+followup_log.csv
+contacted_companies.csv
+contacted_companies.txt
+
+# Database files
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# Generated HTML files
+*.html
+!templates/*.html
+!src/templates/*.html
+
+# Cache and temporary files
+*.cache
+*.tmp
+*.temp
+cache/
+temp/
 
 # OS generated files
 .DS_Store
@@ -71,46 +193,28 @@ test_*.csv
 ehthumbs.db
 Thumbs.db
 
-# Database files
-*.db
-*.sqlite
-*.sqlite3
-followups.db
-
-# Security & Sensitive Files
-resumes/
-
-# Email Data
-email_*.csv
-professors_*.csv
+# Archive and backup files
+archive/
+backup/
 *.backup
+*.bak
 
-# Temporary Files
-*.tmp
-*.temp
-*.cache
-.coverage
-coverage.json
-htmlcov/
+# Large data files
+*.zip
+*.tar.gz
+*.rar
 
-# System specific
-*.lnk
-desktop.ini
+# Selenium webdriver files
+chromedriver*
+geckodriver*
 
-# Email attachments
-*.pdf
-*.doc
-*.docx
+# Test output
+test_results.json
+test_output/
 
-# Config backups
-*.env.backup
-*.env.production
+# Streamlit cache
+.streamlit/
 
-# Test files (keep main test files but exclude temporary ones)
-test_*.py
-*_test.py
-security_audit.py
-
-# Data files (if they contain sensitive information)
-data/professors_*.csv
-data/sent_emails.json
+# Local configuration overrides
+config.local.py
+settings.local.py

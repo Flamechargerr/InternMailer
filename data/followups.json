@@ -174,6 +174,41 @@
       "description": "Academic outreach for Any internships",
       "created_at": "2025-07-30T15:49:57.289145+00:00",
       "settings": {}
+    },
+    "e3efbcfb-e7bd-483b-a2bf-ddbebe71127c": {
+      "id": "e3efbcfb-e7bd-483b-a2bf-ddbebe71127c",
+      "name": "Outreach 2025-07-31 00:47 (Live Send)",
+      "description": "Academic outreach for Any internships",
+      "created_at": "2025-07-30T19:17:08.673112+00:00",
+      "settings": {}
+    },
+    "ae79e52f-dbb1-4086-99a8-40b8bce42ae3": {
+      "id": "ae79e52f-dbb1-4086-99a8-40b8bce42ae3",
+      "name": "Outreach 2025-07-31 01:11 (Live Send)",
+      "description": "Academic outreach for Any internships",
+      "created_at": "2025-07-30T19:41:16.171206+00:00",
+      "settings": {}
+    },
+    "22f991c9-375e-44bc-b81e-50fc3d7d73e0": {
+      "id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "name": "Outreach 2025-07-31 09:04 (Live Send)",
+      "description": "Academic outreach for Any internships",
+      "created_at": "2025-07-31T03:34:26.729230+00:00",
+      "settings": {}
+    },
+    "bfe2c032-4c2e-4cc6-8855-675fc60b69b5": {
+      "id": "bfe2c032-4c2e-4cc6-8855-675fc60b69b5",
+      "name": "Outreach 2025-07-31 11:51 (Live Send)",
+      "description": "Academic outreach for Any internships",
+      "created_at": "2025-07-31T06:21:54.304667+00:00",
+      "settings": {}
+    },
+    "69ccbd25-173d-48de-a3c7-71eb4004ec03": {
+      "id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "name": "Outreach 2025-07-31 12:39 (Live Send)",
+      "description": "Academic outreach for Any internships",
+      "created_at": "2025-07-31T07:09:19.683214+00:00",
+      "settings": {}
     }
   },
   "followups": {
@@ -5576,6 +5611,1076 @@
       "scheduled_at": "2025-08-06T16:28:48.370269+00:00",
       "created_at": "2025-07-30T16:28:48.370269+00:00",
       "email_log_id": "620dbf52-8cb4-4a3f-a43f-5f306cbc574e"
+    },
+    "ddfa8d48-dfcb-4542-8936-a788481b8c3c": {
+      "id": "ddfa8d48-dfcb-4542-8936-a788481b8c3c",
+      "campaign_id": "e3efbcfb-e7bd-483b-a2bf-ddbebe71127c",
+      "email": "jane.sinclair@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI education",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-06T19:17:13.319780+00:00",
+      "created_at": "2025-07-30T19:17:13.319780+00:00",
+      "email_log_id": "ed481140-2c6c-4d20-b162-15e32aa39638"
+    },
+    "86ed3dc4-f9d3-4d25-ad88-24a012db54d5": {
+      "id": "86ed3dc4-f9d3-4d25-ad88-24a012db54d5",
+      "campaign_id": "e3efbcfb-e7bd-483b-a2bf-ddbebe71127c",
+      "email": "matthew.leeke@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Dependable systems AI",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-06T19:17:47.417311+00:00",
+      "created_at": "2025-07-30T19:17:47.417311+00:00",
+      "email_log_id": "e705f854-87f8-4455-b407-e296b0d67bef"
+    },
+    "72e07df2-7a9b-4ef3-b702-015773f47272": {
+      "id": "72e07df2-7a9b-4ef3-b702-015773f47272",
+      "campaign_id": "e3efbcfb-e7bd-483b-a2bf-ddbebe71127c",
+      "email": "nasir.rajpoot@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Medical AI imaging",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-06T19:18:21.677597+00:00",
+      "created_at": "2025-07-30T19:18:21.677597+00:00",
+      "email_log_id": "aa28aa54-fc7e-4dec-9e48-60dbd745c5ec"
+    },
+    "a9ea203c-2253-44f7-8bcc-a59dbb3c4c7f": {
+      "id": "a9ea203c-2253-44f7-8bcc-a59dbb3c4c7f",
+      "campaign_id": "e3efbcfb-e7bd-483b-a2bf-ddbebe71127c",
+      "email": "nathan.griffiths@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Multi-agent AI",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-06T19:18:56.139594+00:00",
+      "created_at": "2025-07-30T19:18:56.139594+00:00",
+      "email_log_id": "ab34be5d-44a5-44ea-8b8c-b1a0476a6742"
+    },
+    "490fff5f-d9e4-4f12-852e-e5effa603e9b": {
+      "id": "490fff5f-d9e4-4f12-852e-e5effa603e9b",
+      "campaign_id": "e3efbcfb-e7bd-483b-a2bf-ddbebe71127c",
+      "email": "ranko.lazic@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI verification",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-06T19:19:30.241647+00:00",
+      "created_at": "2025-07-30T19:19:30.241647+00:00",
+      "email_log_id": "5d8b5ff3-5709-47d2-b521-65461982f650"
+    },
+    "6f8341d1-2da9-494a-844f-0b72f3642e5d": {
+      "id": "6f8341d1-2da9-494a-844f-0b72f3642e5d",
+      "campaign_id": "e3efbcfb-e7bd-483b-a2bf-ddbebe71127c",
+      "email": "richard.kirk@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI graphics",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-06T19:20:04.372305+00:00",
+      "created_at": "2025-07-30T19:20:04.372305+00:00",
+      "email_log_id": "e9599dab-9d0b-42fc-97fd-d63742c0d99d"
+    },
+    "5905bedc-c588-4857-a70b-ef360f0c2728": {
+      "id": "5905bedc-c588-4857-a70b-ef360f0c2728",
+      "campaign_id": "e3efbcfb-e7bd-483b-a2bf-ddbebe71127c",
+      "email": "rob.procter@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI social computing",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-06T19:20:38.237786+00:00",
+      "created_at": "2025-07-30T19:20:38.237786+00:00",
+      "email_log_id": "d156c40a-5073-466d-893e-9ad5c3da0be2"
+    },
+    "583d786f-b591-462c-8a29-d00c700ca691": {
+      "id": "583d786f-b591-462c-8a29-d00c700ca691",
+      "campaign_id": "e3efbcfb-e7bd-483b-a2bf-ddbebe71127c",
+      "email": "rossella.arcucci@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Data assimilation ML",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-06T19:21:12.220750+00:00",
+      "created_at": "2025-07-30T19:21:12.220750+00:00",
+      "email_log_id": "b36fef9a-62cf-4b60-820b-e2c0ed9e83af"
+    },
+    "a0cec7c1-8f44-478c-ab3e-b6a20eb4338e": {
+      "id": "a0cec7c1-8f44-478c-ab3e-b6a20eb4338e",
+      "campaign_id": "e3efbcfb-e7bd-483b-a2bf-ddbebe71127c",
+      "email": "sayan.mukherjee@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML statistics",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-06T19:21:46.900454+00:00",
+      "created_at": "2025-07-30T19:21:46.900454+00:00",
+      "email_log_id": "bcb365bd-5196-40e3-b67d-02752b374f4f"
+    },
+    "40cfc6b8-88e9-4ff7-bf05-c2cfa7cea420": {
+      "id": "40cfc6b8-88e9-4ff7-bf05-c2cfa7cea420",
+      "campaign_id": "e3efbcfb-e7bd-483b-a2bf-ddbebe71127c",
+      "email": "theo.damoulas@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML probabilistic",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-06T19:22:21.073803+00:00",
+      "created_at": "2025-07-30T19:22:21.073803+00:00",
+      "email_log_id": "52c08580-0646-4c27-b7ea-43637f29ff0d"
+    },
+    "5f24647b-e8a2-4b5b-8d46-95e0d773fd2b": {
+      "id": "5f24647b-e8a2-4b5b-8d46-95e0d773fd2b",
+      "campaign_id": "ae79e52f-dbb1-4086-99a8-40b8bce42ae3",
+      "email": "torsten.mutze@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Algorithms data science",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-06T19:41:21.159097+00:00",
+      "created_at": "2025-07-30T19:41:21.159097+00:00",
+      "email_log_id": "8a7610d4-e0f2-42c4-a71d-1dad009b2dcd"
+    },
+    "66991e10-3c80-4c1b-b271-dfaa8ff67910": {
+      "id": "66991e10-3c80-4c1b-b271-dfaa8ff67910",
+      "campaign_id": "ae79e52f-dbb1-4086-99a8-40b8bce42ae3",
+      "email": "yulan.he@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI NLP",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-06T19:41:55.698877+00:00",
+      "created_at": "2025-07-30T19:41:55.698877+00:00",
+      "email_log_id": "e11f42d5-8598-4a6b-a824-951699c7e6ee"
+    },
+    "63a3ba50-c260-4b2f-ad29-d2633cfb2c1f": {
+      "id": "63a3ba50-c260-4b2f-ad29-d2633cfb2c1f",
+      "campaign_id": "ae79e52f-dbb1-4086-99a8-40b8bce42ae3",
+      "email": "yusuf.aytar@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI multimodal",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-06T19:42:29.848634+00:00",
+      "created_at": "2025-07-30T19:42:29.848634+00:00",
+      "email_log_id": "38ed4f48-8da3-4982-9fd9-81060e124b79"
+    },
+    "e34b62ba-c0d6-40e9-9c1e-aab36c338393": {
+      "id": "e34b62ba-c0d6-40e9-9c1e-aab36c338393",
+      "campaign_id": "ae79e52f-dbb1-4086-99a8-40b8bce42ae3",
+      "email": "torsten.mutze@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Algorithms data science",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-06T19:43:04.044181+00:00",
+      "created_at": "2025-07-30T19:43:04.044181+00:00",
+      "email_log_id": "0b5b00df-7237-4c36-89d4-7bc0ba78c361"
+    },
+    "e79abbd5-4145-40cc-a38f-a0e5b99b1d0f": {
+      "id": "e79abbd5-4145-40cc-a38f-a0e5b99b1d0f",
+      "campaign_id": "ae79e52f-dbb1-4086-99a8-40b8bce42ae3",
+      "email": "yulan.he@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI NLP",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-06T19:43:37.981794+00:00",
+      "created_at": "2025-07-30T19:43:37.981794+00:00",
+      "email_log_id": "ea7686b4-7690-437d-8617-ea4d4a5d377c"
+    },
+    "1691b075-f07f-4bdc-bdb1-954133d281af": {
+      "id": "1691b075-f07f-4bdc-bdb1-954133d281af",
+      "campaign_id": "ae79e52f-dbb1-4086-99a8-40b8bce42ae3",
+      "email": "yusuf.aytar@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI multimodal",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-06T19:44:12.252611+00:00",
+      "created_at": "2025-07-30T19:44:12.252611+00:00",
+      "email_log_id": "0f4aaffe-7d50-4da9-aae3-2ee0ece307dd"
+    },
+    "16add18c-a74b-4cc5-974f-a4f4dbf2f493": {
+      "id": "16add18c-a74b-4cc5-974f-a4f4dbf2f493",
+      "campaign_id": "ae79e52f-dbb1-4086-99a8-40b8bce42ae3",
+      "email": "derijke@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Information retrieval AI",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-06T19:44:46.335133+00:00",
+      "created_at": "2025-07-30T19:44:46.335133+00:00",
+      "email_log_id": "19969791-f036-46a8-97a6-caeb69255148"
+    },
+    "5607a6e6-a66a-4ae1-9387-d56f3b7c2f6f": {
+      "id": "5607a6e6-a66a-4ae1-9387-d56f3b7c2f6f",
+      "campaign_id": "ae79e52f-dbb1-4086-99a8-40b8bce42ae3",
+      "email": "welling@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Deep learning ML",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-06T19:45:20.707147+00:00",
+      "created_at": "2025-07-30T19:45:20.707147+00:00",
+      "email_log_id": "a7e4c449-ee69-45b4-8328-c6b6841de248"
+    },
+    "ae1de735-0f4c-4751-9a13-1548703548c7": {
+      "id": "ae1de735-0f4c-4751-9a13-1548703548c7",
+      "campaign_id": "ae79e52f-dbb1-4086-99a8-40b8bce42ae3",
+      "email": "worring@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Multimedia AI",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-06T19:45:54.359107+00:00",
+      "created_at": "2025-07-30T19:45:54.359107+00:00",
+      "email_log_id": "0207f75a-ca84-44cf-add1-76321dca7144"
+    },
+    "737f4390-cf7e-4d67-99d4-6403f242a4e8": {
+      "id": "737f4390-cf7e-4d67-99d4-6403f242a4e8",
+      "campaign_id": "ae79e52f-dbb1-4086-99a8-40b8bce42ae3",
+      "email": "c.g.m.snoek@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI vision",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-06T19:46:28.823614+00:00",
+      "created_at": "2025-07-30T19:46:28.823614+00:00",
+      "email_log_id": "fc3657b4-9cd4-4fa6-ac07-3e94de227db4"
+    },
+    "76c86bd4-7258-4ef8-acb2-7ba614507b1d": {
+      "id": "76c86bd4-7258-4ef8-acb2-7ba614507b1d",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "a.w.m.smeulders@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Computer vision ML",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T03:34:30.727896+00:00",
+      "created_at": "2025-07-31T03:34:30.727896+00:00",
+      "email_log_id": "4d0f9346-f77c-4c86-9ddb-19173830517c"
+    },
+    "c66e2683-5705-4a96-a58f-d472ca8bc260": {
+      "id": "c66e2683-5705-4a96-a58f-d472ca8bc260",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "p.t.groth@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Knowledge graphs AI",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T03:35:04.260152+00:00",
+      "created_at": "2025-07-31T03:35:04.260152+00:00",
+      "email_log_id": "7a19412c-b186-45a9-99ae-ee509f616f32"
+    },
+    "b67016bf-fe1b-4964-a1f0-e16b5213ac0e": {
+      "id": "b67016bf-fe1b-4964-a1f0-e16b5213ac0e",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "n.helberger@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI ethics",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T03:35:38.345625+00:00",
+      "created_at": "2025-07-31T03:35:38.345625+00:00",
+      "email_log_id": "2ead9717-9240-48df-a295-a042e88abba0"
+    },
+    "bb0f9ba6-b3bb-4400-a726-cc735b0d6b42": {
+      "id": "bb0f9ba6-b3bb-4400-a726-cc735b0d6b42",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "e.gavves@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI computer vision",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T03:36:12.108191+00:00",
+      "created_at": "2025-07-31T03:36:12.108191+00:00",
+      "email_log_id": "197d944b-ddcb-47fd-956c-8b7d795b9a49"
+    },
+    "ca51691a-e6db-44cb-b386-642863a09293": {
+      "id": "ca51691a-e6db-44cb-b386-642863a09293",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "s.ghebreab@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI fairness",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T03:36:45.815352+00:00",
+      "created_at": "2025-07-31T03:36:45.815352+00:00",
+      "email_log_id": "41ff3b9a-9cd1-4f70-af03-8e5b2709dceb"
+    },
+    "15bff9e7-6117-4a49-b98f-2678f267d318": {
+      "id": "15bff9e7-6117-4a49-b98f-2678f267d318",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "j.m.mooij@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML causality",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T03:37:19.770362+00:00",
+      "created_at": "2025-07-31T03:37:19.770362+00:00",
+      "email_log_id": "b4f9e5af-9ac6-4770-bbe0-0e614c1cf72d"
+    },
+    "3d662a7c-5bb9-44c6-9823-015f723db407": {
+      "id": "3d662a7c-5bb9-44c6-9823-015f723db407",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "j.w.van.hentenryck@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI optimization",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T03:37:53.490243+00:00",
+      "created_at": "2025-07-31T03:37:53.490243+00:00",
+      "email_log_id": "57e5b272-ca1a-4248-8a1a-75d5b36e2ebe"
+    },
+    "9e09c9bd-1641-41d2-92de-8732eeab7f9d": {
+      "id": "9e09c9bd-1641-41d2-92de-8732eeab7f9d",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "k.simaan@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI NLP",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T03:38:27.065669+00:00",
+      "created_at": "2025-07-31T03:38:27.065669+00:00",
+      "email_log_id": "76469e10-491c-475d-bb4c-4d1136cfa7d0"
+    },
+    "0880e3eb-cfa7-4640-85fd-4ca19582d4fb": {
+      "id": "0880e3eb-cfa7-4640-85fd-4ca19582d4fb",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "r.a.m.vanrooij@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI semantics",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T03:39:01.993761+00:00",
+      "created_at": "2025-07-31T03:39:01.993761+00:00",
+      "email_log_id": "47466e10-25ae-4f4b-8166-0b9ce34e4e58"
+    },
+    "69abf6b3-2b5f-49ab-8bcb-da021f16a64b": {
+      "id": "69abf6b3-2b5f-49ab-8bcb-da021f16a64b",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "s.j.l.smets@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI logic",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T03:39:36.308188+00:00",
+      "created_at": "2025-07-31T03:39:36.308188+00:00",
+      "email_log_id": "bb2fff8e-faa8-44d7-b404-b15acdb8f3e5"
+    },
+    "1f20970b-732f-4f65-ad74-38c9f7246f59": {
+      "id": "1f20970b-732f-4f65-ad74-38c9f7246f59",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "t.gevers@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI vision",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T03:40:09.878925+00:00",
+      "created_at": "2025-07-31T03:40:09.878925+00:00",
+      "email_log_id": "d5d66ec9-0895-4442-8abf-4fab290bc1fc"
+    },
+    "c1dc8000-5291-4430-917f-39c26798d77c": {
+      "id": "c1dc8000-5291-4430-917f-39c26798d77c",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "u.brandt@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Computational biology AI",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T03:40:44.163380+00:00",
+      "created_at": "2025-07-31T03:40:44.163380+00:00",
+      "email_log_id": "b21c278a-d8a8-45f4-98f8-d68668e5b500"
+    },
+    "42d696ec-e7ed-4200-a7c4-34603c2351cc": {
+      "id": "42d696ec-e7ed-4200-a7c4-34603c2351cc",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "v.dehaan@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Quantum AI",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T03:41:17.846051+00:00",
+      "created_at": "2025-07-31T03:41:17.846051+00:00",
+      "email_log_id": "72722a12-70c3-4939-8698-f827163eda51"
+    },
+    "370e39a4-1c2f-4b76-a38c-aa3044c46dfc": {
+      "id": "370e39a4-1c2f-4b76-a38c-aa3044c46dfc",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "z.ivezic@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Data science astronomy",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T03:41:51.662858+00:00",
+      "created_at": "2025-07-31T03:41:51.662858+00:00",
+      "email_log_id": "fc724b20-88a8-4bfe-b951-e050ce5c8871"
+    },
+    "63ec1665-55d5-4c31-9aec-d2cf57320da2": {
+      "id": "63ec1665-55d5-4c31-9aec-d2cf57320da2",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "a.visser@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI robotics",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T03:42:25.223297+00:00",
+      "created_at": "2025-07-31T03:42:25.223297+00:00",
+      "email_log_id": "fea909cd-2e64-47d1-ae83-fed915d3fc3f"
+    },
+    "7d118f32-4370-4ad0-a030-bfab275d8152": {
+      "id": "7d118f32-4370-4ad0-a030-bfab275d8152",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "b.j.a.krose@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI ambient intelligence",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T03:42:58.918353+00:00",
+      "created_at": "2025-07-31T03:42:58.918353+00:00",
+      "email_log_id": "9a4ea902-9834-4a36-9b04-9206ae30efce"
+    },
+    "a70a61be-1b75-40b4-8b3f-6781d2aa90ae": {
+      "id": "a70a61be-1b75-40b4-8b3f-6781d2aa90ae",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "bart.demoor@kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Data science ML",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T03:43:33.185957+00:00",
+      "created_at": "2025-07-31T03:43:33.185957+00:00",
+      "email_log_id": "a281ca83-c7d3-4df5-9d36-28b07c45683d"
+    },
+    "9a0ad3f9-3c2a-4b39-bb2d-d81eaf00fd8c": {
+      "id": "9a0ad3f9-3c2a-4b39-bb2d-d81eaf00fd8c",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "jesse.davis@cs.kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML sports analytics",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T03:44:07.065832+00:00",
+      "created_at": "2025-07-31T03:44:07.065832+00:00",
+      "email_log_id": "99ab3bd2-5459-4365-b9f5-750f2602f283"
+    },
+    "9b6561e8-3a12-419b-9de9-64a0efcf4f9b": {
+      "id": "9b6561e8-3a12-419b-9de9-64a0efcf4f9b",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "luc.deraedt@cs.kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI inductive logic",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T03:44:40.658501+00:00",
+      "created_at": "2025-07-31T03:44:40.658501+00:00",
+      "email_log_id": "9e77efa1-c1e3-4a77-ac07-4da67bbcf7d3"
+    },
+    "b2586913-5812-4299-b0ec-f177111d1d77": {
+      "id": "b2586913-5812-4299-b0ec-f177111d1d77",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "matthew.blaschko@esat.kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI vision",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T03:45:14.332683+00:00",
+      "created_at": "2025-07-31T03:45:14.332683+00:00",
+      "email_log_id": "71274e06-6c6a-4f36-8c89-fb331937cff5"
+    },
+    "6f475adc-c356-4f3b-9305-41a0b41c2927": {
+      "id": "6f475adc-c356-4f3b-9305-41a0b41c2927",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "tinne.tuytelaars@esat.kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Computer vision ML",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T03:45:48.389038+00:00",
+      "created_at": "2025-07-31T03:45:48.389038+00:00",
+      "email_log_id": "1e93d5d5-ca29-413d-a673-d858726146a1"
+    },
+    "319ec8e4-f687-4cf9-a19c-26377173cec5": {
+      "id": "319ec8e4-f687-4cf9-a19c-26377173cec5",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "bart.preneel@esat.kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Cryptography fintech",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T03:46:22.718425+00:00",
+      "created_at": "2025-07-31T03:46:22.718425+00:00",
+      "email_log_id": "a9f1ef48-7c93-428a-a8cf-04f070471813"
+    },
+    "36def552-f393-4c7d-9635-19aaeebf2883": {
+      "id": "36def552-f393-4c7d-9635-19aaeebf2883",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "bernard.vanacker@kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI robotics",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T03:46:56.320364+00:00",
+      "created_at": "2025-07-31T03:46:56.320364+00:00",
+      "email_log_id": "04fd34b6-a5f0-4f4b-93a8-89c15c427b02"
+    },
+    "ccf79f54-25ac-47a2-9b6e-2114746a1fe4": {
+      "id": "ccf79f54-25ac-47a2-9b6e-2114746a1fe4",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "daan.christiaens@kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Medical imaging AI",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T03:47:30.045596+00:00",
+      "created_at": "2025-07-31T03:47:30.045596+00:00",
+      "email_log_id": "afb4efdf-d41f-418f-9ecf-69af7e222cc5"
+    },
+    "5816d5e3-539b-491e-92c3-26104a562257": {
+      "id": "5816d5e3-539b-491e-92c3-26104a562257",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "dirk.vandermeulen@kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI medical imaging",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T03:48:03.981344+00:00",
+      "created_at": "2025-07-31T03:48:03.981344+00:00",
+      "email_log_id": "72ce3bd0-7be2-4e6f-9e63-14f529799e8f"
+    },
+    "df35fc48-304b-4cd4-a882-3fbf006ed28d": {
+      "id": "df35fc48-304b-4cd4-a882-3fbf006ed28d",
+      "campaign_id": "bfe2c032-4c2e-4cc6-8855-675fc60b69b5",
+      "email": "frank.piessens@cs.kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Secure AI",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T06:21:58.951573+00:00",
+      "created_at": "2025-07-31T06:21:58.951573+00:00",
+      "email_log_id": "243cf542-fd9c-4fcd-8d63-3e0d22f7bf36"
+    },
+    "c82636c9-c9d5-44cd-9700-9b59851484f6": {
+      "id": "c82636c9-c9d5-44cd-9700-9b59851484f6",
+      "campaign_id": "bfe2c032-4c2e-4cc6-8855-675fc60b69b5",
+      "email": "hugo.vanhamme@esat.kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI speech processing",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T06:22:32.646228+00:00",
+      "created_at": "2025-07-31T06:22:32.646228+00:00",
+      "email_log_id": "8cf83f1c-583e-4ae9-93e7-6c126fbbd187"
+    },
+    "0573781b-9f5e-44ff-9fa4-2f880bafbce5": {
+      "id": "0573781b-9f5e-44ff-9fa4-2f880bafbce5",
+      "campaign_id": "bfe2c032-4c2e-4cc6-8855-675fc60b69b5",
+      "email": "jan.ramon@cs.kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML graphs",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T06:23:07.200105+00:00",
+      "created_at": "2025-07-31T06:23:07.200105+00:00",
+      "email_log_id": "1417699f-2bf6-4c33-b260-6ece280e2499"
+    },
+    "37db87ff-0da4-4345-9063-3d8fd2038ffa": {
+      "id": "37db87ff-0da4-4345-9063-3d8fd2038ffa",
+      "campaign_id": "bfe2c032-4c2e-4cc6-8855-675fc60b69b5",
+      "email": "johan.suykens@esat.kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML kernel methods",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T06:23:40.841661+00:00",
+      "created_at": "2025-07-31T06:23:40.841661+00:00",
+      "email_log_id": "9d0d9f50-490b-42d6-a426-654b6fe3f514"
+    },
+    "da71cbf2-10ff-4a9f-b7ad-e0a9783a5e54": {
+      "id": "da71cbf2-10ff-4a9f-b7ad-e0a9783a5e54",
+      "campaign_id": "bfe2c032-4c2e-4cc6-8855-675fc60b69b5",
+      "email": "lieven.delathauwer@kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Signal processing ML",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T06:24:14.726420+00:00",
+      "created_at": "2025-07-31T06:24:14.726420+00:00",
+      "email_log_id": "0b9d12e0-487d-4840-9bf0-f207d2b20ee3"
+    },
+    "06f02e4d-ecb7-4608-8151-4578f47645b5": {
+      "id": "06f02e4d-ecb7-4608-8151-4578f47645b5",
+      "campaign_id": "bfe2c032-4c2e-4cc6-8855-675fc60b69b5",
+      "email": "marc.vanhulle@kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Computational neuroscience AI",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T06:24:48.419932+00:00",
+      "created_at": "2025-07-31T06:24:48.419932+00:00",
+      "email_log_id": "07f29a5e-99ab-4c5c-9eae-e03b57ec3b93"
+    },
+    "6fdfa235-a580-4e02-88a5-95217dfa5ca4": {
+      "id": "6fdfa235-a580-4e02-88a5-95217dfa5ca4",
+      "campaign_id": "bfe2c032-4c2e-4cc6-8855-675fc60b69b5",
+      "email": "maurice.bruynooghe@cs.kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI logic programming",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T06:25:22.196829+00:00",
+      "created_at": "2025-07-31T06:25:22.196829+00:00",
+      "email_log_id": "098f692b-ce1e-43bf-a1db-4a9d2b4136f5"
+    },
+    "f140b2a7-b32e-48d1-ba4b-989d6156b3fd": {
+      "id": "f140b2a7-b32e-48d1-ba4b-989d6156b3fd",
+      "campaign_id": "bfe2c032-4c2e-4cc6-8855-675fc60b69b5",
+      "email": "patrick.decausmaecker@kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI optimization",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T06:25:55.779364+00:00",
+      "created_at": "2025-07-31T06:25:55.779364+00:00",
+      "email_log_id": "fd17f0ed-f836-4da9-a5cf-d9b2230cdf39"
+    },
+    "dc7e306e-a6e6-4134-8869-c93085ada948": {
+      "id": "dc7e306e-a6e6-4134-8869-c93085ada948",
+      "campaign_id": "bfe2c032-4c2e-4cc6-8855-675fc60b69b5",
+      "email": "sien.moens@cs.kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI NLP",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T06:26:29.398784+00:00",
+      "created_at": "2025-07-31T06:26:29.398784+00:00",
+      "email_log_id": "30774727-0310-4a43-8f2b-99bd55b18965"
+    },
+    "f8a97b1e-2df4-40e2-ab75-bd8621d456f9": {
+      "id": "f8a97b1e-2df4-40e2-ab75-bd8621d456f9",
+      "campaign_id": "bfe2c032-4c2e-4cc6-8855-675fc60b69b5",
+      "email": "toon.vanwaterschoot@esat.kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI audio processing",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T06:27:03.050239+00:00",
+      "created_at": "2025-07-31T06:27:03.050239+00:00",
+      "email_log_id": "02afabe5-2a8a-435b-ac59-6467ad8dfdef"
+    },
+    "2d14f6a9-c2dd-4764-8ce7-ec018798f3a6": {
+      "id": "2d14f6a9-c2dd-4764-8ce7-ec018798f3a6",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "wannes.meert@cs.kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML time series",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:09:23.363997+00:00",
+      "created_at": "2025-07-31T07:09:23.363997+00:00",
+      "email_log_id": "e55b573f-551e-4214-a9a6-802826b0b5b3"
+    },
+    "62145118-d846-4083-a9c9-3cc14b6c1795": {
+      "id": "62145118-d846-4083-a9c9-3cc14b6c1795",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "albert.bifet@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Data streams ML",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:09:57.111999+00:00",
+      "created_at": "2025-07-31T07:09:57.111999+00:00",
+      "email_log_id": "db02aaac-6ea7-47ed-8cbf-28fbde3f431f"
+    },
+    "301493c5-6086-4ffb-bed0-84d1ee12c713": {
+      "id": "301493c5-6086-4ffb-bed0-84d1ee12c713",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "alessio.sakr@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI verification",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:10:30.795473+00:00",
+      "created_at": "2025-07-31T07:10:30.795473+00:00",
+      "email_log_id": "56112167-b28c-41ad-a6b2-8279ff3c9db8"
+    },
+    "e06db2d0-112b-45c7-b53d-28290782455f": {
+      "id": "e06db2d0-112b-45c7-b53d-28290782455f",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "antoine.cornuejols@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML algorithms",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:11:04.403457+00:00",
+      "created_at": "2025-07-31T07:11:04.403457+00:00",
+      "email_log_id": "2d551fc0-0fa8-40b3-bb68-8e84ccd66490"
+    },
+    "bd926bb0-75fe-4b89-822d-27ae83fa9007": {
+      "id": "bd926bb0-75fe-4b89-822d-27ae83fa9007",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "christophe.marsala@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Fuzzy ML",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:11:38.014766+00:00",
+      "created_at": "2025-07-31T07:11:38.014766+00:00",
+      "email_log_id": "3e3fdc35-ed36-4527-a4be-ae38f2ae5609"
+    },
+    "08e5f65d-ddd6-412b-99fc-b5de0abac584": {
+      "id": "08e5f65d-ddd6-412b-99fc-b5de0abac584",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "fabrice.kordon@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI distributed systems",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:12:11.764378+00:00",
+      "created_at": "2025-07-31T07:12:11.764378+00:00",
+      "email_log_id": "5ad159b4-1173-4d4a-b1ef-80cbb5f94e44"
+    },
+    "38af37ee-c0cb-4447-aef4-251c20288f7d": {
+      "id": "38af37ee-c0cb-4447-aef4-251c20288f7d",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "gianluca.pollastri@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Computational biology AI",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:12:45.535809+00:00",
+      "created_at": "2025-07-31T07:12:45.535809+00:00",
+      "email_log_id": "c3a69eca-dd0e-444d-94a3-f6910f065da8"
+    },
+    "4d1748cd-ff82-4db1-93b3-3ea6595bd5c6": {
+      "id": "4d1748cd-ff82-4db1-93b3-3ea6595bd5c6",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "jean-daniel.zucker@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML in biology",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:13:19.138497+00:00",
+      "created_at": "2025-07-31T07:13:19.138497+00:00",
+      "email_log_id": "2f150080-bba1-4aec-ae80-8f30a0b9e929"
+    },
+    "6cba3042-c51c-4713-aaad-30ae94a4ef40": {
+      "id": "6cba3042-c51c-4713-aaad-30ae94a4ef40",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "matthieu.cord@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI vision",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:13:54.077723+00:00",
+      "created_at": "2025-07-31T07:13:54.077723+00:00",
+      "email_log_id": "68b9eef0-ebde-4a75-b715-e53c5688e064"
+    },
+    "1f831bb5-eeee-4ee1-9b0d-592f4f9f533b": {
+      "id": "1f831bb5-eeee-4ee1-9b0d-592f4f9f533b",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "mohamed.chetouani@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Human-AI interaction",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:14:27.661324+00:00",
+      "created_at": "2025-07-31T07:14:27.661324+00:00",
+      "email_log_id": "4760693f-1607-40a4-b6a4-91e0332c9b16"
+    },
+    "0a435757-5083-400d-bf8b-54ae2535492b": {
+      "id": "0a435757-5083-400d-bf8b-54ae2535492b",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "nicolas.baskiotis@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML unsupervised",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:15:01.220841+00:00",
+      "created_at": "2025-07-31T07:15:01.220841+00:00",
+      "email_log_id": "85600cfc-8605-42b4-b9aa-3a4e5e77468b"
+    },
+    "155bd9b5-8ddd-4bfe-a8a4-4572b08c2614": {
+      "id": "155bd9b5-8ddd-4bfe-a8a4-4572b08c2614",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "olivier.schwander@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI optimization",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:15:34.814277+00:00",
+      "created_at": "2025-07-31T07:15:34.814277+00:00",
+      "email_log_id": "4b0da2bc-5b7b-40bc-a3e5-35549d5020c2"
+    },
+    "3a6c160e-e9da-4ac7-9191-9445931b47bf": {
+      "id": "3a6c160e-e9da-4ac7-9191-9445931b47bf",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "patrick.gallinari@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Deep learning",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:16:08.591204+00:00",
+      "created_at": "2025-07-31T07:16:08.591204+00:00",
+      "email_log_id": "81de9a9c-ed32-4d11-8b6b-70c7956071ec"
+    },
+    "cb9fe6a3-9a0b-48ee-bdf2-404085518565": {
+      "id": "cb9fe6a3-9a0b-48ee-bdf2-404085518565",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "sylvain.lamprier@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: RL",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:16:42.803303+00:00",
+      "created_at": "2025-07-31T07:16:42.803303+00:00",
+      "email_log_id": "87bf9994-4a98-4ebd-aa1f-e3210d5ec486"
+    },
+    "9f9537d1-6a84-4bff-a96a-fc476c95d734": {
+      "id": "9f9537d1-6a84-4bff-a96a-fc476c95d734",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "talel.abdessalem@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Big data AI",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:17:16.347247+00:00",
+      "created_at": "2025-07-31T07:17:16.347247+00:00",
+      "email_log_id": "7f9a476d-ce63-48b7-9abf-ee275327d60b"
+    },
+    "24fea406-d843-4877-8125-e860b9a843cd": {
+      "id": "24fea406-d843-4877-8125-e860b9a843cd",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "theodore.lim@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI graphs",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:17:50.248207+00:00",
+      "created_at": "2025-07-31T07:17:50.248207+00:00",
+      "email_log_id": "37e7f1d6-facb-449b-8e3c-eae33cc31c68"
+    },
+    "febe972c-8ed4-4599-93fd-32c12ae8287c": {
+      "id": "febe972c-8ed4-4599-93fd-32c12ae8287c",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "thomas.bonald@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Network ML",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:18:23.931801+00:00",
+      "created_at": "2025-07-31T07:18:23.931801+00:00",
+      "email_log_id": "5b21d10a-60de-4efc-9474-502ab3cac583"
+    },
+    "e3e7f928-6b64-4f28-b847-e7d333868190": {
+      "id": "e3e7f928-6b64-4f28-b847-e7d333868190",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "vanda.luengo@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI education",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:18:57.454461+00:00",
+      "created_at": "2025-07-31T07:18:57.454461+00:00",
+      "email_log_id": "a293c8e3-2202-4fea-b50c-f0c1f2bbfc77"
+    },
+    "5324ee4f-46f2-43a1-800c-5319bb2eb4d7": {
+      "id": "5324ee4f-46f2-43a1-800c-5319bb2eb4d7",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "virginie.do@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI knowledge representation",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:19:31.223333+00:00",
+      "created_at": "2025-07-31T07:19:31.223333+00:00",
+      "email_log_id": "14002662-a8b4-4c47-b8c2-88aa4a4d03ce"
+    },
+    "4b75050e-c4f2-4497-93b0-3c55ee04b80a": {
+      "id": "4b75050e-c4f2-4497-93b0-3c55ee04b80a",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "zahia.guessoum@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Multi-agent AI",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:20:05.069877+00:00",
+      "created_at": "2025-07-31T07:20:05.069877+00:00",
+      "email_log_id": "d15f6b26-d686-4d2b-b9de-4c73d4b136ea"
+    },
+    "6c0b8d61-c629-402d-80bf-a213e0d5f6dd": {
+      "id": "6c0b8d61-c629-402d-80bf-a213e0d5f6dd",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "barry.smyth@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI recommendation",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:20:39.662523+00:00",
+      "created_at": "2025-07-31T07:20:39.663523+00:00",
+      "email_log_id": "738738fa-9852-48f6-9b89-b6ceadeb7460"
+    },
+    "0ae263b1-0747-45e9-9c88-807578df9f30": {
+      "id": "0ae263b1-0747-45e9-9c88-807578df9f30",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "brett.houlding@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML decision theory",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:21:13.460891+00:00",
+      "created_at": "2025-07-31T07:21:13.460891+00:00",
+      "email_log_id": "19caed74-dc3a-4cd9-9609-66d52e07193a"
+    },
+    "4badbb50-b7f9-4cfc-b5e7-afb4ffb1fd87": {
+      "id": "4badbb50-b7f9-4cfc-b5e7-afb4ffb1fd87",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "chris.bleakley@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI embedded systems",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:21:47.141003+00:00",
+      "created_at": "2025-07-31T07:21:47.141003+00:00",
+      "email_log_id": "18c3a171-a0f6-427f-8607-3e8cf8a02a44"
+    },
+    "66650419-e804-436d-b4c8-72f2db43cd6f": {
+      "id": "66650419-e804-436d-b4c8-72f2db43cd6f",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "david.coyle@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Human-AI interaction",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:22:21.143375+00:00",
+      "created_at": "2025-07-31T07:22:21.143375+00:00",
+      "email_log_id": "a58f412e-8d1a-4d8a-b40d-aef85fa4c949"
+    },
+    "61ef7d0a-eec1-4172-b770-a4922c6c4918": {
+      "id": "61ef7d0a-eec1-4172-b770-a4922c6c4918",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "derek.greene@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML clustering",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:22:55.491268+00:00",
+      "created_at": "2025-07-31T07:22:55.491268+00:00",
+      "email_log_id": "09f6b689-dbe5-4709-bb1c-08d09b9b21a8"
+    },
+    "9cd62884-240a-44bd-a67d-836186c46855": {
+      "id": "9cd62884-240a-44bd-a67d-836186c46855",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "elaine.uidhonnchadha@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI NLP",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:23:29.140441+00:00",
+      "created_at": "2025-07-31T07:23:29.140441+00:00",
+      "email_log_id": "b3c9eae0-706a-4eee-9f5a-86f751254a2b"
+    },
+    "43d003b5-278b-4c9d-b79d-29742de3ebb6": {
+      "id": "43d003b5-278b-4c9d-b79d-29742de3ebb6",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "fionnuala.murphy@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Fintech AI",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:24:03.258860+00:00",
+      "created_at": "2025-07-31T07:24:03.258860+00:00",
+      "email_log_id": "92d5246a-a490-4704-afea-46852af94c87"
+    },
+    "8d774c37-bb11-4aaa-b92f-99efeb8f579d": {
+      "id": "8d774c37-bb11-4aaa-b92f-99efeb8f579d",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "georgiana.ifrim@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML time series",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:24:36.958659+00:00",
+      "created_at": "2025-07-31T07:24:36.958659+00:00",
+      "email_log_id": "01a2121b-f13f-4a3d-8aaf-cf5d523b2e22"
+    },
+    "1e5cf649-8190-42e4-9727-ef35037f84f7": {
+      "id": "1e5cf649-8190-42e4-9727-ef35037f84f7",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "giuseppe.difatta@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Big data AI",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:25:11.330364+00:00",
+      "created_at": "2025-07-31T07:25:11.330364+00:00",
+      "email_log_id": "50ba9623-19c9-4a18-a8a0-5ef0aa1448d0"
+    },
+    "eafd8e3d-260a-462c-aef8-dbc191d6b8bf": {
+      "id": "eafd8e3d-260a-462c-aef8-dbc191d6b8bf",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "john.dunnion@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI search",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:25:45.080707+00:00",
+      "created_at": "2025-07-31T07:25:45.080707+00:00",
+      "email_log_id": "2fdb9a6a-e654-495b-bbf5-3d05bcd3f07d"
+    },
+    "68b54db2-6ee9-4552-913a-0653564b1074": {
+      "id": "68b54db2-6ee9-4552-913a-0653564b1074",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "liam.murphy@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI networks",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:26:18.700847+00:00",
+      "created_at": "2025-07-31T07:26:18.700847+00:00",
+      "email_log_id": "847a6ca5-d4e8-435b-899e-d0a068f4d6c0"
+    },
+    "aa687248-5609-40b1-8bc7-8145be75c6af": {
+      "id": "aa687248-5609-40b1-8bc7-8145be75c6af",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "mark.scanlon@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Digital forensics AI",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:26:52.255105+00:00",
+      "created_at": "2025-07-31T07:26:52.255105+00:00",
+      "email_log_id": "e78f8c3a-51cb-4aee-a61e-c3c69de798f3"
+    },
+    "d42adee3-0a22-4371-9d96-955978b5d2b1": {
+      "id": "d42adee3-0a22-4371-9d96-955978b5d2b1",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "michael.oneill@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Evolutionary AI",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:27:26.079451+00:00",
+      "created_at": "2025-07-31T07:27:26.079451+00:00",
+      "email_log_id": "0dbec4d1-ac9e-4b09-930e-ca861ab3502f"
+    },
+    "18c7486e-5174-45a8-b3de-98d072069a30": {
+      "id": "18c7486e-5174-45a8-b3de-98d072069a30",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "neil.hurley@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI recommender systems",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:28:00.072662+00:00",
+      "created_at": "2025-07-31T07:28:00.072662+00:00",
+      "email_log_id": "8da5a94f-c068-4459-b2fa-1c6a68118ffa"
+    },
+    "3b5995a7-3668-4b99-96af-cd46d6d26537": {
+      "id": "3b5995a7-3668-4b99-96af-cd46d6d26537",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "padraig.cunningham@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML case-based reasoning",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:28:34.470582+00:00",
+      "created_at": "2025-07-31T07:28:34.470582+00:00",
+      "email_log_id": "134f6383-f5c3-416d-a254-9f1312f09c13"
+    },
+    "34972bb5-1c18-4fd3-84dc-8db6273fadb9": {
+      "id": "34972bb5-1c18-4fd3-84dc-8db6273fadb9",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "ramanujan.kashi@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI optimization",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:29:08.150307+00:00",
+      "created_at": "2025-07-31T07:29:08.150307+00:00",
+      "email_log_id": "a897e724-8c29-4f1e-b7b3-8709e400e726"
+    },
+    "44f84202-1039-42a0-b2f1-8d501e0cb7e0": {
+      "id": "44f84202-1039-42a0-b2f1-8d501e0cb7e0",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "rem.collier@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Multi-agent AI",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:29:41.835171+00:00",
+      "created_at": "2025-07-31T07:29:41.835171+00:00",
+      "email_log_id": "a966a8c1-a88b-4bbf-a373-9b8f071e7078"
+    },
+    "13d37251-cb61-4c8a-a209-27b45da01b73": {
+      "id": "13d37251-cb61-4c8a-a209-27b45da01b73",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "tahereh.dehdarirad@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Data science scientometrics",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:30:15.550278+00:00",
+      "created_at": "2025-07-31T07:30:15.550278+00:00",
+      "email_log_id": "b9bcfb41-ad3a-4bcc-ba8d-634bc76a802a"
+    },
+    "c6c99700-3fa4-4e19-9710-6c1d40616ba0": {
+      "id": "c6c99700-3fa4-4e19-9710-6c1d40616ba0",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "vivek.nallur@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI ethics",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:30:49.076496+00:00",
+      "created_at": "2025-07-31T07:30:49.076496+00:00",
+      "email_log_id": "8401e368-f899-4f8c-aadd-10d72d1d8b97"
+    },
+    "1136a283-79b9-4f07-bff2-b1772d17b0df": {
+      "id": "1136a283-79b9-4f07-bff2-b1772d17b0df",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "anatoly.zayats@kcl.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI photonics",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:31:22.705871+00:00",
+      "created_at": "2025-07-31T07:31:22.705871+00:00",
+      "email_log_id": "be5d098a-3231-47a5-ab65-c2b65c6cddb8"
+    },
+    "47c520ab-9b69-4210-b210-144affe8ccaa": {
+      "id": "47c520ab-9b69-4210-b210-144affe8ccaa",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "elena.simperl@kcl.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI knowledge engineering",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:31:57.496682+00:00",
+      "created_at": "2025-07-31T07:31:57.496682+00:00",
+      "email_log_id": "1a4f59db-8a63-4b6f-8995-b5c1dccdf855"
+    },
+    "db5912c6-e56b-42a9-8dee-1f45702c5ee4": {
+      "id": "db5912c6-e56b-42a9-8dee-1f45702c5ee4",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "fabio.cuzzolin@kcl.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI uncertainty",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:32:31.114324+00:00",
+      "created_at": "2025-07-31T07:32:31.114324+00:00",
+      "email_log_id": "c43eed10-e8ff-4685-a419-0c91c1a3815e"
+    },
+    "a891fa53-78b5-430b-964e-4b070a19b8f2": {
+      "id": "a891fa53-78b5-430b-964e-4b070a19b8f2",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "freddie.hepburn@kcl.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Data science",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:33:04.786519+00:00",
+      "created_at": "2025-07-31T07:33:04.786519+00:00",
+      "email_log_id": "5426d9e6-6813-4395-9c6e-f18d903e2762"
+    },
+    "371be7a3-718b-481c-b5f6-77a94983ceea": {
+      "id": "371be7a3-718b-481c-b5f6-77a94983ceea",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "hana.chockler@kcl.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI causality",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:33:38.558897+00:00",
+      "created_at": "2025-07-31T07:33:38.558897+00:00",
+      "email_log_id": "1390cd1d-4ace-40f6-9751-dd211e319eae"
+    },
+    "9b16cfd7-08ee-4381-8e01-e24f3701851d": {
+      "id": "9b16cfd7-08ee-4381-8e01-e24f3701851d",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "jeroen.keppens@kcl.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI argumentation",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:34:12.165403+00:00",
+      "created_at": "2025-07-31T07:34:12.165403+00:00",
+      "email_log_id": "841e23cf-6d19-49b2-a8c3-5caed8434f8f"
+    },
+    "70a800ee-cdf1-4104-bc63-9eaecaaf0d5e": {
+      "id": "70a800ee-cdf1-4104-bc63-9eaecaaf0d5e",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "luca.vigano@kcl.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI security",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:34:45.975105+00:00",
+      "created_at": "2025-07-31T07:34:45.975105+00:00",
+      "email_log_id": "1abc7b26-b416-4c4c-ae95-db43199aa996"
+    },
+    "4511a523-3bd4-4054-9f87-c48f4e0e271e": {
+      "id": "4511a523-3bd4-4054-9f87-c48f4e0e271e",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "maria.polukarov@kcl.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI game theory",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:35:19.562763+00:00",
+      "created_at": "2025-07-31T07:35:19.562763+00:00",
+      "email_log_id": "89faae8f-a0ee-4c39-8049-eb516ab58348"
+    },
+    "17a5ac88-a58f-4adc-8010-6f67643a098f": {
+      "id": "17a5ac88-a58f-4adc-8010-6f67643a098f",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "michael.luck@kcl.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Multi-agent AI",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:35:53.191565+00:00",
+      "created_at": "2025-07-31T07:35:53.191565+00:00",
+      "email_log_id": "17bfc356-6a51-4462-8286-d10d8ed3397b"
+    },
+    "a9edbf10-9852-44fc-863d-d5795d83c46a": {
+      "id": "a9edbf10-9852-44fc-863d-d5795d83c46a",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "michael.spratling@kcl.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Computational neuroscience AI",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:36:26.929399+00:00",
+      "created_at": "2025-07-31T07:36:26.929399+00:00",
+      "email_log_id": "92411944-e921-4d50-9a0b-e5ff9c509e0f"
+    },
+    "fcd0c5e7-368e-4b0c-b097-ef0d50844a73": {
+      "id": "fcd0c5e7-368e-4b0c-b097-ef0d50844a73",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "mischa.dohler@kcl.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI wireless",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:37:00.741374+00:00",
+      "created_at": "2025-07-31T07:37:00.741374+00:00",
+      "email_log_id": "f53034c7-85ee-4403-a8e0-36fd97f03efb"
+    },
+    "187f8c4a-b98a-400a-8420-86b2035b284c": {
+      "id": "187f8c4a-b98a-400a-8420-86b2035b284c",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "mohammad.shikh-bahaei@kcl.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI communications",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:37:34.481996+00:00",
+      "created_at": "2025-07-31T07:37:34.481996+00:00",
+      "email_log_id": "32a1a2c0-b480-439b-a210-e7ee4a914b83"
+    },
+    "03a97779-55fd-4043-8519-a57fa74b4a72": {
+      "id": "03a97779-55fd-4043-8519-a57fa74b4a72",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "nishanth.sastry@kcl.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI social networks",
+      "status": "scheduled",
+      "scheduled_at": "2025-08-07T07:38:08.857784+00:00",
+      "created_at": "2025-07-31T07:38:08.857784+00:00",
+      "email_log_id": "f174be93-dc8e-4b12-a6e9-1e4bdc142d12"
     }
   },
   "email_logs": [
@@ -9358,6 +10463,755 @@
       "email": "hakan.ferhatosmanoglu@warwick.ac.uk",
       "subject": "Research Internship Inquiry – Anamay Tripathy re: Big data AI",
       "sent_at": "2025-07-30T16:28:48.370269+00:00"
+    },
+    {
+      "id": "ed481140-2c6c-4d20-b162-15e32aa39638",
+      "campaign_id": "e3efbcfb-e7bd-483b-a2bf-ddbebe71127c",
+      "email": "jane.sinclair@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI education",
+      "sent_at": "2025-07-30T19:17:13.319780+00:00"
+    },
+    {
+      "id": "e705f854-87f8-4455-b407-e296b0d67bef",
+      "campaign_id": "e3efbcfb-e7bd-483b-a2bf-ddbebe71127c",
+      "email": "matthew.leeke@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Dependable systems AI",
+      "sent_at": "2025-07-30T19:17:47.417311+00:00"
+    },
+    {
+      "id": "aa28aa54-fc7e-4dec-9e48-60dbd745c5ec",
+      "campaign_id": "e3efbcfb-e7bd-483b-a2bf-ddbebe71127c",
+      "email": "nasir.rajpoot@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Medical AI imaging",
+      "sent_at": "2025-07-30T19:18:21.677597+00:00"
+    },
+    {
+      "id": "ab34be5d-44a5-44ea-8b8c-b1a0476a6742",
+      "campaign_id": "e3efbcfb-e7bd-483b-a2bf-ddbebe71127c",
+      "email": "nathan.griffiths@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Multi-agent AI",
+      "sent_at": "2025-07-30T19:18:56.139594+00:00"
+    },
+    {
+      "id": "5d8b5ff3-5709-47d2-b521-65461982f650",
+      "campaign_id": "e3efbcfb-e7bd-483b-a2bf-ddbebe71127c",
+      "email": "ranko.lazic@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI verification",
+      "sent_at": "2025-07-30T19:19:30.241647+00:00"
+    },
+    {
+      "id": "e9599dab-9d0b-42fc-97fd-d63742c0d99d",
+      "campaign_id": "e3efbcfb-e7bd-483b-a2bf-ddbebe71127c",
+      "email": "richard.kirk@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI graphics",
+      "sent_at": "2025-07-30T19:20:04.372305+00:00"
+    },
+    {
+      "id": "d156c40a-5073-466d-893e-9ad5c3da0be2",
+      "campaign_id": "e3efbcfb-e7bd-483b-a2bf-ddbebe71127c",
+      "email": "rob.procter@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI social computing",
+      "sent_at": "2025-07-30T19:20:38.237786+00:00"
+    },
+    {
+      "id": "b36fef9a-62cf-4b60-820b-e2c0ed9e83af",
+      "campaign_id": "e3efbcfb-e7bd-483b-a2bf-ddbebe71127c",
+      "email": "rossella.arcucci@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Data assimilation ML",
+      "sent_at": "2025-07-30T19:21:12.220750+00:00"
+    },
+    {
+      "id": "bcb365bd-5196-40e3-b67d-02752b374f4f",
+      "campaign_id": "e3efbcfb-e7bd-483b-a2bf-ddbebe71127c",
+      "email": "sayan.mukherjee@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML statistics",
+      "sent_at": "2025-07-30T19:21:46.900454+00:00"
+    },
+    {
+      "id": "52c08580-0646-4c27-b7ea-43637f29ff0d",
+      "campaign_id": "e3efbcfb-e7bd-483b-a2bf-ddbebe71127c",
+      "email": "theo.damoulas@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML probabilistic",
+      "sent_at": "2025-07-30T19:22:21.073803+00:00"
+    },
+    {
+      "id": "8a7610d4-e0f2-42c4-a71d-1dad009b2dcd",
+      "campaign_id": "ae79e52f-dbb1-4086-99a8-40b8bce42ae3",
+      "email": "torsten.mutze@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Algorithms data science",
+      "sent_at": "2025-07-30T19:41:21.159097+00:00"
+    },
+    {
+      "id": "e11f42d5-8598-4a6b-a824-951699c7e6ee",
+      "campaign_id": "ae79e52f-dbb1-4086-99a8-40b8bce42ae3",
+      "email": "yulan.he@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI NLP",
+      "sent_at": "2025-07-30T19:41:55.698877+00:00"
+    },
+    {
+      "id": "38ed4f48-8da3-4982-9fd9-81060e124b79",
+      "campaign_id": "ae79e52f-dbb1-4086-99a8-40b8bce42ae3",
+      "email": "yusuf.aytar@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI multimodal",
+      "sent_at": "2025-07-30T19:42:29.848634+00:00"
+    },
+    {
+      "id": "0b5b00df-7237-4c36-89d4-7bc0ba78c361",
+      "campaign_id": "ae79e52f-dbb1-4086-99a8-40b8bce42ae3",
+      "email": "torsten.mutze@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Algorithms data science",
+      "sent_at": "2025-07-30T19:43:04.044181+00:00"
+    },
+    {
+      "id": "ea7686b4-7690-437d-8617-ea4d4a5d377c",
+      "campaign_id": "ae79e52f-dbb1-4086-99a8-40b8bce42ae3",
+      "email": "yulan.he@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI NLP",
+      "sent_at": "2025-07-30T19:43:37.980798+00:00"
+    },
+    {
+      "id": "0f4aaffe-7d50-4da9-aae3-2ee0ece307dd",
+      "campaign_id": "ae79e52f-dbb1-4086-99a8-40b8bce42ae3",
+      "email": "yusuf.aytar@warwick.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI multimodal",
+      "sent_at": "2025-07-30T19:44:12.252611+00:00"
+    },
+    {
+      "id": "19969791-f036-46a8-97a6-caeb69255148",
+      "campaign_id": "ae79e52f-dbb1-4086-99a8-40b8bce42ae3",
+      "email": "derijke@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Information retrieval AI",
+      "sent_at": "2025-07-30T19:44:46.335133+00:00"
+    },
+    {
+      "id": "a7e4c449-ee69-45b4-8328-c6b6841de248",
+      "campaign_id": "ae79e52f-dbb1-4086-99a8-40b8bce42ae3",
+      "email": "welling@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Deep learning ML",
+      "sent_at": "2025-07-30T19:45:20.707147+00:00"
+    },
+    {
+      "id": "0207f75a-ca84-44cf-add1-76321dca7144",
+      "campaign_id": "ae79e52f-dbb1-4086-99a8-40b8bce42ae3",
+      "email": "worring@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Multimedia AI",
+      "sent_at": "2025-07-30T19:45:54.359107+00:00"
+    },
+    {
+      "id": "fc3657b4-9cd4-4fa6-ac07-3e94de227db4",
+      "campaign_id": "ae79e52f-dbb1-4086-99a8-40b8bce42ae3",
+      "email": "c.g.m.snoek@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI vision",
+      "sent_at": "2025-07-30T19:46:28.823614+00:00"
+    },
+    {
+      "id": "4d0f9346-f77c-4c86-9ddb-19173830517c",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "a.w.m.smeulders@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Computer vision ML",
+      "sent_at": "2025-07-31T03:34:30.727896+00:00"
+    },
+    {
+      "id": "7a19412c-b186-45a9-99ae-ee509f616f32",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "p.t.groth@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Knowledge graphs AI",
+      "sent_at": "2025-07-31T03:35:04.260152+00:00"
+    },
+    {
+      "id": "2ead9717-9240-48df-a295-a042e88abba0",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "n.helberger@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI ethics",
+      "sent_at": "2025-07-31T03:35:38.345625+00:00"
+    },
+    {
+      "id": "197d944b-ddcb-47fd-956c-8b7d795b9a49",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "e.gavves@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI computer vision",
+      "sent_at": "2025-07-31T03:36:12.108191+00:00"
+    },
+    {
+      "id": "41ff3b9a-9cd1-4f70-af03-8e5b2709dceb",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "s.ghebreab@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI fairness",
+      "sent_at": "2025-07-31T03:36:45.815352+00:00"
+    },
+    {
+      "id": "b4f9e5af-9ac6-4770-bbe0-0e614c1cf72d",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "j.m.mooij@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML causality",
+      "sent_at": "2025-07-31T03:37:19.770362+00:00"
+    },
+    {
+      "id": "57e5b272-ca1a-4248-8a1a-75d5b36e2ebe",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "j.w.van.hentenryck@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI optimization",
+      "sent_at": "2025-07-31T03:37:53.490243+00:00"
+    },
+    {
+      "id": "76469e10-491c-475d-bb4c-4d1136cfa7d0",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "k.simaan@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI NLP",
+      "sent_at": "2025-07-31T03:38:27.065669+00:00"
+    },
+    {
+      "id": "47466e10-25ae-4f4b-8166-0b9ce34e4e58",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "r.a.m.vanrooij@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI semantics",
+      "sent_at": "2025-07-31T03:39:01.993761+00:00"
+    },
+    {
+      "id": "bb2fff8e-faa8-44d7-b404-b15acdb8f3e5",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "s.j.l.smets@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI logic",
+      "sent_at": "2025-07-31T03:39:36.308188+00:00"
+    },
+    {
+      "id": "d5d66ec9-0895-4442-8abf-4fab290bc1fc",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "t.gevers@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI vision",
+      "sent_at": "2025-07-31T03:40:09.878925+00:00"
+    },
+    {
+      "id": "b21c278a-d8a8-45f4-98f8-d68668e5b500",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "u.brandt@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Computational biology AI",
+      "sent_at": "2025-07-31T03:40:44.163380+00:00"
+    },
+    {
+      "id": "72722a12-70c3-4939-8698-f827163eda51",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "v.dehaan@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Quantum AI",
+      "sent_at": "2025-07-31T03:41:17.846051+00:00"
+    },
+    {
+      "id": "fc724b20-88a8-4bfe-b951-e050ce5c8871",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "z.ivezic@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Data science astronomy",
+      "sent_at": "2025-07-31T03:41:51.662858+00:00"
+    },
+    {
+      "id": "fea909cd-2e64-47d1-ae83-fed915d3fc3f",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "a.visser@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI robotics",
+      "sent_at": "2025-07-31T03:42:25.223297+00:00"
+    },
+    {
+      "id": "9a4ea902-9834-4a36-9b04-9206ae30efce",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "b.j.a.krose@uva.nl",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI ambient intelligence",
+      "sent_at": "2025-07-31T03:42:58.918353+00:00"
+    },
+    {
+      "id": "a281ca83-c7d3-4df5-9d36-28b07c45683d",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "bart.demoor@kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Data science ML",
+      "sent_at": "2025-07-31T03:43:33.185957+00:00"
+    },
+    {
+      "id": "99ab3bd2-5459-4365-b9f5-750f2602f283",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "jesse.davis@cs.kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML sports analytics",
+      "sent_at": "2025-07-31T03:44:07.065832+00:00"
+    },
+    {
+      "id": "9e77efa1-c1e3-4a77-ac07-4da67bbcf7d3",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "luc.deraedt@cs.kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI inductive logic",
+      "sent_at": "2025-07-31T03:44:40.658501+00:00"
+    },
+    {
+      "id": "71274e06-6c6a-4f36-8c89-fb331937cff5",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "matthew.blaschko@esat.kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI vision",
+      "sent_at": "2025-07-31T03:45:14.332683+00:00"
+    },
+    {
+      "id": "1e93d5d5-ca29-413d-a673-d858726146a1",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "tinne.tuytelaars@esat.kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Computer vision ML",
+      "sent_at": "2025-07-31T03:45:48.389038+00:00"
+    },
+    {
+      "id": "a9f1ef48-7c93-428a-a8cf-04f070471813",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "bart.preneel@esat.kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Cryptography fintech",
+      "sent_at": "2025-07-31T03:46:22.718425+00:00"
+    },
+    {
+      "id": "04fd34b6-a5f0-4f4b-93a8-89c15c427b02",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "bernard.vanacker@kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI robotics",
+      "sent_at": "2025-07-31T03:46:56.320364+00:00"
+    },
+    {
+      "id": "afb4efdf-d41f-418f-9ecf-69af7e222cc5",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "daan.christiaens@kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Medical imaging AI",
+      "sent_at": "2025-07-31T03:47:30.045596+00:00"
+    },
+    {
+      "id": "72ce3bd0-7be2-4e6f-9e63-14f529799e8f",
+      "campaign_id": "22f991c9-375e-44bc-b81e-50fc3d7d73e0",
+      "email": "dirk.vandermeulen@kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI medical imaging",
+      "sent_at": "2025-07-31T03:48:03.981344+00:00"
+    },
+    {
+      "id": "243cf542-fd9c-4fcd-8d63-3e0d22f7bf36",
+      "campaign_id": "bfe2c032-4c2e-4cc6-8855-675fc60b69b5",
+      "email": "frank.piessens@cs.kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Secure AI",
+      "sent_at": "2025-07-31T06:21:58.951573+00:00"
+    },
+    {
+      "id": "8cf83f1c-583e-4ae9-93e7-6c126fbbd187",
+      "campaign_id": "bfe2c032-4c2e-4cc6-8855-675fc60b69b5",
+      "email": "hugo.vanhamme@esat.kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI speech processing",
+      "sent_at": "2025-07-31T06:22:32.646228+00:00"
+    },
+    {
+      "id": "1417699f-2bf6-4c33-b260-6ece280e2499",
+      "campaign_id": "bfe2c032-4c2e-4cc6-8855-675fc60b69b5",
+      "email": "jan.ramon@cs.kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML graphs",
+      "sent_at": "2025-07-31T06:23:07.200105+00:00"
+    },
+    {
+      "id": "9d0d9f50-490b-42d6-a426-654b6fe3f514",
+      "campaign_id": "bfe2c032-4c2e-4cc6-8855-675fc60b69b5",
+      "email": "johan.suykens@esat.kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML kernel methods",
+      "sent_at": "2025-07-31T06:23:40.841661+00:00"
+    },
+    {
+      "id": "0b9d12e0-487d-4840-9bf0-f207d2b20ee3",
+      "campaign_id": "bfe2c032-4c2e-4cc6-8855-675fc60b69b5",
+      "email": "lieven.delathauwer@kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Signal processing ML",
+      "sent_at": "2025-07-31T06:24:14.726420+00:00"
+    },
+    {
+      "id": "07f29a5e-99ab-4c5c-9eae-e03b57ec3b93",
+      "campaign_id": "bfe2c032-4c2e-4cc6-8855-675fc60b69b5",
+      "email": "marc.vanhulle@kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Computational neuroscience AI",
+      "sent_at": "2025-07-31T06:24:48.419932+00:00"
+    },
+    {
+      "id": "098f692b-ce1e-43bf-a1db-4a9d2b4136f5",
+      "campaign_id": "bfe2c032-4c2e-4cc6-8855-675fc60b69b5",
+      "email": "maurice.bruynooghe@cs.kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI logic programming",
+      "sent_at": "2025-07-31T06:25:22.196829+00:00"
+    },
+    {
+      "id": "fd17f0ed-f836-4da9-a5cf-d9b2230cdf39",
+      "campaign_id": "bfe2c032-4c2e-4cc6-8855-675fc60b69b5",
+      "email": "patrick.decausmaecker@kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI optimization",
+      "sent_at": "2025-07-31T06:25:55.779364+00:00"
+    },
+    {
+      "id": "30774727-0310-4a43-8f2b-99bd55b18965",
+      "campaign_id": "bfe2c032-4c2e-4cc6-8855-675fc60b69b5",
+      "email": "sien.moens@cs.kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI NLP",
+      "sent_at": "2025-07-31T06:26:29.398784+00:00"
+    },
+    {
+      "id": "02afabe5-2a8a-435b-ac59-6467ad8dfdef",
+      "campaign_id": "bfe2c032-4c2e-4cc6-8855-675fc60b69b5",
+      "email": "toon.vanwaterschoot@esat.kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI audio processing",
+      "sent_at": "2025-07-31T06:27:03.050239+00:00"
+    },
+    {
+      "id": "e55b573f-551e-4214-a9a6-802826b0b5b3",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "wannes.meert@cs.kuleuven.be",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML time series",
+      "sent_at": "2025-07-31T07:09:23.363997+00:00"
+    },
+    {
+      "id": "db02aaac-6ea7-47ed-8cbf-28fbde3f431f",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "albert.bifet@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Data streams ML",
+      "sent_at": "2025-07-31T07:09:57.111999+00:00"
+    },
+    {
+      "id": "56112167-b28c-41ad-a6b2-8279ff3c9db8",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "alessio.sakr@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI verification",
+      "sent_at": "2025-07-31T07:10:30.795473+00:00"
+    },
+    {
+      "id": "2d551fc0-0fa8-40b3-bb68-8e84ccd66490",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "antoine.cornuejols@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML algorithms",
+      "sent_at": "2025-07-31T07:11:04.403457+00:00"
+    },
+    {
+      "id": "3e3fdc35-ed36-4527-a4be-ae38f2ae5609",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "christophe.marsala@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Fuzzy ML",
+      "sent_at": "2025-07-31T07:11:38.014766+00:00"
+    },
+    {
+      "id": "5ad159b4-1173-4d4a-b1ef-80cbb5f94e44",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "fabrice.kordon@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI distributed systems",
+      "sent_at": "2025-07-31T07:12:11.764378+00:00"
+    },
+    {
+      "id": "c3a69eca-dd0e-444d-94a3-f6910f065da8",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "gianluca.pollastri@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Computational biology AI",
+      "sent_at": "2025-07-31T07:12:45.535809+00:00"
+    },
+    {
+      "id": "2f150080-bba1-4aec-ae80-8f30a0b9e929",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "jean-daniel.zucker@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML in biology",
+      "sent_at": "2025-07-31T07:13:19.138497+00:00"
+    },
+    {
+      "id": "68b9eef0-ebde-4a75-b715-e53c5688e064",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "matthieu.cord@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI vision",
+      "sent_at": "2025-07-31T07:13:54.077723+00:00"
+    },
+    {
+      "id": "4760693f-1607-40a4-b6a4-91e0332c9b16",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "mohamed.chetouani@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Human-AI interaction",
+      "sent_at": "2025-07-31T07:14:27.661324+00:00"
+    },
+    {
+      "id": "85600cfc-8605-42b4-b9aa-3a4e5e77468b",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "nicolas.baskiotis@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML unsupervised",
+      "sent_at": "2025-07-31T07:15:01.219840+00:00"
+    },
+    {
+      "id": "4b0da2bc-5b7b-40bc-a3e5-35549d5020c2",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "olivier.schwander@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI optimization",
+      "sent_at": "2025-07-31T07:15:34.814277+00:00"
+    },
+    {
+      "id": "81de9a9c-ed32-4d11-8b6b-70c7956071ec",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "patrick.gallinari@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Deep learning",
+      "sent_at": "2025-07-31T07:16:08.591204+00:00"
+    },
+    {
+      "id": "87bf9994-4a98-4ebd-aa1f-e3210d5ec486",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "sylvain.lamprier@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: RL",
+      "sent_at": "2025-07-31T07:16:42.803303+00:00"
+    },
+    {
+      "id": "7f9a476d-ce63-48b7-9abf-ee275327d60b",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "talel.abdessalem@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Big data AI",
+      "sent_at": "2025-07-31T07:17:16.347247+00:00"
+    },
+    {
+      "id": "37e7f1d6-facb-449b-8e3c-eae33cc31c68",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "theodore.lim@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI graphs",
+      "sent_at": "2025-07-31T07:17:50.248207+00:00"
+    },
+    {
+      "id": "5b21d10a-60de-4efc-9474-502ab3cac583",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "thomas.bonald@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Network ML",
+      "sent_at": "2025-07-31T07:18:23.931801+00:00"
+    },
+    {
+      "id": "a293c8e3-2202-4fea-b50c-f0c1f2bbfc77",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "vanda.luengo@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI education",
+      "sent_at": "2025-07-31T07:18:57.454461+00:00"
+    },
+    {
+      "id": "14002662-a8b4-4c47-b8c2-88aa4a4d03ce",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "virginie.do@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI knowledge representation",
+      "sent_at": "2025-07-31T07:19:31.223333+00:00"
+    },
+    {
+      "id": "d15f6b26-d686-4d2b-b9de-4c73d4b136ea",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "zahia.guessoum@sorbonne-universite.fr",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Multi-agent AI",
+      "sent_at": "2025-07-31T07:20:05.069877+00:00"
+    },
+    {
+      "id": "738738fa-9852-48f6-9b89-b6ceadeb7460",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "barry.smyth@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI recommendation",
+      "sent_at": "2025-07-31T07:20:39.662523+00:00"
+    },
+    {
+      "id": "19caed74-dc3a-4cd9-9609-66d52e07193a",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "brett.houlding@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML decision theory",
+      "sent_at": "2025-07-31T07:21:13.460891+00:00"
+    },
+    {
+      "id": "18c3a171-a0f6-427f-8607-3e8cf8a02a44",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "chris.bleakley@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI embedded systems",
+      "sent_at": "2025-07-31T07:21:47.141003+00:00"
+    },
+    {
+      "id": "a58f412e-8d1a-4d8a-b40d-aef85fa4c949",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "david.coyle@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Human-AI interaction",
+      "sent_at": "2025-07-31T07:22:21.143375+00:00"
+    },
+    {
+      "id": "09f6b689-dbe5-4709-bb1c-08d09b9b21a8",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "derek.greene@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML clustering",
+      "sent_at": "2025-07-31T07:22:55.491268+00:00"
+    },
+    {
+      "id": "b3c9eae0-706a-4eee-9f5a-86f751254a2b",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "elaine.uidhonnchadha@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI NLP",
+      "sent_at": "2025-07-31T07:23:29.140441+00:00"
+    },
+    {
+      "id": "92d5246a-a490-4704-afea-46852af94c87",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "fionnuala.murphy@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Fintech AI",
+      "sent_at": "2025-07-31T07:24:03.258860+00:00"
+    },
+    {
+      "id": "01a2121b-f13f-4a3d-8aaf-cf5d523b2e22",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "georgiana.ifrim@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML time series",
+      "sent_at": "2025-07-31T07:24:36.958659+00:00"
+    },
+    {
+      "id": "50ba9623-19c9-4a18-a8a0-5ef0aa1448d0",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "giuseppe.difatta@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Big data AI",
+      "sent_at": "2025-07-31T07:25:11.330364+00:00"
+    },
+    {
+      "id": "2fdb9a6a-e654-495b-bbf5-3d05bcd3f07d",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "john.dunnion@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI search",
+      "sent_at": "2025-07-31T07:25:45.080707+00:00"
+    },
+    {
+      "id": "847a6ca5-d4e8-435b-899e-d0a068f4d6c0",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "liam.murphy@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI networks",
+      "sent_at": "2025-07-31T07:26:18.700847+00:00"
+    },
+    {
+      "id": "e78f8c3a-51cb-4aee-a61e-c3c69de798f3",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "mark.scanlon@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Digital forensics AI",
+      "sent_at": "2025-07-31T07:26:52.255105+00:00"
+    },
+    {
+      "id": "0dbec4d1-ac9e-4b09-930e-ca861ab3502f",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "michael.oneill@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Evolutionary AI",
+      "sent_at": "2025-07-31T07:27:26.079451+00:00"
+    },
+    {
+      "id": "8da5a94f-c068-4459-b2fa-1c6a68118ffa",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "neil.hurley@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI recommender systems",
+      "sent_at": "2025-07-31T07:28:00.072662+00:00"
+    },
+    {
+      "id": "134f6383-f5c3-416d-a254-9f1312f09c13",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "padraig.cunningham@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: ML case-based reasoning",
+      "sent_at": "2025-07-31T07:28:34.470582+00:00"
+    },
+    {
+      "id": "a897e724-8c29-4f1e-b7b3-8709e400e726",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "ramanujan.kashi@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI optimization",
+      "sent_at": "2025-07-31T07:29:08.150307+00:00"
+    },
+    {
+      "id": "a966a8c1-a88b-4bbf-a373-9b8f071e7078",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "rem.collier@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Multi-agent AI",
+      "sent_at": "2025-07-31T07:29:41.835171+00:00"
+    },
+    {
+      "id": "b9bcfb41-ad3a-4bcc-ba8d-634bc76a802a",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "tahereh.dehdarirad@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Data science scientometrics",
+      "sent_at": "2025-07-31T07:30:15.550278+00:00"
+    },
+    {
+      "id": "8401e368-f899-4f8c-aadd-10d72d1d8b97",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "vivek.nallur@ucd.ie",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI ethics",
+      "sent_at": "2025-07-31T07:30:49.075501+00:00"
+    },
+    {
+      "id": "be5d098a-3231-47a5-ab65-c2b65c6cddb8",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "anatoly.zayats@kcl.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI photonics",
+      "sent_at": "2025-07-31T07:31:22.705871+00:00"
+    },
+    {
+      "id": "1a4f59db-8a63-4b6f-8995-b5c1dccdf855",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "elena.simperl@kcl.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI knowledge engineering",
+      "sent_at": "2025-07-31T07:31:57.496682+00:00"
+    },
+    {
+      "id": "c43eed10-e8ff-4685-a419-0c91c1a3815e",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "fabio.cuzzolin@kcl.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI uncertainty",
+      "sent_at": "2025-07-31T07:32:31.114324+00:00"
+    },
+    {
+      "id": "5426d9e6-6813-4395-9c6e-f18d903e2762",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "freddie.hepburn@kcl.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Data science",
+      "sent_at": "2025-07-31T07:33:04.786519+00:00"
+    },
+    {
+      "id": "1390cd1d-4ace-40f6-9751-dd211e319eae",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "hana.chockler@kcl.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI causality",
+      "sent_at": "2025-07-31T07:33:38.558897+00:00"
+    },
+    {
+      "id": "841e23cf-6d19-49b2-a8c3-5caed8434f8f",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "jeroen.keppens@kcl.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI argumentation",
+      "sent_at": "2025-07-31T07:34:12.165403+00:00"
+    },
+    {
+      "id": "1abc7b26-b416-4c4c-ae95-db43199aa996",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "luca.vigano@kcl.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI security",
+      "sent_at": "2025-07-31T07:34:45.975105+00:00"
+    },
+    {
+      "id": "89faae8f-a0ee-4c39-8049-eb516ab58348",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "maria.polukarov@kcl.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI game theory",
+      "sent_at": "2025-07-31T07:35:19.562763+00:00"
+    },
+    {
+      "id": "17bfc356-6a51-4462-8286-d10d8ed3397b",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "michael.luck@kcl.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Multi-agent AI",
+      "sent_at": "2025-07-31T07:35:53.191565+00:00"
+    },
+    {
+      "id": "92411944-e921-4d50-9a0b-e5ff9c509e0f",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "michael.spratling@kcl.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: Computational neuroscience AI",
+      "sent_at": "2025-07-31T07:36:26.929399+00:00"
+    },
+    {
+      "id": "f53034c7-85ee-4403-a8e0-36fd97f03efb",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "mischa.dohler@kcl.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI wireless",
+      "sent_at": "2025-07-31T07:37:00.741374+00:00"
+    },
+    {
+      "id": "32a1a2c0-b480-439b-a210-e7ee4a914b83",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "mohammad.shikh-bahaei@kcl.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI communications",
+      "sent_at": "2025-07-31T07:37:34.481996+00:00"
+    },
+    {
+      "id": "f174be93-dc8e-4b12-a6e9-1e4bdc142d12",
+      "campaign_id": "69ccbd25-173d-48de-a3c7-71eb4004ec03",
+      "email": "nishanth.sastry@kcl.ac.uk",
+      "subject": "Research Internship Inquiry – Anamay Tripathy re: AI social networks",
+      "sent_at": "2025-07-31T07:38:08.857784+00:00"
     }
   ]
 }

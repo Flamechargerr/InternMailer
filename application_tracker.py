@@ -1,7 +1,13 @@
 
 import json
 import datetime
+import os
 from typing import Dict, List
+from hr_finder import HRFinder
+from send_email_with_cv import send_email_with_cv
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class ApplicationTracker:
     def __init__(self, log_file: str = "data/application_log.json"):

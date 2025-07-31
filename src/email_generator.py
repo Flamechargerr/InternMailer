@@ -32,6 +32,10 @@ class AzureAIClient:
             allowed_methods=["POST"]
         )
         
+        # Create session
+        import requests
+        self.session = requests.Session()
+        
         # Mount adapter with retry strategy
         adapter = HTTPAdapter(max_retries=retry_strategy, pool_connections=1, pool_maxsize=1)
         self.session.mount("http://", adapter)

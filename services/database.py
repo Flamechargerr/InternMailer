@@ -286,7 +286,7 @@ class MockDatabaseService(BaseService):
     
     async def _create_sample_data(self):
         """Create sample data for testing."""
-        # Create sample contacts
+        # Avoid recursion by directly manipulating _contacts and _campaigns
         sample_contacts = [
             {
                 "email": "john.smith@mit.edu",
@@ -318,9 +318,12 @@ class MockDatabaseService(BaseService):
         ]
         
         for contact_data in sample_contacts:
-            await self.create_contact(contact_data)
-        
-        # Create sample campaigns 
+            contact = Contact(**contact_data)
+            contact.id = f"contact_{self._next_contact_id}"
+            self._next_contact_id += 1
+            self._contacts[contact.id] = contact
+
+        # Directly create campaigns
         sample_campaigns = [
             {
                 "name": "ML Professors Outreach",
@@ -345,7 +348,10 @@ class MockDatabaseService(BaseService):
         ]
         
         for campaign_data in sample_campaigns:
-            await self.create_campaign(campaign_data)
+            campaign = Campaign(**campaign_data)
+            campaign.id = f"campaign_{self._next_campaign_id}"
+            self._next_campaign_id += 1
+            self._campaigns[campaign.id] = campaign
     
     @with_error_handling
     async def list_contacts(self, filters: Optional[QueryFilters] = None) -> List[Contact]:
@@ -371,7 +377,11 @@ class MockDatabaseService(BaseService):
             # Apply sorting
             if filters and filters.sort_by:
                 reverse = filters.sort_order == "desc"
-                contacts.sort(key=lambda x: getattr(x, filters.sort_by, ""), reverse=reverse)
+                try:
+                    contacts.sort(key=lambda x: getattr(x, filters.sort_by, "") or "", reverse=reverse)
+                except TypeError:
+                    # Handle cases where we can't sort (e.g., mixed types, None values)
+                    contacts.sort(key=lambda x: str(getattr(x, filters.sort_by, "") or ""), reverse=reverse)
             
             # Apply pagination
             if filters and filters.offset:
@@ -457,7 +467,11 @@ class MockDatabaseService(BaseService):
             # Apply sorting
             if filters and filters.sort_by:
                 reverse = filters.sort_order == "desc"
-                campaigns.sort(key=lambda x: getattr(x, filters.sort_by, ""), reverse=reverse)
+                try:
+                    campaigns.sort(key=lambda x: getattr(x, filters.sort_by, "") or "", reverse=reverse)
+                except TypeError:
+                    # Handle cases where we can't sort (e.g., mixed types, None values)
+                    campaigns.sort(key=lambda x: str(getattr(x, filters.sort_by, "") or ""), reverse=reverse)
             
             # Apply pagination
             if filters and filters.offset:

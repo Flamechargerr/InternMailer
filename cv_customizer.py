@@ -1,16 +1,50 @@
 
 import json
+import os
 from typing import Dict, List
 
 class CVCustomizer:
-    def __init__(self, base_cv: Dict):
+    def __init__(self, base_cv_file: str = None):
         """
         Initializes the CV Customizer with a base CV.
         
         Args:
-            base_cv (Dict): A dictionary representing the user's base CV.
+            base_cv_file (str): Path to the base CV JSON file, or None to use default.
         """
-        self.base_cv = base_cv
+        if base_cv_file and os.path.exists(base_cv_file):
+            with open(base_cv_file, 'r') as f:
+                data = json.load(f)
+                # Handle both list and dict format
+                self.base_cv = data[0] if isinstance(data, list) else data
+        else:
+            # Default CV data if file doesn't exist
+            self.base_cv = {
+                "name": "Anamay Tripathy",
+                "email": "tripathy.anamay23@gmail.com",
+                "phone": "+91-9877454747",
+                "skills": ["Python", "JavaScript", "Machine Learning", "Data Science", 
+                          "TensorFlow", "PyTorch", "React.js", "Node.js", "AWS", "Docker", "SQL"],
+                "experience": [
+                    {
+                        "title": "Technical Head",
+                        "company": "YaanBarpe",
+                        "description": "Leading technical development and product strategy for a Karnataka Government-incubated startup."
+                    },
+                    {
+                        "title": "Data Analyst Intern",
+                        "company": "Intellect Design Arena",
+                        "description": "Automated KPI dashboard systems and developed REST APIs improving user engagement by 22%."
+                    }
+                ],
+                "projects": [
+                    {"name": "VARtificial Intelligence", "description": "ML prediction system with 89% accuracy using XGBoost."},
+                    {"name": "CrimeConnect", "description": "FBI-inspired case management dashboard with AI-powered analytics."}
+                ]
+            }
+    
+    def customize_cv(self, job_posting: Dict) -> Dict:
+        """Alias for customize_for_job for backwards compatibility."""
+        return self.customize_for_job(job_posting)
 
     def customize_for_job(self, job_posting: Dict) -> Dict:
         """
@@ -27,9 +61,23 @@ class CVCustomizer:
         """
         customized_cv = self.base_cv.copy()
         
-        # Placeholder logic: Add job title to a new 'objective' section
-        job_title = job_posting.get('title', 'the role')
-        customized_cv['objective'] = f"To obtain a challenging and rewarding position as {job_title}."
+        # Enhance logic to tailor CV to the job posting
+        job_title = job_posting.get('title', 'the role').lower()
+        required_skills = job_posting.get('description', '').lower()
+        
+        # Tailor skills
+        tailored_skills = [skill for skill in self.base_cv['skills'] if skill.lower() in required_skills]
+        customized_cv['skills'] = tailored_skills
+        
+        # Highlight relevant experience
+        relevant_experience = []
+        for exp in self.base_cv['experience']:
+            if any(skill.lower() in exp['description'].lower() for skill in tailored_skills):
+                relevant_experience.append(exp)
+        customized_cv['experience'] = relevant_experience
+
+        # Add job title to 'objective'
+        customized_cv['objective'] = f"To excel as a {job_title}, leveraging skills in {', '.join(tailored_skills)}."
         
         print(f"Customizing CV for: {job_title}")
         return customized_cv

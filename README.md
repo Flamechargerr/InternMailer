@@ -1,6 +1,6 @@
 # InternMailer 🚀
 
-InternMailer is a **production-ready**, AI-powered academic outreach platform designed to help students secure research internships through intelligent, personalized email campaigns. Built with advanced resume parsing, semantic research matching, and automated email workflows, it delivers highly targeted outreach at scale.
+**InternMailer** is a comprehensive, AI-powered academic outreach and job application automation platform designed to help students secure research internships and job opportunities through intelligent, personalized email campaigns.
 
 ## ✨ Key Features
 

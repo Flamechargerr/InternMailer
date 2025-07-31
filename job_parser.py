@@ -108,6 +108,11 @@ class JobParser:
             salary=raw_job_data.get('salary'),
             job_type=self.determine_job_type(description, raw_job_data.get('location', ''))
         )
+    
+    def parse_job(self, raw_job_data: Dict) -> Dict:
+        """Parse raw job data and return as dictionary (backwards compatibility)."""
+        job_posting = self.parse_job_posting(raw_job_data)
+        return job_posting.to_dict()
 
 def process_job_postings(input_file: str, output_file: str):
     """Process raw job postings and save parsed results."""

@@ -1,1 +1,37 @@
-[]
+[
+    {
+        "University": "Massachusetts Institute of Technology (MIT)",
+        "Name": "Adam Belay",
+        "Email": "abelay@csail.mit.edu",
+        "Homepage": "https://engineering.mit.edu/faculty-research/year-2017",
+        "Research Area": "Systems for ML"
+    },
+    {
+        "University": "Massachusetts Institute of Technology (MIT)",
+        "Name": "Adam Chlipala",
+        "Email": "adamc@csail.mit.edu",
+        "Homepage": "http://adam.chlipala.net",
+        "Research Area": "AI verification"
+    },
+    {
+        "University": "Massachusetts Institute of Technology (MIT)",
+        "Name": "Alexander Rakhlin",
+        "Email": "rakhlin@mit.edu",
+        "Homepage": "https://www.mit.edu/~rakhlin",
+        "Research Area": "ML theory"
+    },
+    {
+        "University": "Massachusetts Institute of Technology (MIT)",
+        "Name": "Anant Agarwal",
+        "Email": "agarwal@mit.edu",
+        "Homepage": "https://www.csail.mit.edu/user/723",
+        "Research Area": "AI in education"
+    },
+    {
+        "University": "Massachusetts Institute of Technology (MIT)",
+        "Name": "Ankur Moitra",
+        "Email": "moitra@mit.edu",
+        "Homepage": "http://people.csail.mit.edu/moitra",
+        "Research Area": "ML algorithms"
+    }
+]

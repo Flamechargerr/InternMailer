@@ -8,8 +8,7 @@ from email_generator import EmailGenerator
 from gmail_sender import GmailSender
 from professor_scraper import ProfessorScraper
 # Import enhanced email generation system
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from enhanced_personalized_email import generate_deeply_personalized_email
+from email_generator import EmailGenerator
 # Fix import path for followup manager
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'scheduler'))
 from streamlit_api import get_followup_manager
@@ -265,8 +264,9 @@ class OutreachRunner:
                     'homepage_text': professor_data.get('homepage_text', '')
                 }
                 
-                # Use existing enhanced email generation
-                body = generate_deeply_personalized_email(prof_data)
+                # Use existing email generator
+                generator = EmailGenerator(student_info)
+                body = generator.generate_with_llm(prof_data)
                 subject = f"Research Internship Inquiry – Anamay Tripathy re: {professor_data['research_area']}"
                 
                 return {

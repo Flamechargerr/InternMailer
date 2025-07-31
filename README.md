@@ -36,6 +36,23 @@
 - **Template System**: Multiple email templates with preview and comparison features
 - **Real-time Analytics**: Campaign performance metrics and insights
 
+### 🏢 HR Mailing & Job Application Automation
+- **Job Scraping**: Extract job postings from LinkedIn and other platforms automatically
+- **HR Contact Discovery**: Use Hunter.io API integration to find HR contacts at target companies
+- **Company Database**: Build and maintain a database of companies with HR contact information
+- **Automated HR Outreach**: Send personalized emails to HR departments for job opportunities
+- **CV Customization**: Automatically tailor resumes for each specific role and company
+- **Application Tracking**: Monitor application status, responses, and follow-up requirements
+- **Bulk HR Campaigns**: Launch large-scale campaigns to multiple companies simultaneously
+
+### 📨 Advanced HR Email Features
+- **Industry-Specific Templates**: Pre-built templates for different industries (tech, finance, healthcare)
+- **Role-Based Personalization**: Customize content based on job requirements and company culture
+- **HR Department Targeting**: Smart routing to appropriate HR contacts (recruiters, hiring managers)
+- **Follow-up Automation**: Systematic follow-ups with customizable intervals and content
+- **Response Tracking**: Monitor email open rates, click-through rates, and reply rates
+- **Integration Capabilities**: Seamlessly integrate with existing email workflows and CRM systems
+
 ## Folder Structure
 ```
 InternMailer/
@@ -100,10 +117,22 @@ GMAIL_APP_PASSWORD=your-16-character-app-password
 # OpenAI API (Optional - enables enhanced AI email generation)
 OPENAI_API_KEY=sk-your-openai-key-here
 
+# Hunter.io Configuration (Required for HR email discovery)
+HUNTER_API_KEY=your-hunter-api-key
+
+# Azure AI Configuration (Optional - alternative AI provider)
+AZURE_AI_ENDPOINT=https://your-endpoint.openai.azure.com/
+AZURE_AI_KEY=your-azure-key
+
 # Campaign Settings (Optional)
 MAX_EMAILS_PER_DAY=50
 MIN_DELAY_SECONDS=2
 DRY_RUN_MODE=false
+
+# Job Scraping Configuration (Optional)
+LINKEDIN_EMAIL=your-linkedin-email
+LINKEDIN_PASSWORD=your-linkedin-password
+SCRAPE_DELAY_SECONDS=3
 ```
 
 ### Gmail App Password Setup
@@ -120,12 +149,139 @@ Your CSV file should contain columns:
 - `University`: Institution name  
 - `Research Area`: Research interests/specialization
 
+### Hunter.io API Setup (For HR Email Discovery)
+1. Sign up for a free account at [Hunter.io](https://hunter.io)
+2. Navigate to your dashboard and get your API key
+3. Add the API key to your `.env` file as `HUNTER_API_KEY=your-key`
+4. Free tier provides 25 requests/month, paid plans offer more
+
+## 🏢 HR Mailing Workflow
+
+### Step-by-Step HR Campaign Process
+
+#### 1. Job Discovery & Scraping
+```bash
+# Navigate to Job Applications page in Streamlit UI
+# Or use command line:
+python job_harvester.py --keywords "software engineer intern" --location "remote"
+```
+
+#### 2. Company Database Building
+- Jobs are parsed to extract company information
+- Company database is built automatically in `data/scraped_companies.json`
+- Duplicate companies are filtered out
+
+#### 3. HR Contact Discovery
+```bash
+# Using the UI (recommended):
+# 1. Go to Job Applications page
+# 2. Enter Hunter.io API key in sidebar
+# 3. Click "Find HR Emails"
+
+# Command line alternative:
+python hr_finder.py --api-key YOUR_HUNTER_KEY --companies-file data/scraped_companies.json
+```
+
+#### 4. Email Generation & Personalization
+- System automatically generates personalized emails for each HR contact
+- Templates are customized based on:
+  - Job requirements
+  - Company information
+  - Your resume/skills
+  - Industry context
+
+#### 5. HR Email Campaign Execution
+```bash
+# Dry run first (recommended)
+python integrated_job_hr_outreach.py --mode dry_run
+
+# Live campaign
+python integrated_job_hr_outreach.py --mode live
+```
+
+### HR Email Templates
+
+The system includes industry-specific templates:
+
+#### Technology Companies
+```text
+Subject: Software Engineering Intern Application - [Your Name]
+
+Dear [HR Name],
+
+I am writing to express my interest in the [Job Title] position at [Company]. 
+With my experience in [Relevant Skills], I believe I would be a valuable 
+addition to your team.
+
+[Personalized content based on job requirements]
+
+Best regards,
+[Your Name]
+```
+
+#### Financial Services
+```text
+Subject: Internship Application - [Your Name] | [University]
+
+Dear [HR Name],
+
+I am currently pursuing [Degree] at [University] and am very interested 
+in the [Job Title] opportunity at [Company]. My background in [Relevant Experience] 
+aligns well with your requirements.
+
+[Personalized content based on financial sector context]
+
+Sincerely,
+[Your Name]
+```
+
+### Advanced HR Features
+
+#### Bulk HR Campaigns
+```python
+# Configure bulk campaign settings
+campaign_settings = {
+    'batch_size': 20,
+    'delay_between_emails': 5,  # seconds
+    'follow_up_enabled': True,
+    'follow_up_delay_days': 7
+}
+```
+
+#### Response Tracking
+- All HR emails are logged with tracking IDs
+- Response rates are calculated automatically
+- Follow-up scheduling based on no-reply timeouts
+
+#### Integration with Job Applications
+- Seamlessly links HR contacts to specific job postings
+- Tracks application status per company
+- Manages multiple applications to the same company
+
+### HR Campaign Analytics
+
+Track your HR outreach performance:
+
+```python
+# View campaign statistics
+from application_tracker import ApplicationTracker
+
+tracker = ApplicationTracker()
+stats = tracker.get_campaign_stats()
+
+print(f"Total Applications: {stats['total_applications']}")
+print(f"Response Rate: {stats['response_rate']}%")
+print(f"Interview Requests: {stats['interviews']}")
+```
+
 ## Security
 - All secrets are read from `.env` and masked in logs.
 - API calls are secured.
+- Hunter.io API key is never logged or exposed.
 
 ## Testing
 - Unit tests are included for core modules.
+- HR workflow can be tested in dry-run mode.
 
 ## Bulk Send HOW-TO
 

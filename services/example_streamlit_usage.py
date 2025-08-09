@@ -274,7 +274,8 @@ def show_contacts():
                 
                 with col2:
                     if st.button(f"📧 Email", key=f"email_{contact['id']}"):
-                        st.session_state.email_recipient = contact['email']
+                        from src.shared.session_state import session_state
+                        session_state.set(session_state.EMAIL_RECIPIENT, contact['email'])
                         st.switch_page("Send Email")  # Navigate to send email page
                 
                 st.divider()

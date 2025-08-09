@@ -1,142 +1,243 @@
-import json
-import re
-from typing import Dict, List, Optional
-from dataclasses import dataclass
+"""
+Job Parser Module
 
-@dataclass
-class JobPosting:
-    title: str
-    company: str
-    location: str
-    description: str
-    requirements: List[str]
-    skills: List[str]
-    contact_email: Optional[str] = None
-    apply_url: Optional[str] = None
-    salary: Optional[str] = None
-    job_type: Optional[str] = None  # remote, onsite, hybrid
-    
-    def to_dict(self):
-        return {
-            'title': self.title,
-            'company': self.company,
-            'location': self.location,
-            'description': self.description,
-            'requirements': self.requirements,
-            'skills': self.skills,
-            'contact_email': self.contact_email,
-            'apply_url': self.apply_url,
-            'salary': self.salary,
-            'job_type': self.job_type
-        }
+This module parses job postings and extracts relevant information
+like required skills, experience, company details, etc.
+"""
+
+import re
+import json
+from typing import Dict, List, Any
+from datetime import datetime
+
 
 class JobParser:
+    """Parse job postings and extract structured information."""
+    
     def __init__(self):
-        # Common technical skills to look for
-        self.tech_skills = [
-            'python', 'javascript', 'java', 'react', 'node.js', 'sql', 
-            'machine learning', 'ai', 'tensorflow', 'pytorch', 'docker',
-            'kubernetes', 'aws', 'azure', 'gcp', 'data science', 'analytics',
-            'pandas', 'numpy', 'scikit-learn', 'mongodb', 'postgresql',
-            'git', 'agile', 'scrum', 'rest api', 'microservices'
+        """Initialize the job parser with common skill patterns."""
+        self.skill_patterns = [
+            r'\bpython\b',
+            r'\bjava\b',
+            r'\bjavascript\b',
+            r'\bmachine learning\b',
+            r'\bdata science\b',
+            r'\bsql\b',
+            r'\breact\b',
+            r'\bangular\b',
+            r'\bnode\.?js\b',
+            r'\baws\b',
+            r'\bdocker\b',
+            r'\bkubernetes\b',
+            r'\bgit\b',
+            r'\bagile\b',
+            r'\bscrum\b'
         ]
         
-        # Email regex pattern
-        self.email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+        self.experience_patterns = [
+            r'(\d+)[\s\-]*(?:years?|yrs?)\s+(?:of\s+)?experience',
+            r'(\d+)\+\s*years?',
+            r'minimum\s+(\d+)\s+years?',
+            r'at least\s+(\d+)\s+years?'
+        ]
     
-    def extract_skills(self, text: str) -> List[str]:
+    def parse_job(self, job_data: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Parse a job posting and extract structured information.
+        
+        Args:
+            job_data: Raw job data containing title, description, company, etc.
+        
+        Returns:
+            Parsed job information with extracted skills, requirements, etc.
+        """
+        parsed_job = {
+            'title': job_data.get('title', ''),
+            'company': job_data.get('company', ''),
+            'location': job_data.get('location', ''),
+            'description': job_data.get('description', ''),
+            'url': job_data.get('url', ''),
+            'posted_date': job_data.get('posted_date', ''),
+            'parsed_at': datetime.now().isoformat(),
+            'skills': self._extract_skills(job_data.get('description', '')),
+            'experience_required': self._extract_experience(job_data.get('description', '')),
+            'requirements': self._extract_requirements(job_data.get('description', '')),
+            'job_type': self._classify_job_type(job_data),
+            'salary_range': self._extract_salary(job_data.get('description', '')),
+        }
+        
+        return parsed_job
+    
+    def _extract_skills(self, description: str) -> List[str]:
         """Extract technical skills from job description."""
-        text_lower = text.lower()
+        if not description:
+            return []
+        
+        description_lower = description.lower()
         found_skills = []
         
-        for skill in self.tech_skills:
-            if skill.lower() in text_lower:
-                found_skills.append(skill)
+        for pattern in self.skill_patterns:
+            matches = re.findall(pattern, description_lower, re.IGNORECASE)
+            found_skills.extend(matches)
         
-        return list(set(found_skills))  # Remove duplicates
+        # Remove duplicates and clean up
+        unique_skills = list(set(found_skills))
+        return [skill.strip().title() for skill in unique_skills if skill.strip()]
     
-    def extract_requirements(self, text: str) -> List[str]:
-        """Extract job requirements from description."""
-        # Look for bullet points, numbered lists, or requirement sections
-        requirements = []
+    def _extract_experience(self, description: str) -> str:
+        """Extract experience requirements from job description."""
+        if not description:
+            return "Not specified"
         
-        # Split by common requirement indicators
-        patterns = [
-            r'requirements?:?\s*(.+?)(?:responsibilities?:|skills?:|$)',
-            r'qualifications?:?\s*(.+?)(?:responsibilities?:|skills?:|$)',
-            r'must have:?\s*(.+?)(?:nice to have:|preferred:|$)'
+        for pattern in self.experience_patterns:
+            match = re.search(pattern, description, re.IGNORECASE)
+            if match:
+                years = match.group(1)
+                return f"{years} years"
+        
+        # Check for entry level indicators
+        entry_level_patterns = [
+            r'\bentry[\s\-]level\b',
+            r'\bintern\b',
+            r'\bgraduate\b',
+            r'\bjunior\b',
+            r'\bno experience\b'
         ]
         
-        for pattern in patterns:
-            matches = re.findall(pattern, text, re.IGNORECASE | re.DOTALL)
+        for pattern in entry_level_patterns:
+            if re.search(pattern, description, re.IGNORECASE):
+                return "Entry level"
+        
+        return "Not specified"
+    
+    def _extract_requirements(self, description: str) -> List[str]:
+        """Extract job requirements from description."""
+        if not description:
+            return []
+        
+        requirements = []
+        
+        # Look for requirement sections
+        requirement_patterns = [
+            r'requirements?:([^\.]+(?:\.[^\.]*)*)',
+            r'qualifications?:([^\.]+(?:\.[^\.]*)*)',
+            r'must have:([^\.]+(?:\.[^\.]*)*)',
+            r'you should have:([^\.]+(?:\.[^\.]*)*)'
+        ]
+        
+        for pattern in requirement_patterns:
+            matches = re.findall(pattern, description, re.IGNORECASE | re.DOTALL)
             for match in matches:
-                # Split by bullet points or new lines
-                req_items = re.split(r'[•\-\*\n]', match)
-                requirements.extend([req.strip() for req in req_items if req.strip()])
+                # Split by common delimiters and clean up
+                items = re.split(r'[•\n\r\*\-]', match)
+                for item in items:
+                    cleaned = item.strip()
+                    if cleaned and len(cleaned) > 10:  # Filter out very short items
+                        requirements.append(cleaned)
         
         return requirements[:10]  # Limit to top 10 requirements
     
-    def extract_email(self, text: str) -> Optional[str]:
-        """Extract email address from job posting."""
-        matches = re.findall(self.email_pattern, text)
-        return matches[0] if matches else None
-    
-    def determine_job_type(self, text: str, location: str = "") -> str:
-        """Determine if job is remote, onsite, or hybrid."""
-        text_combined = (text + " " + location).lower()
+    def _classify_job_type(self, job_data: Dict[str, Any]) -> str:
+        """Classify the type of job (internship, full-time, part-time, etc.)."""
+        title = job_data.get('title', '').lower()
+        description = job_data.get('description', '').lower()
         
-        if any(keyword in text_combined for keyword in ['remote', 'work from home', 'distributed']):
-            return 'remote'
-        elif any(keyword in text_combined for keyword in ['hybrid', 'flexible']):
-            return 'hybrid'
+        if any(word in title for word in ['intern', 'internship']):
+            return 'Internship'
+        elif any(word in title for word in ['part-time', 'part time']):
+            return 'Part-time'
+        elif any(word in title for word in ['contract', 'contractor']):
+            return 'Contract'
+        elif any(word in title for word in ['remote']):
+            return 'Remote'
         else:
-            return 'onsite'
+            return 'Full-time'
     
-    def parse_job_posting(self, raw_job_data: Dict) -> JobPosting:
-        """Parse raw job data into structured JobPosting object."""
-        description = raw_job_data.get('description', '')
+    def _extract_salary(self, description: str) -> str:
+        """Extract salary information from job description."""
+        if not description:
+            return "Not specified"
         
-        return JobPosting(
-            title=raw_job_data.get('title', ''),
-            company=raw_job_data.get('company', ''),
-            location=raw_job_data.get('location', ''),
-            description=description,
-            requirements=self.extract_requirements(description),
-            skills=self.extract_skills(description),
-            contact_email=self.extract_email(description),
-            apply_url=raw_job_data.get('apply_url'),
-            salary=raw_job_data.get('salary'),
-            job_type=self.determine_job_type(description, raw_job_data.get('location', ''))
-        )
+        salary_patterns = [
+            r'\$(\d{1,3}(?:,\d{3})*(?:\.\d{2})?)\s*(?:to|[-–])\s*\$(\d{1,3}(?:,\d{3})*(?:\.\d{2})?)',
+            r'\$(\d{1,3}(?:,\d{3})*(?:\.\d{2})?)\s*(?:per|\/)\s*(?:year|hour|month)',
+            r'(\d{1,3}(?:,\d{3})*)\s*(?:to|[-–])\s*(\d{1,3}(?:,\d{3})*)\s*(?:per|\/)\s*(?:year|hour|month)'
+        ]
+        
+        for pattern in salary_patterns:
+            match = re.search(pattern, description, re.IGNORECASE)
+            if match:
+                return match.group(0)
+        
+        return "Not specified"
     
-    def parse_job(self, raw_job_data: Dict) -> Dict:
-        """Parse raw job data and return as dictionary (backwards compatibility)."""
-        job_posting = self.parse_job_posting(raw_job_data)
-        return job_posting.to_dict()
+    def parse_multiple_jobs(self, jobs: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Parse multiple job postings."""
+        return [self.parse_job(job) for job in jobs]
+    
+    def get_parsing_summary(self, parsed_jobs: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """Get summary statistics of parsed jobs."""
+        if not parsed_jobs:
+            return {"total_jobs": 0}
+        
+        all_skills = []
+        job_types = []
+        companies = []
+        
+        for job in parsed_jobs:
+            all_skills.extend(job.get('skills', []))
+            job_types.append(job.get('job_type', 'Unknown'))
+            companies.append(job.get('company', 'Unknown'))
+        
+        # Count occurrences
+        skill_counts = {}
+        for skill in all_skills:
+            skill_counts[skill] = skill_counts.get(skill, 0) + 1
+        
+        type_counts = {}
+        for job_type in job_types:
+            type_counts[job_type] = type_counts.get(job_type, 0) + 1
+        
+        return {
+            "total_jobs": len(parsed_jobs),
+            "unique_companies": len(set(companies)),
+            "most_common_skills": sorted(skill_counts.items(), key=lambda x: x[1], reverse=True)[:10],
+            "job_type_distribution": type_counts,
+            "companies": list(set(companies))
+        }
 
-def process_job_postings(input_file: str, output_file: str):
-    """Process raw job postings and save parsed results."""
-    parser = JobParser()
+
+def main():
+    """Test the job parser with sample data."""
+    sample_jobs = [
+        {
+            "title": "Data Science Intern",
+            "company": "Tech Corp",
+            "location": "Remote",
+            "description": "Looking for a data science intern with Python, SQL, and machine learning experience. Must have 1 year of experience with data analysis."
+        },
+        {
+            "title": "Software Engineer Intern",
+            "company": "StartupXYZ",
+            "location": "New York",
+            "description": "Backend development internship position. Requirements: Java, Spring Boot, Docker. Entry level position perfect for new graduates."
+        }
+    ]
     
-    try:
-        with open(input_file, 'r') as f:
-            raw_jobs = json.load(f)
-        
-        parsed_jobs = []
-        for job_data in raw_jobs:
-            parsed_job = parser.parse_job_posting(job_data)
-            parsed_jobs.append(parsed_job.to_dict())
-        
-        with open(output_file, 'w') as f:
-            json.dump(parsed_jobs, f, indent=4)
-        
-        print(f"Successfully parsed {len(parsed_jobs)} job postings and saved to {output_file}")
-        
-    except FileNotFoundError:
-        print(f"Input file {input_file} not found.")
-    except json.JSONDecodeError:
-        print(f"Error parsing JSON from {input_file}")
+    parser = JobParser()
+    parsed_jobs = parser.parse_multiple_jobs(sample_jobs)
+    
+    print("Parsed Jobs:")
+    for job in parsed_jobs:
+        print(f"\nTitle: {job['title']}")
+        print(f"Company: {job['company']}")
+        print(f"Skills: {job['skills']}")
+        print(f"Experience: {job['experience_required']}")
+        print(f"Job Type: {job['job_type']}")
+    
+    summary = parser.get_parsing_summary(parsed_jobs)
+    print(f"\nSummary: {summary}")
+
 
 if __name__ == "__main__":
-    # Process job postings from scraper output
-    process_job_postings("data/job_postings.json", "data/parsed_jobs.json")
+    main()

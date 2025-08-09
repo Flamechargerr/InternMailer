@@ -5,10 +5,8 @@ import pandas as pd
 from src.enhanced_professor_scraper import EnhancedProfessorScraper as ProfessorScraper
 import time
 from datetime import datetime
-from generate_email import generate_personalized_email
-from send_mass_email import send_mass_email
 
-def run_scraper_in_batches(data_dir, batch_size=100, total_professors=1000, max_workers=50):
+def run_scraper_in_batches(data_dir, batch_size=100, total_professors=1000, max_workers=800):
     """Run the professor scraper in batches with enhanced multiprocessing."""
     if not os.path.exists(data_dir):
         print(f"Data directory '{data_dir}' not found!")
@@ -80,8 +78,8 @@ def run_scraper_in_batches(data_dir, batch_size=100, total_professors=1000, max_
             
             # Add delay between batches to be respectful (reduced for efficiency)
             if i < num_batches - 1:
-                print("⏳ Waiting 2 seconds before next batch...")
-                time.sleep(2)
+                print("⏳ Waiting 0.5 seconds before next batch...")
+                time.sleep(0.5)
 
         print("\n" + "=" * 60)
         print("🎯 All batches processed!")
@@ -130,59 +128,7 @@ def run_scraper_in_batches(data_dir, batch_size=100, total_professors=1000, max_
                 writer.writerows(final_professors)
         print(f"   📄 Updated main file: {main_output_file}")
         
-        # Load previously emailed professors and send new emails
-        duplication_check = set()
-        emailed_professors_file = os.path.join(data_dir, "emailed_professors.json")
-        
-        # Read existing emailed professors
-        try:
-            with open(emailed_professors_file, 'r', encoding='utf-8') as f:
-                existing_emailed_professors = json.load(f)["professors"]
-                duplication_check.update(p["email"] for p in existing_emailed_professors)
-        except FileNotFoundError:
-            existing_emailed_professors = []
-        
-        # Generate and send personalized emails
-        new_emailed_entries = []
-        emails_sent = 0
-        for professor in final_professors:
-            if professor['email'] not in duplication_check:
-                professor_name = professor['name']
-                recipient_email = professor['email']
-                homepage = professor.get('homepage', '')
-                subject = f"Research Internship Inquiry – Anamay Tripathy re: {professor.get('Research Area', 'Computer Science')}"
-                print(f"📧 Generating email for {professor_name}")
-                try:
-                    email_content = generate_personalized_email(professor_name, professor.get('Research Area', 'Computer Science'))
-                    print(f"📨 Sending email to {recipient_email}")
-                    send_mass_email(subject, email_content, [recipient_email], attachment_path='Anamay_Tripathy_CV.txt')
-                    emails_sent += 1
-                    
-                    new_emailed_entries.append({
-                        "email": recipient_email,
-                        "name": professor_name,
-                        "university": professor.get('affiliation', ''),
-                        "first_emailed": datetime.now().isoformat(),
-                        "last_emailed": datetime.now().isoformat(),
-                        "last_subject": subject,
-                        "status": "sent",
-                        "email_count": 1,
-                        "notes": "Automated send - batch scraper"
-                    })
-                except Exception as e:
-                    print(f"❌ Failed to send email to {professor_name}: {e}")
-            else:
-                print(f"⏭️ Skipping {professor['name']} - already emailed")
-        
-        # Update emailed professors file
-        existing_emailed_professors.extend(new_emailed_entries)
-        with open(emailed_professors_file, 'w', encoding='utf-8') as f:
-            json.dump({"professors": existing_emailed_professors}, f, indent=2)
-        
-        print(f"\n📧 EMAIL STATISTICS:")
-        print(f"   📨 New emails sent: {emails_sent}")
-        print(f"   ⏭️ Emails skipped (duplicates): {len(final_professors) - emails_sent}")
-        print(f"   📬 Total tracked emails: {len(existing_emailed_professors)}")
+        print(f"\n🎉 SCRAPING COMPLETE! Ready for email campaigns or further processing.")
         
     except Exception as e:
         print(f"❌ Scraping failed: {str(e)}")

@@ -23,7 +23,7 @@ class EnhancedProfessorScraper:
     """
     Enhanced professor scraper with parallel processing and advanced email extraction.
     """
-    def __init__(self, data_dir: str, cache_file: str = None, max_workers: int = 400):
+    def __init__(self, data_dir: str, cache_file: str = None, max_workers: int = 800):
         self.data_dir = data_dir
         self.professors = []
         self.cache_file = cache_file or os.path.join(data_dir, "scraped_professors_cache.json")
@@ -42,8 +42,8 @@ class EnhancedProfessorScraper:
         # EXTREME adapter for ultra-high concurrency
         adapter = HTTPAdapter(
             max_retries=retry_strategy,
-            pool_connections=100,  # Massive connection pool
-            pool_maxsize=400,     # Match max_workers for optimal performance
+            pool_connections=200,  # Massive connection pool
+            pool_maxsize=800,     # Match max_workers for optimal performance
             pool_block=False      # Non-blocking pool
         )
         self.session.mount("http://", adapter)
@@ -76,7 +76,7 @@ class EnhancedProfessorScraper:
             }
             
             with self.session_lock:
-                resp = self.session.get(url, timeout=12, headers=headers, verify=False)  # Ultra-fast timeout for extreme processing
+                resp = self.session.get(url, timeout=8, headers=headers, verify=False)  # Ultra-fast timeout for extreme processing
                 resp.raise_for_status()
             
             soup = BeautifulSoup(resp.text, 'html.parser')

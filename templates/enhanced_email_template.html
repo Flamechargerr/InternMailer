@@ -3,165 +3,168 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="UTF-8">
-    <title>Research Internship Inquiry</title>
+    <title>Professional Internship Inquiry</title>
   </head>
-  <body style="margin: 0; padding: 0; background-color: #f5f7fa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
+  <body style="margin: 0; padding: 0; background-color: #f8f9fa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
     
     <!-- Main Container -->
-    <div style="max-width: 720px; margin: 20px auto; background: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden;">
+    <div style="max-width: 700px; margin: 20px auto; background: #ffffff; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); overflow: hidden;">
       
-      <!-- Header with subtle gradient -->
-      <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1px; margin: 0;">
-        <div style="background: #ffffff; margin: 0;">
-          <div style="padding: 30px 35px 25px 35px;">
-            
-            <!-- Greeting -->
-            <p style="margin: 0 0 18px 0; font-size: 16px; color: #2c3e50; line-height: 1.5;">
-              Dear <strong>Prof. {{ professor.last_name }}</strong>,
-            </p>
-
-            <!-- Opening paragraph with improved formatting -->
-            <p style="margin: 0 0 20px 0; font-size: 16px; color: #34495e; line-height: 1.6;">
-              I am <strong style="color: #2c3e50;">Anamay Tripathy</strong>, a third-year B.Tech Data Science student at <strong>MIT Manipal, India</strong> (CGPA: 7.6/10). I am writing to express my strong interest in joining your research group as an intern, particularly drawn to your work in <strong style="color: #667eea;">{{ professor.research_area }}</strong> and its intersection with artificial intelligence.
-            </p>
-
-            <!-- Motivation paragraph -->
-            <p style="margin: 0 0 25px 0; font-size: 16px; color: #34495e; line-height: 1.6;">
-              Your pioneering contributions to {{ professor.research_area.lower() }} have been a significant inspiration for my academic journey. I am eager to contribute meaningfully to your ongoing research while deepening my understanding under your mentorship.
-            </p>
-
-          </div>
-        </div>
+      <!-- Header -->
+      <div style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); padding: 30px 35px;">
+        <h1 style="margin: 0; color: #ffffff; font-size: 24px; font-weight: 600; text-align: center;">
+          Professional Internship Inquiry
+        </h1>
       </div>
 
       <!-- Main Content -->
-      <div style="padding: 0 35px 35px 35px;">
+      <div style="padding: 35px;">
+        
+        <!-- Greeting -->
+        <p style="margin: 0 0 25px 0; font-size: 16px; color: #2c3e50; line-height: 1.6;">
+          Dear <strong>{{name}}</strong>,
+        </p>
+
+        <!-- Opening Paragraph -->
+        <p style="margin: 0 0 25px 0; font-size: 16px; color: #34495e; line-height: 1.7;">
+          I hope this message finds you well. I am writing to express my strong interest in joining <strong>{{company_name}}</strong> as an intern, particularly drawn to your innovative work in <strong>{{company_niche}}</strong> and your company's commitment to driving technological advancement in this space.
+        </p>
+
+        <!-- Personal Introduction -->
+        <p style="margin: 0 0 25px 0; font-size: 16px; color: #34495e; line-height: 1.7;">
+          I am <strong>Anamay Tripathy</strong>, a third-year B.Tech Data Science student at <strong>MIT Manipal, India</strong> (CGPA: 7.6/10), currently based in <strong>Mumbai, India</strong>. My academic background, combined with hands-on experience in data science and machine learning, has equipped me with the technical skills and analytical mindset that I believe would be valuable to your team.
+        </p>
+
+        <!-- Why This Company -->
+        <p style="margin: 0 0 25px 0; font-size: 16px; color: #34495e; line-height: 1.7;">
+          What particularly excites me about {{company_name}} is your forward-thinking approach to {{company_niche.lower()}} and your track record of developing solutions that address real-world challenges. Your company's culture of innovation and commitment to excellence aligns perfectly with my career aspirations and professional values.
+        </p>
 
         <!-- Professional Experience Section -->
-        <div style="margin-bottom: 28px;">
-          <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #2c3e50; border-bottom: 2px solid #667eea; padding-bottom: 8px; font-weight: 600;">
-            🚀 Current Professional Experience
+        <div style="margin-bottom: 30px;">
+          <h3 style="margin: 0 0 20px 0; font-size: 18px; color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 8px; font-weight: 600;">
+            Relevant Professional Experience
           </h3>
           
-          <div style="background: #f8fafc; padding: 18px; border-radius: 6px; border-left: 4px solid #667eea; margin-bottom: 15px;">
+          <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 4px solid #3498db; margin-bottom: 15px;">
             <p style="margin: 0 0 10px 0; font-size: 16px; color: #2c3e50; line-height: 1.5;">
-              <strong>Technical Head</strong> – <a href="https://www.yaanbarpe.in/" target="_blank" style="color: #667eea; text-decoration: none; font-weight: 600;">YaanBarpe</a> <em>(Karnataka Government-incubated startup)</em>
+              <strong>Technical Head</strong> – YaanBarpe <em>(Karnataka Government-incubated startup)</em>
             </p>
             <p style="margin: 0; font-size: 15px; color: #5a6c7d; line-height: 1.5;">
-              Leading product development and technical strategy for a startup focused on sustainable solutions.
+              Leading product development and technical strategy for sustainable solutions, managing cross-functional teams and driving innovation initiatives.
             </p>
           </div>
 
-          <div style="background: #f8fafc; padding: 18px; border-radius: 6px; border-left: 4px solid #52c41a;">
+          <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 4px solid #27ae60;">
             <p style="margin: 0 0 10px 0; font-size: 16px; color: #2c3e50; line-height: 1.5;">
               <strong>Data Analyst Intern</strong> – Intellect Design Arena, Mumbai <em>(3 months)</em>
             </p>
             <ul style="margin: 8px 0 0 0; padding-left: 20px; color: #5a6c7d; font-size: 15px; line-height: 1.5;">
-              <li>Automated KPI dashboards using Python and SQL, <strong>saving 12+ hours/week</strong></li>
-              <li>Developed REST APIs that <strong>improved user engagement by 22%</strong></li>
+              <li>Developed automated KPI dashboards using Python and SQL, resulting in <strong>12+ hours of time savings per week</strong></li>
+              <li>Built REST APIs that <strong>improved user engagement by 22%</strong> and enhanced system efficiency</li>
+              <li>Collaborated with cross-functional teams to implement data-driven decision-making processes</li>
             </ul>
           </div>
         </div>
 
-        <!-- Research Projects Section -->
-        <div style="margin-bottom: 28px;">
-          <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #2c3e50; border-bottom: 2px solid #52c41a; padding-bottom: 8px; font-weight: 600;">
-            🔬 Key Research Projects
+        <!-- Key Projects Section -->
+        <div style="margin-bottom: 30px;">
+          <h3 style="margin: 0 0 20px 0; font-size: 18px; color: #2c3e50; border-bottom: 2px solid #e74c3c; padding-bottom: 8px; font-weight: 600;">
+            Notable Technical Projects
           </h3>
           
           <div style="display: grid; gap: 15px;">
             
-            <!-- Project 1 -->
-            <div style="background: #f8fafc; padding: 18px; border-radius: 6px; border-left: 4px solid #fa8c16;">
+            <div style="background: #f8f9fa; padding: 18px; border-radius: 6px; border-left: 4px solid #e74c3c;">
               <p style="margin: 0 0 8px 0; font-size: 16px; line-height: 1.5;">
-                <strong><a href="https://crime-connect-fbi.lovable.app/login" target="_blank" style="color: #fa8c16; text-decoration: none;">CrimeConnect</a></strong> – FBI-inspired Case Management System
+                <strong>CrimeConnect</strong> – AI-Powered Case Management System
               </p>
               <p style="margin: 0; font-size: 14px; color: #5a6c7d; line-height: 1.5;">
-                <strong>Tech:</strong> MERN Stack + Supabase | <strong>Impact:</strong> 40% reduction in case processing time through AI-powered analytics
+                <strong>Technologies:</strong> MERN Stack, Supabase, AI Analytics | <strong>Impact:</strong> 40% reduction in case processing time
               </p>
             </div>
 
-            <!-- Project 2 -->
-            <div style="background: #f8fafc; padding: 18px; border-radius: 6px; border-left: 4px solid #1890ff;">
+            <div style="background: #f8f9fa; padding: 18px; border-radius: 6px; border-left: 4px solid #f39c12;">
               <p style="margin: 0 0 8px 0; font-size: 16px; line-height: 1.5;">
-                <strong><a href="https://match-predictor-genie-66.lovable.app/" target="_blank" style="color: #1890ff; text-decoration: none;">VARtificial Intelligence</a></strong> – ML Sports Predictor
+                <strong>VARtificial Intelligence</strong> – Machine Learning Sports Predictor
               </p>
               <p style="margin: 0; font-size: 14px; color: #5a6c7d; line-height: 1.5;">
-                <strong>Tech:</strong> XGBoost + Pyodide | <strong>Accuracy:</strong> 89% prediction rate using real-time player statistics
+                <strong>Technologies:</strong> XGBoost, Pyodide, Real-time Analytics | <strong>Accuracy:</strong> 89% prediction rate
               </p>
             </div>
 
-            <!-- Project 3 -->
-            <div style="background: #f8fafc; padding: 18px; border-radius: 6px; border-left: 4px solid #f5222d;">
+            <div style="background: #f8f9fa; padding: 18px; border-radius: 6px; border-left: 4px solid #9b59b6;">
               <p style="margin: 0 0 8px 0; font-size: 16px; line-height: 1.5;">
-                <strong><a href="https://flamechargerr.github.io/" target="_blank" style="color: #f5222d; text-decoration: none;">HackOps</a></strong> – Cybersecurity Training Platform
+                <strong>HackOps</strong> – Cybersecurity Training Platform
               </p>
               <p style="margin: 0; font-size: 14px; color: #5a6c7d; line-height: 1.5;">
-                <strong>Features:</strong> 25+ security challenges | <strong>Impact:</strong> 35% improvement in cyber-awareness
+                <strong>Features:</strong> 25+ security challenges, Interactive learning modules | <strong>Impact:</strong> 35% improvement in cyber-awareness
               </p>
             </div>
 
           </div>
         </div>
 
-        <!-- Technical Expertise Section -->
-        <div style="margin-bottom: 28px;">
-          <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #2c3e50; border-bottom: 2px solid #722ed1; padding-bottom: 8px; font-weight: 600;">
-            💻 Technical Expertise & Research Alignment
+        <!-- Technical Skills Section -->
+        <div style="margin-bottom: 30px;">
+          <h3 style="margin: 0 0 20px 0; font-size: 18px; color: #2c3e50; border-bottom: 2px solid #9b59b6; padding-bottom: 8px; font-weight: 600;">
+            Technical Expertise
           </h3>
           
           <div style="display: grid; gap: 12px;">
-            <div style="background: linear-gradient(90deg, #667eea15 0%, #764ba215 100%); padding: 15px; border-radius: 6px;">
+            <div style="background: linear-gradient(90deg, #3498db15 0%, #2980b915 100%); padding: 15px; border-radius: 6px;">
               <p style="margin: 0; font-size: 15px; color: #2c3e50; line-height: 1.5;">
-                <strong style="color: #667eea;">AI/ML:</strong> TensorFlow, PyTorch, Scikit-learn, XGBoost, OpenCV
+                <strong style="color: #3498db;">Programming Languages:</strong> Python, JavaScript, Java, C++, SQL
               </p>
             </div>
-            <div style="background: linear-gradient(90deg, #52c41a15 0%, #73d13d15 100%); padding: 15px; border-radius: 6px;">
+            <div style="background: linear-gradient(90deg, #27ae6015 0%, #22995415 100%); padding: 15px; border-radius: 6px;">
               <p style="margin: 0; font-size: 15px; color: #2c3e50; line-height: 1.5;">
-                <strong style="color: #52c41a;">Languages:</strong> Python, JavaScript, Java, C++, SQL
+                <strong style="color: #27ae60;">Data Science & ML:</strong> TensorFlow, PyTorch, Scikit-learn, XGBoost, OpenCV, Pandas, NumPy
               </p>
             </div>
-            <div style="background: linear-gradient(90deg, #1890ff15 0%, #40a9ff15 100%); padding: 15px; border-radius: 6px;">
+            <div style="background: linear-gradient(90deg, #e74c3c15 0%, #c0392b15 100%); padding: 15px; border-radius: 6px;">
               <p style="margin: 0; font-size: 15px; color: #2c3e50; line-height: 1.5;">
-                <strong style="color: #1890ff;">Cloud & DevOps:</strong> AWS, GCP, Docker, Git, Firebase, Supabase
+                <strong style="color: #e74c3c;">Cloud & DevOps:</strong> AWS, GCP, Docker, Git, Firebase, Supabase, CI/CD
               </p>
             </div>
           </div>
         </div>
 
-        <!-- Research Interest & Alignment -->
-        <div style="margin-bottom: 28px;">
-          <div style="background: linear-gradient(135deg, #667eea10 0%, #764ba210 100%); padding: 20px; border-radius: 8px; border: 1px solid #667eea30;">
-            <p style="margin: 0 0 15px 0; font-size: 16px; color: #2c3e50; line-height: 1.6;">
-              <strong>Research Motivation:</strong> I am particularly excited about the intersection of {{ professor.research_area.lower() }} and AI applications. My background in distributed systems, data science, and machine learning, combined with hands-on experience in building scalable solutions, positions me well to contribute to your research objectives.
+        <!-- Value Proposition -->
+        <div style="margin-bottom: 30px;">
+          <div style="background: linear-gradient(135deg, #3498db10 0%, #2980b910 100%); padding: 20px; border-radius: 8px; border: 1px solid #3498db30;">
+            <p style="margin: 0 0 15px 0; font-size: 16px; color: #2c3e50; line-height: 1.7;">
+              <strong>What I Bring to {{company_name}}:</strong> My combination of technical skills, analytical thinking, and hands-on experience in data science positions me to contribute meaningfully to your {{company_niche.lower()}} initiatives. I am particularly excited about the opportunity to apply my expertise in machine learning and data analysis to help drive innovation and solve complex business challenges.
             </p>
-            <p style="margin: 0; font-size: 16px; color: #2c3e50; line-height: 1.6;">
-              I would be grateful for the opportunity to contribute as a research intern—<strong>remotely or on-site, funded or voluntary</strong>—and believe this experience would be invaluable for my planned graduate studies in this field.
+            <p style="margin: 0; font-size: 16px; color: #2c3e50; line-height: 1.7;">
+              I am flexible regarding the internship format—<strong>remote or on-site, paid or unpaid</strong>—and am committed to making a meaningful contribution to your team while gaining valuable industry experience.
             </p>
           </div>
         </div>
 
         <!-- Call to Action -->
-        <div style="margin-bottom: 25px;">
-          <p style="margin: 0 0 20px 0; font-size: 16px; color: #34495e; line-height: 1.6;">
-            I would be delighted to discuss how my technical expertise and research passion can contribute to your lab's ongoing work. Please find my detailed CV attached, and feel free to explore my comprehensive project portfolio.
+        <div style="margin-bottom: 30px;">
+          <p style="margin: 0 0 20px 0; font-size: 16px; color: #34495e; line-height: 1.7;">
+            I would welcome the opportunity to discuss how my skills and enthusiasm can contribute to {{company_name}}'s continued success. I have attached my detailed CV for your review and would be happy to provide any additional information or references you may need.
+          </p>
+          <p style="margin: 0; font-size: 16px; color: #34495e; line-height: 1.7;">
+            Thank you for considering my application. I look forward to the possibility of contributing to your team and learning from the talented professionals at {{company_name}}.
           </p>
         </div>
 
         <!-- Contact Information -->
-        <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e1e8ed; margin-bottom: 25px;">
-          <h4 style="margin: 0 0 12px 0; font-size: 16px; color: #2c3e50; font-weight: 600;">📞 Contact Information</h4>
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #e1e8ed; margin-bottom: 25px;">
+          <h4 style="margin: 0 0 15px 0; font-size: 16px; color: #2c3e50; font-weight: 600;">Contact Information</h4>
           <div style="display: grid; gap: 8px;">
             <p style="margin: 0; font-size: 15px; color: #34495e;">
-              <strong>Email:</strong> <a href="mailto:tripathy.anamay23@gmail.com" style="color: #667eea; text-decoration: none;">tripathy.anamay23@gmail.com</a>
+              <strong>Email:</strong> <a href="mailto:tripathy.anamay23@gmail.com" style="color: #3498db; text-decoration: none;">tripathy.anamay23@gmail.com</a>
             </p>
             <p style="margin: 0; font-size: 15px; color: #34495e;">
-              <strong>Phone:</strong> <a href="tel:+919877454747" style="color: #667eea; text-decoration: none;">+91-9877454747</a>
+              <strong>Phone:</strong> <a href="tel:+919877454747" style="color: #3498db; text-decoration: none;">+91-9877454747</a>
             </p>
             <p style="margin: 0; font-size: 15px; color: #34495e;">
-              <strong>Portfolio:</strong> <a href="https://anamay.vercel.app/" target="_blank" style="color: #667eea; text-decoration: none;">anamay.vercel.app</a>
-              | <strong>LinkedIn:</strong> <a href="https://linkedin.com/in/anamay-tripathy" target="_blank" style="color: #667eea; text-decoration: none;">linkedin.com/in/anamay-tripathy</a> 
-              | <strong>GitHub:</strong> <a href="https://github.com/Flamechargerr" target="_blank" style="color: #667eea; text-decoration: none;">github.com/Flamechargerr</a>
+              <strong>Portfolio:</strong> <a href="https://anamay.vercel.app/" target="_blank" style="color: #3498db; text-decoration: none;">anamay.vercel.app</a>
+              | <strong>LinkedIn:</strong> <a href="https://linkedin.com/in/anamay-tripathy" target="_blank" style="color: #3498db; text-decoration: none;">linkedin.com/in/anamay-tripathy</a>
             </p>
           </div>
         </div>
@@ -169,11 +172,10 @@
         <!-- Signature -->
         <div style="padding-top: 20px; border-top: 1px solid #e1e8ed;">
           <p style="margin: 0; font-size: 16px; color: #2c3e50; line-height: 1.6;">
-            Thank you for your time and consideration.
+            Best regards,
           </p>
           <p style="margin: 15px 0 0 0; font-size: 16px; color: #2c3e50; line-height: 1.6;">
-            Warm regards,<br />
-            <strong style="color: #667eea; font-size: 18px;">Anamay Tripathy</strong><br />
+            <strong style="color: #3498db; font-size: 18px;">Anamay Tripathy</strong><br />
             <em style="color: #5a6c7d; font-size: 14px;">B.Tech Data Science | MIT Manipal, India</em>
           </p>
         </div>
@@ -181,9 +183,9 @@
       </div>
     </div>
 
-    <!-- Footer with subtle branding -->
+    <!-- Footer -->
     <div style="text-align: center; padding: 20px; color: #8e9aaf; font-size: 12px;">
-      <p style="margin: 0;">Professional communication powered by InternMailer</p>
+      <p style="margin: 0;">Professional communication</p>
     </div>
 
   </body>

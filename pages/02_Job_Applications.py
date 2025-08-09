@@ -4,21 +4,33 @@ import os
 import json
 import pandas as pd
 import sys
-sys.path.append('.')
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from hr_email_generator import HREmailGenerator
 # from job_harvester import JobHarvester
 from job_parser import JobParser
 from cv_customizer import CVCustomizer
 from application_tracker import ApplicationTracker
 from hr_finder import HRFinder
+from jinja2 import Template
 
 # --- App Configuration ---
-st.set_page_config(
-    page_title="Job Application Automator",
-    page_icon="🤖",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
+# Note: st.set_page_config() should only be called in the main app.py file
+
+def load_html_template(template_path):
+    """Load HTML template from file"""
+    with open(template_path, 'r', encoding='utf-8') as f:
+        return f.read()
+
+def create_personalized_hr_email(hr_data):
+    """Create HR template email with company data"""
+    template_content = load_html_template('templates/enhanced_hr_template.html')
+    context = {
+        'company_name': hr_data.get('company', 'Tech Company'), 
+        'company_niche': hr_data.get('niche', 'Technology'), 
+        'name': hr_data.get('name', 'Hiring Manager')
+    }
+    html_content = Template(template_content).render(**context)
+    return f"Internship Opportunity - {hr_data.get('company', 'Tech Company')}", html_content
 
 # --- Helper Functions ---
 def load_data(file_path):
@@ -129,7 +141,7 @@ def main():
                     for company, contacts in companies.items():
                         with st.expander(f"🏢 {company} ({len(contacts)} contacts)"):
                             for contact in contacts:
-                                col1, col2, col3 = st.columns([2, 2, 1])
+                                col1, col2, col3, col4 = st.columns([2, 2, 1, 1])
                                 with col1:
                                     st.write(f"📧 **{contact.get('email', 'N/A')}**")
                                 with col2:
@@ -144,6 +156,10 @@ def main():
                                         st.write("🤖 Generated")
                                     else:
                                         st.write("🔍 Scraped")
+                                with col4:
+                                    # Add preview button for each contact
+                                    if st.button("Preview", key=f"preview_{contact.get('email', 'unknown')}"):
+                                        preview_hr_email(contact)
                     hr_data_found = True
                     break
         
@@ -157,6 +173,23 @@ def main():
             
             **Note:** You can get a free Hunter.io API key at [hunter.io](https://hunter.io)
             """)
+
+def preview_hr_email(contact):
+    """Preview HR email for a specific contact"""
+    st.subheader(f"Email Preview for {contact.get('name', 'Hiring Manager')}")
+    
+    hr_data = {
+        'company': contact.get('company', 'Tech Company'),
+        'niche': contact.get('niche', 'Technology'),
+        'name': contact.get('name', 'Hiring Manager')
+    }
+    
+    subject, html_content = create_personalized_hr_email(hr_data)
+    
+    st.write(f"**Subject:** {subject}")
+    st.write(f"**To:** {contact.get('email', 'N/A')}")
+    st.markdown("**Preview:**")
+    st.components.v1.html(html_content, height=600, scrolling=True)
 
 def find_hr_emails(api_key):
     with st.spinner("Finding HR emails..."):
@@ -241,22 +274,22 @@ def run_orchestrator(job_board_url):
             st.success("CV customization completed!")
             
         with st.spinner("Generating application emails..."):
-            # Step 4: Generate emails
-            email_gen = HREmailGenerator()
+            # Step 4: Generate emails using new HR template
             emails = []
             
             for item in customized_cvs:
-                job_posting = {
-                    'title': item['job_title'],
+                hr_data = {
                     'company': item['company'],
-                    'skills': item['customized_cv'].get('skills', [])
+                    'niche': 'Technology',
+                    'name': 'Hiring Manager'
                 }
                 
-                email_content = email_gen.generate_email(job_posting, item['customized_cv'])
+                subject, html_content = create_personalized_hr_email(hr_data)
                 emails.append({
                     'job_title': item['job_title'],
                     'company': item['company'],
-                    'email_content': email_content
+                    'subject': subject,
+                    'email_content': html_content
                 })
             
             # Save emails
@@ -307,7 +340,9 @@ def display_generated_emails(file_path):
     
     for i, email_data in enumerate(emails):
         with st.expander(f"Email for {email_data['job_title']} at {email_data['company']}"):
-            st.code(email_data['email_content'], language='text')
+            st.write(f"**Subject:** {email_data.get('subject', 'No Subject')}")
+            st.markdown("**Content:**")
+            st.components.v1.html(email_data['email_content'], height=400, scrolling=True)
 
 if __name__ == "__main__":
     main()

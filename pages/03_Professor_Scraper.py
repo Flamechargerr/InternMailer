@@ -5,12 +5,7 @@ import pandas as pd
 from src.professor_scraper import ProfessorScraper
 
 # --- App Configuration ---
-st.set_page_config(
-    page_title="Professor Scraper",
-    page_icon="🔍",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
+# Note: st.set_page_config() should only be called in the main app.py file
 
 # --- Main Application ---
 def main():

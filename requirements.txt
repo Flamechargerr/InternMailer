@@ -33,7 +33,7 @@ pytest>=7.4.0
 pytest-cov>=4.1.0
 
 # AI Inference
-azure-ai-inference>=1.0.0
+azure-ai-inference>=1.0.0b9
 openai>=1.0.0
 
 # Database
@@ -56,3 +56,18 @@ click>=8.1.0
 
 # Email
 email-validator>=2.0.0
+
+# NLP and Text Processing (Free)
+spacy>=3.7.0
+nltk>=3.8.0
+textblob>=0.17.0
+newspaper3k>=0.2.8
+feedparser>=6.0.10
+
+# Enhanced Web Scraping
+newsapi-python>=0.2.6
+GoogleNews>=1.6.0
+
+# Better Rate Limiting
+requests-ratelimiter>=0.4.0
+backoff>=2.2.0

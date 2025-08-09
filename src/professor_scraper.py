@@ -134,11 +134,11 @@ class ProfessorScraper:
         logging.info(f"Deduplicated to {len(filtered)} unique professors with valid emails.")
         return filtered
 
-    def _load_cache(self) -> Dict:
-        """Load the cache of already scraped professors."""
+    def _load_cache(self) -> Dict[str, Any]:
+        """Load scraped professors cache."""
         try:
             if os.path.exists(self.cache_file):
-                with open(self.cache_file, 'r') as f:
+                with open(self.cache_file, 'r', encoding='utf-8') as f:
                     return json.load(f)
         except (FileNotFoundError, json.JSONDecodeError):
             pass
@@ -147,8 +147,8 @@ class ProfessorScraper:
     def _save_cache(self):
         """Save the cache of scraped professors."""
         os.makedirs(os.path.dirname(self.cache_file), exist_ok=True)
-        with open(self.cache_file, 'w') as f:
-            json.dump(self.scraped_professors, f, indent=4)
+        with open(self.cache_file, 'w', encoding='utf-8') as f:
+            json.dump(self.scraped_professors, f, indent=4, ensure_ascii=False)
     
     def _get_professor_key(self, prof: Dict) -> str:
         """Generate a unique key for a professor (name + affiliation)."""

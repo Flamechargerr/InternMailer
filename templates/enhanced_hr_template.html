@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <title>Internship Opportunity - {{ company_name }}</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333333;
+        }
+        
+        .email-container {
+            max-width: 700px;
+            margin: 30px auto;
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .header p {
+            margin: 10px 0 0 0;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .greeting {
+            font-size: 18px;
+            margin-bottom: 25px;
+            color: #2c3e50;
+        }
+        
+        .paragraph {
+            margin-bottom: 25px;
+            font-size: 16px;
+            line-height: 1.7;
+            color: #333333;
+        }
+        
+        .metrics-section {
+            background: #f8f9fa;
+            padding: 25px;
+            margin: 25px 0;
+            border-left: 4px solid #2c3e50;
+        }
+        
+        .metrics-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+        
+        .metric-item {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .metric-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .metric-label {
+            font-size: 14px;
+            color: #6c757d;
+            line-height: 1.4;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2c3e50;
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .highlight-box {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #2c3e50;
+        }
+        
+        .highlight-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .project-item {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 3px solid #2c3e50;
+        }
+        
+        .project-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .project-title a {
+            color: #2c3e50;
+            text-decoration: none;
+        }
+        
+        .project-title a:hover {
+            text-decoration: underline;
+        }
+        
+        .project-description {
+            color: #555555;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .skill-category {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .skill-category h4 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        
+        .skill-category ul {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 14px;
+        }
+        
+        .skill-category li {
+            margin-bottom: 4px;
+            color: #555555;
+        }
+        
+        .experience-item {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 3px solid #2c3e50;
+        }
+        
+        .experience-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+        
+        .experience-company {
+            color: #6c757d;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .experience-description {
+            color: #555555;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .experience-achievements {
+            padding-left: 20px;
+        }
+        
+        .experience-achievements li {
+            color: #555555;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .signature {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 2px solid #e9ecef;
+        }
+        
+        .signature p {
+            margin: 0 0 8px 0;
+            font-size: 16px;
+            color: #2c3e50;
+        }
+        
+        .signature .name {
+            font-weight: 600;
+            font-size: 18px;
+        }
+        
+        .signature .title {
+            color: #6c757d;
+            font-size: 14px;
+        }
+        
+        .contact-info {
+            background: #f8f9fa;
+            padding: 25px;
+            margin-top: 25px;
+            border-radius: 6px;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+        
+        .contact-item {
+            text-align: center;
+        }
+        
+        .contact-label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .contact-value {
+            color: #2c3e50;
+            font-size: 14px;
+        }
+        
+        .contact-value a {
+            color: #2c3e50;
+            text-decoration: none;
+        }
+        
+        .contact-value a:hover {
+            text-decoration: underline;
+        }
+        
+        .cv-note {
+            text-align: center;
+            margin-top: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #2c3e50;
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <h1>Internship Opportunity</h1>
+            <p>{{ company_name }} - {{ company_niche }}</p>
+        </div>
+        
+        <div class="content">
+            <div class="greeting">Dear <strong>{{ name }}</strong>,</div>
+            
+            <div class="paragraph">
+                I hope this email finds you well. My name is <strong>Anamay Tripathy</strong>, and I'm reaching out regarding internship opportunities at <strong>{{ company_name }}</strong> for Winter 2025 or Summer 2026.
+            </div>
+            
+            <div class="paragraph">
+                I've been following {{ company_name }}'s innovative work in the {{ company_niche }} sector and am particularly impressed by your company's approach to solving industry challenges. {{ company_name }}'s commitment to excellence and dynamic work environment makes it an ideal place where I believe I can contribute meaningfully while gaining invaluable industry experience.
+            </div>
+            
+            <div class="metrics-section">
+                <div class="metrics-title">Key Achievements & Impact</div>
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <div class="metric-number">22%</div>
+                        <div class="metric-label">User Engagement Improvement</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-number">40%</div>
+                        <div class="metric-label">Process Efficiency Gain</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-number">89%</div>
+                        <div class="metric-label">Prediction Accuracy</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-number">35%</div>
+                        <div class="metric-label">Awareness Improvement</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="highlight-box">
+                <div class="highlight-title">Why I'm Excited About {{ company_name }}:</div>
+                <ul style="margin: 10px 0; padding-left: 20px; color: #555555;">
+                    <li><strong>Innovation Focus:</strong> {{ company_name }}'s cutting-edge approach to {{ company_niche }} aligns perfectly with my passion for building scalable solutions</li>
+                    <li><strong>Growth Culture:</strong> Your company's dynamic environment and commitment to employee development matches my career aspirations</li>
+                    <li><strong>Industry Impact:</strong> {{ company_name }}'s work in {{ company_niche }} has the potential to transform how businesses operate</li>
+                    <li><strong>Technical Excellence:</strong> Your company's reputation for technical innovation and problem-solving resonates with my background</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">Academic Background</h2>
+                <div style="margin-bottom: 15px;">
+                    <p style="margin: 0 0 8px 0; font-size: 16px; color: #333333;">
+                        <strong>Degree:</strong> B.Tech in Data Science Engineering (2023–2027)
+                    </p>
+                    <p style="margin: 0 0 8px 0; font-size: 16px; color: #333333;">
+                        <strong>Institution:</strong> MIT Manipal, India
+                    </p>
+                    <p style="margin: 0 0 8px 0; font-size: 16px; color: #333333;">
+                        <strong>CGPA:</strong> 7.6 / 10
+                    </p>
+                    <p style="margin: 0 0 15px 0; font-size: 16px; color: #333333;">
+                        <strong>Relevant Coursework:</strong> Data Structures & Algorithms, Machine Learning, Database Management Systems, Computer Networks, Software Engineering, Statistical Analysis
+                    </p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">Professional Experience</h2>
+                
+                <div class="experience-item">
+                    <div class="experience-title">Technical Head</div>
+                    <div class="experience-company">YaanBarpe (Current)</div>
+                    <div class="experience-description">
+                        Leading technical development and product strategy for a Karnataka Government-incubated startup focused on sustainable solutions. Responsible for system architecture, team coordination, and strategic technology decisions.
+                    </div>
+                </div>
+                
+                <div class="experience-item">
+                    <div class="experience-title">Data Analyst Intern</div>
+                    <div class="experience-company">Intellect Design Arena, Mumbai (3 months)</div>
+                    <div class="experience-description">
+                        Key achievements during this role:
+                    </div>
+                    <ul class="experience-achievements">
+                        <li>Automated KPI dashboard systems using Python and SQL, resulting in 12+ hours weekly time savings</li>
+                        <li>Developed and deployed REST APIs that improved user engagement metrics by 22%</li>
+                        <li>Conducted statistical analysis on large datasets to derive actionable business insights</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">Key Projects & Achievements</h2>
+                
+                <div class="project-item">
+                    <div class="project-title">
+                        <a href="https://crime-connect-fbi.lovable.app/login">CrimeConnect</a>: FBI-Inspired Case Management Dashboard
+                    </div>
+                    <div class="project-description">
+                        Developed a comprehensive case management system using the MERN stack and Supabase, incorporating AI-powered analytics for pattern recognition and case correlation. The system achieved a 40% reduction in case processing time through automated workflow optimization and intelligent data categorization.
+                    </div>
+                </div>
+                
+                <div class="project-item">
+                    <div class="project-title">
+                        <a href="https://match-predictor-genie-66.lovable.app/">VARtificial Intelligence</a>: Machine Learning Sports Prediction System
+                    </div>
+                    <div class="project-description">
+                        Implemented a sophisticated prediction model using XGBoost and Pyodide, incorporating real-time player statistics, historical performance data, and game dynamics analysis. The system achieves 89% prediction accuracy through advanced feature engineering and ensemble learning techniques.
+                    </div>
+                </div>
+                
+                <div class="project-item">
+                    <div class="project-title">
+                        <a href="https://flamechargerr.github.io/">HackOps</a>: Cybersecurity Simulation and Training Platform
+                    </div>
+                    <div class="project-description">
+                        Designed and implemented a comprehensive cybersecurity training platform featuring 25+ security challenges covering penetration testing, network security, and incident response. The platform improved user cyber-awareness by 35% through gamified learning methodologies and hands-on practical exercises.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">Technical Competencies</h2>
+                
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h4>Programming Languages</h4>
+                        <ul>
+                            <li>Python, JavaScript, Java, C++, SQL</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h4>Machine Learning & AI</h4>
+                        <ul>
+                            <li>TensorFlow, PyTorch, Scikit-learn, XGBoost, OpenCV, NLP</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h4>Web Technologies</h4>
+                        <ul>
+                            <li>React.js, Node.js, MongoDB, Next.js, RESTful APIs</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h4>Cloud & DevOps</h4>
+                        <ul>
+                            <li>AWS, GCP, Docker, Git, Linux/Unix</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="paragraph">
+                My background in technical leadership and proven track record of delivering results (including a 22% improvement in user engagement during my previous internship) positions me well to contribute to {{ company_name }}'s continued success. I believe my fresh perspective, technical skills, and passion for innovation would add immediate value to your team.
+            </div>
+            
+            <div class="paragraph">
+                I would be honored to discuss how my technical expertise and enthusiasm for {{ company_name }}'s mission can contribute to your company's growth. I'm available for a call at your convenience and would welcome the opportunity to learn more about potential internship opportunities.
+            </div>
+            
+            <div class="signature">
+                <p>Best regards,</p>
+                <p class="name">Anamay Tripathy</p>
+                <p class="title">B.Tech Data Science | MIT Manipal, India</p>
+            </div>
+            
+            <div class="contact-info">
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <div class="contact-label">Email</div>
+                        <div class="contact-value">
+                            <a href="mailto:tripathy.anamay23@gmail.com">tripathy.anamay23@gmail.com</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-label">Phone</div>
+                        <div class="contact-value">
+                            <a href="tel:+919877454747">+91-9877454747</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-label">Location</div>
+                        <div class="contact-value">Mumbai, India (Willing to relocate)</div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-label">Portfolio</div>
+                        <div class="contact-value">
+                            <a href="https://anamay.vercel.app/">anamay.vercel.app</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-label">LinkedIn</div>
+                        <div class="contact-value">
+                            <a href="https://linkedin.com/in/anamay-tripathy">linkedin.com/in/anamay-tripathy</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cv-note">
+                    <strong>CV:</strong> Attached for your review
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Thank you for your time and consideration. I look forward to the possibility of contributing to {{ company_name }}'s success.</p>
+        </div>
+    </div>
+</body>
+</html> 
+</html> 

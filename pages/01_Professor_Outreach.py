@@ -3,12 +3,15 @@ import os
 import pandas as pd
 import sys
 from datetime import datetime
+import json
+from jinja2 import Template
 
 # Add src directory to path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
 from outreach_runner import OutreachRunner
 from shared.ui_components import UIComponents
+from shared.session_state import session_state
 from email_generator import EmailGenerator
 from send_email_with_cv import send_email_with_cv
 
@@ -16,9 +19,29 @@ from send_email_with_cv import send_email_with_cv
 ui = UIComponents()
 ui.apply_global_styles()
 
+def load_html_template(template_path):
+    """Load HTML template from file"""
+    with open(template_path, 'r', encoding='utf-8') as f:
+        return f.read()
+
+def create_personalized_academic_email(professor_data):
+    """Create personalized academic professor template email"""
+    template_content = load_html_template('templates/enhanced_academic_research_template.html')
+    context = {
+        'professor': {
+            'last_name': professor_data.get('last_name', 'Doe'), 
+            'research_area': professor_data.get('research_area', 'Computer Science')
+        }
+    }
+    html_content = Template(template_content).render(**context)
+    return f"Research Internship Inquiry - {professor_data.get('research_area', 'Computer Science')}", html_content
+
 # --- Main Application ---
 def main():
     """Main function to run the Streamlit page."""
+    
+    # Track navigation
+    session_state.track_navigation("Professor Outreach Page")
 
     # Header and mode selection
     st.title("🚀 Unified Professor Outreach")
@@ -56,15 +79,15 @@ def handle_bulk_outreach():
             resume_path = os.path.join(resumes_dir, uploaded_file.name)
             with open(resume_path, "wb") as f:
                 f.write(uploaded_file.getbuffer())
-            st.session_state.resume_path = resume_path
+            session_state.set_resume_path(resume_path)
 
         run_bulk_campaign(settings)
     elif start_button:
         st.error("Please upload your resume before starting the campaign.")
 
     # Display results if they exist
-    if "campaign_results" in st.session_state:
-        display_results(st.session_state.campaign_results)
+    if session_state.has_key("campaign_results"):
+        display_results(session_state.get_campaign_results())
 
 def handle_individual_outreach():
     """Handle individual outreach logic"""
@@ -80,19 +103,42 @@ def handle_individual_outreach():
             professor_data = {
                 "name": professor_name,
                 "university": university,
-                "research_area": research_area
+                "research_area": research_area,
+                "last_name": professor_name.split()[-1] if professor_name else "Doe"
             }
-            send_email_with_cv(professor_data, recipient_email)
+            send_individual_email(professor_data, recipient_email)
 
     st.subheader("Email Preview")
     professor_data = {
         "name": professor_name,
         "university": university,
-        "research_area": research_area
+        "research_area": research_area,
+        "last_name": professor_name.split()[-1] if professor_name else "Doe"
     }
-    email_gen = EmailGenerator(professor_data)
-    email_content = email_gen.generate_with_llm(professor_data)
-    st.markdown(email_content, unsafe_allow_html=True)
+    
+    # Use new personalized template
+    subject, html_content = create_personalized_academic_email(professor_data)
+    
+    st.write(f"**Subject:** {subject}")
+    st.markdown("**Preview:**")
+    st.components.v1.html(html_content, height=600, scrolling=True)
+
+def send_individual_email(professor_data, recipient_email):
+    """Send individual email using new personalized template"""
+    try:
+        subject, html_content = create_personalized_academic_email(professor_data)
+        
+        # Use the existing send_email_with_cv function
+        success = send_email_with_cv(professor_data, recipient_email)
+        
+        if success:
+            st.success(f"✅ Email sent successfully to {recipient_email}")
+            st.info(f"Subject: {subject}")
+        else:
+            st.error(f"❌ Failed to send email to {recipient_email}")
+            
+    except Exception as e:
+        st.error(f"Error sending email: {str(e)}")
 
 def run_bulk_campaign(settings):
     """Execute bulk outreach campaign"""
@@ -111,7 +157,7 @@ def run_bulk_campaign(settings):
 
     try:
         runner = OutreachRunner(
-            resume_path=st.session_state.resume_path,
+            resume_path=session_state.get_resume_path(),
             season=settings.get('season'),
             funding=settings.get('funding'),
             selected_countries=settings.get('countries'),
@@ -124,7 +170,7 @@ def run_bulk_campaign(settings):
         with st.spinner("Running campaign... This may take a few minutes."):
             results = runner.run()
 
-        st.session_state.campaign_results = results
+        session_state.set_campaign_results(results)
         st.rerun() # Rerun to display results cleanly
 
     except Exception as e:

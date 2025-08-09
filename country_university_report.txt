@@ -1,0 +1,79 @@
+
+🌍 UNKNOWN: 37,787 total emails
+--------------------------------------------------
+  🎓 Carnegie Mellon University: 1,766 emails
+  🎓 University of Michigan: 1,188 emails
+  🎓 Berkeley: 1,069 emails
+  🎓 University of Washington: 1,033 emails
+  🎓 Cornell University: 950 emails
+  🎓 University of Maryland: 940 emails
+  🎓 New York University: 929 emails
+  🎓 University of Wisconsin: 862 emails
+  🎓 Purdue University: 803 emails
+  🎓 University of Kentucky: 769 emails
+
+🌍 UK: 548 total emails
+--------------------------------------------------
+  🎓 Duke University: 458 emails
+  🎓 University of Wisconsin: 85 emails
+  🎓 Open University: 5 emails
+
+🌍 GEORGIA: 2,076 total emails
+--------------------------------------------------
+  🎓 Georgia Institute: 1,556 emails
+  🎓 University of Georgia: 317 emails
+  🎓 Georgia State University: 203 emails
+
+🌍 USA: 1,372 total emails
+--------------------------------------------------
+  🎓 University of Texas at Austin: 542 emails
+  🎓 University of Houston: 307 emails
+  🎓 IST Austria: 150 emails
+  🎓 Dalhousie University: 147 emails
+  🎓 Massachusetts Institute: 71 emails
+  🎓 Augusta University: 66 emails
+  🎓 Australian National University: 19 emails
+  🎓 University of Piraeus: 15 emails
+  🎓 Aarhus University: 12 emails
+  🎓 HKUST: 9 emails
+
+🌍 CHINA: 23 total emails
+--------------------------------------------------
+  🎓 Chinese Academy of Sciences: 16 emails
+  🎓 University of Hong Kong: 4 emails
+  🎓 East China Normal University: 2 emails
+  🎓 University of China: 1 emails
+
+🌍 CHILE: 12 total emails
+--------------------------------------------------
+  🎓 Universidad de Chile: 7 emails
+  🎓 Pontificia Universidad Catolica de Chile: 5 emails
+
+🌍 MEXICO: 1 total emails
+--------------------------------------------------
+  🎓 New Mexico State University: 1 emails
+
+🌍 LUXEMBOURG: 2 total emails
+--------------------------------------------------
+  🎓 University of Luxembourg: 2 emails
+
+🌍 INDIA: 17 total emails
+--------------------------------------------------
+  🎓 Indiana University: 17 emails
+
+🌍 SINGAPORE: 10 total emails
+--------------------------------------------------
+  🎓 University of Singapore: 9 emails
+  🎓 Singapore Management University: 1 emails
+
+🌍 CANADA: 1 total emails
+--------------------------------------------------
+  🎓 Royal Military College: 1 emails
+
+🌍 MALTA: 1 total emails
+--------------------------------------------------
+  🎓 University of Malta: 1 emails
+
+🌍 CZECH REPUBLIC: 3 total emails
+--------------------------------------------------
+  🎓 Czech Technical University: 3 emails

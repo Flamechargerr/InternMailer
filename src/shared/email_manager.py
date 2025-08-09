@@ -8,6 +8,7 @@ from email_generator import EmailGenerator
 from gmail_sender import GmailSender
 from datetime import datetime
 import os
+from .session_state import session_state
 
 class EmailManager:
     """Class to manage email operations"""
@@ -51,9 +52,7 @@ class EmailManager:
 
     def _log_email(self, log_entry):
         """Log email send attempts"""
-        if 'sent_emails' not in st.session_state:
-            st.session_state.sent_emails = []
-        st.session_state.sent_emails.append(log_entry)
+        session_state.add_sent_email(log_entry)
 
 # Global email manager instance
 email_manager = EmailManager(config_manager.config)

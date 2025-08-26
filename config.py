@@ -2,6 +2,7 @@
 """
 🚀 INTERNMAILING - CENTRALIZED CONFIGURATION
 ===========================================
+Version: 2.1.0 | Enhanced Performance & Analytics
 Centralized configuration management for academic and corporate outreach system
 """
 

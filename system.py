@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
 ANAMAY'S ULTIMATE EMAIL SYSTEM - 100% DELIVERY GUARANTEED
+Version 2.1.0 - Enhanced with Analytics & Response Tracking
 Just type: python system.py
 Everything happens automatically with verified 43k+ emails!
 """

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Collaboration Inquiry</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: #f8f9fa;
+            margin: 0;
+            padding: 20px 0;
+            width: 100%;
+        }
+        
+        .email-wrapper {
+            width: 100%;
+            background: #f8f9fa;
+            padding: 30px 0;
+        }
+        
+        .email-container {
+            max-width: 750px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            padding: 45px 30px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .subject-line {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #34495e;
+            padding-bottom: 15px;
+        }
+        
+        .salutation {
+            margin-bottom: 20px;
+            font-weight: 500;
+            font-size: 16px;
+        }
+        
+        .paragraph {
+            margin-bottom: 20px;
+            text-align: justify;
+            line-height: 1.7;
+        }
+        
+        .section-header {
+            font-weight: bold;
+            margin: 30px 0 18px 0;
+            color: white;
+            font-size: 17px;
+            padding: 14px 22px;
+            background: #2c5aa0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(44, 90, 160, 0.15);
+        }
+        
+        .highlight-box {
+            background: #f8fffe;
+            border-left: 4px solid #20b2aa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+            box-shadow: 0 1px 6px rgba(32, 178, 170, 0.08);
+        }
+        
+        .research-insight {
+            background: #fefbf7;
+            border-left: 4px solid #d69e2e;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+            box-shadow: 0 1px 6px rgba(214, 158, 46, 0.08);
+            font-style: italic;
+        }
+        
+        .experience-item {
+            margin-bottom: 20px;
+            padding: 18px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 3px solid #495057;
+            box-shadow: 0 1px 6px rgba(73, 80, 87, 0.08);
+        }
+        
+        .experience-title {
+            font-weight: bold;
+            color: #495057;
+            font-size: 16px;
+        }
+        
+        .experience-details {
+            margin-top: 10px;
+            color: #6c757d;
+            line-height: 1.7;
+        }
+        
+        .skills-list {
+            margin: 18px 0;
+            padding: 20px;
+            line-height: 1.8;
+            background: #f1f3f4;
+            border-radius: 8px;
+            border-left: 3px solid #6c757d;
+            box-shadow: 0 1px 6px rgba(108, 117, 125, 0.08);
+        }
+        
+        .contact-info {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #bdc3c7;
+        }
+        
+        .signature {
+            margin-top: 30px;
+            line-height: 1.5;
+        }
+        
+        .ps-section {
+            margin-top: 25px;
+            font-style: italic;
+            color: #5a6c7d;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 600px) {
+            .email-container {
+                margin: 0 10px;
+                padding: 20px 15px;
+                border-radius: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-wrapper">
+        <div class="email-container">
+            <div class="subject-line">
+                Research Collaboration Inquiry<br>
+                Data Science Engineering Student - MIT Manipal
+            </div>
+
+            <div class="salutation">
+                Dear Prof. {{ professor_name }},
+            </div>
+
+            <div class="paragraph">
+                I hope this email finds you in excellent health and high spirits. My name is <strong>Anamay Tripathy</strong>, and I am a dedicated Data Science Engineering student from <strong>MIT Manipal, India</strong>, with a profound passion for <strong>{{ research_area }}</strong> and computational research.
+            </div>
+
+            <div class="section-header">🔬 Research Alignment and University Connection</div>
+            <div class="highlight-box">
+                {{ research_inspiration }}
+            </div>
+
+            <div class="research-insight">
+                <strong>Specific Research Interest:</strong> {{ specific_papers }} This aligns perfectly with my own projects in time-series prediction, reproducible ML methods, and data-driven research approaches.
+            </div>
+
+            <div class="paragraph">
+                {{ university_specific_research }} I admire how your research exemplifies bridging fundamental research with scalable applications, and this approach strongly resonates with my academic vision and career aspirations.
+            </div>
+
+            <div class="section-header">💻 Technical Background and Expertise:</div>
+            <div class="skills-list">
+                <strong>Programming Proficiency:</strong> Advanced skills in Python, R, SQL, and JavaScript with extensive experience in data manipulation, statistical analysis, and machine learning implementation<br>
+                <strong>Machine Learning Frameworks:</strong> Hands-on experience with TensorFlow, PyTorch, scikit-learn, pandas, NumPy, and advanced ensemble methods<br>
+                <strong>Research Methodologies:</strong> Strong foundation in experimental design, statistical hypothesis testing, computational modeling, and data visualization<br>
+                <strong>Project Portfolio:</strong> Successfully developed multiple projects in {{ research_focus }}, including predictive modeling systems and {{ research_domain }} applications<br>
+                <strong>Technical Skills:</strong> Proficient in cloud computing (AWS, Azure), database management, API development, and version control systems
+            </div>
+
+            <div class="section-header">🏢 Professional Experience:</div>
+            <div class="experience-item">
+                <div class="experience-title">🔹 Technical Head - YaanBarpe (Government of Karnataka Incubated):</div>
+                <div class="experience-details">
+                    Leading 12 developers creating sustainable tech solutions addressing environmental challenges. We've developed ML-powered waste management systems achieving 34% efficiency improvement.
+                </div>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-title">🔹 Data Analyst Intern - Intellect Design Arena, Mumbai:</div>
+                <div class="experience-details">
+                    Developed automated dashboards processing 2.3M+ daily financial transactions. Implemented Python/Kafka pipelines reducing processing time by 67%, improving reliability to 99.8%.
+                </div>
+            </div>
+
+            <div class="section-header">🎯 Research Contribution Potential:</div>
+            <div class="paragraph">
+                I am particularly excited about the opportunity to contribute to research projects involving:
+            </div>
+            <div class="skills-list">
+                Advanced {{ research_focus }} and their practical implementation in {{ research_domain }}<br>
+                Computational approaches to solving complex problems in {{ research_area }}<br>
+                Interdisciplinary research that combines data science methodologies with domain-specific knowledge<br>
+                Development and optimization of algorithms for {{ research_area }} applications<br>
+                Statistical analysis and modeling for {{ research_domain }} research initiatives
+            </div>
+
+            <div class="section-header">🎓 Academic Background and Achievements:</div>
+            <div class="paragraph">
+                My academic foundation at MIT Manipal has provided me with rigorous training in both theoretical concepts and practical implementation skills. I have consistently demonstrated excellence in coursework related to machine learning, statistical analysis, and computational methods. Additionally, my role as Technical Head at YaanBarpe has enhanced my leadership and project management capabilities.
+            </div>
+
+            <div class="section-header">🤝 Collaboration Objectives:</div>
+            <div class="paragraph">
+                I would be deeply honored to join your research team as a graduate research assistant, summer intern, or visiting researcher. My specific interests include:
+            </div>
+            <div class="skills-list">
+                Contributing to ongoing research projects in {{ research_area }}<br>
+                Developing advanced technical skills under your expert mentorship<br>
+                Participating in academic publications and conference presentations<br>
+                Learning cutting-edge research methodologies and best practices in {{ research_focus }}<br>
+                Applying my technical expertise to advance your laboratory's research objectives
+            </div>
+
+            <div class="paragraph">
+                I have attached my comprehensive curriculum vitae, which provides detailed information about my academic achievements, technical projects, research experience, and relevant coursework. I believe my combination of strong technical skills, academic dedication, and genuine passion for {{ research_area }} would make me a valuable addition to your research team.
+            </div>
+
+            <div class="section-header">📅 Next Steps and Availability:</div>
+            <div class="paragraph">
+                I would be extremely grateful for the opportunity to discuss potential research opportunities in your laboratory. I am available for a virtual meeting at your convenience to explore how my background, skills, and research interests align with your current and future research directions.
+            </div>
+
+            <div class="paragraph">
+                Thank you very much for considering my application and for the invaluable contributions you make to the field of {{ research_area }}. I look forward to the possibility of learning from your expertise and contributing meaningfully to cutting-edge research under your distinguished guidance.
+            </div>
+
+            <div class="signature">
+                Best regards,<br><br>
+                
+                <strong>Anamay Tripathy</strong><br>
+                B.Tech Data Science Engineering<br>
+                MIT Manipal, India<br>
+                Technical Head, YaanBarpe<br>
+                Email: tripathy.anamay23@gmail.com<br>
+                Phone: +91-9877454747<br>
+                Portfolio: anamay.vercel.app
+            </div>
+
+            <div class="ps-section">
+                <strong>P.S.</strong> I am particularly fascinated by the intersection of {{ research_focus }} and real-world applications, and I believe your research group would provide an exceptional environment for academic growth and meaningful research contributions. I am fully committed to dedicating my time, energy, and technical skills to advancing research objectives in {{ research_area }} and contributing to the scientific community.
+            </div>
+        </div>
+    </div>
+</body>
+</html>

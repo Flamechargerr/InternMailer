@@ -1,12 +1,20 @@
-# Byte-compiled / optimized / DLL files
+# 🚀 InternMailing - Git Ignore Configuration
+# ==========================================
+# Comprehensive exclusions for Python project
+
+# 🔐 Environment and Secrets
+.env
+.env.*
+*.env
+secrets.json
+config.json
+credentials.json
+
+# 🐍 Python
 __pycache__/
 *.py[cod]
 *$py.class
-
-# C extensions
 *.so
-
-# Distribution / packaging
 .Python
 build/
 develop-eggs/
@@ -20,171 +28,65 @@ parts/
 sdist/
 var/
 wheels/
+pip-wheel-metadata/
 share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
 MANIFEST
 
-# PyInstaller
-*.manifest
-*.spec
+# 📊 Database Files
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+data/
+*.csv
+*.xlsx
+*.json
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
+# 📧 Email Logs and Tracking
+logs/
+email_logs/
+tracking/
+sent_emails/
+responses/
+analytics/
 
-# Unit test / coverage reports
-htmlcov/
+# ⚡ Cache and Temporary Files
+.cache/
+*.tmp
+*.temp
+.tmp/
+.temp/
+
+# 🧪 Testing
 .tox/
 .nox/
 .coverage
-.coverage.*
+.pytest_cache/
+.hypothesis/
+htmlcov/
 .cache
 nosetests.xml
 coverage.xml
 *.cover
 *.py,cover
 .hypothesis/
-.pytest_cache/
-cover/
 
-# Translations
-*.mo
-*.pot
-
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
-
-# Flask stuff:
-instance/
-.webassets-cache
-
-# Scrapy stuff:
-.scrapy
-
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
-.pybuilder/
-target/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# IPython
-profile_default/
-ipython_config.py
-
-# pyenv
-.python-version
-
-# pipenv
-Pipfile.lock
-
-# poetry
-poetry.lock
-
-# pdm
-.pdm.toml
-
-# PEP 582
-__pypackages__/
-
-# Celery stuff
-celerybeat-schedule
-celerybeat.pid
-
-# SageMath parsed files
-*.sage.py
-
-# Environments
-.env
-.env.local
-.env.development
-.env.test
-.env.production
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre type checker
-.pyre/
-
-# pytype static type analyzer
-.pytype/
-
-# Cython debug symbols
-cython_debug/
-
-# PyCharm
-.idea/
-
-# VS Code
+# 🎯 IDE and Editors
 .vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+*.sublime-project
+*.sublime-workspace
 
-# Project-specific ignores
-# Sensitive data
-*.csv
-*.json
-!requirements.txt
-!package.json
-!package-lock.json
-!data/csrankings-*.csv
-!tests/schemas/*.json
-!src/templates/template_metadata.json
-
-# Resume files (contain personal information)
-resumes/
-!resumes/.gitkeep
-
-# Email logs and tracking
-email_log.csv
-followup_log.csv
-contacted_companies.csv
-contacted_companies.txt
-
-# Database files
-*.db
-*.db-journal
-*.sqlite
-*.sqlite3
-
-# Generated HTML files
-*.html
-!templates/*.html
-!src/templates/*.html
-
-# Cache and temporary files
-*.cache
-*.tmp
-*.temp
-cache/
-temp/
-
-# OS generated files
+# 📱 Operating System
 .DS_Store
 .DS_Store?
 ._*
@@ -192,29 +94,173 @@ temp/
 .Trashes
 ehthumbs.db
 Thumbs.db
+desktop.ini
 
-# Archive and backup files
-archive/
-backup/
-*.backup
+# 🌐 Web and Browser
+.selenium/
+screenshots/
+*.png
+*.jpg
+*.jpeg
+*.gif
+
+# 📦 Package Managers
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 🤖 AI and ML Models
+models/
+*.pkl
+*.joblib
+*.h5
+*.pt
+*.pth
+checkpoints/
+
+# 📈 Analytics and Reports
+reports/
+analytics/
+*.pdf
+*.docx
+
+# 🔧 Build Tools
+.venv/
+venv/
+ENV/
+env/
+.env/
+
+# 📝 Documentation Build
+docs/_build/
+docs/build/
+site/
+
+# 🚀 Deployment
+.docker/
+Dockerfile.*
+docker-compose.*
+k8s/
+*.yaml
+*.yml
+
+# 📊 Data Science
+.ipynb_checkpoints/
+*.ipynb
+.jupyter/
+
+# 🔍 Search Indexes
+.whoosh_index/
+elastic_search/
+
+# 📞 Communication
+*.log
+*.out
+*.err
+
+# 🎪 Event Data
+events/
+conferences/
+*.ics
+
+# 💼 Corporate Data (Future)
+corporate_data/
+company_data/
+linkedin_data/
+apollo_data/
+zoominfo_data/
+
+# 🔒 Security
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# 📱 Mobile
+*.apk
+*.ipa
+
+# 🌐 Web Assets
+static/
+media/
+uploads/
+
+# 🔄 Backup Files
 *.bak
+*.backup
+*.old
+*_backup.*
+*_old.*
 
-# Large data files
-*.zip
+# 📊 Excel and Office
+~$*
+*.xlsm
+*.pptx
+
+# 🎯 Email Templates (Keep tracked templates, ignore generated ones)
+generated_templates/
+temp_templates/
+
+# 🧪 Test Data
+test_data/
+sample_data/
+mock_data/
+
+# 📈 Performance Monitoring
+*.prof
+*.profile
+
+# 🌍 Internationalization
+*.mo
+*.pot
+
+# 🔧 Configuration (Keep template configs, ignore instance configs)
+config_local.*
+local_settings.py
+instance/
+
+# 📱 Social Media Data
+twitter_data/
+linkedin_cache/
+facebook_data/
+
+# 🎪 Conference and Event Cache
+conference_cache/
+event_data/
+
+# 💾 Redis and Cache
+dump.rdb
+redis.conf
+
+# 📊 Monitoring and Metrics
+metrics/
+monitoring/
+grafana/
+prometheus/
+
+# 🔐 SSL and Certificates
+ssl/
+certs/
+certificates/
+
+# 🚀 CI/CD
+.github/workflows/local_*
+.gitlab-ci-local.yml
+
+# 📦 Distribution
+build/
+dist/
 *.tar.gz
-*.rar
+*.zip
 
-# Selenium webdriver files
-chromedriver*
-geckodriver*
+# 🎯 InternMailing Specific
+professor_data/
+email_cache/
+research_cache/
+university_data/
+verified_contacts_backup/
+email_templates_generated/
 
-# Test output
-test_results.json
-test_output/
-
-# Streamlit cache
-.streamlit/
-
-# Local configuration overrides
-config.local.py
-settings.local.py
+# END OF .GITIGNORE

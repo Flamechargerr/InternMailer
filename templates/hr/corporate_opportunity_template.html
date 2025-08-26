@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Opportunity Inquiry - {{ recipient.company }}</title>
+    <style>
+        /* Reset and base styles */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 20px 0;
+        }
+        
+        .email-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        /* Ensure proper centering in all email clients */
+        .email-wrapper {
+            width: 100%;
+            background-color: #f8fafc;
+            padding: 20px 0;
+            text-align: center;
+        }
+        
+        .email-container {
+            display: inline-block;
+            text-align: left;
+        }
+        
+        /* Header with corporate colors */
+        .header {
+            background: linear-gradient(135deg, #1890ff 0%, #722ed1 100%);
+            padding: 2px;
+        }
+        
+        .header-content {
+            background: #ffffff;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .greeting {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .opening-line {
+            font-size: 16px;
+            color: #34495e;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        
+        .highlight {
+            color: #1890ff;
+            font-weight: 600;
+        }
+        
+        .company-highlight {
+            color: #722ed1;
+            font-weight: 600;
+        }
+        
+        /* Main content */
+        .content {
+            padding: 0 30px 30px 30px;
+        }
+        
+        .section {
+            margin-bottom: 26px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #1890ff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-icon {
+            font-size: 20px;
+        }
+        
+        /* Value proposition */
+        .value-proposition {
+            background: linear-gradient(135deg, #1890ff08 0%, #722ed108 100%);
+            padding: 24px;
+            border-radius: 12px;
+            border-left: 5px solid #1890ff;
+            margin-bottom: 24px;
+            position: relative;
+        }
+        
+        .value-proposition::before {
+            content: "💼";
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            background: white;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 16px;
+        }
+        
+        .value-proposition h3 {
+            color: #1890ff;
+            font-size: 17px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        
+        .value-proposition p {
+            margin-bottom: 14px;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        
+        .value-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        .value-highlight {
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid #52c41a;
+            text-align: center;
+        }
+        
+        .value-highlight-title {
+            font-weight: 600;
+            color: #52c41a;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        
+        .value-highlight-text {
+            font-size: 13px;
+            color: #5a6c7d;
+        }
+        
+        /* Professional experience */
+        .experience-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+        
+        .experience-card {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #52c41a;
+            transition: transform 0.2s ease;
+        }
+        
+        .experience-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .experience-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .experience-company {
+            color: #1890ff;
+            font-weight: 500;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .experience-description {
+            font-size: 14px;
+            color: #5a6c7d;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .experience-achievement {
+            background: #1890ff10;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #1890ff;
+        }
+        
+        /* Skills and competencies */
+        .skills-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #e8f4fd 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 24px;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+        }
+        
+        .skill-category {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid #e1e8ed;
+            text-align: center;
+        }
+        
+        .skill-category-title {
+            font-weight: 600;
+            color: #1890ff;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .skill-list {
+            font-size: 13px;
+            color: #2c3e50;
+            line-height: 1.4;
+        }
+        
+        /* Project portfolio */
+        .portfolio-section {
+            margin-bottom: 24px;
+        }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        
+        .portfolio-card {
+            background: #f8fafc;
+            padding: 18px;
+            border-radius: 10px;
+            border-left: 4px solid #fa8c16;
+            transition: all 0.3s ease;
+        }
+        
+        .portfolio-card:hover {
+            box-shadow: 0 4px 15px rgba(250, 140, 22, 0.15);
+            transform: translateY(-1px);
+        }
+        
+        .portfolio-title {
+            font-weight: 600;
+            color: #fa8c16;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+        
+        .portfolio-link {
+            color: #fa8c16;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .portfolio-link:hover {
+            text-decoration: underline;
+        }
+        
+        .portfolio-description {
+            font-size: 14px;
+            color: #5a6c7d;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+        
+        .portfolio-tech {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .tech-tag {
+            background: #fa8c1615;
+            color: #fa8c16;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* Career objectives */
+        .career-objectives {
+            background: linear-gradient(135deg, #1890ff10 0%, #722ed110 100%);
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 24px;
+            border: 2px solid #1890ff20;
+        }
+        
+        .objectives-title {
+            font-size: 18px;
+            color: #1890ff;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .objectives-text {
+            font-size: 16px;
+            color: #2c3e50;
+            margin-bottom: 16px;
+            line-height: 1.7;
+        }
+        
+        .opportunity-types {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+        
+        .opportunity-tag {
+            background: #1890ff;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(24, 144, 255, 0.3);
+        }
+        
+        /* Academic credentials */
+        .academic-section {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 24px;
+        }
+        
+        .academic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .academic-item {
+            text-align: center;
+            padding: 12px;
+            background: linear-gradient(135deg, #1890ff15 0%, #722ed115 100%);
+            border-radius: 8px;
+        }
+        
+        .academic-number {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1890ff;
+            display: block;
+        }
+        
+        .academic-label {
+            font-size: 12px;
+            color: #5a6c7d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .academic-details {
+            text-align: center;
+            color: #5a6c7d;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        /* Contact section */
+        .contact-section {
+            background: #f8fafc;
+            padding: 22px;
+            border-radius: 12px;
+            border: 1px solid #e1e8ed;
+            margin-bottom: 24px;
+        }
+        
+        .contact-title {
+            font-size: 17px;
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            text-align: center;
+        }
+        
+        .contact-item {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #e1e8ed;
+        }
+        
+        .contact-label {
+            font-size: 12px;
+            color: #5a6c7d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        
+        .contact-link {
+            color: #1890ff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .contact-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Signature */
+        .signature {
+            padding: 26px 30px;
+            border-top: 2px solid #e1e8ed;
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+        }
+        
+        .signature-text {
+            font-size: 15px;
+            color: #2c3e50;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+        
+        .signature-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1890ff;
+            margin-bottom: 6px;
+        }
+        
+        .signature-title {
+            font-size: 14px;
+            color: #5a6c7d;
+            font-style: italic;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 16px;
+            background: #f8fafc;
+            color: #8e9aaf;
+            font-size: 12px;
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .email-container {
+                margin: 0 10px;
+                border-radius: 8px;
+            }
+            
+            .header-content, .content, .signature {
+                padding: 20px;
+            }
+            
+            .experience-showcase, .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            .opportunity-types {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .academic-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .value-highlights {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .academic-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-wrapper">
+        <div class="email-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="greeting">
+                    Dear <strong>{{ recipient.name if recipient.name else 'Hiring Manager' }}</strong>,
+                </div>
+                <div class="opening-line">
+                    I am <span class="highlight">{{ sender.name }}</span>, a {{ sender.title }} at <strong>{{ sender.institution }}</strong>. 
+                    I am writing to express my strong interest in opportunities at <span class="company-highlight">{{ recipient.company or recipient.affiliation }}</span>, 
+                    where I believe my technical expertise and innovative mindset would contribute significantly to your team's success.
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Value Proposition -->
+            <div class="value-proposition">
+                <h3>Why I'm Reaching Out to {{ recipient.company or recipient.affiliation }}</h3>
+                <p>Your company's reputation for innovation and excellence in technology aligns perfectly with my career aspirations and technical capabilities. I am particularly drawn to organizations that value cutting-edge solutions and foster professional growth.</p>
+                
+                <p><strong>What I Bring:</strong> A unique combination of academic rigor, practical experience, and entrepreneurial leadership that enables me to contribute immediately while continuing to grow within your organization.</p>
+                
+                <div class="value-highlights">
+                    <div class="value-highlight">
+                        <div class="value-highlight-title">Technical Leadership</div>
+                        <div class="value-highlight-text">Leading tech teams in startup environment</div>
+                    </div>
+                    <div class="value-highlight">
+                        <div class="value-highlight-title">Proven Results</div>
+                        <div class="value-highlight-text">22% engagement improvement through ML</div>
+                    </div>
+                    <div class="value-highlight">
+                        <div class="value-highlight-title">Full-Stack Expertise</div>
+                        <div class="value-highlight-text">End-to-end development capabilities</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Professional Experience -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="section-icon">💼</span>
+                    Professional Experience & Leadership
+                </div>
+                
+                <div class="experience-showcase">
+                    <div class="experience-card">
+                        <div class="experience-title">Technical Head</div>
+                        <div class="experience-company">YaanBarpe (Karnataka Government-incubated)</div>
+                        <div class="experience-description">
+                            Leading technical development and product strategy for sustainable solutions. 
+                            Responsible for system architecture, team coordination, and strategic technology decisions in a fast-paced startup environment.
+                        </div>
+                        <div class="experience-achievement">
+                            🚀 Government-backed startup leadership
+                        </div>
+                    </div>
+                    
+                    <div class="experience-card">
+                        <div class="experience-title">Data Analyst Intern</div>
+                        <div class="experience-company">Intellect Design Arena, Mumbai</div>
+                        <div class="experience-description">
+                            Automated KPI dashboard systems using Python and SQL, saving 12+ hours weekly. 
+                            Developed and deployed REST APIs that improved user engagement metrics by 22% through data-driven optimization.
+                        </div>
+                        <div class="experience-achievement">
+                            📈 22% engagement improvement via ML
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical Skills -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="section-icon">🛠️</span>
+                    Technical Skills & Competencies
+                </div>
+                
+                <div class="skills-section">
+                    <div class="skills-grid">
+                        <div class="skill-category">
+                            <div class="skill-category-title">Programming</div>
+                            <div class="skill-list">Python, JavaScript, Java<br>C++, SQL, Git/Linux</div>
+                        </div>
+                        <div class="skill-category">
+                            <div class="skill-category-title">AI/ML & Analytics</div>
+                            <div class="skill-list">TensorFlow, PyTorch, XGBoost<br>Pandas, Statistical Analysis</div>
+                        </div>
+                        <div class="skill-category">
+                            <div class="skill-category-title">Web Development</div>
+                            <div class="skill-list">React.js, Node.js, MongoDB<br>REST APIs, Next.js</div>
+                        </div>
+                        <div class="skill-category">
+                            <div class="skill-category-title">Cloud & DevOps</div>
+                            <div class="skill-list">AWS, GCP, Docker<br>Kubernetes, CI/CD</div>
+                        </div>
+                        <div class="skill-category">
+                            <div class="skill-category-title">Tools & Platforms</div>
+                            <div class="skill-list">Supabase, Firebase<br>Jupyter, VS Code</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Portfolio -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="section-icon">🚀</span>
+                    Project Portfolio & Innovations
+                </div>
+                
+                <div class="portfolio-grid">
+                    <div class="portfolio-card">
+                        <div class="portfolio-title">
+                            <a href="https://crime-connect-fbi.lovable.app/login" class="portfolio-link" target="_blank">CrimeConnect</a> - AI Case Management
+                        </div>
+                        <div class="portfolio-description">
+                            Comprehensive MERN + Supabase platform with AI-powered analytics. 
+                            Implemented machine learning algorithms for pattern recognition and automated workflow optimization.
+                        </div>
+                        <div class="portfolio-tech">
+                            <span class="tech-tag">MERN Stack</span>
+                            <span class="tech-tag">AI/ML</span>
+                            <span class="tech-tag">40% Efficiency</span>
+                        </div>
+                    </div>
+                    
+                    <div class="portfolio-card">
+                        <div class="portfolio-title">
+                            <a href="https://match-predictor-genie-66.lovable.app/" class="portfolio-link" target="_blank">VARtificial Intelligence</a> - ML Predictor
+                        </div>
+                        <div class="portfolio-description">
+                            Advanced prediction model using XGBoost and Pyodide with sophisticated feature engineering. 
+                            Achieved high accuracy through ensemble learning and real-time analytics.
+                        </div>
+                        <div class="portfolio-tech">
+                            <span class="tech-tag">XGBoost</span>
+                            <span class="tech-tag">89% Accuracy</span>
+                            <span class="tech-tag">Real-time</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Academic Foundation -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="section-icon">🎓</span>
+                    Academic Foundation & Credentials
+                </div>
+                
+                <div class="academic-section">
+                    <div class="academic-grid">
+                        <div class="academic-item">
+                            <span class="academic-number">7.6</span>
+                            <span class="academic-label">CGPA / 10</span>
+                        </div>
+                        <div class="academic-item">
+                            <span class="academic-number">2027</span>
+                            <span class="academic-label">Graduation</span>
+                        </div>
+                        <div class="academic-item">
+                            <span class="academic-number">MIT</span>
+                            <span class="academic-label">Manipal</span>
+                        </div>
+                        <div class="academic-item">
+                            <span class="academic-number">B.Tech</span>
+                            <span class="academic-label">Data Science</span>
+                        </div>
+                    </div>
+                    
+                    <div class="academic-details">
+                        <strong>Degree:</strong> B.Tech in Data Science Engineering (2023–2027)<br>
+                        <strong>Relevant Coursework:</strong> Algorithms, Data Structures, Databases, Operating Systems, Machine Learning, Statistical Analysis
+                    </div>
+                </div>
+            </div>
+
+            <!-- Career Objectives -->
+            <div class="career-objectives">
+                <div class="objectives-title">Career Objectives & Opportunity Alignment</div>
+                <div class="objectives-text">
+                    I am seeking opportunities where I can apply my technical skills, leadership experience, and innovative mindset to contribute to meaningful projects while continuing to grow professionally in a dynamic environment.
+                </div>
+                <div class="objectives-text">
+                    My goal is to join a forward-thinking organization like <strong>{{ recipient.company or recipient.affiliation }}</strong> where I can make immediate contributions while building a long-term career in technology and innovation.
+                </div>
+                
+                <div class="opportunity-types">
+                    <span class="opportunity-tag">Full-time Positions</span>
+                    <span class="opportunity-tag">Internship Programs</span>
+                    <span class="opportunity-tag">Graduate Opportunities</span>
+                    <span class="opportunity-tag">Remote/Hybrid</span>
+                </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="contact-section">
+                <div class="contact-title">📞 Contact Information</div>
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <div class="contact-label">Email</div>
+                        <a href="mailto:{{ sender.email }}" class="contact-link">{{ sender.email }}</a>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-label">Phone</div>
+                        <a href="tel:{{ sender.phone }}" class="contact-link">{{ sender.phone }}</a>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-label">Portfolio</div>
+                        <a href="{{ sender.portfolio }}" class="contact-link" target="_blank">{{ sender.portfolio }}</a>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-label">LinkedIn</div>
+                        <a href="{{ sender.linkedin }}" class="contact-link" target="_blank">LinkedIn Profile</a>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-label">GitHub</div>
+                        <a href="{{ sender.github }}" class="contact-link" target="_blank">GitHub Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Signature -->
+        <div class="signature">
+            <div class="signature-text">
+                Thank you for considering my application. I would welcome the opportunity to discuss how my technical expertise, leadership experience, and passion for innovation can contribute to {{ recipient.company or recipient.affiliation }}'s continued success.
+            </div>
+            <div class="signature-text">
+                I look forward to hearing from you and am available for an interview at your convenience.
+            </div>
+            <div style="margin-top: 20px;">
+                <div class="signature-text">Best regards,</div>
+                <div class="signature-name">{{ sender.name }}</div>
+                <div class="signature-title">{{ sender.title }} | {{ sender.institution }}</div>
+            </div>
+        </div>
+    </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            Professional Corporate Communication | Career Opportunity Inquiry
+        </div>
+        </div>
+    </div>
+</body>
+</html>

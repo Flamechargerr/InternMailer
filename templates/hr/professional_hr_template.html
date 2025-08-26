@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Application</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 20px 0;
+            width: 100%;
+        }
+        
+        .email-wrapper {
+            width: 100%;
+            background-color: #f8fafc;
+            padding: 20px 0;
+        }
+        
+        .email-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #34495e;
+            padding-bottom: 20px;
+        }
+        
+        .sender-info {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+        
+        .date {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+        
+        .recipient {
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        
+        .subject-line {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+        
+        .salutation {
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .paragraph {
+            margin-bottom: 20px;
+            text-align: justify;
+            text-indent: 30px;
+        }
+        
+        .section-header {
+            font-weight: bold;
+            margin: 30px 0 15px 0;
+            color: #34495e;
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 5px;
+        }
+        
+        .experience-item {
+            margin-bottom: 15px;
+            padding-left: 20px;
+        }
+        
+        .experience-title {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .experience-details {
+            margin-top: 5px;
+            color: #34495e;
+        }
+        
+        .skills-list {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .contact-info {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #bdc3c7;
+        }
+        
+        .signature {
+            margin-top: 30px;
+        }
+        
+        .attachment-note {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 600px) {
+            .email-container {
+                margin: 0 10px;
+                padding: 20px 15px;
+                border-radius: 8px;
+            }
+            .paragraph {
+                text-indent: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-wrapper">
+        <div class="email-container">
+            <div class="header">
+        <div class="sender-info">
+            Anamay Tripathy<br>
+            B.Tech Data Science Engineering<br>
+            MIT Manipal, India<br>
+            tripathy.anamay23@gmail.com | +91-9877454747
+        </div>
+        <div class="date">{{ current_date }}</div>
+    </div>
+
+    <div class="recipient">
+        {{ hr_name }}<br>
+        {{ job_title }}<br>
+        {{ company_name }}<br>
+        {{ company_address }}
+    </div>
+
+    <div class="subject-line">
+        Subject: Application for {{ internship_type }} Internship Position
+    </div>
+
+    <div class="salutation">
+        Dear {{ hr_salutation }},
+    </div>
+
+    <div class="paragraph">
+        I am writing to express my strong interest in pursuing an internship opportunity with {{ company_name }}. As a third-year B.Tech Data Science student at MIT Manipal, India, I have been following {{ company_name }}'s innovative work in {{ company_domain }} and am particularly impressed by your organization's commitment to {{ company_values }}.
+    </div>
+
+    <div class="paragraph">
+        Your company's reputation for fostering innovation and providing meaningful learning experiences for students aligns perfectly with my career aspirations in {{ career_field }}. I am eager to contribute to {{ company_name }}'s continued success while gaining valuable industry experience that will complement my academic foundation.
+    </div>
+
+    <div class="section-header">Academic Background</div>
+    <div class="experience-item">
+        <div class="experience-title">B.Tech in Data Science Engineering (2023–2027)</div>
+        <div class="experience-details">
+            MIT Manipal, India | CGPA: 7.6/10<br>
+            Relevant Coursework: Algorithms, Data Structures, Databases, Operating Systems, Machine Learning, Statistical Analysis, Software Engineering
+        </div>
+    </div>
+
+    <div class="section-header">Professional Experience</div>
+    <div class="experience-item">
+        <div class="experience-title">Technical Head – YaanBarpe (Current)</div>
+        <div class="experience-details">
+            Leading technical development and product strategy for a Karnataka Government-incubated startup focused on sustainable solutions. Responsible for system architecture, team coordination, and strategic technology decisions, managing cross-functional teams and driving product innovation.
+        </div>
+    </div>
+
+    <div class="experience-item">
+        <div class="experience-title">Data Analyst Intern – Intellect Design Arena, Mumbai</div>
+        <div class="experience-details">
+            • Automated KPI dashboard systems using Python and SQL, achieving 12+ hours weekly time savings<br>
+            • Developed and deployed REST APIs that improved user engagement metrics by 22%<br>
+            • Conducted comprehensive statistical analysis on large datasets to derive actionable business insights<br>
+            • Collaborated with cross-functional teams to implement data-driven solutions
+        </div>
+    </div>
+
+    <div class="section-header">Key Projects and Achievements</div>
+    <div class="experience-item">
+        <div class="experience-title">{{ project_1_name }}</div>
+        <div class="experience-details">{{ project_1_description }}</div>
+    </div>
+
+    <div class="experience-item">
+        <div class="experience-title">{{ project_2_name }}</div>
+        <div class="experience-details">{{ project_2_description }}</div>
+    </div>
+
+    <div class="section-header">Technical Competencies</div>
+    <div class="skills-list">
+        <strong>Programming Languages:</strong> Python, JavaScript, Java, C++, SQL<br>
+        <strong>Data Science & Analytics:</strong> Statistical Analysis, Data Visualization, Predictive Modeling, Machine Learning<br>
+        <strong>Web Technologies:</strong> React.js, Node.js, MongoDB, Next.js, RESTful APIs<br>
+        <strong>Cloud & DevOps:</strong> AWS, GCP, Docker, Git, Linux/Unix<br>
+        <strong>Development Tools:</strong> Supabase, Firebase, Jupyter Notebooks, VS Code<br>
+        <strong>Soft Skills:</strong> Team Leadership, Project Management, Cross-functional Collaboration, Problem-solving
+    </div>
+
+    <div class="paragraph">
+        I am particularly drawn to {{ company_name }} because of {{ company_attraction_reason }}. My experience in {{ relevant_experience }} and passion for {{ relevant_field }} make me well-suited to contribute meaningfully to your team while gaining valuable industry insights.
+    </div>
+
+    <div class="paragraph">
+        I am seeking an internship opportunity that will allow me to apply my technical skills in a real-world environment while contributing to {{ company_name }}'s innovative projects. I am flexible regarding the internship duration and structure to best align with your organizational needs and am available for both remote and on-site arrangements.
+    </div>
+
+    <div class="paragraph">
+        I would welcome the opportunity to discuss how my technical background, leadership experience, and enthusiasm for {{ industry_field }} can contribute to {{ company_name }}'s continued success. I have attached my detailed curriculum vitae for your review and would be pleased to provide any additional information or participate in an interview at your convenience.
+    </div>
+
+    <div class="paragraph">
+        Thank you for considering my application. I look forward to the possibility of contributing to {{ company_name }}'s dynamic team and learning from your organization's expertise.
+    </div>
+
+    <div class="signature">
+        Sincerely,<br><br>
+        Anamay Tripathy<br>
+        B.Tech Data Science Engineering<br>
+        MIT Manipal, India
+    </div>
+
+    <div class="contact-info">
+        <strong>Contact Information:</strong><br>
+        Email: tripathy.anamay23@gmail.com<br>
+        Phone: +91-9877454747<br>
+        Portfolio: <a href="https://anamay.vercel.app">anamay.vercel.app</a><br>
+        LinkedIn: <a href="https://linkedin.com/in/anamay-tripathy">linkedin.com/in/anamay-tripathy</a><br>
+        GitHub: <a href="https://github.com/Flamechargerr">github.com/Flamechargerr</a>
+    </div>
+
+            <div class="attachment-note">
+                Attachment: Curriculum Vitae (CV_Anamay_Modern.pdf)
+            </div>
+        </div>
+    </div>
+</body>
+</html>

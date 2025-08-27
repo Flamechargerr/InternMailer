@@ -223,14 +223,14 @@ class VerifiedEmailSystem:
         self.email_address = os.getenv('EMAIL_ADDRESS') or os.getenv('GMAIL_USER')
         self.email_password = os.getenv('EMAIL_PASSWORD') or os.getenv('GMAIL_APP_PASSWORD')
         
-        # PERFORMANCE OPTIMIZATIONS
-        self.max_workers = min(64, multiprocessing.cpu_count() * 8)  # Increased workers
-        self.rate_limit_per_second = 5  # Increased from 2 to 5 emails/second
+        # PERFORMANCE OPTIMIZATIONS - TURBO SPEED v2.1.1 🚀
+        self.max_workers = min(256, multiprocessing.cpu_count() * 20)  # TURBO: 256 workers for 200+ emails
+        self.rate_limit_per_second = 12  # TURBO: Increased to 12/sec for faster processing
         self.daily_limit = 450  # Gmail daily limit
-        self.batch_size = 200  # Increased batch size for better throughput
+        self.batch_size = 300  # TURBO: Optimized for 200+ email batches
         
-        # SMTP Connection Pool for reusing connections
-        self.smtp_pool = queue.Queue(maxsize=10)
+        # TURBO SMTP Connection Pool for 200+ emails 🔌
+        self.smtp_pool = queue.Queue(maxsize=15)  # TURBO: 15 connections for speed
         self.smtp_lock = Lock()
         self._initialize_smtp_pool()
         
@@ -393,13 +393,14 @@ class VerifiedEmailSystem:
         conn.close()
     
     def _initialize_smtp_pool(self):
-        """Initialize SMTP connection pool for performance"""
-        print("🔌 Initializing SMTP connection pool...")
-        for i in range(5):  # Create 5 connections in pool
+        """Initialize TURBO SMTP connection pool for 200+ emails"""
+        print("🚀 Initializing TURBO SMTP connection pool...")
+        for i in range(8):  # TURBO: 8 connections for 200+ email speed
             try:
                 server = self._create_smtp_connection()
                 if server:
                     self.smtp_pool.put(server)
+                    print(f"   ⚡ SMTP connection {i+1}/8 ready")
             except Exception as e:
                 print(f"⚠️  Failed to create SMTP connection {i+1}: {e}")
     
@@ -1183,8 +1184,8 @@ tripathy.anamay23@gmail.com
                 if not result['success']:
                     print(f"❌ Email failed for {final_email}: {result.get('error', 'Unknown error')}")
                 
-                # Minimal delay for rate limiting (reduced from 1.0 to 0.2 seconds)
-                time.sleep(0.2 / self.rate_limit_per_second)
+                # TURBO: Minimal delay for 200+ email speed (optimized to 0.1 seconds)
+                time.sleep(0.1 / self.rate_limit_per_second)
                 
                 # Record successful send
                 if result['success']:
@@ -1224,9 +1225,9 @@ tripathy.anamay23@gmail.com
     def send_batch_emails_concurrent(self, max_contacts=50, template_type='research', max_workers=None):
         """Ultra-optimized concurrent email sending - MAXIMUM SPEED VERSION"""
         
-        print(f"🚀 ULTRA-SPEED EMAIL SYSTEM - OPTIMIZED")
+        print(f"🚀 TURBO-SPEED EMAIL SYSTEM - 200+ OPTIMIZED")
         print(f"⚡ Workers: {max_workers or self.max_workers} | Rate: {self.rate_limit_per_second}/sec")
-        print(f"🔌 SMTP Pool: 5 connections | 💾 Caching: ON | 🎯 Batch: {self.batch_size}")
+        print(f"🔌 SMTP Pool: 8 connections | 💾 Caching: ON | 🎯 Batch: {self.batch_size}")
         print("=" * 65)
         
         # Get contacts (using optimized caching)

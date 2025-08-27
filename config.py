@@ -41,11 +41,12 @@ class InternMailingConfig:
         SMTP_PORT = int(os.getenv('SMTP_PORT', 587))
         USE_TLS = os.getenv('USE_TLS', 'true').lower() == 'true'
         
-        # Email Limits and Rate Limiting
+        # TURBO Email Limits and Rate Limiting - Optimized for 200+ emails
         MAX_EMAILS_PER_DAY = int(os.getenv('MAX_EMAILS_PER_DAY', 500))
-        MAX_CONCURRENT_EMAILS = int(os.getenv('MAX_CONCURRENT_EMAILS', 5))
-        RATE_LIMIT_DELAY = int(os.getenv('RATE_LIMIT_DELAY', 2))
-        BATCH_SIZE = int(os.getenv('BATCH_SIZE', 50))
+        MAX_CONCURRENT_EMAILS = int(os.getenv('MAX_CONCURRENT_EMAILS', 12))  # TURBO: 12/sec
+        RATE_LIMIT_DELAY = float(os.getenv('RATE_LIMIT_DELAY', 0.1))  # TURBO: 0.1s delay
+        BATCH_SIZE = int(os.getenv('BATCH_SIZE', 300))  # TURBO: 300 for 200+ emails
+        TURBO_MODE = os.getenv('TURBO_MODE', 'true').lower() == 'true'  # TURBO flag
         
         # Email Templates
         TEMPLATES = {

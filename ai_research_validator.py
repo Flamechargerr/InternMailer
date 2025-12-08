@@ -52,6 +52,58 @@ class AIResearchValidator:
             'imperial.ac.uk': ['imperial'],
             'ucl.ac.uk': ['ucl', 'university college london'],
         }
+        
+        # Ollama API for AI-powered personalization
+        self.ollama_url = "http://localhost:11434/api/generate"
+    
+    def _generate_ai_hook(self, professor_name: str, papers: List[Dict], research_area: str) -> str:
+        """
+        Use Ollama AI to generate a TRULY PERSONALIZED paragraph about the professor's research.
+        This analyzes their actual papers and creates content showing genuine understanding.
+        """
+        if not papers:
+            return None
+            
+        # Get paper info for context
+        paper_titles = [p.get('title', '')[:100] for p in papers[:3] if p.get('title')]
+        paper_contexts = []
+        for p in papers[:2]:
+            abstract = p.get('abstract', '')
+            if abstract:
+                paper_contexts.append(abstract[:300])
+        
+        prompt = f"""You are helping write a research internship inquiry email.
+
+PROFESSOR: {professor_name}
+RESEARCH AREA: {research_area}
+RECENT PAPERS: {'; '.join(paper_titles)}
+CONTEXT: {' '.join(paper_contexts)[:500]}
+
+Write a SHORT (2-3 sentences) personalized paragraph that:
+1. Shows genuine understanding of their specific research direction
+2. Mentions what aspect of their work you find compelling and WHY
+3. Connects their work to broader real-world impact
+4. Does NOT use generic phrases like "I am interested in your work"
+5. Does NOT repeat paper titles verbatim
+6. Sounds like a real student who has read about their research
+
+Output ONLY the paragraph, nothing else. No greeting, no signature."""
+
+        try:
+            response = requests.post(
+                self.ollama_url,
+                json={"model": "llama3", "prompt": prompt, "stream": False},
+                timeout=30
+            )
+            if response.status_code == 200:
+                ai_text = response.json().get('response', '').strip()
+                # Validate the response
+                if ai_text and 20 < len(ai_text) < 600 and not ai_text.startswith('Dear'):
+                    return ai_text
+        except Exception as e:
+            print(f"   ⚠️ Ollama AI hook failed: {e}")
+        
+        return None
     
     def validate_university_match(self, email: str, claimed_affiliation: str) -> Dict:
         """
@@ -838,19 +890,32 @@ https://anamay.vercel.app
             desc = research_area.lower()
             desc = desc.replace(' ai ', ' AI ').replace('human-ai', 'human-AI').replace(' nlp ', ' NLP ').replace('human- ai', 'human-AI')
             work_description = desc
-        # PERSONALIZED TEMPLATE - Uses research area but avoids specific paper claims
-        # This is safer than citing papers while still showing genuine interest
+        # PERSONALIZED TEMPLATE - Uses AI to generate truly unique content
+        # Try to generate a personalized hook using Ollama AI
+        ai_hook = self._generate_ai_hook(professor_name, papers, research_area)
         
         # Format research area nicely
         area_display = work_description if work_description else research_area.lower()
         
         subject = f"Research Internship Inquiry – {research_area}"
         
+        # Use AI hook if available, otherwise use a decent fallback
+        if ai_hook:
+            personalized_paragraph = ai_hook
+            print(f"   ✨ AI-generated personalized hook for {professor_name}")
+        else:
+            # Fallback using paper title (but not repeating it)
+            paper_title = papers[0].get('title', '')[:80] if papers else ''
+            if paper_title:
+                personalized_paragraph = f"Your recent work, particularly in the area of {area_display}, caught my attention. I am especially drawn to how your research addresses important challenges in {research_area.lower()} and explores new methodologies that could have significant real-world impact."
+            else:
+                personalized_paragraph = f"I came across your research profile while exploring work in {area_display}, and I am genuinely excited about the directions your group is pursuing. The intersection of {research_area.lower()} with practical applications is an area I find particularly compelling."
+        
         body = f"""Dear Professor {professor_name},
 
 I hope this email finds you well. My name is Anamay Tripathy, and I am a final-year B.Tech student in Data Science Engineering at MIT Manipal, India. I am writing to express my strong interest in joining your research group at {university} as a research intern.
 
-I came across your research profile while exploring work in {area_display}, and I am genuinely excited about the directions your group is pursuing. The intersection of {research_area.lower()} with practical applications is an area I find particularly compelling.
+{personalized_paragraph}
 
 My academic background and experience have prepared me to contribute meaningfully to your research:
 

@@ -9,7 +9,12 @@ Redis-based caching for 100x performance boost
 - Sub-second response times for repeated queries
 """
 
-import redis
+try:
+    import redis
+    REDIS_AVAILABLE = True
+except ImportError:
+    redis = None
+    REDIS_AVAILABLE = False
 import json
 import hashlib
 import pickle
@@ -58,8 +63,11 @@ class AdvancedCachingSystem:
         
         print("💾 Advanced Caching System initialized successfully")
     
-    def _initialize_redis(self, redis_url: str) -> redis.Redis:
+    def _initialize_redis(self, redis_url: str):
         """Initialize Redis connection with fallback to local cache"""
+        if not REDIS_AVAILABLE:
+            print("⚠️ Redis module not installed, using in-memory cache only")
+            return None
         try:
             client = redis.from_url(redis_url, decode_responses=True)
             client.ping()  # Test connection

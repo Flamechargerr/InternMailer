@@ -15,6 +15,8 @@ from typing import Dict, List, Optional, Tuple
 from dataclasses import dataclass
 from datetime import datetime
 import json
+import csv
+from pathlib import Path
 
 @dataclass
 class CorporateContact:
@@ -69,66 +71,57 @@ class CorporateDataExtractor:
             'chief', 'senior', 'principal', 'staff'
         ]
     
+    def load_verified_contacts(self) -> List[CorporateContact]:
+        """📂 Load verified contacts from CSV"""
+        # Assuming script is in root of project, data is in data/
+        csv_path = Path(__file__).parent / 'data' / 'hiring_managers.csv'
+        
+        if not csv_path.exists():
+            print(f"⚠️ Verified contacts file not found: {csv_path}")
+            return []
+            
+        contacts = []
+        try:
+            with open(csv_path, 'r', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    # Basic validation
+                    if not row.get('Email') or not row.get('Name'):
+                        continue
+                        
+                    contact = CorporateContact(
+                        name=row['Name'],
+                        email=row['Email'],
+                        company=row['Company'],
+                        title=row['Role'],
+                        department=row['Department'],
+                        contact_source=row['Source'],
+                        hiring_indicator=True,
+                        referral_potential=95, # High for verified list
+                        industry="Technology"
+                    )
+                    contacts.append(contact)
+            print(f"✅ Loaded {len(contacts)} verified contacts from CSV")
+        except Exception as e:
+            print(f"⚠️ Error loading verified contacts: {e}")
+            
+        return contacts
+
     def extract_from_company_website(self, company_domain: str) -> List[CorporateContact]:
         """🌐 Extract contacts from company website (prototype)"""
-        contacts = []
-        
-        # This is a prototype - in production, would use web scraping
-        # For now, return sample data based on company
-        sample_contacts = {
-            'google.com': [
-                CorporateContact(
-                    name="Sarah Chen",
-                    email="sarah.chen@google.com", 
-                    company="Google",
-                    title="Senior Software Engineer",
-                    department="Engineering",
-                    linkedin_url="linkedin.com/in/sarahchen",
-                    industry="Technology",
-                    location="Mountain View, CA",
-                    hiring_indicator=True,
-                    referral_potential=85,
-                    contact_source="company_website"
-                ),
-                CorporateContact(
-                    name="Michael Rodriguez",
-                    email="m.rodriguez@google.com",
-                    company="Google", 
-                    title="Engineering Manager",
-                    department="Cloud Platform",
-                    linkedin_url="linkedin.com/in/mrodriguez",
-                    industry="Technology",
-                    location="Seattle, WA",
-                    hiring_indicator=True,
-                    referral_potential=92,
-                    contact_source="company_website"
-                )
-            ],
-            'microsoft.com': [
-                CorporateContact(
-                    name="Emily Thompson",
-                    email="emily.thompson@microsoft.com",
-                    company="Microsoft",
-                    title="Principal Product Manager",
-                    department="Azure AI",
-                    linkedin_url="linkedin.com/in/emilythompson",
-                    industry="Technology",
-                    location="Redmond, WA", 
-                    hiring_indicator=True,
-                    referral_potential=88,
-                    contact_source="company_website"
-                )
-            ]
-        }
-        
-        return sample_contacts.get(company_domain, [])
+        # In production, this would use web scraping.
+        # Since we only want authentic data, we return empty here 
+        # and rely on the verified CSV list.
+        return []
+    
+
     
     def extract_from_linkedin_api(self, company_name: str) -> List[CorporateContact]:
         """👔 Extract contacts from LinkedIn API (prototype)"""
         # Prototype implementation - would integrate with LinkedIn API
-        print(f"🔍 [PROTOTYPE] LinkedIn extraction for {company_name}")
+        # Returning empty list to ensure only authentic CSV data is used
         return []
-    
+
     def extract_hiring_managers(self, company_domain: str, department: str = "") -> List[CorporateContact]:
         """👨‍💼 Extract hiring managers and recruiters"""
         contacts = self.extract_from_company_website(company_domain)
@@ -140,6 +133,21 @@ class CorporateDataExtractor:
         ]
         
         return hiring_contacts
+
+    def generate_email_permutations(self, first_name: str, last_name: str, domain: str) -> List[str]:
+        """📧 Generate common corporate email permutations"""
+        f = first_name.lower()
+        l = last_name.lower()
+        
+        permutations = [
+            f"{f}.{l}@{domain}",       # first.last@company.com
+            f"{f}{l}@{domain}",        # firstlast@company.com
+            f"{f}@{domain}",           # first@company.com
+            f"{f[0]}{l}@{domain}",     # flast@company.com
+            f"{f}.{l[0]}@{domain}",    # first.l@company.com
+            f"{f}_{l}@{domain}",       # first_last@company.com
+        ]
+        return permutations
 
 class CorporateEmailPersonalizer:
     """✨ Personalize emails for corporate outreach"""
@@ -338,6 +346,11 @@ class CorporateOutreachSystem:
         if target_departments is None:
             target_departments = ['Engineering', 'Product', 'Data Science', 'AI/ML', 'Cloud']
         
+        # Load verified contacts from CSV first
+        verified_contacts = self.data_extractor.load_verified_contacts()
+        if verified_contacts:
+            all_contacts.extend(verified_contacts)
+        
         for company in company_list:
             print(f"🏢 Discovering contacts at {company}...")
             
@@ -362,8 +375,9 @@ class CorporateOutreachSystem:
             all_contacts.extend(filtered_contacts)
             print(f"   ✅ Found {len(filtered_contacts)} relevant contacts")
         
-        self.contact_database = all_contacts
-        return all_contacts
+        # Final deduplication
+        self.contact_database = self._deduplicate_contacts(all_contacts)
+        return self.contact_database
     
     def launch_corporate_campaign(self, contacts: List[CorporateContact], 
                                 campaign_type: str = 'informational_interview',
@@ -426,7 +440,7 @@ class CorporateOutreachSystem:
         results['end_time'] = datetime.now().isoformat()
         results['success_rate'] = (results['sent'] / (results['sent'] + results['failed']) * 100) if (results['sent'] + results['failed']) > 0 else 0
         
-        print(f"\\n📊 CORPORATE CAMPAIGN RESULTS:")
+        print(f"\n📊 CORPORATE CAMPAIGN RESULTS:")
         print(f"   ✅ Emails Sent: {results['sent']}")
         print(f"   ❌ Failed: {results['failed']}")
         print(f"   📈 Success Rate: {results['success_rate']:.1f}%")
@@ -489,40 +503,40 @@ def demo_corporate_outreach():
     corporate_system = CorporateOutreachSystem()
     
     # Target companies
-    target_companies = ['Google', 'Microsoft', 'Apple']
+    target_companies = ['Google', 'Microsoft', 'Apple', 'NetApp', 'Expedia Group', 'JP Morgan Chase']
     target_departments = ['Engineering', 'AI/ML', 'Product']
     
     # Discover contacts
     print("🔍 DISCOVERING CORPORATE CONTACTS...")
     contacts = corporate_system.discover_corporate_contacts(target_companies, target_departments)
     
-    print(f"\\n📊 CONTACT DISCOVERY RESULTS:")
+    print(f"\n📊 CONTACT DISCOVERY RESULTS:")
     print(f"   👥 Total Contacts Found: {len(contacts)}")
     
     # Show sample contacts
-    print(f"\\n👥 SAMPLE CONTACTS:")
-    for i, contact in enumerate(contacts[:3], 1):
+    print(f"\n👥 SAMPLE CONTACTS:")
+    for i, contact in enumerate(contacts[:5], 1):
         print(f"   {i}. {contact.name} - {contact.title}")
         print(f"      🏢 {contact.company} | 📧 {contact.email}")
         print(f"      🎯 Referral Potential: {contact.referral_potential}%")
     
     # Launch campaign
-    print(f"\\n🚀 LAUNCHING DEMO CAMPAIGN...")
+    print(f"\n🚀 LAUNCHING DEMO CAMPAIGN...")
     results = corporate_system.launch_corporate_campaign(
         contacts, 
         campaign_type='informational_interview',
         job_title='Software Engineer',
-        max_emails=3
+        max_emails=5
     )
     
     # Show analytics
-    print(f"\\n📊 CAMPAIGN ANALYTICS:")
+    print(f"\n📊 CAMPAIGN ANALYTICS:")
     analytics = corporate_system.get_campaign_analytics()
     print(f"   🏢 Companies: {len(analytics['companies'])}")
     print(f"   👨‍💼 Avg Referral Potential: {analytics['avg_referral_potential']:.1f}%")
     print(f"   🎯 Hiring Contacts: {analytics['hiring_contacts']}")
     
-    print(f"\\n🎉 CORPORATE EXPANSION DEMO COMPLETE!")
+    print(f"\n🎉 CORPORATE EXPANSION DEMO COMPLETE!")
     print(f"💡 This prototype shows InternMailing's potential for corporate outreach")
 
 if __name__ == "__main__":

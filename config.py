@@ -14,19 +14,26 @@ from typing import Dict, List, Optional
 # Load environment variables
 load_dotenv()
 
+# 📁 Project Paths
+BASE_DIR = Path(__file__).parent.absolute()
+DATA_DIR = BASE_DIR / "data"
+TEMPLATES_DIR = BASE_DIR / "templates"
+LOGS_DIR = BASE_DIR / "logs"
+CACHE_DIR = BASE_DIR / "cache"
+
+# Ensure directories exist
+for directory in [DATA_DIR, TEMPLATES_DIR, LOGS_DIR, CACHE_DIR]:
+    directory.mkdir(exist_ok=True)
+
 class InternMailingConfig:
     """🔧 Centralized configuration for InternMailing system"""
     
-    # 📁 Project Paths
-    BASE_DIR = Path(__file__).parent.absolute()
-    DATA_DIR = BASE_DIR / "data"
-    TEMPLATES_DIR = BASE_DIR / "templates"
-    LOGS_DIR = BASE_DIR / "logs"
-    CACHE_DIR = BASE_DIR / "cache"
-    
-    # Ensure directories exist
-    for directory in [DATA_DIR, TEMPLATES_DIR, LOGS_DIR, CACHE_DIR]:
-        directory.mkdir(exist_ok=True)
+    # Expose paths as class attributes for backward compatibility
+    BASE_DIR = BASE_DIR
+    DATA_DIR = DATA_DIR
+    TEMPLATES_DIR = TEMPLATES_DIR
+    LOGS_DIR = LOGS_DIR
+    CACHE_DIR = CACHE_DIR
     
     # 📧 Email Configuration
     class Email:
@@ -82,9 +89,9 @@ class InternMailingConfig:
         
     # 📊 Database Configuration
     class Database:
-        DATABASE_PATH = str(InternMailingConfig.DATA_DIR / 'verified_professors.db')
-        TRACKING_DB_PATH = str(InternMailingConfig.DATA_DIR / 'email_tracking.db')
-        CACHE_DB_PATH = str(InternMailingConfig.DATA_DIR / 'cache.db')
+        DATABASE_PATH = str(DATA_DIR / 'verified_professors.db')
+        TRACKING_DB_PATH = str(DATA_DIR / 'email_tracking.db')
+        CACHE_DB_PATH = str(DATA_DIR / 'cache.db')
         
         # Database Settings
         CONNECTION_TIMEOUT = 30

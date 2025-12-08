@@ -28,18 +28,18 @@ class ReplyClassifier:
         # Keywords for each category (case-insensitive matching)
         self.keywords = {
             ReplyCategory.INTERESTED: [
-                'interested', 'i\'m interested', 'interested in', 'sounds good', 'lets talk', 'let\'s talk', 
+                'interested', 'im interested', 'interested in', 'sounds good', 'lets talk', 
                 'schedule', 'available', 'meet', 'interview', 'discuss', 'discussing this', 'discussing',
                 'impressive', 'would like to', 'please send', 'looking forward', 'reaching out',
                 'tell me more', 'more information', 'resume looks', 'background looks', 'further'
             ],
             
             ReplyCategory.NOT_INTERESTED: [
-                'not interested', 'i\'m not interested', 'but i\'m not', 'not at this time',
+                'not interested', 'im not interested', 'but im not', 'not at this time',
                 'no thank you', 'not hiring', 'no positions',
                 'no openings', 'unfortunately', 'regret to',
-                'unable to', 'don\'t have', 'do not have', 'no vacancy',
-                'not a good fit', 'doesn\'t match', 'does not match',
+                'unable to', 'dont have', 'do not have', 'no vacancy',
+                'not a good fit', 'doesnt match', 'does not match',
                 'overqualified', 'underqualified', 'different direction'
             ],
             
@@ -82,13 +82,17 @@ class ReplyClassifier:
         
         self.negative_indicators = [
             'unfortunately', 'sorry', 'regret', 'unable', 'cannot',
-            'won\'t', 'will not', 'no longer', 'closed'
+            'wont', 'will not', 'no longer', 'closed'
         ]
     
     def preprocess_text(self, text: str) -> str:
         """Clean and normalize email text"""
         # Convert to lowercase
         text = text.lower()
+        # Normalize apostrophes (convert all types to standard apostrophe)
+        text = text.replace("'", "'").replace("'", "'").replace("`", "'")
+        # Remove apostrophes entirely for matching (I'm -> im, don't -> dont)
+        text = text.replace("'", "")
         # Remove extra whitespace
         text = ' '.join(text.split())
         return text
@@ -99,8 +103,7 @@ class ReplyClassifier:
         Common signature markers: "Best regards", "Sincerely", "Sent from"
         """
         signature_markers = [
-            'best regards', 'sincerely', 'thanks', 'thank you',
-            'sent from', 'get outlook', '---', '___', 
+            'best regards', 'sincerely', 'sent from', 'get outlook', '---', '___', 
             'this email', 'confidential'
         ]
         

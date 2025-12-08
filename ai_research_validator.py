@@ -838,18 +838,21 @@ https://anamay.vercel.app
             desc = research_area.lower()
             desc = desc.replace(' ai ', ' AI ').replace('human-ai', 'human-AI').replace(' nlp ', ' NLP ').replace('human- ai', 'human-AI')
             work_description = desc
-        # SAFE TEMPLATE - No specific research claims (avoids McBurney-type incidents)
-        # We don't trust paper data enough to claim "I follow your work on X"
+        # PERSONALIZED TEMPLATE - Uses research area but avoids specific paper claims
+        # This is safer than citing papers while still showing genuine interest
         
-        subject = f"Research Internship Inquiry – {university} Computer Science"
+        # Format research area nicely
+        area_display = work_description if work_description else research_area.lower()
+        
+        subject = f"Research Internship Inquiry – {research_area}"
         
         body = f"""Dear Professor {professor_name},
 
-I hope this email finds you well. My name is Anamay Tripathy, and I am a final-year B.Tech student in Data Science Engineering at MIT Manipal, India. I am writing to inquire about potential research internship opportunities in your group at {university}.
+I hope this email finds you well. My name is Anamay Tripathy, and I am a final-year B.Tech student in Data Science Engineering at MIT Manipal, India. I am writing to express my strong interest in joining your research group at {university} as a research intern.
 
-I am broadly interested in research at the intersection of machine learning, data science, and their real-world applications. I am reaching out to explore whether there might be opportunities where my background could be a good fit for your research group.
+I came across your research profile while exploring work in {area_display}, and I am genuinely excited about the directions your group is pursuing. The intersection of {research_area.lower()} with practical applications is an area I find particularly compelling.
 
-My academic background and experience have prepared me to contribute meaningfully to research:
+My academic background and experience have prepared me to contribute meaningfully to your research:
 
 - Research experience: As Technical Head at YaanBarpe (yaanbarpe.in), a government-incubated startup, I led a team of developers to build an immersive cultural tourism platform for Tulu Nadu, featuring AI-powered voice guides and interactive heritage experiences. I also interned at Intellect Design Arena, where I optimized high-volume financial transaction processing pipelines using Python and Kafka, reducing processing time by 67%.
 
@@ -857,9 +860,9 @@ My academic background and experience have prepared me to contribute meaningfull
 
 - Relevant projects: I have worked on several research-oriented projects involving predictive modeling, time-series analysis, and NLP applications, focusing on building robust, data-driven decision systems.
 
-I am a quick learner, highly motivated, and committed to producing careful, reproducible research. I would be happy to adapt my skills to the specific needs of your ongoing projects.
+I am eager to bring my technical skills and research motivation to your group. I am a quick learner, highly motivated, and committed to producing high-quality, reproducible research. I would be happy to adapt my skills to the specific needs of your ongoing projects in {research_area.lower()}.
 
-I have attached my CV, which includes further details on my coursework, projects, and experience. If there is any possibility of a research position in your group, I would be grateful for the opportunity to discuss potential fit at your convenience.
+I have attached my CV, which includes further details on my coursework, projects, and experience. I would be grateful for the opportunity to discuss potential fit at your convenience.
 
 Thank you very much for your time and consideration.
 
@@ -874,10 +877,10 @@ https://anamay.vercel.app
         return {
             'subject': subject,
             'body': body,
-            'validation_status': 'SAFE_GENERIC',
+            'validation_status': 'PERSONALIZED',
             'research_area': research_area,
             'papers_found': len(papers),
-            'confidence': 0.85
+            'confidence': 0.9
         }
 
 

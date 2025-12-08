@@ -71,51 +71,13 @@ class AdaptiveRateLimiter:
     
     def calculate_safe_daily_limit(self) -> int:
         """
-        Calculate recommended daily sending limit based on reputation
+        Return fixed daily limit
+        User requested: Keep it simple at 500/day
         
         Returns:
-            Recommended daily limit (10 to 500)
+            500 (fixed daily limit)
         """
-        bounce_rate = self.get_bounce_rate()
-        campaign_age = self.get_campaign_age_days()
-        success_rate = self.get_success_rate()
-        
-        # Base limit on campaign age (warmup progression)
-        if campaign_age <= 3:
-            base_limit = 20
-        elif campaign_age <= 7:
-            base_limit = 50
-        elif campaign_age <= 14:
-            base_limit = 100
-        elif campaign_age <= 30:
-            base_limit = 200
-        else:
-            base_limit = 500  # Mature campaign
-        
-        # Adjust based on bounce rate
-        if bounce_rate < 1.0:
-            # Excellent reputation - can send more
-            multiplier = 1.5
-        elif bounce_rate < 2.0:
-            # Good reputation
-            multiplier = 1.2
-        elif bounce_rate < 3.0:
-            # Acceptable
-            multiplier = 1.0
-        elif bounce_rate < 5.0:
-            # Warning - reduce sends
-            multiplier = 0.7
-        else:
-            # High bounce rate - aggressive reduction
-            multiplier = 0.3
-        
-        # Calculate final limit
-        recommended_limit = int(base_limit * multiplier)
-        
-        # Clamp between 10 and 500
-        recommended_limit = max(10, min(500, recommended_limit))
-        
-        return recommended_limit
+        return 500  # Simple fixed limit as requested
     
     def get_reputation_status(self) -> Dict:
         """

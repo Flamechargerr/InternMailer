@@ -6,7 +6,7 @@ Structured JSON logging with alert triggers
 import logging
 import json
 from datetime import datetime
-from typing import Dict, Any
+from typing import Dict, Any, List
 import os
 
 class StructuredLogger:

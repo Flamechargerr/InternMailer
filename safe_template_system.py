@@ -14,7 +14,7 @@ I have been exploring opportunities to work on {research_area} research, and you
 
 My academic background and experience:
 
-- Research experience: As Technical Head at YaanBarpe, a government-incubated startup, I led a team of 12 developers to build ML-powered waste management systems, achieving a 34% improvement in operational efficiency. I also interned at Intellect Design Arena, where I optimized high-volume financial transaction processing pipelines using Python and Kafka, reducing processing time by 67%.
+- Research experience: As Technical Head at YaanBarpe (yaanbarpe.in), a government-incubated startup, I led a team of developers to build an immersive cultural tourism platform for Tulu Nadu, featuring AI-powered voice guides and interactive heritage experiences. I also interned at Intellect Design Arena, where I optimized high-volume financial transaction processing pipelines using Python and Kafka, reducing processing time by 67%.
 
 - Technical proficiency: I have extensive experience with Python, PyTorch, TensorFlow, and SQL. I am comfortable implementing models from scratch, training at scale, and working with large datasets.
 

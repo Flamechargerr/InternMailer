@@ -76,6 +76,7 @@ class FreeEmailValidator:
                 'reason': result[1],
                 'has_mx': bool(result[2]),
                 'is_disposable': bool(result[3]),
+                'confidence': 0.9 if bool(result[0]) else 0.1,  # Add confidence score
                 'cached': True
             }
         return None

@@ -105,29 +105,36 @@ Write a SHORT (2-3 sentences) personalized paragraph. CRITICAL RULES:
 
 Output ONLY the paragraph. No prefix, no greeting. Just 2-3 sentences."""
 
-        # SPEED PRIORITY: Groq (fastest) -> Gemini -> Ollama (slowest, fallback only)
-        self._ai_request_counter += 1
+        # PARALLEL AI CALLS - Try multiple providers simultaneously for MAX SPEED
+        from concurrent.futures import ThreadPoolExecutor, as_completed
         
-        # Try GROQ FIRST (fastest - ~2s response)
-        print(f"   [AI] Trying Groq (fastest)...")
-        result = self._try_groq_hook(prompt)
-        if result:
-            print(f"   [AI] ✓ Groq SUCCESS (~2s)")
-            return result
+        print(f"   [AI] Racing Groq + OpenRouter + Gemini in parallel...")
         
-        # Try Gemini second (fast - ~3s response)
+        # Define provider functions to race
+        providers = []
+        providers.append(('Groq', lambda: self._try_groq_hook(prompt)))
+        providers.append(('OpenRouter', lambda: self._try_openrouter_hook(prompt)))
         if self.ai_available:
-            print(f"   [AI] Trying Gemini...")
-            result = self._try_gemini_hook(prompt)
-            if result:
-                print(f"   [AI] ✓ Gemini SUCCESS (~3s)")
-                return result
+            providers.append(('Gemini', lambda: self._try_gemini_hook(prompt)))
         
-        # Ollama LAST RESORT ONLY (slow - 30-60s response)
-        print(f"   [AI] Trying Ollama (slow fallback)...")
+        # Race all providers - return first success
+        with ThreadPoolExecutor(max_workers=3) as executor:
+            futures = {executor.submit(fn): name for name, fn in providers}
+            for future in as_completed(futures, timeout=15):
+                name = futures[future]
+                try:
+                    result = future.result()
+                    if result:
+                        print(f"   [AI] ✓ {name} WON THE RACE!")
+                        return result
+                except Exception as e:
+                    pass  # Provider failed, continue racing
+        
+        # Fallback to Ollama (slow but reliable)
+        print(f"   [AI] Fast providers failed, trying Ollama (slow)...")
         result = self._try_ollama_hook(prompt)
         if result:
-            print(f"   [AI] ✓ Ollama SUCCESS (slow)")
+            print(f"   [AI] ✓ Ollama SUCCESS (slow fallback)")
             return result
         
         print(f"   [AI] ✗ ALL PROVIDERS FAILED - using generic template")
@@ -184,7 +191,7 @@ Output ONLY the paragraph. No prefix, no greeting. Just 2-3 sentences."""
                     "max_tokens": 300,
                     "temperature": 0.7
                 },
-                timeout=15
+                timeout=10  # Reduced timeout for speed
             )
             if response.status_code == 200:
                 ai_text = response.json()['choices'][0]['message']['content'].strip()
@@ -193,11 +200,40 @@ Output ONLY the paragraph. No prefix, no greeting. Just 2-3 sentences."""
                 else:
                     print(f"   [AI] Groq returned but validation FAILED: {ai_text[:80]}...")
             else:
-                print(f"   [AI] Groq HTTP error: {response.status_code} - {response.text[:100]}")
+                print(f"   [AI] Groq HTTP error: {response.status_code}")
         except Exception as e:
             print(f"   [AI] Groq EXCEPTION: {e}")
         return None
     
+    def _try_openrouter_hook(self, prompt: str) -> str:
+        """Try generating hook with OpenRouter (free models available)"""
+        # OpenRouter has free models - uses OPENROUTER_API_KEY or falls back to anonymous
+        or_key = os.getenv('OPENROUTER_API_KEY', '')
+        try:
+            response = requests.post(
+                "https://openrouter.ai/api/v1/chat/completions",
+                headers={
+                    "Authorization": f"Bearer {or_key}" if or_key else "",
+                    "Content-Type": "application/json",
+                    "HTTP-Referer": "https://internmailer.app",
+                    "X-Title": "InternMailer"
+                },
+                json={
+                    "model": "google/gemma-2-9b-it:free",  # Free model
+                    "messages": [{"role": "user", "content": prompt}],
+                    "max_tokens": 300,
+                    "temperature": 0.7
+                },
+                timeout=15
+            )
+            if response.status_code == 200:
+                ai_text = response.json()['choices'][0]['message']['content'].strip()
+                if self._validate_ai_content(ai_text):
+                    return ai_text
+        except Exception as e:
+            pass  # Silent fail for OpenRouter
+        return None
+
     def _validate_ai_content(self, text: str) -> bool:
         """
         Validate AI-generated content to prevent issues like:

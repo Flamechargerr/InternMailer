@@ -28,15 +28,16 @@ class ReplyClassifier:
         # Keywords for each category (case-insensitive matching)
         self.keywords = {
             ReplyCategory.INTERESTED: [
-                'interested', 'sounds good', 'lets talk', 'let\'s talk', 
-                'schedule', 'available', 'meet', 'interview', 'discuss',
-                'impressive', 'would like to', 'please send', 'looking forward',
-                'tell me more', 'more information', 'resume looks', 'background looks'
+                'interested', 'i\'m interested', 'interested in', 'sounds good', 'lets talk', 'let\'s talk', 
+                'schedule', 'available', 'meet', 'interview', 'discuss', 'discussing this', 'discussing',
+                'impressive', 'would like to', 'please send', 'looking forward', 'reaching out',
+                'tell me more', 'more information', 'resume looks', 'background looks', 'further'
             ],
             
             ReplyCategory.NOT_INTERESTED: [
-                'not interested', 'no thank you', 'not hiring', 'no positions',
-                'no openings', 'not at this time', 'unfortunately', 'regret to',
+                'not interested', 'i\'m not interested', 'but i\'m not', 'not at this time',
+                'no thank you', 'not hiring', 'no positions',
+                'no openings', 'unfortunately', 'regret to',
                 'unable to', 'don\'t have', 'do not have', 'no vacancy',
                 'not a good fit', 'doesn\'t match', 'does not match',
                 'overqualified', 'underqualified', 'different direction'
@@ -49,9 +50,10 @@ class ReplyClassifier:
             ],
             
             ReplyCategory.QUESTION: [
-                'could you', 'can you', 'would you', 'what is your', 'tell me about',
+                'could you', 'could you send', 'can you', 'would you', 'what is your', 'tell me about',
                 'do you have', 'are you', 'clarify', 'wondering if', 'question about',
-                'more details', 'additional information', 'curious about'
+                'more details', 'additional information', 'curious about',
+                'send me more', 'more information about', 'about your', 'your background'
             ],
             
             ReplyCategory.MEETING_REQUEST: [

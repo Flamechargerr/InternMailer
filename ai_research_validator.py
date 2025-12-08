@@ -83,14 +83,18 @@ RECENT PAPERS: {'; '.join(paper_titles)}
 CONTEXT: {' '.join(paper_contexts)[:500]}
 
 Write a SHORT (2-3 sentences) personalized paragraph that:
-1. Mentions SPECIFIC methodologies, signal types, or applications (e.g., "time-series modeling on ECG/PPG signals" or "transformer architectures for clinical NLP")
-2. Shows you understand the concrete techniques they use, not just the broad area
-3. Connects YOUR skills in time-series analysis, ML pipelines, or data processing to THEIR specific domain
-4. Does NOT use vague phrases like "your work" or "your research" without specifics
-5. Does NOT repeat paper titles verbatim - extract the key technique or application instead
-6. Avoids phrases like "I am interested" - instead show understanding through specific knowledge
+1. Mentions SPECIFIC topics from their papers (algorithms, techniques, or applications they actually study)
+2. Shows genuine understanding of what they work on - match their style:
+   - If they do THEORY/ALGORITHMS/GEOMETRY: mention algorithmic complexity, proofs, combinatorics, discrete math
+   - If they do ML/DATA SCIENCE: mention ML techniques, models, pipelines
+   - If they do SYSTEMS: mention distributed systems, networking, performance
+3. Connect to genuine interest, NOT by forcing unrelated skills
+4. Does NOT use vague phrases like "your work" without specifics
+5. Does NOT repeat paper titles verbatim - extract the key ideas
+6. Do NOT force ML/time-series language if their work is theoretical
+7. No intro like "Here is" - start directly with content
 
-Output ONLY the paragraph, nothing else. No greeting, no signature."""
+Output ONLY the paragraph. No prefix, no greeting, no signature. Just 2-3 sentences."""
 
         # Round-robin between 3 AI providers for 3x speed
         self._ai_request_counter += 1

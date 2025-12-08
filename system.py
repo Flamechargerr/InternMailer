@@ -1445,70 +1445,34 @@ linkedin.com/in/anamay-tripathy | anamay.vercel.app"""
                     print(f"   Generated corporate email for {name} at {affiliation}")
                     
                 else:
-                    # ACADEMIC MODE LOGIC - Using Smart Research System (NO RATE LIMITING)
+                    # ACADEMIC MODE LOGIC - Using AI VALIDATED Research System
                     try:
-                        smart_research = get_smart_research_system()
-                        research_data = smart_research.research_professor(name, email, affiliation)
-                        research_area = research_data.get('research_area', 'Computer Science')
-                        print(f"   ✅ Smart research: {research_area} (confidence: {research_data.get('confidence', 0.5):.1f})")
-                    except Exception as e:
-                        print(f"   ⚠️ Research fallback: {e}")
-                        research_data = {
-                            'research_area': 'Computer Science',
-                            'research_mention': 'your distinguished research contributions',
-                            'specific_interest': 'particularly your innovative methodologies',
-                            'research_focus': 'advancing the field of computer science'
-                        }
-                        research_area = 'Computer Science'
-                    
-                    # Social Media Integration
-                    # social_data = self.social_media_integration(name, email)
-                    
-                    # Conference Event Tracking 
-                    # conference_data = self.conference_event_tracking(name, research_area)
-                    
-                    # Create enhanced email content using smart research data
-                    import random
-                    research_mention = research_data.get('research_mention', 'your distinguished research')
-                    specific_interest = research_data.get('specific_interest', 'your innovative work')
-                    paper_ref = research_data.get('paper_reference', '')
-                    research_focus = research_data.get('research_focus', 'advancing computational methods')
-                    university = affiliation if affiliation else 'your university'
-                    prof_name = name.split()[-1] if ' ' in name else name
-                    
-                    template = self.templates['research']
-                    
-                    # Define subject (fixes UnboundLocalError)
-                    subject = f"Research Inquiry: {research_area} & Student Interest"
-                    
-                    # Define context for Jinja2 template
-                    context = {
-                        'professor_name': prof_name,
-                        'name': prof_name,
-                        'university': university if university else "your university",
-                        'research_area': research_area,
-                        'research_inspiration': research_mention,
-                        'research_focus': research_focus,
-                        'specific_papers': paper_ref if paper_ref else "your recent work",
-                        'research_domain': research_area,
-                        'contact_name': prof_name # Support various variable names
-                    }
-                    
-                    # Render template using Jinja2
-                    try:
-                        if '{{' in template:
-                            from jinja2 import Template
-                            body = Template(template).render(**context)
+                        # 🔒 NEW: Use AI Research Validator for VERIFIED personalization
+                        from ai_research_validator import get_research_validator
+                        validator = get_research_validator()
+                        
+                        # Get validated research (cross-checks with AI)
+                        validated_result = validator.generate_validated_email(name, email, affiliation)
+                        
+                        if validated_result.get('validation_status') == 'VERIFIED':
+                            # ✅ Fully verified - use personalized email
+                            subject = validated_result['subject']
+                            body = validated_result['body']
+                            research_area = validated_result.get('research_area', 'Computer Science')
+                            print(f"   ✅ VERIFIED: {research_area} (confidence: {validated_result.get('confidence', 0.9):.0%})")
                         else:
-                            # Fallback for old templates
-                            body = template.replace("[PROFESSOR_NAME]", prof_name) \
-                                           .replace("[RESEARCH_AREA]", research_area) \
-                                           .replace("[RESEARCH_PAPER]", paper_ref if paper_ref else "your recent work") \
-                                           .replace("[UNIVERSITY]", university)
+                            # ⚠️ Could not verify - use SAFE template (no fake data)
+                            subject = validated_result['subject']
+                            body = validated_result['body']
+                            research_area = 'Computer Science'
+                            print(f"   ⚠️ SAFE FALLBACK: {validated_result.get('reason', 'Verification failed')}")
+                            
                     except Exception as e:
-                        print(f"   ⚠️ Template rendering failed: {e}")
-                        # Emergency fallback
-                        body = f"Dear Professor {prof_name},\n\nI am writing to express my interest in your research on {research_area}..."
+                        print(f"   ⚠️ Validator error, using safe template: {e}")
+                        # Emergency fallback to safe template
+                        from safe_template_system import create_safe_academic_email
+                        subject, body = create_safe_academic_email(name, email, affiliation)
+                        research_area = 'Computer Science'
                 
                 # SEND EMAIL
                 result = self.send_email_concurrent_safe(email, subject, body, name, mode)

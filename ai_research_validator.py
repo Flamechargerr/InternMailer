@@ -92,32 +92,43 @@ Write a SHORT (2-3 sentences) personalized paragraph that:
 
 Output ONLY the paragraph, nothing else. No greeting, no signature."""
 
-        # Round-robin between AI providers
+        # Round-robin between 3 AI providers for 3x speed
         self._ai_request_counter += 1
+        provider_order = self._ai_request_counter % 3
         
-        # Try Gemini first (fast and free), then Ollama as fallback
-        if self._ai_request_counter % 2 == 0 and self.ai_available:
+        # Provider 0: Gemini (fast cloud)
+        # Provider 1: Ollama (local)
+        # Provider 2: Groq (free cloud)
+        
+        if provider_order == 0 and self.ai_available:
             result = self._try_gemini_hook(prompt)
             if result:
                 return result
+        elif provider_order == 2:
+            result = self._try_groq_hook(prompt)
+            if result:
+                return result
         
-        # Try Ollama
+        # Try Ollama (always available locally)
         result = self._try_ollama_hook(prompt)
         if result:
             return result
         
-        # Fallback to Gemini if Ollama failed
+        # Fallback chain
         if self.ai_available:
-            return self._try_gemini_hook(prompt)
-        
-        return None
+            result = self._try_gemini_hook(prompt)
+            if result:
+                return result
+        result = self._try_groq_hook(prompt)
+        if result:
+            return result
     
     def _try_gemini_hook(self, prompt: str) -> str:
         """Try generating hook with Gemini (fast, free tier)"""
         try:
             response = self.model.generate_content(prompt)
             ai_text = response.text.strip()
-            if ai_text and 20 < len(ai_text) < 600 and not ai_text.startswith('Dear'):
+            if self._validate_ai_content(ai_text):
                 return ai_text
         except Exception as e:
             pass  # Silent fail, will try other AI
@@ -133,11 +144,61 @@ Output ONLY the paragraph, nothing else. No greeting, no signature."""
             )
             if response.status_code == 200:
                 ai_text = response.json().get('response', '').strip()
-                if ai_text and 20 < len(ai_text) < 600 and not ai_text.startswith('Dear'):
+                if self._validate_ai_content(ai_text):
                     return ai_text
         except Exception as e:
             pass  # Silent fail
         return None
+    
+    def _try_groq_hook(self, prompt: str) -> str:
+        """Try generating hook with Groq (free, very fast cloud API)"""
+        groq_key = os.getenv('GROQ_API_KEY')
+        if not groq_key:
+            return None
+        try:
+            response = requests.post(
+                "https://api.groq.com/openai/v1/chat/completions",
+                headers={
+                    "Authorization": f"Bearer {groq_key}",
+                    "Content-Type": "application/json"
+                },
+                json={
+                    "model": "llama3-8b-8192",
+                    "messages": [{"role": "user", "content": prompt}],
+                    "max_tokens": 300,
+                    "temperature": 0.7
+                },
+                timeout=15
+            )
+            if response.status_code == 200:
+                ai_text = response.json()['choices'][0]['message']['content'].strip()
+                if self._validate_ai_content(ai_text):
+                    return ai_text
+        except Exception as e:
+            pass
+        return None
+    
+    def _validate_ai_content(self, text: str) -> bool:
+        """
+        Validate AI-generated content to prevent issues like:
+        - Paper titles repeated multiple times
+        - Too short or too long content
+        - Content that starts with greeting
+        """
+        if not text or len(text) < 20 or len(text) > 600:
+            return False
+        if text.startswith('Dear') or text.startswith('Hello'):
+            return False
+        # Check for repetition (same phrase appearing 3+ times)
+        words = text.lower().split()
+        if len(words) < 10:
+            return False
+        # Check for any 5-word phrase repeating
+        for i in range(len(words) - 4):
+            phrase = ' '.join(words[i:i+5])
+            if text.lower().count(phrase) >= 2:
+                return False  # Phrase repeats, reject
+        return True
     
     def validate_university_match(self, email: str, claimed_affiliation: str) -> Dict:
         """

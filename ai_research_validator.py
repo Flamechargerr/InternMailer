@@ -916,7 +916,16 @@ https://anamay.vercel.app
         
         # SPECIFIC research area detection (order matters - most specific first)
         area_patterns = [
-            # THEORY / ALGORITHMS / GEOMETRY (add these FIRST for theory researchers!)
+            # LOGIC / LANGUAGE / SEMANTICS / PRAGMATICS (for philosophy of language researchers)
+            (['vagueness', 'tolerance', 'degrees of truth', 'sorites'], 'Logic, Language and Vagueness'),
+            (['pragmatics', 'game-theoretic', 'communication game', 'signaling game'], 'Logic, Language and Pragmatics'),
+            (['semantics', 'formal semantics', 'type theory', 'lambda calculus'], 'Formal Semantics and Logic'),
+            (['modal logic', 'epistemic logic', 'deontic logic', 'temporal logic'], 'Modal and Philosophical Logic'),
+            (['logic', 'logical model', 'entailment', 'inference'], 'Logic and Formal Methods'),
+            (['philosophy of language', 'philosophy of mind', 'philosophy of science'], 'Philosophy of Language and Mind'),
+            (['game theory', 'decision theory', 'mechanism design'], 'Game Theory and Decision Making'),
+            
+            # THEORY / ALGORITHMS / GEOMETRY
             (['computational geometry', 'geometric algorithm', 'convex hull', 'voronoi'], 'Computational Geometry and Algorithms'),
             (['art gallery', 'visibility', 'polygon', 'triangulation'], 'Computational Geometry and Algorithms'),
             (['hypergraph', 'hypergraphs', 'polychromatic', 'coloring problem'], 'Combinatorics and Graph Theory'),

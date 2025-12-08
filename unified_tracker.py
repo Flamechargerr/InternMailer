@@ -102,7 +102,8 @@ def get_today_count() -> int:
     conn = get_db_connection()
     cursor = conn.cursor()
     today = date.today().isoformat()
-    cursor.execute('SELECT emails_sent FROM daily_stats WHERE date = ?', (today,))
+    # Query sent_emails directly instead of daily_stats
+    cursor.execute("SELECT COUNT(*) FROM sent_emails WHERE sent_date LIKE ?", (f"{today}%",))
     result = cursor.fetchone()
     return result[0] if result else 0
 

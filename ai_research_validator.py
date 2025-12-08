@@ -27,7 +27,7 @@ class AIResearchValidator:
         api_key = os.getenv('GEMINI_API_KEY')
         if api_key:
             genai.configure(api_key=api_key)
-            self.model = genai.GenerativeModel('gemini-1.5-pro')
+            self.model = genai.GenerativeModel('gemini-1.5-flash-latest')
             self.ai_available = True
         else:
             self.ai_available = False
@@ -82,19 +82,28 @@ RESEARCH AREA: {research_area}
 RECENT PAPERS: {'; '.join(paper_titles)}
 CONTEXT: {' '.join(paper_contexts)[:500]}
 
-Write a SHORT (2-3 sentences) personalized paragraph that:
-1. Mentions SPECIFIC topics from their papers (algorithms, techniques, or applications they actually study)
-2. Shows genuine understanding of what they work on - match their style:
-   - If they do THEORY/ALGORITHMS/GEOMETRY: mention algorithmic complexity, proofs, combinatorics, discrete math
-   - If they do ML/DATA SCIENCE: mention ML techniques, models, pipelines
-   - If they do SYSTEMS: mention distributed systems, networking, performance
-3. Connect to genuine interest, NOT by forcing unrelated skills
-4. Does NOT use vague phrases like "your work" without specifics
-5. Does NOT repeat paper titles verbatim - extract the key ideas
-6. Do NOT force ML/time-series language if their work is theoretical
-7. No intro like "Here is" - start directly with content
+Write a SHORT (2-3 sentences) personalized paragraph. CRITICAL RULES:
 
-Output ONLY the paragraph. No prefix, no greeting, no signature. Just 2-3 sentences."""
+1. IDENTIFY THE ACTUAL FIELD from their papers - do NOT assume:
+   - "Transformer" does NOT mean LLMs - could be time-series, computer vision, or bioinformatics
+   - "Detection" usually means computer vision, not time-series
+   - Look for domain keywords: biology, agriculture, health, security, networks, algorithms, etc.
+
+2. If they have MULTIPLE topics (e.g., cow detection AND time-series), mention them SEPARATELY:
+   - Don't conflate computer vision work with time-series work
+   - E.g., "your work on object detection for livestock AND time-series forecasting for agricultural data"
+
+3. Match the ACTUAL research domain in your language:
+   - Bioinformatics prof → mention bioinformatics, computational biology, genomics
+   - Agriculture/animal AI → mention agriculture, animal welfare, farm environments
+   - Security researcher → mention security, attacks, defense, cryptography
+   - Theory/algorithms → mention complexity, proofs, discrete math
+
+4. No vague phrases like "your work" without specifics
+5. No intro like "Here is" - start directly with content
+6. Do NOT force "LLM" or "large language models" unless they ACTUALLY work on NLP/text
+
+Output ONLY the paragraph. No prefix, no greeting. Just 2-3 sentences."""
 
         # Round-robin between 3 AI providers for 3x speed
         self._ai_request_counter += 1
@@ -191,7 +200,7 @@ Output ONLY the paragraph. No prefix, no greeting, no signature. Just 2-3 senten
                     "Content-Type": "application/json"
                 },
                 json={
-                    "model": "llama3-8b-8192",
+                    "model": "llama-3.1-8b-instant",
                     "messages": [{"role": "user", "content": prompt}],
                     "max_tokens": 300,
                     "temperature": 0.7
@@ -907,10 +916,28 @@ https://anamay.vercel.app
         
         # SPECIFIC research area detection (order matters - most specific first)
         area_patterns = [
+            # THEORY / ALGORITHMS / GEOMETRY (add these FIRST for theory researchers!)
+            (['computational geometry', 'geometric algorithm', 'convex hull', 'voronoi'], 'Computational Geometry and Algorithms'),
+            (['art gallery', 'visibility', 'polygon', 'triangulation'], 'Computational Geometry and Algorithms'),
+            (['hypergraph', 'hypergraphs', 'polychromatic', 'coloring problem'], 'Combinatorics and Graph Theory'),
+            (['graph coloring', 'chromatic number', 'graph theory'], 'Combinatorics and Graph Theory'),
+            (['combinatorial', 'discrete math', 'discrete structure'], 'Discrete Mathematics and Combinatorics'),
+            (['approximation algorithm', 'polynomial-time', 'np-hard', 'complexity'], 'Algorithms and Complexity Theory'),
+            (['dynamic programming', 'greedy algorithm', 'divide and conquer'], 'Algorithms and Data Structures'),
+            (['proof', 'theorem', 'lemma', 'conjecture'], 'Theoretical Computer Science'),
+            
+            # Bioinformatics / Computational Biology
+            (['bioinformatics', 'genomics', 'dna sequence', 'protein'], 'Bioinformatics and Computational Biology'),
+            (['phylogenet', 'evolutionary', 'molecular evolution'], 'Bioinformatics and Computational Biology'),
+            
+            # Agriculture / Animal AI
+            (['livestock', 'cattle', 'cow', 'animal welfare', 'farm'], 'AI for Agriculture and Animal Welfare'),
+            (['agriculture', 'crop', 'soil', 'farming'], 'AI for Agriculture'),
+            
             # NLP specific
             (['sentiment analysis', 'opinion mining', 'sentiment-topic'], 'Natural Language Processing and Sentiment Analysis'),
             (['topic model', 'topic modelling', 'lda', 'latent dirichlet'], 'Topic Modelling and Text Mining'),
-            (['language model', 'llm', 'gpt', 'bert', 'transformer'], 'Large Language Models'),
+            (['language model', 'llm', 'gpt', 'bert', 'transformer for text', 'text generation'], 'Large Language Models'),
             (['machine translation', 'neural machine'], 'Machine Translation'),
             (['question answering', 'reading comprehension'], 'Question Answering'),
             (['natural language', 'nlp', 'text classification', 'named entity'], 'Natural Language Processing'),
@@ -921,9 +948,10 @@ https://anamay.vercel.app
             (['reinforcement learning', 'policy gradient', 'q-learning', 'rl agent'], 'Reinforcement Learning'),
             (['graph neural', 'graph network', 'gnn', 'node embedding'], 'Graph Neural Networks'),
             (['federated learning', 'distributed learning'], 'Federated Learning'),
+            (['time series', 'time-series', 'forecasting', 'multivariate forecast'], 'Time Series Forecasting'),
             
             # Vision
-            (['object detection', 'image segmentation', 'visual recognition'], 'Computer Vision'),
+            (['object detection', 'image segmentation', 'visual recognition', 'yolo'], 'Computer Vision'),
             (['generative adversarial', 'gan', 'image generation'], 'Generative Models'),
             
             # HCI
@@ -932,18 +960,20 @@ https://anamay.vercel.app
             (['tools for thought', 'cognitive augmentation'], 'Human-AI Interaction and Cognitive Tools'),
             
             # Security (specific patterns for security researchers)
+            (['satellite', 'fingerprinting', 'transmitter', 'rf security'], 'Wireless and Satellite Security'),
             (['wireless security', 'secure ranging', 'distance bounding', 'secure positioning'], 'System and Network Security'),
             (['trusted computing', 'tee', 'secure enclave', 'sgx'], 'Trusted Computing and System Security'),
             (['network security', 'imsi', 'cellular security', 'protocol security'], 'Network and Protocol Security'),
             (['blockchain', 'distributed ledger', 'smart contract'], 'Blockchain and Distributed Systems Security'),
             (['authentication', 'access control', 'identity'], 'Security and Authentication'),
+            (['cryptography', 'encryption', 'cipher', 'zero-knowledge'], 'Cryptography'),
             
             # Systems
             (['robotics', 'autonomous vehicle', 'robot learning'], 'Robotics and Autonomous Systems'),
             (['privacy', 'differential privacy', 'federated'], 'Privacy-Preserving Machine Learning'),
             (['security', 'adversarial', 'attack', 'robust'], 'Adversarial Machine Learning and Security'),
             
-            # General ML (fallback)
+            # General ML (fallback - but more specific now)
             (['deep learning', 'neural network', 'convolutional'], 'Deep Learning'),
             (['machine learning', 'ml model', 'supervised learning'], 'Machine Learning'),
         ]
@@ -952,8 +982,11 @@ https://anamay.vercel.app
             if any(kw in text for kw in keywords):
                 return area
         
-        # Final fallback - still more specific than "Computer Science"
-        return 'Machine Learning and Data Science'
+        # Better fallback - try to infer from common terms
+        if any(kw in text for kw in ['algorithm', 'optimal', 'bounds', 'efficient']):
+            return 'Algorithms and Computer Science'
+        
+        return 'Computer Science Research'
     
     def _generate_safe_fallback(self, name: str, email: str, affiliation: str) -> Dict:
         """Generate safe fallback email without specific research claims."""

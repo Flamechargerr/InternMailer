@@ -27,7 +27,7 @@ class AIResearchValidator:
         api_key = os.getenv('GEMINI_API_KEY')
         if api_key:
             genai.configure(api_key=api_key)
-            self.model = genai.GenerativeModel('gemini-1.5-flash')
+            self.model = genai.GenerativeModel('gemini-2.0-flash')
             self.ai_available = True
         else:
             self.ai_available = False
@@ -105,22 +105,18 @@ Write a SHORT (2-3 sentences) personalized paragraph. CRITICAL RULES:
 
 Output ONLY the paragraph. No prefix, no greeting. Just 2-3 sentences."""
 
-        # SMART LOAD DISTRIBUTION - Round-robin to avoid rate limits
-        # Each provider handles ~1/3 of requests to stay within free tier limits
-        from concurrent.futures import ThreadPoolExecutor, as_completed
-        
+
+        # SMART LOAD DISTRIBUTION - Round-robin
         self._ai_request_counter += 1
-        provider_idx = self._ai_request_counter % 4  # 0=Groq, 1=OpenRouter, 2=Gemini, 3=Groq
+        provider_idx = self._ai_request_counter % 2  # 0=Groq, 1=OpenRouter
         
-        # Define all providers
+        # Define reliable providers (Gemini removed due to 429 rate limits)
         all_providers = [
             ('Groq', self._try_groq_hook),
             ('OpenRouter', self._try_openrouter_hook),
         ]
-        if self.ai_available:
-            all_providers.append(('Gemini', self._try_gemini_hook))
         
-        # Try PRIMARY provider first (round-robin assignment)
+        # Try PRIMARY provider first
         primary_idx = provider_idx % len(all_providers)
         primary_name, primary_fn = all_providers[primary_idx]
         
@@ -130,29 +126,22 @@ Output ONLY the paragraph. No prefix, no greeting. Just 2-3 sentences."""
             print(f"   [AI] ✓ {primary_name} SUCCESS")
             return result
         
-        # Primary failed - try others in parallel
-        print(f"   [AI] {primary_name} failed, racing remaining providers...")
+        # Primary failed - try others
+        print(f"   [AI] {primary_name} failed, trying backup...")
         remaining = [(n, f) for n, f in all_providers if n != primary_name]
+        for name, fn in remaining:
+            result = fn(prompt)
+            if result:
+                print(f"   [AI] ✓ {name} BACKUP SUCCESS")
+                return result
         
-        with ThreadPoolExecutor(max_workers=3) as executor:
-            futures = {executor.submit(fn, prompt): name for name, fn in remaining}
-            for future in as_completed(futures, timeout=12):
-                name = futures[future]
-                try:
-                    result = future.result()
-                    if result:
-                        print(f"   [AI] ✓ {name} BACKUP SUCCESS")
-                        return result
-                except:
-                    pass
-        
-        # Last resort: Ollama (slow but no rate limit)
+        # Last resort: Ollama
         print(f"   [AI] Cloud failed, trying Ollama (slow)...")
         result = self._try_ollama_hook(prompt)
         if result:
             print(f"   [AI] ✓ Ollama FALLBACK SUCCESS")
             return result
-        
+            
         print(f"   [AI] ✗ ALL PROVIDERS FAILED - generic template")
         return None
     

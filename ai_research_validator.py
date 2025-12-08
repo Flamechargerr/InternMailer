@@ -27,7 +27,7 @@ class AIResearchValidator:
         api_key = os.getenv('GEMINI_API_KEY')
         if api_key:
             genai.configure(api_key=api_key)
-            self.model = genai.GenerativeModel('gemini-1.5-flash')
+            self.model = genai.GenerativeModel('gemini-1.5-pro')
             self.ai_available = True
         else:
             self.ai_available = False
@@ -100,28 +100,46 @@ Output ONLY the paragraph, nothing else. No greeting, no signature."""
         # Provider 1: Ollama (local)
         # Provider 2: Groq (free cloud)
         
+        print(f"   [AI] Trying provider order {provider_order} for {professor_name[:20]}...")
+        
         if provider_order == 0 and self.ai_available:
+            print(f"   [AI] Trying Gemini...")
             result = self._try_gemini_hook(prompt)
             if result:
+                print(f"   [AI] ✓ Gemini SUCCESS")
                 return result
+            print(f"   [AI] ✗ Gemini failed")
         elif provider_order == 2:
+            print(f"   [AI] Trying Groq...")
             result = self._try_groq_hook(prompt)
             if result:
+                print(f"   [AI] ✓ Groq SUCCESS")
                 return result
+            print(f"   [AI] ✗ Groq failed")
         
         # Try Ollama (always available locally)
+        print(f"   [AI] Trying Ollama...")
         result = self._try_ollama_hook(prompt)
         if result:
+            print(f"   [AI] ✓ Ollama SUCCESS")
             return result
+        print(f"   [AI] ✗ Ollama failed")
         
         # Fallback chain
         if self.ai_available:
+            print(f"   [AI] Fallback: Trying Gemini...")
             result = self._try_gemini_hook(prompt)
             if result:
+                print(f"   [AI] ✓ Gemini (fallback) SUCCESS")
                 return result
+        print(f"   [AI] Fallback: Trying Groq...")
         result = self._try_groq_hook(prompt)
         if result:
+            print(f"   [AI] ✓ Groq (fallback) SUCCESS")
             return result
+        
+        print(f"   [AI] ✗ ALL PROVIDERS FAILED - using generic template")
+        return None
     
     def _try_gemini_hook(self, prompt: str) -> str:
         """Try generating hook with Gemini (fast, free tier)"""
@@ -130,8 +148,10 @@ Output ONLY the paragraph, nothing else. No greeting, no signature."""
             ai_text = response.text.strip()
             if self._validate_ai_content(ai_text):
                 return ai_text
+            else:
+                print(f"   [AI] Gemini returned but validation FAILED: {ai_text[:80]}...")
         except Exception as e:
-            pass  # Silent fail, will try other AI
+            print(f"   [AI] Gemini EXCEPTION: {e}")
         return None
     
     def _try_ollama_hook(self, prompt: str) -> str:
@@ -140,14 +160,18 @@ Output ONLY the paragraph, nothing else. No greeting, no signature."""
             response = requests.post(
                 self.ollama_url,
                 json={"model": "llama3", "prompt": prompt, "stream": False},
-                timeout=30
+                timeout=60
             )
             if response.status_code == 200:
                 ai_text = response.json().get('response', '').strip()
                 if self._validate_ai_content(ai_text):
                     return ai_text
+                else:
+                    print(f"   [AI] Ollama returned but validation FAILED: {ai_text[:80]}...")
+            else:
+                print(f"   [AI] Ollama HTTP error: {response.status_code}")
         except Exception as e:
-            pass  # Silent fail
+            print(f"   [AI] Ollama EXCEPTION: {e}")
         return None
     
     def _try_groq_hook(self, prompt: str) -> str:
@@ -174,8 +198,12 @@ Output ONLY the paragraph, nothing else. No greeting, no signature."""
                 ai_text = response.json()['choices'][0]['message']['content'].strip()
                 if self._validate_ai_content(ai_text):
                     return ai_text
+                else:
+                    print(f"   [AI] Groq returned but validation FAILED: {ai_text[:80]}...")
+            else:
+                print(f"   [AI] Groq HTTP error: {response.status_code} - {response.text[:100]}")
         except Exception as e:
-            pass
+            print(f"   [AI] Groq EXCEPTION: {e}")
         return None
     
     def _validate_ai_content(self, text: str) -> bool:

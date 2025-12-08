@@ -28,6 +28,18 @@ def test_vip_and_caps():
         "Human-AI Interaction"
     )
     print(f"Generic Body Preview: {res2['body'][-500:]}")
+    
+    # Check for restored template format
+    if "Research Inquiry:" in res2['subject']:
+        print("TEMPLATE CHECK: Subject restored! ✅")
+    else:
+        print(f"TEMPLATE CHECK: Subject mismatch! ❌ ({res2['subject']})")
+
+    if "following your work in" in res2['body']:
+        print("TEMPLATE CHECK: Body restored! ✅")
+    else:
+        print("TEMPLATE CHECK: Body mismatch! ❌")
+
     if "human-AI" in res2['body']:
          print("CAPS CHECK (Generic): 'human-AI' found! ✅")
     else:

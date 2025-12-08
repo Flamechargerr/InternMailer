@@ -27,7 +27,7 @@ class AIResearchValidator:
         api_key = os.getenv('GEMINI_API_KEY')
         if api_key:
             genai.configure(api_key=api_key)
-            self.model = genai.GenerativeModel('gemini-1.5-flash-latest')
+            self.model = genai.GenerativeModel('gemini-1.5-flash-002')
             self.ai_available = True
         else:
             self.ai_available = False
@@ -105,50 +105,29 @@ Write a SHORT (2-3 sentences) personalized paragraph. CRITICAL RULES:
 
 Output ONLY the paragraph. No prefix, no greeting. Just 2-3 sentences."""
 
-        # Round-robin between 3 AI providers for 3x speed
+        # SPEED PRIORITY: Groq (fastest) -> Gemini -> Ollama (slowest, fallback only)
         self._ai_request_counter += 1
-        provider_order = self._ai_request_counter % 3
         
-        # Provider 0: Gemini (fast cloud)
-        # Provider 1: Ollama (local)
-        # Provider 2: Groq (free cloud)
+        # Try GROQ FIRST (fastest - ~2s response)
+        print(f"   [AI] Trying Groq (fastest)...")
+        result = self._try_groq_hook(prompt)
+        if result:
+            print(f"   [AI] ✓ Groq SUCCESS (~2s)")
+            return result
         
-        print(f"   [AI] Trying provider order {provider_order} for {professor_name[:20]}...")
-        
-        if provider_order == 0 and self.ai_available:
+        # Try Gemini second (fast - ~3s response)
+        if self.ai_available:
             print(f"   [AI] Trying Gemini...")
             result = self._try_gemini_hook(prompt)
             if result:
-                print(f"   [AI] ✓ Gemini SUCCESS")
+                print(f"   [AI] ✓ Gemini SUCCESS (~3s)")
                 return result
-            print(f"   [AI] ✗ Gemini failed")
-        elif provider_order == 2:
-            print(f"   [AI] Trying Groq...")
-            result = self._try_groq_hook(prompt)
-            if result:
-                print(f"   [AI] ✓ Groq SUCCESS")
-                return result
-            print(f"   [AI] ✗ Groq failed")
         
-        # Try Ollama (always available locally)
-        print(f"   [AI] Trying Ollama...")
+        # Ollama LAST RESORT ONLY (slow - 30-60s response)
+        print(f"   [AI] Trying Ollama (slow fallback)...")
         result = self._try_ollama_hook(prompt)
         if result:
-            print(f"   [AI] ✓ Ollama SUCCESS")
-            return result
-        print(f"   [AI] ✗ Ollama failed")
-        
-        # Fallback chain
-        if self.ai_available:
-            print(f"   [AI] Fallback: Trying Gemini...")
-            result = self._try_gemini_hook(prompt)
-            if result:
-                print(f"   [AI] ✓ Gemini (fallback) SUCCESS")
-                return result
-        print(f"   [AI] Fallback: Trying Groq...")
-        result = self._try_groq_hook(prompt)
-        if result:
-            print(f"   [AI] ✓ Groq (fallback) SUCCESS")
+            print(f"   [AI] ✓ Ollama SUCCESS (slow)")
             return result
         
         print(f"   [AI] ✗ ALL PROVIDERS FAILED - using generic template")
@@ -226,7 +205,7 @@ Output ONLY the paragraph. No prefix, no greeting. Just 2-3 sentences."""
         - Too short or too long content
         - Content that starts with greeting
         """
-        if not text or len(text) < 20 or len(text) > 600:
+        if not text or len(text) < 20 or len(text) > 800:
             return False
         if text.startswith('Dear') or text.startswith('Hello'):
             return False
@@ -1107,6 +1086,7 @@ MIT Manipal, India
 tripathy.anamay23@gmail.com
 https://anamay.vercel.app
 +91-9877454747
+
 """
         return {
             'subject': subject,

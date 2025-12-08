@@ -188,12 +188,23 @@ def send_ultra_turbo(count=50):
         except:
             return None
     
-    with ThreadPoolExecutor(max_workers=20) as executor:
-        results = list(executor.map(prepare_email, professors))
-        email_data = [r for r in results if r]
+    # Use 4 workers for Ollama (optimal for sequential AI generation)
+    # This is the sweet spot - more workers overwhelm Ollama, fewer are too slow
+    print("   🤖 AI personalization running (4 parallel workers)...")
+    completed = 0
+    
+    with ThreadPoolExecutor(max_workers=4) as executor:
+        futures = {executor.submit(prepare_email, p): p for p in professors}
+        for future in as_completed(futures):
+            result = future.result()
+            if result:
+                email_data.append(result)
+            completed += 1
+            if completed % 10 == 0:
+                print(f"   ✨ Generated {completed}/{len(professors)} AI-personalized emails...")
     
     prep_time = time.time() - start_time
-    print(f"   ✅ Prepared {len(email_data)} emails in {prep_time:.1f}s")
+    print(f"   ✅ Prepared {len(email_data)} AI-personalized emails in {prep_time:.1f}s")
     
     # Phase 2: Batch Send (8 threads)
     print(f"\n📧 Phase 2: Batch Send (8 threads)...")

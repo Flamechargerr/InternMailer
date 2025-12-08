@@ -16,6 +16,7 @@ class ReplyCategory(Enum):
     MEETING_REQUEST = "meeting_request"
     ALREADY_HIRED = "already_hired"
     SPAM = "spam"
+    REFERRAL = "referral"
     UNKNOWN = "unknown"
 
 class ReplyClassifier:
@@ -71,6 +72,14 @@ class ReplyClassifier:
             ReplyCategory.SPAM: [
                 'unsubscribe', 'remove me', 'stop emailing', 'do not contact',
                 'harassment', 'report spam', 'unsolicited'
+            ],
+            
+            ReplyCategory.REFERRAL: [
+                'put you in contact', 'contact my colleague', 'copied here', 'ccing', 
+                'ccd', 'cced', 'reach out to', 'refer you to', 'speak with', 'talk to',
+                'forwarding this to', 'check with', 'connecting you with',
+                'introducing you to', 'copying', 'contact my', 'my student', 
+                'my colleague', 'my postdoc'
             ]
         }
         
@@ -205,6 +214,7 @@ class ReplyClassifier:
             ReplyCategory.MEETING_REQUEST: "📅 SCHEDULE: Send calendar link or availability",
             ReplyCategory.ALREADY_HIRED: "✅ ARCHIVE: Mark as closed/resolved",
             ReplyCategory.SPAM: "🚫 BLOCK: Add to blacklist immediately",
+            ReplyCategory.REFERRAL: "🔄 REFERRAL: Auto-reply to all (including CC)",
             ReplyCategory.UNKNOWN: "👀 MANUAL REVIEW: Needs human classification"
         }
         return actions.get(category, "👀 MANUAL REVIEW: Unknown category")

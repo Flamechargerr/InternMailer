@@ -1,3 +1,6 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from reply_classifier import get_reply_classifier
 
 c = get_reply_classifier()

@@ -34,7 +34,7 @@ class AutoActionEngine:
         cursor = conn.cursor()
         
         cursor.execute('''
-            SELECT message_id, from_email, subject, category, confidence
+            SELECT message_id, from_email, subject, category, confidence, cc_list, to_list
             FROM processed_replies
             WHERE action_taken = 'pending'
         ''')
@@ -46,7 +46,9 @@ class AutoActionEngine:
                 'email': row[1],
                 'subject': row[2],
                 'category': row[3],
-                'confidence': row[4]
+                'confidence': row[4],
+                'cc_list': row[5] if len(row) > 5 else '',
+                'to_list': row[6] if len(row) > 6 else ''
             })
         
         conn.close()
@@ -196,6 +198,80 @@ class AutoActionEngine:
             print(f"   ❌ Error processing out of office: {e}")
             return False
     
+    def process_referral_reply(self, reply: Dict) -> bool:
+        """
+        Handle REFERRAL reply:
+        1. Reply to All (Sender + CC + Others in To)
+        2. Introduce self to new contact
+        """
+        try:
+            # Send Reply All
+            self._reply_to_all(
+                reply['email'], 
+                reply.get('to_list', ''), 
+                reply.get('cc_list', ''), 
+                reply['subject']
+            )
+            
+            print(f"   🔄 REFERRAL: Replied to all (Subject: {reply['subject']})")
+            return True
+            
+        except Exception as e:
+            print(f"   ❌ Error processing referral: {e}")
+            return False
+
+    def _reply_to_all(self, from_email: str, to_list_str: str, cc_list_str: str, original_subject: str):
+        """Send Reply All email"""
+        try:
+            msg = MIMEMultipart('alternative')
+            msg['Subject'] = f"Re: {original_subject}" if not original_subject.lower().startswith('re:') else original_subject
+            msg['From'] = self.email_address
+            
+            # Construct To list: Sender + (Original To - Me)
+            to_emails = [from_email]
+            if to_list_str:
+                others = [e.strip() for e in to_list_str.split(',') if e.strip()]
+                for email in others:
+                    if email.lower() != self.email_address.lower() and email.lower() != from_email.lower():
+                        to_emails.append(email)
+            
+            msg['To'] = ", ".join(to_emails)
+            
+            # Construct CC list
+            cc_emails = []
+            if cc_list_str:
+                cc_emails = [e.strip() for e in cc_list_str.split(',') if e.strip()]
+                msg['Cc'] = ", ".join(cc_emails)
+            
+            recipients = to_emails + cc_emails
+            
+            body = f"""Dear All,
+
+Thank you for the response and the introduction.
+
+I am excited to connect and would love to learn more about the team's work. The transition from research to real-world applications is exactly where my interest lies.
+
+I have attached my details below. I would welcome the opportunity for a brief conversation to discuss how I might contribute.
+
+Best regards,
+Anamay Tripathy
+B.Tech Data Science Engineering, MIT Manipal
+https://anamay.vercel.app
+"""
+            
+            text_part = MIMEText(body, 'plain')
+            msg.attach(text_part)
+            
+            # Send via SMTP
+            with smtplib.SMTP('smtp.gmail.com', 587) as server:
+                server.starttls()
+                server.login(self.email_address, self.password)
+                server.send_message(msg)
+            
+        except Exception as e:
+            print(f"   ❌ Failed to send reply-all email: {e}")
+            raise e
+
     def _send_calendar_email(self, to_email: str, original_subject: str):
         """Send calendar link to interested party"""
         try:
@@ -260,6 +336,7 @@ Anamay Tripathy
             'not_interested': 0,
             'question': 0,
             'out_of_office': 0,
+            'referral': 0,
             'other': 0
         }
         
@@ -284,6 +361,9 @@ Anamay Tripathy
             elif category == 'out_of_office':
                 success = self.process_out_of_office_reply(reply)
                 stats['out_of_office'] += 1
+            elif category == 'referral':
+                success = self.process_referral_reply(reply)
+                stats['referral'] += 1
             else:
                 stats['other'] += 1
             

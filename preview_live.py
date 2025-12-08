@@ -1,3 +1,6 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 """
 Script to preview one AI-personalized Professor email and one detailed HR email.

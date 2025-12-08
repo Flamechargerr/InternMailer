@@ -150,7 +150,16 @@ class ContentVariationSystem:
         
         # Select based on context to ensure consistency per professor
         index = hash(str(context_hash)) % len(synonyms)
-        return synonyms[index]
+        
+        # 🔧 FIX: Ensure proper capitalization for AI
+        result = synonyms[index]
+       
+        # Fix specific capitalization terms
+        result = re.sub(r'\bai\b', 'AI', result, flags=re.IGNORECASE)
+        result = result.replace('human-ai', 'human-AI')
+        result = result.replace('human-AI', 'human-AI') # prevent double fix issues
+        
+        return result
     
     def get_varied_research_mention(self, area, professor_name):
         """Get a varied research mention avoiding repetition"""
@@ -1306,11 +1315,6 @@ linkedin.com/in/anamay-tripathy | anamay.vercel.app"""
 <body style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
     <div style="background-color: #ffffff; padding: 20px; border-radius: 8px;">
         {body_escaped}
-    </div>
-    <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; font-size: 12px; color: #666;">
-        <p>Best regards,<br>
-        <strong>Anamay Tripathy</strong><br>
-        Computer Science Student | AI/ML Enthusiast</p>
     </div>
 </body>
 </html>

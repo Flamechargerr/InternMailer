@@ -1108,8 +1108,8 @@ linkedin.com/in/anamay-tripathy | anamay.vercel.app"""
         
         return subject, body
 
-    def send_email_concurrent_safe(self, to_email, subject, body, contact_name='', contact_type='professor'):
-        """Thread-safe email sending with tracking, resume attachment, and advanced features"""
+    def send_email_concurrent_safe(self, to_email, subject, body, contact_name='', contact_type='professor', max_retries=3):
+        """Thread-safe email sending with tracking, resume attachment, SMTP retry logic, and advanced features"""
         import smtplib
         from email.mime.text import MIMEText
         from email.mime.multipart import MIMEMultipart
@@ -1159,16 +1159,19 @@ linkedin.com/in/anamay-tripathy | anamay.vercel.app"""
             pass  # Continue if check fails
         
         
-        try:
-            # Get connection from pool
-            smtp_connection = None
+        # SMTP RETRY LOGIC WITH EXPONENTIAL BACKOFF
+        last_error = None
+        for attempt in range(max_retries):
             try:
-                smtp_connection = self.smtp_pool.get(timeout=30)
-            except:
-                # Create new connection if pool empty
-                smtp_connection = smtplib.SMTP('smtp.gmail.com', 587)
-                smtp_connection.starttls()
-                smtp_connection.login(self.email_address, self.email_password)
+                # Get connection from pool
+                smtp_connection = None
+                try:
+                    smtp_connection = self.smtp_pool.get(timeout=30)
+                except:
+                    # Create new connection if pool empty
+                    smtp_connection = smtplib.SMTP('smtp.gmail.com', 587, timeout=10)
+                    smtp_connection.starttls()
+                    smtp_connection.login(self.email_address, self.email_password)
             
             # Create outer container for attachment
             outer_msg = MIMEMultipart('mixed')

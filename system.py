@@ -308,10 +308,19 @@ class VerifiedEmailSystem:
     def get_verified_contacts(self, max_contacts=50, min_confidence=90):
         """Fetch verified contacts from the database"""
         try:
-            # 1. Load sent emails into memory for robust filtering (FROM ALL SOURCES)
+            # 1. Load sent emails from UNIFIED TRACKER (single source of truth)
             sent_emails = set()
             
-            # Possible DB paths
+            # First, try unified tracker (preferred)
+            try:
+                from unified_tracker import get_all_sent_emails
+                unified_emails = get_all_sent_emails()
+                sent_emails.update(e.lower().strip() for e in unified_emails if e)
+                print(f"   🔍 Loaded {len(sent_emails)} emails from UNIFIED tracker")
+            except ImportError:
+                pass
+            
+            # Also check legacy DB paths as backup
             db_paths = [
                 'email_tracking.db', 
                 'campaign_results/email_tracking.db',
@@ -465,16 +474,22 @@ class VerifiedEmailSystem:
             print(f"⚠️ Tracking DB setup failed: {e}")
 
     def _track_sent_email(self, email, name, subject, contact_type):
-        """Track sent email in database"""
+        """Track sent email in UNIFIED database (shared across all scripts)"""
         try:
-            with self.tracking_lock:
-                with sqlite3.connect(self.db_path) as conn:
-                    c = conn.cursor()
-                    c.execute("INSERT INTO sent_emails VALUES (?, ?, ?, ?, ?)",
-                              (email, name, subject, datetime.now().isoformat(), contact_type))
-                    conn.commit()
-        except Exception as e:
-            print(f"⚠️ Failed to track email: {e}")
+            # Use unified tracker for centralized tracking
+            from unified_tracker import record_email_sent
+            record_email_sent(email, name, subject, source='system.py')
+        except ImportError:
+            # Fallback to local tracking if unified_tracker not available
+            try:
+                with self.tracking_lock:
+                    with sqlite3.connect(self.db_path) as conn:
+                        c = conn.cursor()
+                        c.execute("INSERT INTO sent_emails VALUES (?, ?, ?, ?, ?)",
+                                  (email, name, subject, datetime.now().isoformat(), contact_type))
+                        conn.commit()
+            except Exception as e:
+                print(f"⚠️ Failed to track email: {e}")
             
     def _initialize_smtp_pool(self):
         """Initialize TURBO SMTP connection pool for 200+ emails"""

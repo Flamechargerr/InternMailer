@@ -27,7 +27,7 @@ class AIResearchValidator:
         api_key = os.getenv('GEMINI_API_KEY')
         if api_key:
             genai.configure(api_key=api_key)
-            self.model = genai.GenerativeModel('gemini-1.5-flash-002')
+            self.model = genai.GenerativeModel('gemini-1.5-flash')
             self.ai_available = True
         else:
             self.ai_available = False
@@ -105,39 +105,55 @@ Write a SHORT (2-3 sentences) personalized paragraph. CRITICAL RULES:
 
 Output ONLY the paragraph. No prefix, no greeting. Just 2-3 sentences."""
 
-        # PARALLEL AI CALLS - Try multiple providers simultaneously for MAX SPEED
+        # SMART LOAD DISTRIBUTION - Round-robin to avoid rate limits
+        # Each provider handles ~1/3 of requests to stay within free tier limits
         from concurrent.futures import ThreadPoolExecutor, as_completed
         
-        print(f"   [AI] Racing Groq + OpenRouter + Gemini in parallel...")
+        self._ai_request_counter += 1
+        provider_idx = self._ai_request_counter % 4  # 0=Groq, 1=OpenRouter, 2=Gemini, 3=Groq
         
-        # Define provider functions to race
-        providers = []
-        providers.append(('Groq', lambda: self._try_groq_hook(prompt)))
-        providers.append(('OpenRouter', lambda: self._try_openrouter_hook(prompt)))
+        # Define all providers
+        all_providers = [
+            ('Groq', self._try_groq_hook),
+            ('OpenRouter', self._try_openrouter_hook),
+        ]
         if self.ai_available:
-            providers.append(('Gemini', lambda: self._try_gemini_hook(prompt)))
+            all_providers.append(('Gemini', self._try_gemini_hook))
         
-        # Race all providers - return first success
+        # Try PRIMARY provider first (round-robin assignment)
+        primary_idx = provider_idx % len(all_providers)
+        primary_name, primary_fn = all_providers[primary_idx]
+        
+        print(f"   [AI] Request #{self._ai_request_counter}: Primary={primary_name}")
+        result = primary_fn(prompt)
+        if result:
+            print(f"   [AI] ✓ {primary_name} SUCCESS")
+            return result
+        
+        # Primary failed - try others in parallel
+        print(f"   [AI] {primary_name} failed, racing remaining providers...")
+        remaining = [(n, f) for n, f in all_providers if n != primary_name]
+        
         with ThreadPoolExecutor(max_workers=3) as executor:
-            futures = {executor.submit(fn): name for name, fn in providers}
-            for future in as_completed(futures, timeout=15):
+            futures = {executor.submit(fn, prompt): name for name, fn in remaining}
+            for future in as_completed(futures, timeout=12):
                 name = futures[future]
                 try:
                     result = future.result()
                     if result:
-                        print(f"   [AI] ✓ {name} WON THE RACE!")
+                        print(f"   [AI] ✓ {name} BACKUP SUCCESS")
                         return result
-                except Exception as e:
-                    pass  # Provider failed, continue racing
+                except:
+                    pass
         
-        # Fallback to Ollama (slow but reliable)
-        print(f"   [AI] Fast providers failed, trying Ollama (slow)...")
+        # Last resort: Ollama (slow but no rate limit)
+        print(f"   [AI] Cloud failed, trying Ollama (slow)...")
         result = self._try_ollama_hook(prompt)
         if result:
-            print(f"   [AI] ✓ Ollama SUCCESS (slow fallback)")
+            print(f"   [AI] ✓ Ollama FALLBACK SUCCESS")
             return result
         
-        print(f"   [AI] ✗ ALL PROVIDERS FAILED - using generic template")
+        print(f"   [AI] ✗ ALL PROVIDERS FAILED - generic template")
         return None
     
     def _try_gemini_hook(self, prompt: str) -> str:

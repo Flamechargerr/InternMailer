@@ -838,17 +838,18 @@ https://anamay.vercel.app
             desc = research_area.lower()
             desc = desc.replace(' ai ', ' AI ').replace('human-ai', 'human-AI').replace(' nlp ', ' NLP ').replace('human- ai', 'human-AI')
             work_description = desc
+        # SAFE TEMPLATE - No specific research claims (avoids McBurney-type incidents)
+        # We don't trust paper data enough to claim "I follow your work on X"
         
-        subject = f"Research Internship Inquiry – {research_area}"
+        subject = f"Research Internship Inquiry – {university} Computer Science"
         
-        safe_area_lower = research_area.lower().replace(' ai ', ' AI ').replace('human-ai', 'human-AI').replace(' nlp ', ' NLP ')
         body = f"""Dear Professor {professor_name},
 
-I hope this email finds you well. My name is Anamay Tripathy, and I am a final-year B.Tech student in Data Science Engineering at MIT Manipal, India. I am writing to express my strong interest in joining your research group at {university} as a research intern or assistant.
+I hope this email finds you well. My name is Anamay Tripathy, and I am a final-year B.Tech student in Data Science Engineering at MIT Manipal, India. I am writing to inquire about potential research internship opportunities in your group at {university}.
 
-I have been following your work on {work_description} with great interest. I am particularly drawn to how your research addresses important challenges in the field and how such methods can improve the reliability and effectiveness of real-world systems.
+I am broadly interested in research at the intersection of machine learning, data science, and their real-world applications. I am reaching out to explore whether there might be opportunities where my background could be a good fit for your research group.
 
-My academic background and experience have prepared me to contribute meaningfully to your research:
+My academic background and experience have prepared me to contribute meaningfully to research:
 
 - Research experience: As Technical Head at YaanBarpe, a government-incubated startup, I led a team of 12 developers to build ML-powered waste management systems, achieving a 34% improvement in operational efficiency. I also interned at Intellect Design Arena, where I optimized high-volume financial transaction processing pipelines using Python and Kafka, reducing processing time by 67%.
 
@@ -856,9 +857,9 @@ My academic background and experience have prepared me to contribute meaningfull
 
 - Relevant projects: I have worked on several research-oriented projects involving predictive modeling, time-series analysis, and NLP applications, focusing on building robust, data-driven decision systems.
 
-I am eager to bring my technical skills and research motivation to your group. I would be particularly excited to contribute to projects involving {safe_area_lower} or related topics where my background in data science and engineering could be useful. I am a quick learner, highly motivated, and committed to producing careful, reproducible research.
+I am a quick learner, highly motivated, and committed to producing careful, reproducible research. I would be happy to adapt my skills to the specific needs of your ongoing projects.
 
-I have attached my CV, which includes further details on my coursework, projects, and experience. If there is any possibility of a research internship or assistantship with your group, I would be grateful for the opportunity to discuss potential fit and timelines at your convenience.
+I have attached my CV, which includes further details on my coursework, projects, and experience. If there is any possibility of a research position in your group, I would be grateful for the opportunity to discuss potential fit at your convenience.
 
 Thank you very much for your time and consideration.
 
@@ -870,14 +871,13 @@ tripathy.anamay23@gmail.com
 https://anamay.vercel.app
 +91-9877454747
 """
-        
         return {
             'subject': subject,
             'body': body,
-            'validation_status': 'VERIFIED',
+            'validation_status': 'SAFE_GENERIC',
             'research_area': research_area,
             'papers_found': len(papers),
-            'confidence': 0.9
+            'confidence': 0.85
         }
 
 

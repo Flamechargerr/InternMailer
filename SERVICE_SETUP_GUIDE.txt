@@ -1,0 +1,165 @@
+═══════════════════════════════════════════════════════════════
+  JARVIS WINDOWS SERVICE - INSTALLATION GUIDE
+═══════════════════════════════════════════════════════════════
+
+🎯 GOAL: Make JARVIS run on startup and survive terminal close
+
+═══════════════════════════════════════════════════════════════
+  METHOD 1: AUTOMATED (RECOMMENDED - 30 seconds)
+═══════════════════════════════════════════════════════════════
+
+STEP 1: Find the file
+  → c:\Users\anama\InternMailer\INSTALL_SERVICE.bat
+
+STEP 2: Right-click the file
+  → Select "Run as administrator"
+
+STEP 3: Click "Yes" when Windows asks for permission
+
+STEP 4: Wait for "SUCCESS!" message
+
+DONE! JARVIS is now a Windows service!
+
+═══════════════════════════════════════════════════════════════
+  METHOD 2: MANUAL (If automated fails - 5 minutes)
+═══════════════════════════════════════════════════════════════
+
+STEP 1: Open Task Scheduler
+  → Press Windows key
+  → Type "Task Scheduler"
+  → Press Enter
+
+STEP 2: Create Basic Task
+  → Click "Create Basic Task" (right side)
+  → Name: JARVIS_InternMailer
+  → Description: Automated job hunting agent
+  → Click "Next"
+
+STEP 3: Set Trigger
+  → Select "When the computer starts"
+  → Click "Next"
+
+STEP 4: Set Action
+  → Select "Start a program"
+  → Click "Next"
+
+STEP 5: Configure Program
+  → Program/script: python
+  → Add arguments: c:\Users\anama\InternMailer\jarvis_mode.py --start
+  → Start in: c:\Users\anama\InternMailer
+  → Click "Next"
+
+STEP 6: Finish Setup
+  → Check "Open the Properties dialog"
+  → Click "Finish"
+
+STEP 7: Advanced Settings (Properties window opens)
+  → ✅ Check "Run whether user is logged on or not"
+  → ✅ Check "Run with highest privileges"
+  → ✅ Check "Hidden"
+  → In "Conditions" tab:
+      → ✅ Check "Start the task only if the computer is on AC power"
+      → ✅ Uncheck "Stop if computer switches to battery"
+  → Click "OK"
+
+STEP 8: Enter your Windows password when prompted
+
+DONE! JARVIS is now a Windows service!
+
+═══════════════════════════════════════════════════════════════
+  TESTING
+═══════════════════════════════════════════════════════════════
+
+1. Close all terminal windows
+2. Close Antigravity
+3. Check Task Manager (Ctrl+Shift+Esc)
+   → Look for "python.exe" in Processes
+   → Should see it running!
+
+4. JARVIS is working if you see:
+   → python.exe process
+   → Files being created in campaign_results/
+
+═══════════════════════════════════════════════════════════════
+  MANAGING JARVIS SERVICE
+═══════════════════════════════════════════════════════════════
+
+START JARVIS:
+  → Open Task Scheduler
+  → Find "JARVIS_InternMailer"
+  → Right-click → Run
+
+STOP JARVIS:
+  → Open Task Manager (Ctrl+Shift+Esc)
+  → Find "python.exe"
+  → Right-click → End task
+
+REMOVE SERVICE:
+  → Open Task Scheduler
+  → Find "JARVIS_InternMailer"  
+  → Right-click → Delete
+
+VIEW LOGS:
+  → Open: c:\Users\anama\InternMailer\campaign_results\jarvis_log.txt
+
+═══════════════════════════════════════════════════════════════
+  TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════
+
+PROBLEM: "Access Denied" error
+SOLUTION: Run as Administrator (right-click → Run as administrator)
+
+PROBLEM: Service not starting
+SOLUTION: Check Python path in Task Scheduler
+  → Should be: python (not full path)
+  → Or use: C:\Program Files\Python310\python.exe
+
+PROBLEM: Can't find python.exe in Task Manager
+SOLUTION: 
+  1. Open Task Scheduler
+  2. Right-click JARVIS_InternMailer → Run
+  3. Check Task Manager again
+
+PROBLEM: JARVIS stops after laptop sleep
+SOLUTION: In Task Scheduler properties:
+  → Conditions tab → Uncheck "Stop if computer switches to battery"
+
+═══════════════════════════════════════════════════════════════
+  WHAT HAPPENS AFTER SETUP
+═══════════════════════════════════════════════════════════════
+
+✅ Windows starts → JARVIS starts automatically
+✅ Close terminal → JARVIS keeps running
+✅ Close Antigravity → JARVIS keeps running  
+✅ Laptop sleeps → JARVIS resumes on wake
+✅ JARVIS crashes → Auto-restarts (if configured)
+
+📧 JARVIS continues to:
+  - Send 50 emails daily (9 AM)
+  - Check inbox every hour
+  - Reply to questions with AI
+  - Send follow-ups after 7 days
+  - Archive rejections
+
+═══════════════════════════════════════════════════════════════
+  FINAL CHECK
+═══════════════════════════════════════════════════════════════
+
+After 24 hours, verify JARVIS is working:
+
+1. Check log file:
+   type campaign_results\jarvis_log.txt
+
+2. Check database:
+   - Should see entries in sent_emails
+   - Should see entries in processed_replies (if any)
+
+3. Check email:
+   - Should have sent 50 emails at 9 AM
+   - Should have replied to any inbox messages
+
+═══════════════════════════════════════════════════════════════
+
+🎉 You're done! JARVIS now runs 24/7 automatically!
+
+═══════════════════════════════════════════════════════════════

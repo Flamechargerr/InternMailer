@@ -1172,19 +1172,16 @@ linkedin.com/in/anamay-tripathy | anamay.vercel.app"""
             pass  # Continue if check fails
         
         
-        # SMTP RETRY LOGIC WITH EXPONENTIAL BACKOFF
-        last_error = None
-        for attempt in range(max_retries):
+        try:
+            # Get connection from pool
+            smtp_connection = None
             try:
-                # Get connection from pool
-                smtp_connection = None
-                try:
-                    smtp_connection = self.smtp_pool.get(timeout=30)
-                except:
-                    # Create new connection if pool empty
-                    smtp_connection = smtplib.SMTP('smtp.gmail.com', 587, timeout=10)
-                    smtp_connection.starttls()
-                    smtp_connection.login(self.email_address, self.email_password)
+                smtp_connection = self.smtp_pool.get(timeout=30)
+            except:
+                # Create new connection if pool empty
+                smtp_connection = smtplib.SMTP('smtp.gmail.com', 587, timeout=10)
+                smtp_connection.starttls(())
+                smtp_connection.login(self.email_address, self.email_password)
             
             # Create outer container for attachment
             outer_msg = MIMEMultipart('mixed')

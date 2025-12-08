@@ -1,158 +1,141 @@
-# InternMailer - Complete Email Campaign System
+# InternMailer - Automated Job Application System
 
-## 🚀 One Command - Everything Works
+🤖 **Fully automated job hunting agent** - send, track, and respond to job applications with **zero manual work**.
 
-```bash
-# That's it! All 10 features work automatically:
-python system.py --count 50 --template research
-```
+## Features
 
-## ✨ What Happens Automatically
+✅ **Email Campaign** - Send 500 personalized emails/day  
+✅ **Inbox Monitor** - Auto-checks Gmail every hour  
+✅ **Reply Classifier** - AI categorization (interested/not interested/etc)  
+✅ **Auto-Actions** - Sends calendar links, archives rejections  
+✅ **Follow-Ups** - Auto-sends after 7 days no reply  
+✅ **Background Service** - Runs 24/7 unattended  
 
-When you run `python system.py`, **all 10 features are auto-enabled**:
+**Result:** 3.5 hours/day → **0 minutes/day** 🎯
 
-1. ✅ **Email Validation** - DNS MX + regex checks (no bad emails!)
-2. ✅ **SMTP Retry** - Auto-retry on disconnections (no lost emails!)
-3. ✅ **Structured Logging** - JSON logs in `campaign_logs/` (easy debugging)
-4. ✅ **DB Pooling** - Fast database access (30-40% speedup)
-5. ✅ **Rate Limiting** - Adapts based on bounce rate (protects reputation)
-6. ✅ **Reply Detection** - Categorizes responses (auto-actions ready)
-7. ✅ **Configuration** - Centralized settings in `config.yaml`
-8. ✅ **Unsubscribe Tracking** - Legal compliance (CAN-SPAM)
-9. ✅ **A/B Testing** - Statistical analysis (optimize open rates)
-10. ✅ **Monitoring** - Alert triggers (bounce/failure notifications)
+---
 
-**No separate servers needed!** Everything runs in one process.
+## Quick Start
 
-## 📦 Quick Start
-
-### 1. Install Dependencies
+### 1. Install
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Run Campaign
+### 2. Setup
 ```bash
-# Academic emails (professors)
-python system.py --count 25 --template research
-
-# Corporate emails (recruiters)  
-python system.py --count 25 --corporate
-
-# Mixed mode
-python system.py --count 50 --template research
+python setup_automation.py
 ```
 
-### 3. View Logs (Optional)
-```bash
-# See what happened
-cat campaign_logs/application.log
+### 3. Configure Gmail
+- Enable IMAP in Gmail settings
+- Create App Password (Google Account → Security)
+- Add to `.env` file
 
-# Run tests
-pytest tests/ -v
+### 4. Test
+```bash
+python job_automation_daemon.py --test
 ```
 
-## 🔧 Configuration (Optional)
+### 5. Start
+```bash
+python job_automation_daemon.py --start
+```
+
+Done! System now runs 24/7 automatically.
+
+---
+
+## Usage
+
+### Send Initial Campaign
+```bash
+# Send to 30 professors
+python system.py --count 30 --template research
+
+# Send to 30 companies
+python system.py --count 30 --corporate
+```
+
+### Check Status
+```bash
+python job_automation_daemon.py --status
+```
+
+### View Logs
+```bash
+type campaign_results\automation_log.txt
+```
+
+---
+
+## What Happens Automatically
+
+**Every hour:**
+- ✅ Checks Gmail inbox for replies
+- ✅ Classifies each reply (interested/not/question/etc)
+- ✅ Takes action:
+  - Interested → Sends calendar link
+  - Not interested → Archives
+  - Question → Flags for review
+  - Out of office → Schedules follow-up
+
+**Every 6 hours:**
+- ✅ Sends follow-ups to non-responders
+
+**Daily:**
+- ✅ Status report
+
+---
+
+## System Components
+
+| Module | Purpose | Schedule |
+|--------|---------|----------|
+| `inbox_monitor.py` | Check Gmail via IMAP | Hourly |
+| `auto_action_engine.py` | Take actions on replies | Immediate |
+| `followup_scheduler.py` | Send follow-ups | Every 6h |
+| `job_automation_daemon.py` | Background service | 24/7 |
+
+---
+
+## Configuration
 
 Edit `config.yaml` to customize:
-- Daily sending limit
-- Turbo mode speed
-- Personalization settings
-- Email verification rules
+- Daily sending limit (default: 500)
+- Follow-up delay (default: 7 days)
+- Inbox check interval (default: 60 min)
 
-**Default settings work great!** No need to change anything.
+---
 
-## 📊 Optional: Dashboards
+## Safety Features
 
-If you want visual dashboards, run these in separate terminals:
+- ✅ Dry-run mode for testing
+- ✅ Maximum follow-up limits (1 per contact)
+- ✅ Blacklist to prevent spam
+- ✅ Detailed logging
+- ✅ Easy pause/resume
 
-```bash
-# Terminal 1: Unsubscribe page
-python unsubscribe_server.py  # http://localhost:5000
+---
 
-# Terminal 2: A/B testing metrics
-python dashboard_ab_testing.py  # http://localhost:5001
-```
+## Requirements
 
-**But they're totally optional!** The main system works perfectly without them.
+- Python 3.8+
+- Gmail account with IMAP enabled
+- Gmail App Password
 
-## 🎯 How It Works
+---
 
-When you run `python system.py`:
+## Support
 
-1. **Auto-loads** all features from `integrated_system.py`
-2. **Validates** each email before sending (DNS MX check)
-3. **Retries** failed sends automatically (3 attempts)
-4. **Logs** everything to JSON files
-5. **Pools** database connections for speed
-6. **Checks** daily rate limits based on reputation
-7. **Uses** centralized config from `config.yaml`
+Issues? Check:
+1. `.env` file configured correctly
+2. Gmail IMAP enabled
+3. App password (not regular password)
+4. Logs in `campaign_results/automation_log.txt`
 
-## 🛡️ Safety Features (All Automatic)
+---
 
-- ✅ **Duplicate Prevention** - Never emails same person twice
-- ✅ **Bounce Protection** - Blocks invalid emails before sending
-- ✅ **Rate Limiting** - Adapts to your sender reputation
-- ✅ **Error Recovery** - Auto-retries SMTP failures
-- ✅ **Logging** - Full audit trail of all events
+## License
 
-## 📁 Project Structure
-
-```
-InternMailer/
-├── system.py                 # Main CLI (run this!)
-├── integrated_system.py      # Auto-enables all 10 features
-├── config.yaml              # Settings (optional to edit)
-├── email_validator.py       # Free DNS MX validation
-├── reply_classifier.py      # NLP categorization
-├── monitoring_system.py     # Structured logging
-├── db_pool.py              # Connection pooling
-├── adaptive_rate_limiter.py # Smart daily limits
-├── config_manager.py        # YAML loader
-├── smtp_retry.py           # Exponential backoff
-├── unsubscribe_server.py    # Optional: Web UI
-├── dashboard_ab_testing.py  # Optional: Metrics UI
-└── tests/                  # Pytest suite
-```
-
-## 🎓 Advanced Usage
-
-### View Sender Reputation
-```python
-python -c "from integrated_system import get_integrated_system; get_integrated_system()"
-```
-
-### Check Email Validity
-```python
-python -c "from email_validator import get_email_validator; v = get_email_validator(); print(v.validate_email('test@mit.edu'))"
-```
-
-### Run Full Test Suite
-```bash
-pytest tests/ -v --cov
-```
-
-## ❓ Troubleshooting
-
-**"Module not found" errors:**
-```bash
-pip install -r requirements.txt
-```
-
-**Syntax errors in system.py:**
-```bash
-# Revert to clean version
-git checkout system.py
-```
-
-**Features not working:**
-```bash
-# Check what's enabled
-python -c "from integrated_system import get_integrated_system; s = get_integrated_system()"
-```
-
-## 🎉 That's It!
-
-Just run `python system.py --count 50` and everything works automatically.
-
-No complex setup. No separate processes. One command. Done.
+MIT

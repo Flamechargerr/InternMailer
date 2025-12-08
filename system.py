@@ -46,6 +46,19 @@ from ml_success_predictor import get_ml_success_predictor
 from smart_research_system import get_smart_research_system
 from advanced_features import get_advanced_manager
 
+# 🚀 AUTO-ENABLE ALL 10 NEW FEATURES (email validation, logging, rate limiting, etc.)
+try:
+    from integrated_system import get_integrated_system, validate_email, check_daily_limit, log_event
+    INTEGRATED_FEATURES_ENABLED = True
+    print("✅ Integrated System: All 10 features auto-enabled!")
+except ImportError as e:
+    INTEGRATED_FEATURES_ENABLED = False
+    print(f"⚠️ Integrated features not available (run: pip install -r requirements.txt)")
+    # Fallback functions
+    def validate_email(email): return True
+    def check_daily_limit(): return (True, 500)
+    def log_event(event_type, **kwargs): pass
+
 # Load environment variables
 load_dotenv()
 

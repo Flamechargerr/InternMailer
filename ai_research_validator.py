@@ -83,12 +83,12 @@ RECENT PAPERS: {'; '.join(paper_titles)}
 CONTEXT: {' '.join(paper_contexts)[:500]}
 
 Write a SHORT (2-3 sentences) personalized paragraph that:
-1. Shows genuine understanding of their specific research direction
-2. Mentions what aspect of their work you find compelling and WHY
-3. Connects their work to broader real-world impact
-4. Does NOT use generic phrases like "I am interested in your work"
-5. Does NOT repeat paper titles verbatim
-6. Sounds like a real student who has read about their research
+1. Mentions SPECIFIC methodologies, signal types, or applications (e.g., "time-series modeling on ECG/PPG signals" or "transformer architectures for clinical NLP")
+2. Shows you understand the concrete techniques they use, not just the broad area
+3. Connects YOUR skills in time-series analysis, ML pipelines, or data processing to THEIR specific domain
+4. Does NOT use vague phrases like "your work" or "your research" without specifics
+5. Does NOT repeat paper titles verbatim - extract the key technique or application instead
+6. Avoids phrases like "I am interested" - instead show understanding through specific knowledge
 
 Output ONLY the paragraph, nothing else. No greeting, no signature."""
 

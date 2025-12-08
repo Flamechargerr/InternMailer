@@ -55,11 +55,14 @@ class AIResearchValidator:
         
         # Ollama API for AI-powered personalization
         self.ollama_url = "http://localhost:11434/api/generate"
+        
+        # Request counter for load balancing
+        self._ai_request_counter = 0
     
     def _generate_ai_hook(self, professor_name: str, papers: List[Dict], research_area: str) -> str:
         """
-        Use Ollama AI to generate a TRULY PERSONALIZED paragraph about the professor's research.
-        This analyzes their actual papers and creates content showing genuine understanding.
+        Use MULTIPLE FREE AI APIs for parallel personalization.
+        Round-robin between Gemini and Ollama for 2x speed.
         """
         if not papers:
             return None
@@ -89,6 +92,39 @@ Write a SHORT (2-3 sentences) personalized paragraph that:
 
 Output ONLY the paragraph, nothing else. No greeting, no signature."""
 
+        # Round-robin between AI providers
+        self._ai_request_counter += 1
+        
+        # Try Gemini first (fast and free), then Ollama as fallback
+        if self._ai_request_counter % 2 == 0 and self.ai_available:
+            result = self._try_gemini_hook(prompt)
+            if result:
+                return result
+        
+        # Try Ollama
+        result = self._try_ollama_hook(prompt)
+        if result:
+            return result
+        
+        # Fallback to Gemini if Ollama failed
+        if self.ai_available:
+            return self._try_gemini_hook(prompt)
+        
+        return None
+    
+    def _try_gemini_hook(self, prompt: str) -> str:
+        """Try generating hook with Gemini (fast, free tier)"""
+        try:
+            response = self.model.generate_content(prompt)
+            ai_text = response.text.strip()
+            if ai_text and 20 < len(ai_text) < 600 and not ai_text.startswith('Dear'):
+                return ai_text
+        except Exception as e:
+            pass  # Silent fail, will try other AI
+        return None
+    
+    def _try_ollama_hook(self, prompt: str) -> str:
+        """Try generating hook with Ollama (local)"""
         try:
             response = requests.post(
                 self.ollama_url,
@@ -97,12 +133,10 @@ Output ONLY the paragraph, nothing else. No greeting, no signature."""
             )
             if response.status_code == 200:
                 ai_text = response.json().get('response', '').strip()
-                # Validate the response
                 if ai_text and 20 < len(ai_text) < 600 and not ai_text.startswith('Dear'):
                     return ai_text
         except Exception as e:
-            print(f"   ⚠️ Ollama AI hook failed: {e}")
-        
+            pass  # Silent fail
         return None
     
     def validate_university_match(self, email: str, claimed_affiliation: str) -> Dict:

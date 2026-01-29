@@ -31,7 +31,7 @@ from datetime import datetime
 
 # Try to import AI provider
 try:
-    from unified_ai_provider import get_unified_ai_provider
+    from core.unified_ai_provider import get_unified_ai_provider
     AI_AVAILABLE = True
 except ImportError:
     AI_AVAILABLE = False

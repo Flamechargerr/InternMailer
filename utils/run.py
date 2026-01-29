@@ -52,7 +52,7 @@ def print_menu():
 def preview_emails():
     """Preview emails without sending"""
     print("\n📧 Generating email previews...\n")
-    result = subprocess.run([sys.executable, 'email_system.py', '--preview', '3'])
+    result = subprocess.run([sys.executable, 'core/email_system.py', '--preview', '3'])
     if result.returncode != 0:
         print("❌ Error running preview. Make sure email_system.py exists.")
 
@@ -60,7 +60,7 @@ def preview_emails():
 def send_emails(count: int):
     """Send emails"""
     print(f"\n📤 Sending {count} emails...\n")
-    result = subprocess.run([sys.executable, 'email_system.py', '--send', str(count)])
+    result = subprocess.run([sys.executable, 'core/email_system.py', '--send', str(count)])
     if result.returncode != 0:
         print("❌ Error sending emails. Check your configuration.")
 
@@ -93,7 +93,7 @@ def start_daemon():
     print("\n   Press Ctrl+C to stop\n")
     
     try:
-        subprocess.run([sys.executable, 'daemon.py', '--start'])
+        subprocess.run([sys.executable, 'core/daemon.py', '--start'])
     except KeyboardInterrupt:
         print("\n⏹️  Daemon stopped")
 
@@ -101,7 +101,7 @@ def start_daemon():
 def test_cycle():
     """Run one automation cycle"""
     print("\n🧪 Running one automation cycle (test mode)...\n")
-    result = subprocess.run([sys.executable, 'daemon.py', '--test'])
+    result = subprocess.run([sys.executable, 'core/daemon.py', '--test'])
     if result.returncode != 0:
         print("❌ Error running test cycle.")
 
@@ -109,7 +109,7 @@ def test_cycle():
 def check_status():
     """Check daemon status"""
     print("\n📊 Checking status...\n")
-    result = subprocess.run([sys.executable, 'daemon.py', '--status'])
+    result = subprocess.run([sys.executable, 'core/daemon.py', '--status'])
     if result.returncode != 0:
         print("❌ Error checking status.")
 
@@ -117,7 +117,7 @@ def check_status():
 def view_stats():
     """View campaign statistics"""
     print("\n📊 Campaign Statistics\n")
-    result = subprocess.run([sys.executable, 'email_system.py', '--stats'])
+    result = subprocess.run([sys.executable, 'core/email_system.py', '--stats'])
     if result.returncode != 0:
         print("❌ Error getting statistics.")
 

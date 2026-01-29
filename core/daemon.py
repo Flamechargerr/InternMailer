@@ -23,33 +23,33 @@ import argparse
 from datetime import datetime, timedelta
 from pathlib import Path
 
-# Add current directory to path
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+# Add parent directory to path for imports
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Try to import components
 try:
-    from email_system import get_email_system
+    from core.email_system import get_email_system
     EMAIL_SYSTEM_AVAILABLE = True
 except ImportError as e:
     print(f"⚠️ Email system not available: {e}")
     EMAIL_SYSTEM_AVAILABLE = False
 
 try:
-    from inbox_monitor import get_inbox_monitor
+    from core.inbox_monitor import get_inbox_monitor
     INBOX_MONITOR_AVAILABLE = True
 except ImportError as e:
     print(f"⚠️ Inbox monitor not available: {e}")
     INBOX_MONITOR_AVAILABLE = False
 
 try:
-    from auto_action_engine import get_auto_action_engine
+    from core.auto_action_engine import get_auto_action_engine
     ACTION_ENGINE_AVAILABLE = True
 except ImportError as e:
     print(f"⚠️ Action engine not available: {e}")
     ACTION_ENGINE_AVAILABLE = False
 
 try:
-    from followup_scheduler import get_followup_scheduler
+    from core.followup_scheduler import get_followup_scheduler
     FOLLOWUP_SCHEDULER_AVAILABLE = True
 except ImportError as e:
     print(f"⚠️ Followup scheduler not available: {e}")

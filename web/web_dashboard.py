@@ -30,14 +30,14 @@ from flask import Flask, render_template, jsonify, request, flash, redirect, url
 from flask import session
 from werkzeug.utils import secure_filename
 
-# Add current directory to path
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+# Add parent directory to path for imports
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Import InternMailer components
 try:
-    from email_system import EmailSystem
-    from ats_optimizer import ATSOptimizer
-    from unified_ai_provider import get_unified_ai_provider
+    from core.email_system import EmailSystem
+    from web.ats_optimizer import ATSOptimizer
+    from core.unified_ai_provider import get_unified_ai_provider
     EMAIL_SYSTEM_AVAILABLE = True
 except ImportError as e:
     print(f"⚠️ Email system not available: {e}")

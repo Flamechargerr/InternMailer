@@ -34,8 +34,8 @@ from threading import Lock
 
 # Import AI components
 try:
-    from unified_ai_provider import get_unified_ai_provider, PersonalizationResult
-    from anti_templating_engine import get_anti_templating_engine
+    from core.unified_ai_provider import get_unified_ai_provider, PersonalizationResult
+    from core.anti_templating_engine import get_anti_templating_engine
     AI_AVAILABLE = True
 except ImportError:
     AI_AVAILABLE = False

@@ -8,13 +8,13 @@
 
 ## ✨ Features
 
-- **📧 AI-Powered Email Sending** - Personalized emails with anti-templating technology
-- **🎯 ATS Optimizer** - Auto-customize LaTeX resume & cover letter for each job (NEW!)
+- **🌐 Web Dashboard** - Visual interface to control everything
+- **🎯 ATS Optimizer** - Auto-customize LaTeX resume & cover letter for each job
+- **📧 AI-Powered Email Sending** - Personalized emails with anti-templating
 - **📥 Inbox Monitoring** - Auto-checks Gmail for replies via IMAP
 - **🤖 Reply Classification** - AI categorizes replies (interested/not interested/question/OOO)
 - **⚡ Auto-Actions** - Sends calendar links, archives rejections, flags questions
 - **🔄 Follow-Up Management** - Auto-sends follow-ups after 7 days
-- **🌐 Web Dashboard** - Visual interface to control everything
 - **📊 Campaign Tracking** - SQLite database tracks all activity
 
 ## 🚀 Quick Start
@@ -34,40 +34,57 @@ cp .env.example .env
 # Edit .env with your credentials (Gmail + Groq API key)
 ```
 
-### 2. Launch Web Dashboard
+### 2. Launch
 
 ```bash
-python web_dashboard.py
+# Start web dashboard (default)
+python main.py
+
+# Or use CLI menu
+python main.py --cli
 ```
 
 Open http://localhost:5000 in your browser.
 
-### 3. Or Use Command Line
+## 📁 Project Structure
 
-```bash
-# Interactive menu
-python run.py
-
-# Preview emails
-python email_system.py --preview 5
-
-# Send emails
-python email_system.py --send 10
-
-# Start full automation
-python daemon.py --start --send 10
+```
+internmailer/
+├── main.py                  # 🚀 Entry point (web dashboard)
+├── core/                    # 📦 Core modules
+│   ├── email_system.py      # 📧 Email sending
+│   ├── daemon.py            # 🤖 Automation daemon
+│   ├── inbox_monitor.py     # 📥 Gmail monitoring
+│   ├── reply_classifier.py  # 🤖 AI classification
+│   ├── auto_action_engine.py# ⚡ Auto-actions
+│   ├── followup_scheduler.py# 🔄 Follow-ups
+│   ├── unified_ai_provider.py# 🤖 AI provider
+│   ├── anti_templating_engine.py
+│   └── config.py
+├── web/                     # 🌐 Web interface
+│   ├── web_dashboard.py     # Flask app
+│   └── ats_optimizer.py     # Resume optimizer
+├── utils/                   # 🛠️ Utilities
+│   └── run.py               # CLI menu
+├── templates/               # 📄 Email & LaTeX templates
+├── docs/                    # 📚 Documentation
+├── .env                     # 🔐 Configuration
+└── requirements.txt         # 📦 Dependencies
 ```
 
 ## 🎯 ATS Optimizer
 
 Customize your resume and cover letter for each job application:
 
-```bash
-# Interactive mode
-python ats_optimizer.py --interactive
+### Via Web Dashboard
+1. Open http://localhost:5000
+2. Click "ATS Optimizer" tab
+3. Paste job description
+4. Download optimized PDFs
 
-# From file
-python ats_optimizer.py --job-desc job.txt
+### Via CLI
+```bash
+python web/ats_optimizer.py --interactive
 ```
 
 The optimizer will:
@@ -78,27 +95,6 @@ The optimizer will:
 5. Compile to PDF (if LaTeX is installed)
 
 See [ATS Optimizer Guide](docs/ATS_OPTIMIZER_GUIDE.md) for details.
-
-## 📁 Project Structure
-
-```
-internmailer/
-├── web_dashboard.py           # 🌐 Web interface (NEW!)
-├── ats_optimizer.py           # 🎯 Resume/cover letter optimizer
-├── email_system.py            # 📧 Main email sending system
-├── daemon.py                  # 🤖 Automation daemon
-├── run.py                     # 🖥️ CLI menu
-├── inbox_monitor.py           # 📥 Gmail IMAP monitoring
-├── reply_classifier.py        # 🤖 AI reply classification
-├── auto_action_engine.py      # ⚡ Auto-response actions
-├── followup_scheduler.py      # 🔄 Follow-up management
-├── unified_ai_provider.py     # 🤖 AI personalization
-├── anti_templating_engine.py  # 📝 Email variation
-├── config.py                  # ⚙️ Configuration
-├── requirements.txt           # 📦 Dependencies
-├── .env                       # 🔐 Environment variables
-└── templates/                 # 📄 Email & LaTeX templates
-```
 
 ## 🔧 Configuration
 
@@ -144,7 +140,7 @@ The web dashboard provides a visual interface for:
 ### Send Personalized Emails
 
 ```python
-from email_system import EmailSystem
+from core.email_system import EmailSystem
 
 system = EmailSystem()
 system.send_campaign(count=50)  # Send 50 personalized emails
@@ -153,7 +149,7 @@ system.send_campaign(count=50)  # Send 50 personalized emails
 ### Optimize Resume for a Job
 
 ```python
-from ats_optimizer import ATSOptimizer
+from web.ats_optimizer import ATSOptimizer
 
 optimizer = ATSOptimizer()
 job_description = """Data Science Intern position...
@@ -166,7 +162,7 @@ print(f"ATS Score: {result.ats_score_before} → {result.ats_score_after}")
 ### Monitor Inbox
 
 ```python
-from inbox_monitor import get_inbox_monitor
+from core.inbox_monitor import get_inbox_monitor
 
 monitor = get_inbox_monitor()
 replies = monitor.check_inbox()

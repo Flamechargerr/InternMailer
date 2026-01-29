@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 import sqlite3
 from typing import List, Dict, Tuple
 from dotenv import load_dotenv
-from reply_classifier import get_reply_classifier
+from core.reply_classifier import get_reply_classifier
 
 load_dotenv()
 

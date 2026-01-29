@@ -15,7 +15,7 @@ from typing import Dict, List, Optional
 load_dotenv()
 
 # 📁 Project Paths
-BASE_DIR = Path(__file__).parent.absolute()
+BASE_DIR = Path(__file__).parent.parent.absolute()
 DATA_DIR = BASE_DIR / "data"
 TEMPLATES_DIR = BASE_DIR / "templates"
 LOGS_DIR = BASE_DIR / "logs"

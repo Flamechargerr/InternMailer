@@ -1,0 +1,84 @@
+\documentclass[a4paper,10pt]{article}
+
+% ---------- Packages ----------
+\usepackage[margin=0.48in, bottom=0.4in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{mathpazo}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{titlesec}
+
+% ---------- Layout Control ----------
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\linespread{0.96}
+
+\setlist[itemize]{leftmargin=*, itemsep=0.5pt, topsep=0.5pt, parsep=0pt}
+
+% ---------- Section Formatting ----------
+\titleformat{\section}
+  {\large\bfseries}
+  {}
+  {0pt}
+  {}
+  [\vspace{0.2ex}\titlerule\vspace{0.4ex}]
+
+\titlespacing*{\section}{0pt}{0.5ex}{0.4ex}
+
+\hypersetup{
+  colorlinks=true,
+  urlcolor=blue
+}
+
+\begin{document}
+
+% ---------- Header ----------
+\begin{flushright}
+{\small Last updated: {{DATE}}}
+\end{flushright}
+\vspace{-20pt}
+
+\begin{center}
+{\fontsize{28}{32}\selectfont \textbf{Anamay Tripathy}}\\[2pt]
+
+{\small Udupi, Karnataka \;|\;
+\href{mailto:tripathy.anamay23@gmail.com}{tripathy.anamay23@gmail.com} \;|\;
++91 9877454747}\\[1pt]
+
+\href{https://www.linkedin.com/in/anamay-tripathy-b53829296/}{LinkedIn} \;|\;
+\href{https://github.com/Flamechargerr}{GitHub} \;|\;
+\href{https://anamay.vercel.app/}{Portfolio}
+\end{center}
+\vspace{-2pt}
+
+% ---------- Summary ----------
+\section*{Summary}
+{{SUMMARY}}
+
+% ---------- Education ----------
+\section*{Education}
+\textbf{Manipal Institute of Technology} \hfill Aug 2023 -- Expected May 2027\\
+\textbf{B.Tech, Data Science Engineering} \hfill\\
+Relevant Coursework: {{COURSEWORK}}
+
+% ---------- Experience ----------
+\section*{Experience}
+
+{{EXPERIENCE}}
+
+% ---------- Projects ----------
+\section*{Projects}
+
+{{PROJECTS}}
+
+% ---------- Technical Skills ----------
+\section*{Technical Skills}
+{{SKILLS}}
+
+% ---------- Achievements & Certifications ----------
+\section*{Achievements & Certifications}
+\textbf{Competitive Programming}: 150+ LeetCode problems \;|\; \textbf{Certifications}: Machine Learning (Johns Hopkins), IBM Generative AI
+
+\end{document}

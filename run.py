@@ -1,68 +1,257 @@
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+#!/usr/bin/env python3
 """
-InternMailer - Quick Launch Script
-Run: python run.py
-"""
-import sys
-import os
+🚀 InternMailer - Quick Launch Script
+Simple interactive menu to run the automation system.
 
-def main():
+Usage:
+    python run.py
+"""
+
+import os
+import sys
+import subprocess
+
+
+def print_menu():
+    """Print the main menu"""
     print("""
 ╔══════════════════════════════════════════════════════════════╗
-║               INTERNMAILER - QUICK LAUNCHER                  ║
+║               🤖 INTERNMAILER - QUICK LAUNCHER               ║
 ╠══════════════════════════════════════════════════════════════╣
-║  1. Send to 10 Professors                                    ║
-║  2. Send to 10 Recruiters                                    ║
-║  3. Send to 20 (10 each)                                     ║
-║  4. Open Dashboard                                           ║
-║  5. View Status                                              ║
-║  6. Custom Campaign                                          ║
+║                                                              ║
+║  📧 SENDING                                                  ║
+║  ──────────────────────────────────────────────────────────  ║
+║  1. Preview 3 emails (see what will be sent)                 ║
+║  2. Send 5 emails (small test)                               ║
+║  3. Send 10 emails                                           ║
+║  4. Send 20 emails                                           ║
+║  5. Send custom amount                                       ║
+║                                                              ║
+║  🤖 AUTOMATION                                               ║
+║  ──────────────────────────────────────────────────────────  ║
+║  6. Start full automation daemon                             ║
+║  7. Run one automation cycle (test)                          ║
+║  8. Check daemon status                                      ║
+║                                                              ║
+║  📊 MONITORING                                               ║
+║  ──────────────────────────────────────────────────────────  ║
+║  9. View campaign statistics                                 ║
+║  10. View recent logs                                        ║
+║                                                              ║
+║  ⚙️  SETUP                                                   ║
+║  ──────────────────────────────────────────────────────────  ║
+║  11. Check configuration                                     ║
+║  12. Install dependencies                                    ║
+║                                                              ║
 ║  0. Exit                                                     ║
+║                                                              ║
 ╚══════════════════════════════════════════════════════════════╝
 """)
+
+
+def preview_emails():
+    """Preview emails without sending"""
+    print("\n📧 Generating email previews...\n")
+    result = subprocess.run([sys.executable, 'email_system.py', '--preview', '3'])
+    if result.returncode != 0:
+        print("❌ Error running preview. Make sure email_system.py exists.")
+
+
+def send_emails(count: int):
+    """Send emails"""
+    print(f"\n📤 Sending {count} emails...\n")
+    result = subprocess.run([sys.executable, 'email_system.py', '--send', str(count)])
+    if result.returncode != 0:
+        print("❌ Error sending emails. Check your configuration.")
+
+
+def send_custom():
+    """Send custom amount"""
+    try:
+        count = input("\nHow many emails to send? ").strip()
+        count = int(count)
+        if count <= 0:
+            print("❌ Please enter a positive number")
+            return
+        if count > 100:
+            confirm = input(f"⚠️  That's a lot! Send {count} emails? (yes/no): ").strip().lower()
+            if confirm != 'yes':
+                print("Cancelled")
+                return
+        send_emails(count)
+    except ValueError:
+        print("❌ Please enter a valid number")
+
+
+def start_daemon():
+    """Start the automation daemon"""
+    print("\n🤖 Starting automation daemon...")
+    print("   This will:")
+    print("   • Monitor your inbox every hour")
+    print("   • Auto-respond to replies")
+    print("   • Send follow-ups automatically")
+    print("\n   Press Ctrl+C to stop\n")
     
-    choice = input("Select option [1-6]: ").strip()
+    try:
+        subprocess.run([sys.executable, 'daemon.py', '--start'])
+    except KeyboardInterrupt:
+        print("\n⏹️  Daemon stopped")
+
+
+def test_cycle():
+    """Run one automation cycle"""
+    print("\n🧪 Running one automation cycle (test mode)...\n")
+    result = subprocess.run([sys.executable, 'daemon.py', '--test'])
+    if result.returncode != 0:
+        print("❌ Error running test cycle.")
+
+
+def check_status():
+    """Check daemon status"""
+    print("\n📊 Checking status...\n")
+    result = subprocess.run([sys.executable, 'daemon.py', '--status'])
+    if result.returncode != 0:
+        print("❌ Error checking status.")
+
+
+def view_stats():
+    """View campaign statistics"""
+    print("\n📊 Campaign Statistics\n")
+    result = subprocess.run([sys.executable, 'email_system.py', '--stats'])
+    if result.returncode != 0:
+        print("❌ Error getting statistics.")
+
+
+def view_logs():
+    """View recent logs"""
+    log_file = 'campaign_results/automation_log.txt'
     
-    if choice == "1":
-        print("\n🎓 Sending to 10 Professors...")
-        os.system("python system.py --count 10")
+    if not os.path.exists(log_file):
+        print(f"\n❌ Log file not found: {log_file}")
+        return
     
-    elif choice == "2":
-        print("\n🏢 Sending to 10 Recruiters...")
-        os.system("python system.py --hr --count 10")
+    print(f"\n📄 Recent logs from {log_file}:\n")
     
-    elif choice == "3":
-        print("\n📧 Sending to 20 contacts (10 professors + 10 recruiters)...")
-        os.system("python system.py --count 10")
-        os.system("python system.py --hr --count 10")
+    try:
+        # Read last 50 lines
+        with open(log_file, 'r', encoding='utf-8') as f:
+            lines = f.readlines()
+            last_lines = lines[-50:] if len(lines) > 50 else lines
+            for line in last_lines:
+                print(line.rstrip())
+    except Exception as e:
+        print(f"❌ Error reading logs: {e}")
+
+
+def check_config():
+    """Check configuration"""
+    print("\n⚙️  Checking configuration...\n")
     
-    elif choice == "4":
-        print("\n📊 Opening Dashboard...")
-        os.system("streamlit run dashboard.py")
-    
-    elif choice == "5":
-        print("\n📈 Campaign Status:")
-        import system
-        vs = system.VerifiedEmailSystem()
-        vs.show_status()
-    
-    elif choice == "6":
-        mode = input("Mode (professor/hr): ").strip().lower()
-        count = input("Number of emails: ").strip()
+    # Check .env file
+    if os.path.exists('.env'):
+        print("✅ .env file found")
         
-        if mode in ["hr", "corporate", "recruiter"]:
-            os.system(f"python system.py --hr --count {count}")
+        # Read and check key variables
+        with open('.env', 'r') as f:
+            content = f.read()
+            
+        if 'GMAIL_USER' in content or 'EMAIL_ADDRESS' in content:
+            print("✅ Email configuration present")
         else:
-            os.system(f"python system.py --count {count}")
-    
-    elif choice == "0":
-        print("Goodbye!")
-        sys.exit(0)
-    
+            print("❌ Email configuration missing")
+            
+        if 'GMAIL_APP_PASSWORD' in content or 'EMAIL_PASSWORD' in content:
+            print("✅ Password configuration present")
+        else:
+            print("❌ Password configuration missing")
     else:
-        print("Invalid option")
+        print("❌ .env file not found")
+        print("   Create one with your Gmail credentials")
+    
+    # Check data directory
+    if os.path.exists('data'):
+        csv_files = [f for f in os.listdir('data') if f.endswith('.csv')]
+        if csv_files:
+            print(f"✅ Found {len(csv_files)} CSV file(s) in data/")
+        else:
+            print("⚠️  No CSV files in data/ directory")
+    else:
+        print("❌ data/ directory not found")
+    
+    # Check resume
+    resume_paths = ['resumes/CV_Anamay_Modern.pdf', 'CV_Anamay_Modern.pdf', 'resume.pdf']
+    resume_found = any(os.path.exists(p) for p in resume_paths)
+    if resume_found:
+        print("✅ Resume found")
+    else:
+        print("⚠️  Resume not found (will send without attachment)")
+    
+    # Check required files
+    required_files = ['email_system.py', 'daemon.py', 'inbox_monitor.py', 
+                      'reply_classifier.py', 'auto_action_engine.py', 'followup_scheduler.py']
+    
+    print("\n📁 Core files:")
+    for file in required_files:
+        if os.path.exists(file):
+            print(f"   ✅ {file}")
+        else:
+            print(f"   ❌ {file} (missing)")
+    
+    print()
+
+
+def install_deps():
+    """Install dependencies"""
+    print("\n📦 Installing dependencies...\n")
+    result = subprocess.run([sys.executable, '-m', 'pip', 'install', '-r', 'requirements.txt'])
+    if result.returncode == 0:
+        print("\n✅ Dependencies installed successfully")
+    else:
+        print("\n❌ Error installing dependencies")
+
+
+def main():
+    """Main menu loop"""
+    while True:
+        print_menu()
+        choice = input("Select option [0-12]: ").strip()
+        
+        if choice == "1":
+            preview_emails()
+        elif choice == "2":
+            send_emails(5)
+        elif choice == "3":
+            send_emails(10)
+        elif choice == "4":
+            send_emails(20)
+        elif choice == "5":
+            send_custom()
+        elif choice == "6":
+            start_daemon()
+        elif choice == "7":
+            test_cycle()
+        elif choice == "8":
+            check_status()
+        elif choice == "9":
+            view_stats()
+        elif choice == "10":
+            view_logs()
+        elif choice == "11":
+            check_config()
+        elif choice == "12":
+            install_deps()
+        elif choice == "0":
+            print("\n👋 Goodbye!\n")
+            sys.exit(0)
+        else:
+            print("\n❌ Invalid option. Please try again.\n")
+        
+        input("\nPress Enter to continue...")
+
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\n\n👋 Goodbye!\n")
+        sys.exit(0)

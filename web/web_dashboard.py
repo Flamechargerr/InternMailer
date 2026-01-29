@@ -172,7 +172,7 @@ def settings_page():
 def test_groq():
     """Test Groq API connection"""
     try:
-        from unified_ai_provider import get_unified_ai_provider
+        from core.unified_ai_provider import get_unified_ai_provider
         provider = get_unified_ai_provider()
         
         # Try a simple test call

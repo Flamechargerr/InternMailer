@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}Contacts - InternMailer{% endblock %}
+
+{% block content %}
+<h2>👥 Contacts Management</h2>
+<p style="margin-bottom: 20px; color: #666;">Manage your email contacts and track their status</p>
+
+<div class="card">
+    <h3>📊 Contact Statistics</h3>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h4>Total Contacts</h4>
+            <div class="value">{{ stats.total or 0 }}</div>
+        </div>
+        <div class="stat-card">
+            <h4>Emails Sent</h4>
+            <div class="value">{{ stats.sent or 0 }}</div>
+        </div>
+        <div class="stat-card">
+            <h4>Replies</h4>
+            <div class="value">{{ stats.replies or 0 }}</div>
+        </div>
+        <div class="stat-card">
+            <h4>Follow-ups</h4>
+            <div class="value">{{ stats.followups or 0 }}</div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h3>📋 All Contacts</h3>
+    {% if contacts %}
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Company</th>
+                <th>Status</th>
+                <th>Last Contact</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contact in contacts %}
+            <tr>
+                <td>{{ contact.name }}</td>
+                <td>{{ contact.email }}</td>
+                <td>{{ contact.company or '-' }}</td>
+                <td>
+                    {% if contact.status == 'sent' %}
+                    <span class="badge badge-info">Sent</span>
+                    {% elif contact.status == 'replied' %}
+                    <span class="badge badge-success">Replied</span>
+                    {% elif contact.status == 'followed_up' %}
+                    <span class="badge badge-warning">Followed Up</span>
+                    {% else %}
+                    <span class="badge badge-secondary">{{ contact.status }}</span>
+                    {% endif %}
+                </td>
+                <td>{{ contact.last_contact or '-' }}</td>
+                <td>
+                    <a href="/contacts/{{ contact.id }}/edit" class="btn btn-secondary"
+                        style="padding: 5px 10px; font-size: 12px;">Edit</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p style="color: #666; padding: 20px 0;">No contacts found. Add contacts to start sending emails.</p>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h3>➕ Add New Contact</h3>
+    <form method="POST" action="/contacts/add">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+            <div class="form-group">
+                <label for="name">Name *</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="company">Company</label>
+                <input type="text" id="company" name="company">
+            </div>
+            <div class="form-group">
+                <label for="title">Title/Position</label>
+                <input type="text" id="title" name="title">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="notes">Notes</label>
+            <textarea id="notes" name="notes" style="min-height: 80px;"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Contact</button>
+    </form>
+</div>
+
+<div class="card">
+    <h3>📥 Import Contacts</h3>
+    <p style="margin-bottom: 15px; color: #666;">Import contacts from a CSV file. The CSV should have columns: name,
+        email, company, title, notes</p>
+    <form method="POST" action="/contacts/import" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="csv_file">CSV File</label>
+            <input type="file" id="csv_file" name="csv_file" accept=".csv" required>
+        </div>
+        <button type="submit" class="btn btn-success">Import CSV</button>
+    </form>
+</div>
+{% endblock %}

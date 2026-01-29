@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}Settings - InternMailer{% endblock %}
+
+{% block content %}
+<h2>⚙️ System Settings</h2>
+<p style="margin-bottom: 20px; color: #666;">View and configure your InternMailer settings</p>
+
+<div class="card">
+    <h3>📧 Email Configuration</h3>
+    <table>
+        <tr>
+            <td><strong>Gmail Email:</strong></td>
+            <td>{{ config.gmail_email or 'Not configured' }}</td>
+        </tr>
+        <tr>
+            <td><strong>Gmail App Password:</strong></td>
+            <td>{% if config.gmail_password %}✅ Configured{% else %}❌ Not configured{% endif %}</td>
+        </tr>
+        <tr>
+            <td><strong>Sender Name:</strong></td>
+            <td>{{ config.sender_name or 'Not configured' }}</td>
+        </tr>
+    </table>
+    <p style="margin-top: 15px; color: #666; font-size: 14px;">
+        To configure email settings, edit the <code>.env</code> file in your project directory.
+    </p>
+</div>
+
+<div class="card">
+    <h3>🤖 AI Configuration</h3>
+    <table>
+        <tr>
+            <td><strong>Primary AI Provider:</strong></td>
+            <td>Groq</td>
+        </tr>
+        <tr>
+            <td><strong>Groq API Key:</strong></td>
+            <td>{% if config.groq_api_key %}✅ Configured{% else %}❌ Not configured{% endif %}</td>
+        </tr>
+        <tr>
+            <td><strong>OpenRouter API Key:</strong></td>
+            <td>{% if config.openrouter_api_key %}✅ Configured{% else %}❌ Not configured{% endif %}</td>
+        </tr>
+        <tr>
+            <td><strong>GitHub Token:</strong></td>
+            <td>{% if config.github_token %}✅ Configured{% else %}❌ Not configured{% endif %}</td>
+        </tr>
+    </table>
+    <p style="margin-top: 15px; color: #666; font-size: 14px;">
+        The system uses Groq as the primary AI provider. If Groq is unavailable, it falls back to OpenRouter, then
+        GitHub Models, then Ollama.
+    </p>
+</div>
+
+<div class="card">
+    <h3>🗄️ Database Configuration</h3>
+    <table>
+        <tr>
+            <td><strong>Database Path:</strong></td>
+            <td>{{ config.db_path }}</td>
+        </tr>
+        <tr>
+            <td><strong>Contacts DB:</strong></td>
+            <td>{{ config.contacts_db }}</td>
+        </tr>
+        <tr>
+            <td><strong>Inbox DB:</strong></td>
+            <td>{{ config.inbox_db }}</td>
+        </tr>
+    </table>
+</div>
+
+<div class="card">
+    <h3>📁 Directory Structure</h3>
+    <table>
+        <tr>
+            <td><strong>Base Directory:</strong></td>
+            <td>{{ config.base_dir }}</td>
+        </tr>
+        <tr>
+            <td><strong>Templates Directory:</strong></td>
+            <td>{{ config.templates_dir }}</td>
+        </tr>
+        <tr>
+            <td><strong>Output Directory:</strong></td>
+            <td>{{ config.output_dir }}</td>
+        </tr>
+    </table>
+</div>
+
+<div class="card">
+    <h3>🔄 Automation Settings</h3>
+    <table>
+        <tr>
+            <td><strong>Follow-up Interval:</strong></td>
+            <td>7 days</td>
+        </tr>
+        <tr>
+            <td><strong>Max Follow-ups:</strong></td>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td><strong>Inbox Check Interval:</strong></td>
+            <td>5 minutes</td>
+        </tr>
+    </table>
+</div>
+
+<div class="card">
+    <h3>🧪 Test Configuration</h3>
+    <p style="margin-bottom: 15px; color: #666;">Test your configuration to ensure everything is working correctly:</p>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <a href="/api/test-groq" class="btn btn-primary">Test Groq API</a>
+        <a href="/api/test-email" class="btn btn-success">Test Email Connection</a>
+        <a href="/api/test-database" class="btn btn-secondary">Test Database</a>
+    </div>
+</div>
+
+<div class="card">
+    <h3>📖 Documentation</h3>
+    <ul style="margin-left: 20px; line-height: 1.8; color: #333;">
+        <li><a href="/docs/README.md" target="_blank">Main README</a></li>
+        <li><a href="/docs/ATS_OPTIMIZER_GUIDE.md" target="_blank">ATS Optimizer Guide</a></li>
+        <li><a href="/docs/SETUP_GUIDE.md" target="_blank">Setup Guide</a></li>
+    </ul>
+</div>
+{% endblock %}

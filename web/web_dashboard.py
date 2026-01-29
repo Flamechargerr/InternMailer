@@ -43,7 +43,7 @@ except ImportError as e:
     print(f"⚠️ Email system not available: {e}")
     EMAIL_SYSTEM_AVAILABLE = False
 
-app = Flask(__name__, template_folder='templates')
+app = Flask(__name__, template_folder='../templates/web')
 app.secret_key = os.urandom(24)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 
@@ -62,7 +62,17 @@ campaign_stats = {
 def index():
     """Main dashboard page"""
     stats = get_campaign_stats()
-    return render_template('dashboard.html', stats=stats)
+    
+    # Get daemon status
+    daemon_status_info = {
+        'running': False,
+        'pid': None
+    }
+    if daemon_process and daemon_process.poll() is None:
+        daemon_status_info['running'] = True
+        daemon_status_info['pid'] = daemon_process.pid
+    
+    return render_template('dashboard.html', stats=stats, daemon_status=daemon_status_info)
 
 @app.route('/api/stats')
 def api_stats():
@@ -132,13 +142,25 @@ def ats_optimizer_page():
 def contacts_page():
     """Contacts management page"""
     contacts = get_contacts()
-    return render_template('contacts.html', contacts=contacts)
+    stats = {
+        'total': len(contacts) if contacts else 0,
+        'sent': sum(1 for c in contacts if c.get('status') == 'sent') if contacts else 0,
+        'replies': sum(1 for c in contacts if c.get('status') == 'replied') if contacts else 0,
+        'followups': sum(1 for c in contacts if c.get('status') == 'followed_up') if contacts else 0
+    }
+    return render_template('contacts.html', contacts=contacts, stats=stats)
 
 @app.route('/replies')
 def replies_page():
     """Replies monitoring page"""
     replies = get_replies()
-    return render_template('replies.html', replies=replies)
+    stats = {
+        'total': len(replies) if replies else 0,
+        'interested': sum(1 for r in replies if r.get('classification') == 'INTERESTED') if replies else 0,
+        'not_interested': sum(1 for r in replies if r.get('classification') == 'NOT_INTERESTED') if replies else 0,
+        'questions': sum(1 for r in replies if r.get('classification') == 'QUESTION') if replies else 0
+    }
+    return render_template('replies.html', replies=replies, stats=stats)
 
 @app.route('/settings')
 def settings_page():

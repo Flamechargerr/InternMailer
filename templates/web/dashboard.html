@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - InternMailer{% endblock %}
+
+{% block content %}
+<h2>📊 Campaign Dashboard</h2>
+<p style="margin-bottom: 20px; color: #666;">Monitor your email campaigns and automation status</p>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <h4>Total Emails Sent</h4>
+        <div class="value">{{ stats.total_sent or 0 }}</div>
+    </div>
+    <div class="stat-card">
+        <h4>Replies Received</h4>
+        <div class="value">{{ stats.replies or 0 }}</div>
+    </div>
+    <div class="stat-card">
+        <h4>Response Rate</h4>
+        <div class="value">{{ stats.response_rate or 0 }}%</div>
+    </div>
+    <div class="stat-card">
+        <h4>Follow-ups Sent</h4>
+        <div class="value">{{ stats.followups or 0 }}</div>
+    </div>
+</div>
+
+<div class="card">
+    <h3>🚀 Quick Actions</h3>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <a href="/send-emails" class="btn btn-primary">Send Emails</a>
+        <a href="/ats-optimizer" class="btn btn-success">ATS Optimizer</a>
+        <a href="/contacts" class="btn btn-secondary">Manage Contacts</a>
+        <a href="/replies" class="btn btn-info">View Replies</a>
+    </div>
+</div>
+
+<div class="card">
+    <h3>🤖 Automation Daemon</h3>
+    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+        <span style="font-weight: 500;">Status:</span>
+        <span class="badge {% if daemon_status.running %}badge-success{% else %}badge-danger{% endif %}">
+            {% if daemon_status.running %}Running{% else %}Stopped{% endif %}
+        </span>
+        {% if daemon_status.running %}
+        <span style="color: #666; margin-left: 10px;">(PID: {{ daemon_status.pid }})</span>
+        {% endif %}
+    </div>
+    <div style="margin-top: 15px; display: flex; gap: 10px;">
+        {% if daemon_status.running %}
+        <a href="/api/daemon/stop" class="btn btn-danger">Stop Daemon</a>
+        {% else %}
+        <a href="/api/daemon/start" class="btn btn-success">Start Daemon</a>
+        {% endif %}
+        <a href="/api/daemon/status" class="btn btn-secondary">Refresh Status</a>
+    </div>
+</div>
+
+<div class="card">
+    <h3>📈 Recent Activity</h3>
+    {% if stats.recent_activity %}
+    <table>
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Type</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for activity in stats.recent_activity %}
+            <tr>
+                <td>{{ activity.time }}</td>
+                <td>
+                    <span class="badge badge-info">{{ activity.type }}</span>
+                </td>
+                <td>{{ activity.details }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p style="color: #666; padding: 20px 0;">No recent activity</p>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h3>⚙️ System Status</h3>
+    <table>
+        <tr>
+            <td><strong>Email System:</strong></td>
+            <td>
+                {% if EMAIL_SYSTEM_AVAILABLE %}
+                <span class="badge badge-success">Available</span>
+                {% else %}
+                <span class="badge badge-danger">Not Available</span>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td><strong>AI Provider:</strong></td>
+            <td>
+                <span class="badge badge-success">Groq (Primary)</span>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Database:</strong></td>
+            <td>
+                <span class="badge badge-success">Connected</span>
+            </td>
+        </tr>
+    </table>
+</div>
+{% endblock %}

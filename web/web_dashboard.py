@@ -238,10 +238,11 @@ def daemon_status():
 def download_file(filename):
     """Download optimized files"""
     safe_filename = secure_filename(filename)
-    file_path = Path('optimized_documents') / safe_filename
+    # Use parent directory's optimized_documents folder
+    file_path = Path(__file__).parent.parent / 'optimized_documents' / safe_filename
     
     if file_path.exists():
-        return send_file(file_path, as_attachment=True)
+        return send_file(str(file_path), as_attachment=True)
     else:
         return jsonify({'status': 'error', 'message': 'File not found'}), 404
 

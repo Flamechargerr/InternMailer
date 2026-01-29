@@ -43,10 +43,7 @@ except ImportError as e:
     print(f"⚠️ Email system not available: {e}")
     EMAIL_SYSTEM_AVAILABLE = False
 
-# Get project root for templates
-project_root = Path(__file__).parent.parent
-
-app = Flask(__name__, template_folder=str(project_root / 'templates' / 'web'))
+app = Flask(__name__, template_folder='templates')
 app.secret_key = os.urandom(24)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 

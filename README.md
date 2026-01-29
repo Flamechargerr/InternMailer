@@ -38,13 +38,13 @@ cp .env.example .env
 
 ```bash
 # Start web dashboard (default)
-python main.py
+python3 main.py
 
 # Or use CLI menu
-python main.py --cli
+python3 main.py --cli
 ```
 
-Open http://localhost:5000 in your browser.
+Open http://localhost:5050 in your browser.
 
 ## 📁 Project Structure
 

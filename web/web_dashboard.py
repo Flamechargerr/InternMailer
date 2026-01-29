@@ -43,7 +43,10 @@ except ImportError as e:
     print(f"⚠️ Email system not available: {e}")
     EMAIL_SYSTEM_AVAILABLE = False
 
-app = Flask(__name__)
+# Get project root for templates
+project_root = Path(__file__).parent.parent
+
+app = Flask(__name__, template_folder=str(project_root / 'templates' / 'web'))
 app.secret_key = os.urandom(24)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 
@@ -338,7 +341,9 @@ def get_current_config():
 
 def create_templates():
     """Create HTML templates for the dashboard"""
-    templates_dir = Path('templates/web')
+    # Get the correct templates directory relative to project root
+    base_dir = Path(__file__).parent.parent
+    templates_dir = base_dir / 'templates' / 'web'
     templates_dir.mkdir(parents=True, exist_ok=True)
     
     # Base template

@@ -109,7 +109,7 @@ def preview_emails():
     
     try:
         system = EmailSystem()
-        previews = system.preview_emails(count=count)
+        previews = system.preview(count=count)
         return jsonify({'status': 'success', 'previews': previews})
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500

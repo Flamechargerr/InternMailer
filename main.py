@@ -28,9 +28,9 @@ def main():
     else:
         # Launch web dashboard by default
         print("🌐 Starting web dashboard...")
-        print("Open http://localhost:5000 in your browser\n")
+        print("Open http://localhost:5050 in your browser\n")
         from web.web_dashboard import app
-        app.run(host='0.0.0.0', port=5000, debug=True)
+        app.run(host='0.0.0.0', port=5050, debug=True)
 
 if __name__ == '__main__':
     main()

@@ -1,0 +1,20 @@
+"""Application constants."""
+
+MAX_EMAILS_PER_DAY = 100
+MAX_EMAILS_PER_HOUR = 20
+MAX_CONCURRENT_EMAILS = 5
+RATE_LIMIT_DELAY = 2.0
+
+FOLLOWUP_DAYS = 7
+FOLLOWUP_MAX = 3
+
+JOB_SCORE_THRESHOLD = 0.3
+JOB_MAX_RESULTS = 500
+
+PLAYWRIGHT_TIMEOUT = 60000
+PLAYWRIGHT_HEADLESS = False
+
+DEFAULT_ROLE = "Data Science Intern"
+DEFAULT_LOCATIONS = ["remote", "Remote"]
+
+VALID_EMPLOYMENT_TYPES = ["internship", "full_time", "contract", "part_time"]

@@ -18,6 +18,7 @@ import json
 import time
 import random
 import hashlib
+import logging
 import requests
 from typing import Dict, List, Optional, Tuple
 from dataclasses import dataclass
@@ -25,6 +26,8 @@ from datetime import datetime, timedelta
 from dotenv import load_dotenv
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -70,11 +73,11 @@ class UnifiedAIProvider:
         # Check Ollama availability
         self._check_ollama()
         
-        print("🚀 Unified AI Provider initialized")
-        print(f"   Groq: {'✅' if self.provider_status['groq']['available'] else '❌'}")
-        print(f"   OpenRouter: {'✅' if self.provider_status['openrouter']['available'] else '❌'}")
-        print(f"   GitHub Models: {'✅' if self.provider_status['github']['available'] else '❌'}")
-        print(f"   Ollama: {'✅' if self.provider_status['ollama']['available'] else '❌'}")
+        logger.info("Unified AI Provider initialized")
+        logger.info("Groq available: %s", self.provider_status['groq']['available'])
+        logger.info("OpenRouter available: %s", self.provider_status['openrouter']['available'])
+        logger.info("GitHub Models available: %s", self.provider_status['github']['available'])
+        logger.info("Ollama available: %s", self.provider_status['ollama']['available'])
     
     def _check_ollama(self):
         """Check if Ollama is running locally"""
@@ -82,8 +85,8 @@ class UnifiedAIProvider:
             response = requests.get("http://localhost:11434/api/tags", timeout=2)
             if response.status_code == 200:
                 self.provider_status['ollama']['available'] = True
-        except:
-            pass
+        except Exception:
+            logger.debug("Ollama not available on localhost:11434", exc_info=True)
     
     def _get_cache_key(self, professor_name: str, university: str, research_area: str) -> str:
         """Generate cache key for professor"""
@@ -145,7 +148,7 @@ class UnifiedAIProvider:
                 return response.json()['choices'][0]['message']['content'].strip()
             elif response.status_code == 429:
                 self.provider_status['groq']['last_error'] = "Rate limited"
-                print("   ⚠️ Groq rate limited, will try fallback")
+                logger.warning("Groq rate limited, trying fallback providers")
             else:
                 self.provider_status['groq']['last_error'] = f"HTTP {response.status_code}"
                 
@@ -490,9 +493,10 @@ if __name__ == "__main__":
     # Test the provider
     provider = get_unified_ai_provider()
     
-    print("\n" + "="*60)
-    print("Testing Professor Personalization")
-    print("="*60)
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(name)s: %(message)s')
+    logger.info("%s", "=" * 60)
+    logger.info("Testing Professor Personalization")
+    logger.info("%s", "=" * 60)
     
     result = provider.generate_professor_personalization(
         professor_name="Dr. Sarah Chen",
@@ -501,10 +505,10 @@ if __name__ == "__main__":
         papers=[{"title": "Advanced Object Detection in Autonomous Systems"}]
     )
     
-    print(f"\nOpening Hook: {result.opening_hook}")
-    print(f"\nConnection: {result.connection_paragraph}")
-    print(f"\nResearch Mention: {result.research_mention}")
-    print(f"\nWhy Fit: {result.why_fit}")
-    print(f"\nProvider: {result.provider_used}")
-    print(f"Time: {result.generation_time_ms}ms")
-    print(f"Confidence: {result.confidence}")
+    logger.info("Opening Hook: %s", result.opening_hook)
+    logger.info("Connection: %s", result.connection_paragraph)
+    logger.info("Research Mention: %s", result.research_mention)
+    logger.info("Why Fit: %s", result.why_fit)
+    logger.info("Provider: %s", result.provider_used)
+    logger.info("Time: %sms", result.generation_time_ms)
+    logger.info("Confidence: %s", result.confidence)

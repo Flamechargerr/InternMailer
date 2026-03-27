@@ -23,6 +23,7 @@ import smtplib
 import time
 import random
 import csv
+import logging
 from datetime import datetime
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -32,6 +33,8 @@ from pathlib import Path
 from typing import List, Dict, Optional, Tuple
 from threading import Lock
 
+logger = logging.getLogger(__name__)
+
 # Import AI components
 try:
     from core.unified_ai_provider import get_unified_ai_provider, PersonalizationResult
@@ -39,7 +42,7 @@ try:
     AI_AVAILABLE = True
 except ImportError:
     AI_AVAILABLE = False
-    print("⚠️ AI components not available")
+    logger.warning("AI components not available")
 
 
 class EmailSystem:
@@ -67,7 +70,7 @@ class EmailSystem:
                 self.ai_provider = get_unified_ai_provider()
                 self.anti_template = get_anti_templating_engine()
             except Exception as e:
-                print(f"⚠️ AI initialization failed: {e}")
+                logger.warning("AI initialization failed: %s", e)
         
         # Thread safety
         self.send_lock = Lock()
@@ -91,9 +94,9 @@ class EmailSystem:
         # Initialize tracking DB
         self._init_tracking_db()
         
-        print("🚀 Email System initialized")
-        print(f"   Email: {self.email}")
-        print(f"   Daily Limit: {self.max_daily_emails}")
+        logger.info("Email System initialized")
+        logger.info("Email: %s", self.email)
+        logger.info("Daily limit: %s", self.max_daily_emails)
     
     def _init_tracking_db(self):
         """Initialize tracking database"""
@@ -155,7 +158,7 @@ class EmailSystem:
         csv_files = list(data_dir.glob('*.csv'))
         
         if not csv_files:
-            print("⚠️ No CSV files found in data/ directory")
+            logger.warning("No CSV files found in data/ directory")
             return contacts
         
         for csv_path in csv_files:
@@ -183,7 +186,7 @@ class EmailSystem:
                             if len(contacts) >= count:
                                 break
             except Exception as e:
-                print(f"⚠️ Error reading {csv_path}: {e}")
+                logger.warning("Error reading %s: %s", csv_path, e)
                 continue
         
         return contacts
@@ -232,7 +235,7 @@ class EmailSystem:
                     'why_fit': ai_result.why_fit
                 }
             except Exception as e:
-                print(f"   ⚠️ AI generation failed: {e}")
+                logger.warning("AI generation failed for %s: %s", contact_name, e)
         
         # Generate email with anti-templating
         if self.anti_template:
@@ -328,7 +331,7 @@ class EmailSystem:
                 return True
                 
         except Exception as e:
-            print(f"   ❌ Failed to send to {to_email}: {e}")
+            logger.exception("Failed to send to %s", to_email)
             self.stats['failed'] += 1
             return False
     
@@ -354,7 +357,7 @@ class EmailSystem:
                 ))
                 conn.commit()
         except Exception as e:
-            print(f"   ⚠️ Failed to track email: {e}")
+            logger.warning("Failed to track email %s: %s", email, e)
     
     def send_campaign(
         self,
@@ -376,36 +379,36 @@ class EmailSystem:
         # Check daily limit
         can_send, remaining = self.can_send_today()
         if not can_send:
-            print("❌ Daily email limit reached!")
+            logger.warning("Daily email limit reached")
             return self.stats
         
         actual_count = min(count, remaining)
         
-        print(f"\n{'='*60}")
-        print(f"🚀 STARTING EMAIL CAMPAIGN")
-        print(f"{'='*60}")
-        print(f"Target: {actual_count} emails (daily remaining: {remaining})")
-        print(f"AI Personalization: {'✅' if use_ai else '❌'}")
-        print(f"Dry Run: {'✅' if dry_run else '❌'}")
-        print(f"{'='*60}\n")
+        logger.info("%s", '=' * 60)
+        logger.info("STARTING EMAIL CAMPAIGN")
+        logger.info("%s", '=' * 60)
+        logger.info("Target: %s emails (daily remaining: %s)", actual_count, remaining)
+        logger.info("AI Personalization: %s", use_ai)
+        logger.info("Dry Run: %s", dry_run)
+        logger.info("%s", '=' * 60)
         
         # Get contacts
         contacts = self.get_fresh_contacts(actual_count)
-        print(f"📋 Found {len(contacts)} fresh contacts")
+        logger.info("Found %s fresh contacts", len(contacts))
         
         if len(contacts) == 0:
-            print("❌ No fresh contacts available!")
+            logger.warning("No fresh contacts available")
             return self.stats
         
         # Process each contact
         for i, contact in enumerate(contacts, 1):
             name, email, company, position = contact[0], contact[1], contact[2], contact[3]
             
-            print(f"\n[{i}/{len(contacts)}] {name} @ {company}")
+            logger.info("[%s/%s] %s @ %s", i, len(contacts), name, company)
             
             # Skip if missing critical data
             if not email or not name:
-                print("   ⚠️ Skipping - missing email or name")
+                logger.warning("Skipping contact with missing email or name")
                 self.stats['skipped'] += 1
                 continue
             
@@ -427,26 +430,26 @@ class EmailSystem:
                     if provider == 'fallback':
                         self.stats['fallback_used'] += 1
                 
-                print(f"   ✓ Generated ({provider}, conf={confidence:.2f})")
+                logger.info("Generated email (provider=%s, confidence=%.2f)", provider, confidence)
                 
                 # Preview first email
                 if i == 1 and not dry_run:
-                    print(f"\n{'='*60}")
-                    print("PREVIEW (first email):")
-                    print(f"{'='*60}")
-                    print(f"To: {email}")
-                    print(f"Subject: {subject}")
-                    print(f"Body preview: {html_body[:300]}...")
-                    print(f"{'='*60}\n")
+                    logger.info("%s", '=' * 60)
+                    logger.info("PREVIEW (first email)")
+                    logger.info("%s", '=' * 60)
+                    logger.info("To: %s", email)
+                    logger.info("Subject: %s", subject)
+                    logger.info("Body preview: %s...", html_body[:300])
+                    logger.info("%s", '=' * 60)
                     
                     confirm = input("Proceed with sending? (y/n): ").strip().lower()
                     if confirm != 'y':
-                        print("Cancelled by user")
+                        logger.info("Cancelled by user")
                         return self.stats
                 
                 # Send or dry run
                 if dry_run:
-                    print(f"   📝 Dry run - would send to {email}")
+                    logger.info("[DRY RUN] Would send to %s", email)
                 else:
                     success = self.send_single_email(
                         to_email=email,
@@ -464,24 +467,24 @@ class EmailSystem:
                             position=position,
                             metadata=metadata
                         )
-                        print(f"   ✅ Sent")
+                        logger.info("Sent to %s", email)
                     else:
-                        print(f"   ❌ Failed")
+                        logger.error("Failed to send to %s", email)
                 
             except Exception as e:
-                print(f"   ❌ Error: {e}")
+                logger.exception("Unexpected error during campaign loop")
                 self.stats['failed'] += 1
         
         # Print summary
-        print(f"\n{'='*60}")
-        print("CAMPAIGN SUMMARY")
-        print(f"{'='*60}")
-        print(f"Sent: {self.stats['sent']}")
-        print(f"Failed: {self.stats['failed']}")
-        print(f"Skipped: {self.stats['skipped']}")
-        print(f"AI Generated: {self.stats['ai_generated']}")
-        print(f"Remaining Today: {self.max_daily_emails - self.get_daily_sent_count()}")
-        print(f"{'='*60}\n")
+        logger.info("%s", '=' * 60)
+        logger.info("CAMPAIGN SUMMARY")
+        logger.info("%s", '=' * 60)
+        logger.info("Sent: %s", self.stats['sent'])
+        logger.info("Failed: %s", self.stats['failed'])
+        logger.info("Skipped: %s", self.stats['skipped'])
+        logger.info("AI Generated: %s", self.stats['ai_generated'])
+        logger.info("Remaining Today: %s", self.max_daily_emails - self.get_daily_sent_count())
+        logger.info("%s", '=' * 60)
         
         return self.stats
     
@@ -535,7 +538,7 @@ class EmailSystem:
                     'daily_limit': self.max_daily_emails
                 }
         except Exception as e:
-            print(f"⚠️ Error getting stats: {e}")
+            logger.warning("Error getting stats: %s", e)
             return self.stats
 
 
@@ -552,26 +555,27 @@ def get_email_system() -> EmailSystem:
 
 if __name__ == "__main__":
     import sys
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(name)s: %(message)s')
     
     system = get_email_system()
     
     if len(sys.argv) > 1:
         if sys.argv[1] == '--preview':
             count = int(sys.argv[2]) if len(sys.argv) > 2 else 3
-            print(f"\nGenerating {count} previews...\n")
+            logger.info("Generating %s previews", count)
             
             previews = system.preview(count)
             
             for i, p in enumerate(previews, 1):
-                print(f"\n{'='*70}")
-                print(f"PREVIEW {i}/{count}")
-                print(f"{'='*70}")
-                print(f"To: {p['name']} <{p['email']}>")
-                print(f"Company: {p['company']}")
-                print(f"Subject: {p['subject']}")
-                print(f"AI: {p['metadata'].get('provider', 'none')}")
-                print(f"\nBody:\n{p['body'][:800]}...")
-                print(f"{'='*70}\n")
+                logger.info("%s", '=' * 70)
+                logger.info("PREVIEW %s/%s", i, count)
+                logger.info("%s", '=' * 70)
+                logger.info("To: %s <%s>", p['name'], p['email'])
+                logger.info("Company: %s", p['company'])
+                logger.info("Subject: %s", p['subject'])
+                logger.info("AI: %s", p['metadata'].get('provider', 'none'))
+                logger.info("Body: %s...", p['body'][:800])
+                logger.info("%s", '=' * 70)
         
         elif sys.argv[1] == '--send':
             count = int(sys.argv[2]) if len(sys.argv) > 2 else 10
@@ -586,13 +590,13 @@ if __name__ == "__main__":
         
         elif sys.argv[1] == '--stats':
             stats = system.get_stats()
-            print("\n📊 Campaign Statistics")
-            print(f"Total Sent: {stats.get('total_sent', 0)}")
-            print(f"Total Replied: {stats.get('total_replied', 0)}")
-            print(f"Daily Sent: {stats.get('daily_sent', 0)}/{stats.get('daily_limit', 100)}")
+            logger.info("Campaign Statistics")
+            logger.info("Total Sent: %s", stats.get('total_sent', 0))
+            logger.info("Total Replied: %s", stats.get('total_replied', 0))
+            logger.info("Daily Sent: %s/%s", stats.get('daily_sent', 0), stats.get('daily_limit', 100))
         
         else:
-            print("""
+            logger.info("""
 Usage:
     python email_system.py --preview [count]     # Preview emails
     python email_system.py --send [count]        # Send emails
@@ -600,7 +604,7 @@ Usage:
     python email_system.py --stats               # Show statistics
             """)
     else:
-        print("""
+        logger.info("""
 🚀 Email System
 
 Usage:

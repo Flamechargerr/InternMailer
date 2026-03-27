@@ -9,9 +9,12 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import os
+import logging
 from dotenv import load_dotenv
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 class FollowUpScheduler:
     """
@@ -107,7 +110,7 @@ Anamay Tripathy
 """
             
             if dry_run:
-                print(f"   [DRY RUN] Would send follow-up to {contact['email']}")
+                logger.info("[DRY RUN] Would send follow-up to %s", contact['email'])
                 return True
             
             # Create email
@@ -126,11 +129,11 @@ Anamay Tripathy
             # Track follow-up
             self._track_followup(contact['email'], contact['sent_date'])
             
-            print(f"   ✅ Follow-up sent to {contact['email']}")
+            logger.info("Follow-up sent to %s", contact['email'])
             return True
             
         except Exception as e:
-            print(f"   ❌ Failed to send follow-up to {contact['email']}: {e}")
+            logger.exception("Failed to send follow-up to %s", contact.get('email', 'unknown'))
             return False
     
     def _track_followup(self, email: str, original_date: str):
@@ -168,7 +171,7 @@ Anamay Tripathy
             if not due_followups:
                 return 0
             
-            print(f"\n⏰ Processing {len(due_followups)} scheduled follow-ups...")
+            logger.info("Processing %s scheduled follow-ups", len(due_followups))
             
             sent_count = 0
             for row in due_followups:
@@ -195,7 +198,7 @@ Anamay Tripathy
             return sent_count
             
         except Exception as e:
-            print(f"❌ Error processing scheduled follow-ups: {e}")
+            logger.exception("Error processing scheduled follow-ups")
             return 0
     
     def run_followup_cycle(self, dry_run: bool = False):
@@ -204,14 +207,14 @@ Anamay Tripathy
         1. Send follow-ups to no-reply contacts
         2. Send scheduled OOO follow-ups
         """
-        print("📤 Starting follow-up cycle...\n")
+        logger.info("Starting follow-up cycle")
         
         if dry_run:
-            print("🧪 DRY RUN MODE - No emails will be sent\n")
+            logger.info("DRY RUN MODE - No emails will be sent")
         
         # Regular follow-ups (no reply after 7 days)
         contacts_needing_followup = self.get_emails_needing_followup()
-        print(f"📋 Found {len(contacts_needing_followup)} contacts needing follow-up")
+        logger.info("Found %s contacts needing follow-up", len(contacts_needing_followup))
         
         sent_count = 0
         for contact in contacts_needing_followup:
@@ -221,10 +224,10 @@ Anamay Tripathy
         # Scheduled OOO follow-ups
         scheduled_count = self.process_scheduled_followups(dry_run=dry_run)
         
-        print(f"\n✅ Follow-up cycle complete!")
-        print(f"   Regular follow-ups: {sent_count}")
-        print(f"   Scheduled follow-ups: {scheduled_count}")
-        print(f"   Total: {sent_count + scheduled_count}")
+        logger.info("Follow-up cycle complete")
+        logger.info("Regular follow-ups: %s", sent_count)
+        logger.info("Scheduled follow-ups: %s", scheduled_count)
+        logger.info("Total follow-ups: %s", sent_count + scheduled_count)
 
 # Singleton
 _scheduler_instance = None

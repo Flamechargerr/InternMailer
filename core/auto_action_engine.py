@@ -10,9 +10,12 @@ from email.mime.multipart import MIMEMultipart
 from datetime import datetime, timedelta
 from typing import Dict, List
 import os
+import logging
 from dotenv import load_dotenv
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 class AutoActionEngine:
     """
@@ -83,11 +86,11 @@ class AutoActionEngine:
             # Send calendar link
             self._send_calendar_email(reply['email'], reply['subject'])
             
-            print(f"   ✅ INTERESTED: Added {reply['email']} to priority list + sent calendar")
+            logger.info("INTERESTED: added %s to priority list and sent calendar", reply['email'])
             return True
             
         except Exception as e:
-            print(f"   ❌ Error processing interested reply: {e}")
+            logger.exception("Error processing interested reply for %s", reply.get('email', 'unknown'))
             return False
     
     def process_not_interested_reply(self, reply: Dict) -> bool:
@@ -117,11 +120,11 @@ class AutoActionEngine:
             conn.commit()
             conn.close()
             
-            print(f"   📭 NOT INTERESTED: Unsubscribed {reply['email']}")
+            logger.info("NOT_INTERESTED: unsubscribed %s", reply['email'])
             return True
             
         except Exception as e:
-            print(f"   ❌ Error processing not interested: {e}")
+            logger.exception("Error processing not-interested reply for %s", reply.get('email', 'unknown'))
             return False
     
     def process_question_reply(self, reply: Dict) -> bool:
@@ -154,11 +157,11 @@ class AutoActionEngine:
             conn.commit()
             conn.close()
             
-            print(f"   ❓ QUESTION: Flagged {reply['email']} for manual review")
+            logger.info("QUESTION: flagged %s for manual review", reply['email'])
             return True
             
         except Exception as e:
-            print(f"   ❌ Error processing question: {e}")
+            logger.exception("Error processing question reply for %s", reply.get('email', 'unknown'))
             return False
     
     def process_out_of_office_reply(self, reply: Dict) -> bool:
@@ -191,11 +194,11 @@ class AutoActionEngine:
             conn.commit()
             conn.close()
             
-            print(f"   ⏰ OUT OF OFFICE: Follow-up scheduled for {reply['email']} in 14 days")
+            logger.info("OUT_OF_OFFICE: follow-up scheduled for %s in 14 days", reply['email'])
             return True
             
         except Exception as e:
-            print(f"   ❌ Error processing out of office: {e}")
+            logger.exception("Error processing out-of-office reply for %s", reply.get('email', 'unknown'))
             return False
     
     def process_referral_reply(self, reply: Dict) -> bool:
@@ -213,11 +216,11 @@ class AutoActionEngine:
                 reply['subject']
             )
             
-            print(f"   🔄 REFERRAL: Replied to all (Subject: {reply['subject']})")
+            logger.info("REFERRAL: replied to all, subject=%s", reply.get('subject', ''))
             return True
             
         except Exception as e:
-            print(f"   ❌ Error processing referral: {e}")
+            logger.exception("Error processing referral reply for %s", reply.get('email', 'unknown'))
             return False
 
     def _reply_to_all(self, from_email: str, to_list_str: str, cc_list_str: str, original_subject: str):
@@ -269,7 +272,7 @@ https://anamay.vercel.app
                 server.send_message(msg)
             
         except Exception as e:
-            print(f"   ❌ Failed to send reply-all email: {e}")
+            logger.exception("Failed to send reply-all email")
             raise e
 
     def _send_calendar_email(self, to_email: str, original_subject: str):
@@ -302,7 +305,7 @@ Anamay Tripathy
                 server.send_message(msg)
             
         except Exception as e:
-            print(f"   ❌ Failed to send calendar email: {e}")
+            logger.exception("Failed to send calendar email to %s", to_email)
     
     def mark_action_taken(self, message_id: str, action: str):
         """Mark reply as actioned"""
@@ -323,13 +326,13 @@ Anamay Tripathy
         Returns:
             Statistics of actions taken
         """
-        print("\n🤖 Processing pending actions...")
+        logger.info("Processing pending actions")
         
         pending = self.get_pending_actions()
-        print(f"   Found {len(pending)} pending actions")
+        logger.info("Found %s pending actions", len(pending))
         
         if dry_run:
-            print("   🧪 DRY RUN MODE - No actions will be taken\n")
+            logger.info("DRY RUN MODE - No actions will be taken")
         
         stats = {
             'interested': 0,
@@ -344,7 +347,7 @@ Anamay Tripathy
             category = reply['category']
             
             if dry_run:
-                print(f"   [DRY RUN] Would process {category} from {reply['email']}")
+                logger.info("[DRY RUN] Would process %s from %s", category, reply['email'])
                 continue
             
             success = False
@@ -391,13 +394,13 @@ if __name__ == '__main__':
     dry_run = '--dry-run' in sys.argv or '--test' in sys.argv
     
     if dry_run:
-        print("🧪 DRY RUN MODE\n")
+        logger.info("DRY RUN MODE")
     
     stats = engine.process_all_pending(dry_run=dry_run)
     
-    print("\n✅ Actions processed!")
-    print(f"   Interested: {stats['interested']}")
-    print(f"   Not interested: {stats['not_interested']}")
-    print(f"   Questions: {stats['question']}")
-    print(f"   Out of office: {stats['out_of_office']}")
-    print(f"   Other: {stats['other']}")
+    logger.info("Actions processed")
+    logger.info("Interested: %s", stats['interested'])
+    logger.info("Not interested: %s", stats['not_interested'])
+    logger.info("Questions: %s", stats['question'])
+    logger.info("Out of office: %s", stats['out_of_office'])
+    logger.info("Other: %s", stats['other'])

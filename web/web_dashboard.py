@@ -22,6 +22,7 @@ import sqlite3
 import subprocess
 import threading
 import time
+import logging
 from datetime import datetime, timedelta
 from pathlib import Path
 from functools import wraps
@@ -33,6 +34,8 @@ from werkzeug.utils import secure_filename
 # Add parent directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+logger = logging.getLogger(__name__)
+
 # Import InternMailer components
 try:
     from core.email_system import EmailSystem
@@ -40,7 +43,7 @@ try:
     from core.unified_ai_provider import get_unified_ai_provider
     EMAIL_SYSTEM_AVAILABLE = True
 except ImportError as e:
-    print(f"⚠️ Email system not available: {e}")
+    logger.warning("Email system not available: %s", e)
     EMAIL_SYSTEM_AVAILABLE = False
 
 app = Flask(__name__, template_folder='../templates/web')
@@ -93,7 +96,7 @@ def send_emails():
             campaign_stats['emails_failed'] += result.get('failed', 0)
             campaign_stats['last_updated'] = datetime.now().isoformat()
         except Exception as e:
-            print(f"Error sending emails: {e}")
+            logger.exception("Error sending emails")
     
     # Run in background thread
     thread = threading.Thread(target=send_task)
@@ -277,7 +280,7 @@ def get_campaign_stats():
             
             conn.close()
     except Exception as e:
-        print(f"Error getting stats: {e}")
+        logger.exception("Error getting stats")
     
     # Add in-memory stats
     stats['emails_sent'] += campaign_stats['emails_sent']
@@ -312,7 +315,7 @@ def get_contacts():
             
             conn.close()
     except Exception as e:
-        print(f"Error getting contacts: {e}")
+        logger.exception("Error getting contacts")
     
     return contacts
 
@@ -344,7 +347,7 @@ def get_replies():
             
             conn.close()
     except Exception as e:
-        print(f"Error getting replies: {e}")
+        logger.exception("Error getting replies")
     
     return replies
 
@@ -1013,19 +1016,20 @@ setInterval(updateDaemonStatus, 5000);
     
     (templates_dir / 'settings.html').write_text(settings_template)
     
-    print(f"✅ Created web dashboard templates in {templates_dir}")
+    logger.info("Created web dashboard templates in %s", templates_dir)
 
 # ============== MAIN ==============
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(name)s: %(message)s')
     # Create templates
     create_templates()
     
-    print("=" * 60)
-    print("🌐 InternMailer Web Dashboard")
-    print("=" * 60)
-    print("\nStarting Flask server...")
-    print("Open http://localhost:5000 in your browser\n")
+    logger.info("%s", "=" * 60)
+    logger.info("InternMailer Web Dashboard")
+    logger.info("%s", "=" * 60)
+    logger.info("Starting Flask server")
+    logger.info("Open http://localhost:5000 in your browser")
     
     # Run Flask app
     app.run(host='0.0.0.0', port=5000, debug=True)

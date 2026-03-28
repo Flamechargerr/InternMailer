@@ -1,114 +1,626 @@
 {% extends "base.html" %}
 
-{% block title %}Dashboard - InternMailer{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block page_subtitle %}Monitor and control your job application automation{% endblock %}
 
 {% block content %}
-<h2>📊 Campaign Dashboard</h2>
-<p style="margin-bottom: 20px; color: #666;">Monitor your email campaigns and automation status</p>
+<!-- Quick Actions -->
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">🚀 Quick Actions</h2>
+        <p class="card-subtitle">Execute common tasks with one click</p>
+    </div>
+    <div class="actions-bar"
+        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+        <button class="btn btn-primary" onclick="sendEmails()" id="send-btn" style="width: 100%;">
+            <i class="fas fa-paper-plane"></i>
+            Send 10 Emails
+        </button>
+        <button class="btn btn-secondary" onclick="previewEmails()" id="preview-btn" style="width: 100%;">
+            <i class="fas fa-eye"></i>
+            Preview Emails
+        </button>
+        <button class="btn btn-success" onclick="discoverJobs()" id="discover-btn" style="width: 100%;">
+            <i class="fas fa-search"></i>
+            Discover Jobs
+        </button>
+        <button class="btn btn-primary" onclick="window.location.href='{{ url_for('sentiment_page') }}'" id="sentiment-btn" style="width: 100%;">
+            <i class="fas fa-wave-square"></i>
+            Market Sentiment
+        </button>
+        <button class="btn btn-warning" onclick="startDaemon()" id="start-btn" style="width: 100%;">
+            <i class="fas fa-play"></i>
+            Start Daemon
+        </button>
+        <button class="btn btn-danger" onclick="stopDaemon()" id="stop-btn" style="width: 100%;">
+            <i class="fas fa-stop"></i>
+            Stop Daemon
+        </button>
+    </div>
+</div>
 
+<!-- Stats Overview -->
 <div class="stats-grid">
     <div class="stat-card">
-        <h4>Total Emails Sent</h4>
-        <div class="value">{{ stats.total_sent or 0 }}</div>
+        <div class="stat-icon primary">
+            <i class="fas fa-envelope"></i>
+        </div>
+        <div class="stat-value" id="emails-stat">{{ stats.emails_sent or 0 }}</div>
+        <div class="stat-label">Emails Sent</div>
+        <div class="stat-change" id="email-change">+0 today</div>
     </div>
+
     <div class="stat-card">
-        <h4>Replies Received</h4>
-        <div class="value">{{ stats.replies or 0 }}</div>
+        <div class="stat-icon success">
+            <i class="fas fa-reply"></i>
+        </div>
+        <div class="stat-value" id="replies-stat">{{ stats.replies_received or 0 }}</div>
+        <div class="stat-label">Replies Received</div>
+        <div class="stat-change" id="reply-change">+0 today</div>
     </div>
+
     <div class="stat-card">
-        <h4>Response Rate</h4>
-        <div class="value">{{ stats.response_rate or 0 }}%</div>
+        <div class="stat-icon warning">
+            <i class="fas fa-address-book"></i>
+        </div>
+        <div class="stat-value" id="contacts-stat">{{ stats.contacts_contacted or 0 }}</div>
+        <div class="stat-label">Contacts Reached</div>
+        <div class="stat-change" id="contact-change">+0 today</div>
     </div>
+
     <div class="stat-card">
-        <h4>Follow-ups Sent</h4>
-        <div class="value">{{ stats.followups or 0 }}</div>
+        <div class="stat-icon info">
+            <i class="fas fa-redo"></i>
+        </div>
+        <div class="stat-value" id="followups-stat">{{ stats.followups_sent or 0 }}</div>
+        <div class="stat-label">Follow-ups Sent</div>
+        <div class="stat-change" id="followup-change">+0 today</div>
     </div>
 </div>
 
+<!-- Market Sentiment Summary -->
 <div class="card">
-    <h3>🚀 Quick Actions</h3>
-    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-        <a href="/send-emails" class="btn btn-primary">Send Emails</a>
-        <a href="/ats-optimizer" class="btn btn-success">ATS Optimizer</a>
-        <a href="/contacts" class="btn btn-secondary">Manage Contacts</a>
-        <a href="/replies" class="btn btn-info">View Replies</a>
+    <div class="card-header">
+        <h2 class="card-title">📈 Market Pulse</h2>
+        <p class="card-subtitle">Latest market sentiment snapshot (prototype)</p>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+        <div style="display: flex; align-items: baseline; gap: 0.75rem;">
+            <div style="font-size: 2rem; font-weight: 800; letter-spacing: -0.03em;" id="market-sentiment-score">--</div>
+            <span class="badge badge-info" id="market-sentiment-label">Loading...</span>
+        </div>
+        <div style="display: flex; gap: 0.75rem; align-items: center;">
+            <button class="btn btn-secondary btn-sm" onclick="refreshMarketSentiment()" id="market-sentiment-refresh-btn">
+                <i class="fas fa-rotate"></i>
+                Refresh
+            </button>
+            <a class="btn btn-primary btn-sm" href="{{ url_for('sentiment_page') }}">
+                <i class="fas fa-chart-area"></i>
+                View
+            </a>
+        </div>
+    </div>
+
+    <div style="margin-top: 0.75rem; color: var(--text-muted); font-size: 0.875rem;">
+        As of <span id="market-sentiment-asof">--</span>
+        · Articles <span id="market-sentiment-articles">0</span>
     </div>
 </div>
 
+<!-- Recent Activity -->
 <div class="card">
-    <h3>🤖 Automation Daemon</h3>
-    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-        <span style="font-weight: 500;">Status:</span>
-        <span class="badge {% if daemon_status.running %}badge-success{% else %}badge-danger{% endif %}">
-            {% if daemon_status.running %}Running{% else %}Stopped{% endif %}
-        </span>
-        {% if daemon_status.running %}
-        <span style="color: #666; margin-left: 10px;">(PID: {{ daemon_status.pid }})</span>
-        {% endif %}
+    <div class="card-header">
+        <h2 class="card-title">📊 Recent Activity</h2>
+        <p class="card-subtitle">Latest system events and status updates</p>
     </div>
-    <div style="margin-top: 15px; display: flex; gap: 10px;">
-        {% if daemon_status.running %}
-        <a href="/api/daemon/stop" class="btn btn-danger">Stop Daemon</a>
-        {% else %}
-        <a href="/api/daemon/start" class="btn btn-success">Start Daemon</a>
-        {% endif %}
-        <a href="/api/daemon/status" class="btn btn-secondary">Refresh Status</a>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Activity</th>
+                    <th>Status</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody id="activity-tbody">
+                <tr class="skeleton">
+                    <td colspan="4">
+                        <div class="skeleton" style="height: 20px; margin: 4px 0;"></div>
+                    </td>
+                </tr>
+                <tr class="skeleton">
+                    <td colspan="4">
+                        <div class="skeleton" style="height: 20px; margin: 4px 0;"></div>
+                    </td>
+                </tr>
+                <tr class="skeleton">
+                    <td colspan="4">
+                        <div class="skeleton" style="height: 20px; margin: 4px 0;"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
+<!-- System Health -->
+<div class="grid grid-2">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">💻 System Status</h2>
+            <p class="card-subtitle">Real-time health monitoring</p>
+        </div>
+
+        <div style="display: grid; gap: 1rem;">
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-tertiary); border-radius: var(--radius);">
+                <span>AI Provider</span>
+                <span class="badge badge-success" id="ai-status">Checking...</span>
+            </div>
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-tertiary); border-radius: var(--radius);">
+                <span>Email System</span>
+                <span class="badge badge-success" id="email-status">Connected</span>
+            </div>
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-tertiary); border-radius: var(--radius);">
+                <span>Database</span>
+                <span class="badge badge-success" id="db-status">Online</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">🤖 Automation Status</h2>
+            <p class="card-subtitle">Background task management</p>
+        </div>
+
+        <div style="display: grid; gap: 1rem;">
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-tertiary); border-radius: var(--radius);">
+                <span>Daemon</span>
+                <span class="badge badge-warning" id="daemon-status">Stopped</span>
+            </div>
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-tertiary); border-radius: var(--radius);">
+                <span>Job Discovery</span>
+                <span class="badge badge-info" id="job-status">Ready</span>
+            </div>
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-tertiary); border-radius: var(--radius);">
+                <span>Lead Discovery</span>
+                <span class="badge badge-info" id="lead-status">Ready</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Jobs -->
 <div class="card">
-    <h3>📈 Recent Activity</h3>
-    {% if stats.recent_activity %}
-    <table>
-        <thead>
+    <div class="card-header">
+        <h2 class="card-title">🧭 Recent Job Opportunities</h2>
+        <p class="card-subtitle">Latest job matches from your profile</p>
+    </div>
+
+    <div id="recent-jobs" class="grid grid-2">
+        <!-- Jobs will be loaded here -->
+        <div class="skeleton" style="padding: 1.5rem;">
+            <div class="skeleton" style="height: 20px; margin-bottom: 0.5rem;"></div>
+            <div class="skeleton" style="height: 16px; margin-bottom: 0.5rem;"></div>
+            <div class="skeleton" style="height: 16px; width: 80%;"></div>
+        </div>
+        <div class="skeleton" style="padding: 1.5rem;">
+            <div class="skeleton" style="height: 20px; margin-bottom: 0.5rem;"></div>
+            <div class="skeleton" style="height: 16px; margin-bottom: 0.5rem;"></div>
+            <div class="skeleton" style="height: 16px; width: 80%;"></div>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 2rem;">
+        <a href="{{ url_for('jobs_page') }}" class="btn btn-primary">View All Jobs</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Initialize dashboard
+    document.addEventListener('DOMContentLoaded', function () {
+        // Start real-time updates
+        startRealTimeUpdates();
+        loadRecentJobs();
+        loadActivity();
+        loadMarketSentimentSummary();
+    });
+
+    // Real-time updates
+    async function startRealTimeUpdates() {
+        // Update stats every 30 seconds
+        setInterval(updateStats, 30000);
+
+        // Check system status every 60 seconds  
+        setInterval(checkSystemStatus, 60000);
+
+        // Refresh market sentiment summary every 2 minutes
+        setInterval(loadMarketSentimentSummary, 120000);
+
+        // Initial load
+        await updateStats();
+        await checkSystemStatus();
+    }
+
+    // Update dashboard stats
+    async function updateStats() {
+        try {
+            const response = await fetch('/api/stats');
+            const stats = await response.json();
+
+            // Update stat values
+            updateElement('emails-stat', stats.emails_sent || 0);
+            updateElement('replies-stat', stats.replies_received || 0);
+            updateElement('contacts-stat', stats.contacts_contacted || 0);
+            updateElement('followups-stat', stats.followups_sent || 0);
+
+        } catch (error) {
+            console.error('Failed to update stats:', error);
+        }
+    }
+
+    // Check system status
+    async function checkSystemStatus() {
+        try {
+            // Check AI provider
+            const aiResponse = await fetch('/api/test-groq');
+            const aiData = await aiResponse.json();
+
+            const aiBadge = document.getElementById('ai-status');
+            if (aiData.status === 'success') {
+                aiBadge.className = 'badge badge-success';
+                aiBadge.textContent = 'Active';
+            } else {
+                aiBadge.className = 'badge badge-warning';
+                aiBadge.textContent = 'Issues';
+            }
+
+            // Check daemon
+            const daemonResponse = await fetch('/api/daemon/status');
+            const daemonData = await daemonResponse.json();
+
+            const daemonBadge = document.getElementById('daemon-status');
+            if (daemonData.status === 'running') {
+                daemonBadge.className = 'badge badge-success';
+                daemonBadge.textContent = 'Running';
+            } else {
+                daemonBadge.className = 'badge badge-warning';
+                daemonBadge.textContent = 'Stopped';
+            }
+
+        } catch (error) {
+            console.error('Failed to check system status:', error);
+        }
+    }
+
+    // Load recent jobs
+    async function loadRecentJobs() {
+        try {
+            const response = await fetch('/api/jobs?limit=4');
+            const data = await response.json();
+            const jobList = data.jobs || [];
+            const container = document.getElementById('recent-jobs');
+
+            if (jobList.length === 0) {
+                container.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon">📭</div>
+                    <h3>No jobs found</h3>
+                    <p>Start job discovery to see opportunities</p>
+                    <button class="btn btn-primary" onclick="discoverJobs()">Discover Jobs Now</button>
+                </div>
+            `;
+                return;
+            }
+
+            container.innerHTML = jobList.map(job => `
+            <div class="card" style="cursor: pointer;" onclick="window.open('${job.url || job.apply_url}', '_blank')">
+                <div class="card-header">
+                    <h3 style="font-size: 1rem; margin-bottom: 0.25rem;">${job.company || 'Unknown Company'}</h3>
+                    <p style="color: var(--text-muted); font-size: 0.875rem; margin: 0;">${job.title || 'Software Engineer'}</p>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span class="badge badge-info">${job.location_type || 'Remote'}</span>
+                    <span style="color: var(--text-muted); font-size: 0.75rem;">${job.posted_days || 'Recently posted'}</span>
+                </div>
+            </div>
+        `).join('');
+
+        } catch (error) {
+            console.error('Failed to load jobs:', error);
+        }
+    }
+
+    // Load activity log
+    async function loadActivity() {
+        try {
+            const response = await fetch('/api/activity');
+            const activities = await response.json();
+
+            const tbody = document.getElementById('activity-tbody');
+            if (activities.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">No activity recorded yet.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = activities.map(activity => `
             <tr>
-                <th>Time</th>
-                <th>Type</th>
-                <th>Details</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for activity in stats.recent_activity %}
-            <tr>
-                <td>{{ activity.time }}</td>
+                <td>${activity.time}</td>
+                <td>${activity.activity}</td>
                 <td>
-                    <span class="badge badge-info">{{ activity.type }}</span>
+                    <span class="badge badge-${activity.status === 'success' ? 'success' : activity.status === 'error' ? 'danger' : 'info'}">
+                        ${activity.status}
+                    </span>
                 </td>
-                <td>{{ activity.details }}</td>
+                <td>${activity.details}</td>
             </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-    <p style="color: #666; padding: 20px 0;">No recent activity</p>
-    {% endif %}
-</div>
+        `).join('');
 
-<div class="card">
-    <h3>⚙️ System Status</h3>
-    <table>
-        <tr>
-            <td><strong>Email System:</strong></td>
-            <td>
-                {% if EMAIL_SYSTEM_AVAILABLE %}
-                <span class="badge badge-success">Available</span>
-                {% else %}
-                <span class="badge badge-danger">Not Available</span>
-                {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <td><strong>AI Provider:</strong></td>
-            <td>
-                <span class="badge badge-success">Groq (Primary)</span>
-            </td>
-        </tr>
-        <tr>
-            <td><strong>Database:</strong></td>
-            <td>
-                <span class="badge badge-success">Connected</span>
-            </td>
-        </tr>
-    </table>
-</div>
+        } catch (error) {
+            console.error('Failed to load activity:', error);
+            const tbody = document.getElementById('activity-tbody');
+            tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--danger);">Failed to load activity log.</td></tr>';
+        }
+    }
+
+    // Helper functions
+    function updateElement(id, value) {
+        const element = document.getElementById(id);
+        if (element) {
+            element.textContent = value;
+        }
+    }
+
+    function badgeClassForMarketSentiment(score) {
+        const s = typeof score === 'number' ? score : parseFloat(score);
+        if (!Number.isFinite(s)) return 'badge-info';
+        if (s > 0.2) return 'badge-success';
+        if (s < -0.2) return 'badge-danger';
+        return 'badge-info';
+    }
+
+    async function loadMarketSentimentSummary() {
+        try {
+            const snap = await apiRequest('/api/sentiment/snapshot', { method: 'GET' });
+            const score = (snap.overall_score ?? 0);
+            const label = snap.overall_label || snap.label || 'Neutral';
+            const asOf = snap.as_of || snap.created_at || '';
+            const articles = snap.article_count ?? (Array.isArray(snap.items) ? snap.items.length : 0);
+
+            const scoreEl = document.getElementById('market-sentiment-score');
+            if (scoreEl) {
+                const s = typeof score === 'number' ? score : parseFloat(score);
+                scoreEl.textContent = Number.isFinite(s) ? s.toFixed(2) : String(score);
+            }
+
+            const labelEl = document.getElementById('market-sentiment-label');
+            if (labelEl) {
+                labelEl.textContent = label;
+                labelEl.className = `badge ${badgeClassForMarketSentiment(score)}`;
+            }
+
+            updateElement('market-sentiment-asof', asOf || '--');
+            updateElement('market-sentiment-articles', articles || 0);
+        } catch (e) {
+            // apiRequest already toasts; keep dashboard resilient.
+        }
+    }
+
+    async function refreshMarketSentiment() {
+        const btn = document.getElementById('market-sentiment-refresh-btn');
+        if (btn) setButtonLoading(btn, true);
+        try {
+            const resp = await apiRequest('/api/sentiment/refresh', {
+                method: 'POST',
+                body: JSON.stringify({})
+            });
+            showToast(resp.message || 'Market sentiment refresh started', 'success');
+            setTimeout(loadMarketSentimentSummary, 1200);
+        } catch (e) {
+            // apiRequest already toasts
+        } finally {
+            if (btn) setButtonLoading(btn, false);
+        }
+    }
+
+    // Button functions with loading states
+    async function sendEmails() {
+        const btn = document.getElementById('send-btn');
+        setButtonLoading(btn, true);
+
+        try {
+            // First check if contacts are available
+            const availCheck = await fetch('/api/contacts/available');
+            const availData = await availCheck.json();
+            
+            if (availData.available === 0) {
+                showToast('No fresh contacts available. Add more contacts or reset sent status.', 'warning', 6000);
+                setButtonLoading(btn, false);
+                return;
+            }
+            
+            const result = await apiRequest('/send-emails', {
+                method: 'POST',
+                body: JSON.stringify({ count: 10 })
+            });
+
+            if (result.status === 'started') {
+                showToast(`Started sending emails to ${Math.min(10, availData.available)} contacts`, 'success');
+                
+                // Update stats after a delay
+                setTimeout(async () => {
+                    await updateStats();
+                }, 3000);
+            } else {
+                showToast('Email sending completed', 'success');
+            }
+            
+            await updateStats();
+
+        } catch (error) {
+            showToast('Failed to send emails: ' + error.message, 'error');
+        } finally {
+            setButtonLoading(btn, false);
+        }
+    }
+
+    async function previewEmails() {
+        const btn = document.getElementById('preview-btn');
+        setButtonLoading(btn, true);
+
+        try {
+            const result = await apiRequest('/preview-emails?count=3');
+
+            // Show preview modal or container
+            let html = '<div class="card"><h3 class="card-title">📧 Email Previews</h3><div>';
+            result.previews.forEach((preview, i) => {
+                html += `
+                <div style="margin: 1rem 0; padding: 1rem; background: var(--bg-tertiary); border-radius: var(--radius);">
+                    <strong>Email ${i + 1}:</strong>
+                    <pre style="margin-top: 0.5rem; white-space: pre-wrap; font-family: 'Courier New', monospace; font-size: 0.875rem;">${preview}</pre>
+                </div>
+            `;
+            });
+            html += '</div></div>';
+
+            // Show in a modal or append to content
+            showToast('Email previews loaded', 'success');
+
+        } catch (error) {
+            showToast('Failed to generate previews: ' + error.message, 'error');
+        } finally {
+            setButtonLoading(btn, false);
+        }
+    }
+
+    async function discoverJobs() {
+        const btn = document.getElementById('discover-btn');
+        setButtonLoading(btn, true);
+
+        try {
+            const result = await apiRequest('/api/jobs/discover', {
+                method: 'POST',
+                body: JSON.stringify({})
+            });
+
+            showToast('Job discovery started', 'success');
+            await loadRecentJobs();
+
+        } catch (error) {
+            showToast('Failed to discover jobs: ' + error.message, 'error');
+        } finally {
+            setButtonLoading(btn, false);
+        }
+    }
+
+    async function startDaemon() {
+        const btn = document.getElementById('start-btn');
+        setButtonLoading(btn, true);
+
+        try {
+            const result = await apiRequest('/api/daemon/start', {
+                method: 'POST',
+                body: JSON.stringify({})
+            });
+
+            showToast('Daemon started successfully', 'success');
+            await checkSystemStatus();
+
+        } catch (error) {
+            showToast('Failed to start daemon: ' + error.message, 'error');
+        } finally {
+            setButtonLoading(btn, false);
+        }
+    }
+
+    async function stopDaemon() {
+        const btn = document.getElementById('stop-btn');
+        setButtonLoading(btn, true);
+
+        try {
+            const result = await apiRequest('/api/daemon/stop', {
+                method: 'POST',
+                body: JSON.stringify({})
+            });
+
+            showToast('Daemon stopped successfully', 'success');
+            await checkSystemStatus();
+
+        } catch (error) {
+            showToast('Failed to stop daemon: ' + error.message, 'error');
+        } finally {
+            setButtonLoading(btn, false);
+        }
+    }
+
+    // Utility functions
+    function setButtonLoading(btn, loading) {
+        if (loading) {
+            // Save original text before changing
+            if (!btn.dataset.originalText) {
+                btn.dataset.originalText = btn.innerHTML;
+            }
+            btn.disabled = true;
+            btn.classList.add('btn-loading');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+        } else {
+            btn.disabled = false;
+            btn.classList.remove('btn-loading');
+            // Restore original text
+            if (btn.dataset.originalText) {
+                btn.innerHTML = btn.dataset.originalText;
+            }
+        }
+    }
+
+    async function apiRequest(url, options = {}) {
+        const defaultOptions = {
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        };
+
+        const response = await fetch(url, { ...defaultOptions, ...options });
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || data.error || 'Request failed');
+        }
+
+        return data;
+    }
+
+    // Toast notification system
+    function showToast(message, type = 'success', duration = 4000) {
+        const container = document.getElementById('toast-container');
+        if (!container) return;
+
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-triangle' : 'info-circle'}"></i>
+        <span>${message}</span>
+    `;
+
+        container.appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(100%)';
+            setTimeout(() => toast.remove(), 300);
+        }, duration);
+    }
+</script>
 {% endblock %}

@@ -1,0 +1,22 @@
+ats_sources:
+  - type: "greenhouse"
+    company: "examplecompany"
+  - type: "lever"
+    company: "examplecompany"
+  - type: "ashby"
+    company: "examplecompany"
+  - type: "smartrecruiters"
+    company: "examplecompany"
+  - type: "workable"
+    company: "examplecompany"
+job_board_apis:
+  - name: "remotive"
+    url: "https://remotive.com/api/remote-jobs"
+  - name: "arbeitnow"
+    url: "https://www.arbeitnow.com/api/job-board-api"
+custom_company_urls:
+  - "https://example.com/careers"
+  - "https://jobs.example.com"
+login_required_sources:
+  - "linkedin"
+  - "indeed"

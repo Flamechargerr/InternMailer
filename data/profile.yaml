@@ -1,0 +1,22 @@
+# InternMailer Profile
+name: "Anamay Tripathy"
+email: "tripathy.anamay23@gmail.com"
+title: "Software Engineering Intern"
+location: "India"
+phone: "+1-XXX-XXX-XXXX"
+linkedin_url: "linkedin.com/in/anamay-tripathy"
+github_url: "github.com/Flamechargerr"
+calendar_link: "https://cal.com/anamay"
+resume_paths:
+  - "/Users/anamay/Desktop/cv/amazon/anamay_sde_230968270.pdf"
+  - "/Users/anamay/Desktop/cv/amazon/Anamay_Business_230968270.pdf"
+
+# Application Context
+target_roles:
+  - "Software Engineering Intern"
+  - "SDE Intern"
+  - "Data Analyst Intern"
+  - "Business Analyst Intern"
+target_locations: ["India", "Remote"]
+experience_summary: "Passionate software engineer focused on automation and AI."
+skills: ["Python", "JavaScript", "Flask", "React", "AI/ML", "Automation"]

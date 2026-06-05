@@ -1,0 +1,143 @@
+%% ──────────────────────────────────────────────────────────────────────────
+%% InternMailer — ATS-Optimized Resume Template
+%% ──────────────────────────────────────────────────────────────────────────
+%% IMPORTANT: Only text inside %% BLOCK: %% tags may be modified by the AI.
+%% Layout, fonts, margins, spacing, and section order are LOCKED.
+%% Output MUST always be exactly ONE page.
+%% ──────────────────────────────────────────────────────────────────────────
+
+\documentclass[letterpaper,10pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+% ── Page Setup ──────────────────────────────────────────────────────────────
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+% ── Section Formatting ──────────────────────────────────────────────────────
+\titleformat{\section}{\bfseries\large\color{black}}{}{0em}{}[\titlerule]
+\titlespacing*{\section}{0pt}{6pt}{4pt}
+
+% ── List Formatting ────────────────────────────────────────────────────────
+\setlist[itemize]{nosep, leftmargin=1.5em, label=\textbullet}
+
+% ── Colors ──────────────────────────────────────────────────────────────────
+\definecolor{linkblue}{HTML}{0645AD}
+\hypersetup{colorlinks=true, urlcolor=linkblue}
+
+\begin{document}
+
+% ════════════════════════════════════════════════════════════════════════════
+% HEADER — LOCKED
+% ════════════════════════════════════════════════════════════════════════════
+\begin{center}
+    {\LARGE \textbf{Anamay Tripathy}} \\[2pt]
+    \small
+    \href{mailto:tripathy.anamay23@gmail.com}{tripathy.anamay23@gmail.com} \,|\,
+    +91 9877454747 \,|\,
+    \href{https://www.linkedin.com/in/anamay-tripathy-b53829296/}{LinkedIn} \,|\,
+    \href{https://github.com/Flamechargerr}{GitHub} \,|\,
+    \href{https://anamay.vercel.app/}{Portfolio}
+\end{center}
+
+% ════════════════════════════════════════════════════════════════════════════
+% SUMMARY — REPLACEABLE
+% ════════════════════════════════════════════════════════════════════════════
+\section{Summary}
+%% BLOCK:summary_start %%
+Computer Science undergrad at Manipal Institute of Technology with strong foundations in
+algorithm design, distributed systems, and full-stack development. Experienced in building
+scalable platforms, CI/CD pipelines, and AI-powered tools.
+%% BLOCK:summary_end %%
+
+% ════════════════════════════════════════════════════════════════════════════
+% EDUCATION — LOCKED
+% ════════════════════════════════════════════════════════════════════════════
+\section{Education}
+\textbf{Manipal Institute of Technology} \hfill Udupi, Karnataka \\
+\textit{B.Tech Computer Science \& Data Science Engineering} \hfill Expected May 2027 \\
+GPA: $\sim$8.5/10
+
+% ════════════════════════════════════════════════════════════════════════════
+% EXPERIENCE — REPLACEABLE BULLETS
+% ════════════════════════════════════════════════════════════════════════════
+\section{Experience}
+
+\textbf{Software Developer} — \textit{Intellect Design Arena} \hfill 2024
+\begin{itemize}
+%% BLOCK:experience_intellect_start %%
+\item Built \textbf{scalable, fault-tolerant} platform using Python/Java; improved data accuracy by 30\%
+\item Authored 150+ automated tests achieving 85\% code coverage across the platform
+\item Designed CI/CD pipelines accelerating feature delivery cycles by 40\%
+%% BLOCK:experience_intellect_end %%
+\end{itemize}
+
+% ════════════════════════════════════════════════════════════════════════════
+% PROJECTS — REPLACEABLE BULLETS
+% ════════════════════════════════════════════════════════════════════════════
+\section{Projects}
+
+\textbf{YaanBarPe} — \textit{Distributed Payment Platform}
+\begin{itemize}
+%% BLOCK:project_yaanbarpe_start %%
+\item Engineered distributed multi-tiered system serving 3000+ users with 99.5\% uptime
+\item Achieved sub-200ms query performance via optimised \textbf{database} queries and indexing
+%% BLOCK:project_yaanbarpe_end %%
+\end{itemize}
+
+\textbf{CrimeConnect} — \textit{Crime Analytics Platform}
+\begin{itemize}
+%% BLOCK:project_crimeconnect_start %%
+\item Developed O(n log n) \textbf{algorithm design}; processed 1000+ crime records efficiently
+\item Built \textbf{PostgreSQL} relational database layer; reduced analysis time by 60\%
+%% BLOCK:project_crimeconnect_end %%
+\end{itemize}
+
+\textbf{MedRAG} — \textit{Medical AI Research Tool}
+\begin{itemize}
+%% BLOCK:project_medrag_start %%
+\item Achieved 40\% accuracy improvement via \textbf{algorithm optimisation} and model tuning
+%% BLOCK:project_medrag_end %%
+\end{itemize}
+
+\textbf{FloraFight} — \textit{AI Strategy Game}
+\begin{itemize}
+%% BLOCK:project_florafight_start %%
+\item Implemented Minimax AI with priority queues, hash maps, graphs; 70\% perf improvement
+%% BLOCK:project_florafight_end %%
+\end{itemize}
+
+\textbf{HackOps} — \textit{Security Operations Dashboard}
+\begin{itemize}
+%% BLOCK:project_hackops_start %%
+\item Built multi-tiered system serving 500+ users with \textbf{scalable} data retrieval
+%% BLOCK:project_hackops_end %%
+\end{itemize}
+
+% ════════════════════════════════════════════════════════════════════════════
+% SKILLS — LOCKED
+% ════════════════════════════════════════════════════════════════════════════
+\section{Technical Skills}
+\textbf{Languages:} Python, Java, C++, SQL, JavaScript \\
+\textbf{Frameworks:} Flask, React, Node.js, Express \\
+\textbf{Databases:} PostgreSQL, MongoDB, SQLite \\
+\textbf{Tools:} Git, Docker, GitHub Actions, Playwright, PyTest, JUnit
+
+% ════════════════════════════════════════════════════════════════════════════
+% COURSEWORK — REPLACEABLE
+% ════════════════════════════════════════════════════════════════════════════
+\section{Relevant Coursework}
+%% BLOCK:coursework_start %%
+Object-Oriented Design \(\cdot\) Algorithm Design \(\cdot\) Data Structures \(\cdot\)
+Complexity Analysis \(\cdot\) Distributed Systems
+%% BLOCK:coursework_end %%
+
+\end{document}

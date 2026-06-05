@@ -1,0 +1,15 @@
+[project]
+name = "internmailer"
+version = "1.0.0"
+description = "End-to-End Job Application Automation"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Restrict collection to tests/ only — avoids TCC PermissionError on .DS_Store
+norecursedirs = [".venv", "node_modules", "frontend", ".git", "output", "cache", "backups", ".hypothesis", ".pytest_cache", ".ruff_cache", ".kiro", ".qoder", "data", "logs", "campaign_results", "tmp", "optimized_documents", "data_recovery"]
+filterwarnings = [
+    "ignore::urllib3.exceptions.NotOpenSSLWarning",
+    "ignore::DeprecationWarning:pytest_asyncio",
+]
+asyncio_mode = "auto"
+

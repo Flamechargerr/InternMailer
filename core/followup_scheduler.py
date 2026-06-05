@@ -9,9 +9,8 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
+from utils.config import config
+from utils.profile import get_profile
 
 class FollowUpScheduler:
     """
@@ -22,12 +21,38 @@ class FollowUpScheduler:
     """
     
     def __init__(self):
-        self.email_address = os.getenv('EMAIL_ADDRESS')
-        self.password = os.getenv('EMAIL_PASSWORD')
-        self.tracking_db = 'email_tracking.db'
-        self.inbox_db = 'campaign_results/inbox_monitor.db'
-        self.followup_delay_days = 7
+        self.email_address = config.EMAIL_ADDRESS
+        self.password = config.EMAIL_PASSWORD
+        self.tracking_db = config.DATABASE_PATH
+        self.inbox_db = config.INBOX_DB_PATH
+        self.followup_delay_days = config.FOLLOWUP_DELAY_DAYS
         self.max_followups = 1
+        self.profile = get_profile()
+        self._ensure_tracking_schema()
+
+    def _ensure_tracking_schema(self):
+        """Ensure tracking tables/columns exist for follow-ups."""
+        with sqlite3.connect(self.tracking_db) as conn:
+            conn.execute('''
+                CREATE TABLE IF NOT EXISTS sent_emails (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    email TEXT UNIQUE,
+                    name TEXT,
+                    company TEXT,
+                    position TEXT,
+                    subject TEXT,
+                    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    provider_used TEXT,
+                    ai_confidence REAL,
+                    status TEXT DEFAULT 'sent',
+                    followup_sent BOOLEAN DEFAULT 0,
+                    replied BOOLEAN DEFAULT 0
+                )
+            ''')
+            existing_cols = [row[1] for row in conn.execute("PRAGMA table_info(sent_emails)")]
+            if 'subject' not in existing_cols:
+                conn.execute("ALTER TABLE sent_emails ADD COLUMN subject TEXT")
+            conn.commit()
     
     def get_emails_needing_followup(self) -> list:
         """
@@ -94,16 +119,17 @@ class FollowUpScheduler:
         try:
             subject = f"Re: {contact['subject']}"
             
+            signature = self.profile.signature_text()
             body = f"""Hi {contact['name']},
 
-I wanted to follow up on my previous email about internship/research opportunities.
+I wanted to follow up on my previous email about potential opportunities.
 
-I'm very interested in your work and would love to discuss potential collaboration.
+I'm very interested in your work and would love to discuss how I might contribute.
 
 Would you have 10-15 minutes for a brief call this week?
 
 Best regards,
-Anamay Tripathy
+{signature}
 """
             
             if dry_run:

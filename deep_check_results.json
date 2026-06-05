@@ -1,0 +1,12 @@
+{
+  "syntax_errors": [],
+  "import_errors": [],
+  "function_errors": [],
+  "endpoint_errors": [],
+  "database_errors": [],
+  "security_issues": [],
+  "missing_dependencies": [],
+  "configuration_issues": [],
+  "warnings": [],
+  "info": []
+}

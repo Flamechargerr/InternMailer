@@ -53,7 +53,7 @@ internmailer/
 ├── main.py                  # 🚀 Entry point (web dashboard)
 ├── core/                    # 📦 Core modules
 │   ├── email_system.py      # 📧 Email sending
-│   ├── daemon.py            # 🤖 Automation daemon
+│   ├── enhanced_daemon.py   # 🤖 Automation daemon
 │   ├── inbox_monitor.py     # 📥 Gmail monitoring
 │   ├── reply_classifier.py  # 🤖 AI classification
 │   ├── auto_action_engine.py# ⚡ Auto-actions
@@ -77,7 +77,7 @@ internmailer/
 Customize your resume and cover letter for each job application:
 
 ### Via Web Dashboard
-1. Open http://localhost:5000
+1. Open http://localhost:5050
 2. Click "ATS Optimizer" tab
 3. Paste job description
 4. Download optimized PDFs

@@ -1,0 +1,1 @@
+# Core package — Automation engine

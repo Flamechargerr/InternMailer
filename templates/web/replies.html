@@ -3,96 +3,37 @@
 {% block title %}Replies - InternMailer{% endblock %}
 
 {% block content %}
-<h2>📬 Email Replies</h2>
-<p style="margin-bottom: 20px; color: #666;">Monitor and manage replies to your email campaigns</p>
-
 <div class="card">
-    <h3>📊 Reply Statistics</h3>
-    <div class="stats-grid">
-        <div class="stat-card">
-            <h4>Total Replies</h4>
-            <div class="value">{{ stats.total or 0 }}</div>
-        </div>
-        <div class="stat-card">
-            <h4>Interested</h4>
-            <div class="value">{{ stats.interested or 0 }}</div>
-        </div>
-        <div class="stat-card">
-            <h4>Not Interested</h4>
-            <div class="value">{{ stats.not_interested or 0 }}</div>
-        </div>
-        <div class="stat-card">
-            <h4>Questions</h4>
-            <div class="value">{{ stats.questions or 0 }}</div>
-        </div>
-    </div>
+    <h2>📬 Replies</h2>
+    <p>Monitor and manage replies to your email campaigns.</p>
 </div>
 
 <div class="card">
-    <h3>📋 Recent Replies</h3>
-    {% if replies %}
     <table>
         <thead>
             <tr>
-                <th>Date</th>
                 <th>From</th>
                 <th>Subject</th>
-                <th>Classification</th>
-                <th>Actions</th>
+                <th>Date</th>
+                <th>Category</th>
+                <th>Sentiment</th>
             </tr>
         </thead>
         <tbody>
             {% for reply in replies %}
             <tr>
-                <td>{{ reply.date }}</td>
-                <td>{{ reply.from_email }}</td>
+                <td>{{ reply.sender }}</td>
                 <td>{{ reply.subject }}</td>
-                <td>
-                    {% if reply.classification == 'INTERESTED' %}
-                    <span class="badge badge-success">{{ reply.classification }}</span>
-                    {% elif reply.classification == 'NOT_INTERESTED' %}
-                    <span class="badge badge-danger">{{ reply.classification }}</span>
-                    {% elif reply.classification == 'QUESTION' %}
-                    <span class="badge badge-warning">{{ reply.classification }}</span>
-                    {% elif reply.classification == 'MEETING_REQUEST' %}
-                    <span class="badge badge-info">{{ reply.classification }}</span>
-                    {% else %}
-                    <span class="badge badge-secondary">{{ reply.classification }}</span>
-                    {% endif %}
-                </td>
-                <td>
-                    <a href="/replies/{{ reply.id }}" class="btn btn-secondary"
-                        style="padding: 5px 10px; font-size: 12px;">View</a>
-                </td>
+                <td>{{ reply.date }}</td>
+                <td><span class="status-badge">{{ reply.category }}</span></td>
+                <td>{{ reply.sentiment }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5" style="text-align: center; color: #666;">No replies found yet.</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    {% else %}
-    <p style="color: #666; padding: 20px 0;">No replies found yet. Start sending emails to receive replies!</p>
-    {% endif %}
-</div>
-
-<div class="card">
-    <h3>🔄 Auto-Actions</h3>
-    <p style="margin-bottom: 15px; color: #666;">The system automatically takes actions based on reply classifications:
-    </p>
-    <ul style="margin-left: 20px; line-height: 1.8; color: #333;">
-        <li><strong>INTERESTED:</strong> Sends a thank you email and marks for follow-up</li>
-        <li><strong>NOT_INTERESTED:</strong> Archives the email and updates contact status</li>
-        <li><strong>QUESTION:</strong> Flags the email for manual review</li>
-        <li><strong>MEETING_REQUEST:</strong> Sends calendar link and confirms meeting</li>
-        <li><strong>OUT_OF_OFFICE:</strong> Schedules a follow-up for when they return</li>
-    </ul>
-</div>
-
-<div class="card">
-    <h3>⚙️ Reply Classifier</h3>
-    <p style="margin-bottom: 15px; color: #666;">Our AI-powered reply classifier automatically categorizes incoming
-        emails using NLP techniques. It's 100% free and doesn't require any API keys!</p>
-    <div style="display: flex; gap: 10px;">
-        <a href="/api/replies/classify" class="btn btn-primary">Classify New Replies</a>
-        <a href="/api/replies/auto-action" class="btn btn-success">Run Auto-Actions</a>
-    </div>
 </div>
 {% endblock %}

@@ -16,6 +16,8 @@ import re
 from typing import List, Dict, Optional, Tuple
 from dataclasses import dataclass
 
+from utils.profile import get_profile, Profile
+
 
 @dataclass
 class VariationSet:
@@ -39,70 +41,69 @@ class AntiTemplatingEngine:
     Engine to make emails feel unique and non-templated.
     """
     
-    def __init__(self):
-        # Opening variations (avoiding "I am writing to inquire")
+    def __init__(self, profile: Optional[Profile] = None):
+        self.profile = profile or get_profile()
+
+        # Opening variations (avoid template phrasing)
         self.openings = VariationSet([
-            "I've been exploring opportunities in {research_area}, and your group's work immediately stood out.",
-            "Your research on {research_area} represents exactly the kind of innovative work I'm eager to contribute to.",
-            "The approach your lab takes to {research_area} aligns perfectly with my research interests.",
-            "I've been following developments in {research_area}, and your contributions are particularly compelling.",
-            "Your group's advancement of {research_area} methodology is precisely the direction I want to pursue.",
-            "Reading about your work in {research_area} convinced me that your lab is where I can make meaningful contributions.",
-            "The impact of your research on {research_area} has inspired me to reach out about potential collaboration.",
-            "Your innovative approach to {research_area} problems resonates deeply with my technical background.",
+            "I've been exploring opportunities in {focus_area}, and your team's work at {company} stood out.",
+            "Your work in {focus_area} aligns with the kind of impact I want to contribute at {company}.",
+            "The approach your team takes to {focus_area} resonates with my background and interests.",
+            "I've been following developments in {focus_area}, and your work at {company} is particularly compelling.",
+            "Your team's focus on {focus_area} is exactly the direction I want to pursue.",
+            "Reading about {company}'s work in {focus_area} convinced me it could be a strong fit.",
+            "The impact of your work in {focus_area} inspired me to reach out.",
+            "Your approach to {focus_area} problems resonates with my technical background.",
         ])
         
-        # Research interest variations
+        # Interest variations
         self.research_interests = VariationSet([
-            "particularly interested in how you're advancing {research_area}",
-            "especially drawn to your work on {research_area}",
-            "specifically fascinated by your approach to {research_area}",
-            "genuinely excited about your contributions to {research_area}",
-            "deeply interested in your methodology for {research_area}",
-            "particularly compelled by your research in {research_area}",
-            "especially intrigued by your innovations in {research_area}",
+            "particularly interested in how your team advances {focus_area}",
+            "especially drawn to your work on {focus_area}",
+            "specifically fascinated by your approach to {focus_area}",
+            "genuinely excited about your contributions to {focus_area}",
+            "deeply interested in your methodology for {focus_area}",
+            "particularly compelled by your work in {focus_area}",
+            "especially intrigued by your innovations in {focus_area}",
         ])
         
         # Connection phrases
         self.connections = VariationSet([
-            "My experience with {skill} directly applies to your work on {research_area}.",
-            "The skills I've developed in {skill} align well with your {research_area} research.",
-            "Your work on {research_area} connects to my background in {skill}.",
-            "I see a strong overlap between my {skill} experience and your {research_area} focus.",
-            "The {skill} expertise I've built positions me to contribute to your {research_area} projects.",
+            "My experience with {skill} directly applies to your work in {focus_area}.",
+            "The skills I've developed in {skill} align well with your {focus_area} focus.",
+            "Your work in {focus_area} connects to my background in {skill}.",
+            "I see a strong overlap between my {skill} experience and your {focus_area} goals.",
+            "The {skill} expertise I've built positions me to contribute to your {focus_area} initiatives.",
         ])
         
         # Skill mentions
-        self.skills = VariationSet([
-            "Python and scalable ML pipelines",
-            "data processing and machine learning",
-            "production ML systems and data engineering",
-            "deep learning frameworks and optimization",
-            "statistical modeling and algorithm development",
-        ])
+        self.skills = VariationSet(self._build_skill_variations())
         
         # Experience highlights
-        self.experiences = VariationSet([
-            "At Intellect Design Arena, I optimized pipelines processing 2.3M daily transactions, reducing processing time by 67%.",
-            "Leading technical development at YaanBarpe, I built ML-powered systems that improved operational efficiency by 34%.",
-            "My internship at Intellect Design Arena involved building automated dashboards for 2.3M+ daily financial transactions.",
-            "As Technical Head at YaanBarpe, I led a team deploying ML solutions achieving significant efficiency gains.",
-        ])
+        self.experiences = VariationSet(
+            self.profile.get("experience_highlights")
+            or [
+                "In a recent role, I delivered system improvements that increased reliability and performance.",
+                "I have led cross-functional efforts to ship features that improved user outcomes.",
+                "My experience includes building and automating workflows to reduce manual effort.",
+            ]
+        )
         
         # Project mentions
-        self.projects = VariationSet([
-            "VARtificial Intelligence—an XGBoost-based football predictor achieving 89% accuracy—demonstrated my ability to build and optimize ML models.",
-            "CrimeConnect, an FBI-inspired case management dashboard I built using the MERN stack, showcased my full-stack development skills.",
-            "My Flora Fight Frenzy project involved implementing AI-driven behaviors and optimizing for real-time performance.",
-            "HackOps, a gamified cybersecurity platform I deployed with Docker, showed my ability to build secure, scalable systems.",
-        ])
+        self.projects = VariationSet(
+            self.profile.get("project_highlights")
+            or [
+                "I recently delivered a project that combined data processing with automation to improve turnaround time.",
+                "One of my projects focused on building a reliable API and monitoring pipeline.",
+            ]
+        )
         
         # Closing variations
         self.closings = VariationSet([
-            "I would welcome the opportunity to discuss how my background could contribute to your research.",
-            "I'd be grateful for the chance to explore how I might add value to your lab's work.",
-            "I look forward to potentially discussing how my skills align with your research needs.",
-            "I would appreciate the opportunity to learn more about potential contributions I could make.",
+            "I would welcome the opportunity to discuss how my background could contribute to your team.",
+            "I'd be grateful for the chance to explore how I might add value in this role.",
+            "I would appreciate the opportunity to learn more about the role and how I can contribute.",
+            "If there's a fit, I'd value the chance to discuss how I could help the team.",
         ])
         
         # Sign-off variations
@@ -138,9 +139,9 @@ class AntiTemplatingEngine:
     
     def generate_unique_email(
         self,
-        professor_name: str,
-        university: str,
-        research_area: str,
+        contact_name: str,
+        company: str,
+        focus_area: str,
         ai_personalization: Optional[Dict] = None,
         seed: Optional[str] = None
     ) -> Dict[str, str]:
@@ -148,9 +149,9 @@ class AntiTemplatingEngine:
         Generate a unique, non-templated email.
         
         Args:
-            professor_name: Name of the professor
-            university: University name
-            research_area: Research area
+            contact_name: Name of the contact
+            company: Company or organization
+            focus_area: Target role or focus area
             ai_personalization: Optional AI-generated personalization content
             seed: Optional seed for reproducibility
         
@@ -158,7 +159,7 @@ class AntiTemplatingEngine:
             Dict with email components
         """
         if seed is None:
-            seed = f"{professor_name}_{university}_{research_area}"
+            seed = f"{contact_name}_{company}_{focus_area}"
         
         # Use AI personalization if available, otherwise generate variations
         if ai_personalization:
@@ -168,9 +169,9 @@ class AntiTemplatingEngine:
             why_fit = ai_personalization.get('why_fit', '')
         else:
             opening = self.openings.get(seed)
-            connection = self._generate_connection(research_area, seed)
+            connection = self._generate_connection(focus_area, seed)
             research_mention = self.research_interests.get(seed + "_research")
-            why_fit = self._generate_why_fit(research_area, seed)
+            why_fit = self._generate_why_fit(focus_area, seed)
         
         # Get varied components
         experience = self.experiences.get(seed + "_exp")
@@ -184,15 +185,15 @@ class AntiTemplatingEngine:
         
         # Build paragraphs - filter out malformed content
         paragraphs = {}
-        paragraphs['opening'] = self._personalize_opening(opening, professor_name, research_area)
+        paragraphs['opening'] = self._personalize_opening(opening, contact_name, company, focus_area)
         
         # Only add research paragraph if it's valid
-        research_para = self._personalize_research(research_mention, research_area, professor_name)
+        research_para = self._personalize_research(research_mention, focus_area)
         if research_para and not research_para.startswith("I'm your"):
             paragraphs['research'] = research_para
         
         # Only add experience if connection is valid
-        exp_para = self._personalize_experience(connection, experience, research_area)
+        exp_para = self._personalize_experience(connection, experience, focus_area)
         if exp_para and "your work group" not in exp_para and "your inquiry group" not in exp_para:
             paragraphs['experience'] = exp_para
         else:
@@ -212,59 +213,67 @@ class AntiTemplatingEngine:
             'paragraph_order': structure,
             'paragraphs': paragraphs,
             'signoff': signoff,
-            'salutation': f"Dear Professor {professor_name.split()[-1] if professor_name else 'Professor'},",
-            'subject': self._generate_subject(research_area, seed)
+            'salutation': self._build_salutation(contact_name),
+            'subject': self._generate_subject(company, focus_area, seed)
         }
     
-    def _generate_connection(self, research_area: str, seed: str) -> str:
+    def _generate_connection(self, focus_area: str, seed: str) -> str:
         """Generate connection paragraph"""
         # Generate a meaningful connection without template substitution issues
         connections = [
-            f"My experience building ML systems aligns well with your {research_area} research.",
-            f"The skills I've developed in data engineering connect directly to your work on {research_area}.",
-            f"Your research on {research_area} relates to my background in production ML systems.",
-            f"I see strong overlap between my technical experience and your {research_area} focus.",
-            f"My background positions me to contribute meaningfully to your {research_area} projects.",
+            f"My experience building reliable systems aligns well with your {focus_area} work.",
+            f"The skills I've developed in automation and data workflows connect to your {focus_area} focus.",
+            f"Your work in {focus_area} relates to my background in building production systems.",
+            f"I see strong overlap between my technical experience and your {focus_area} goals.",
+            f"My background positions me to contribute meaningfully to your {focus_area} initiatives.",
         ]
         idx = hash(seed + "_conn") % len(connections)
         return connections[idx]
     
-    def _generate_why_fit(self, research_area: str, seed: str) -> str:
+    def _generate_why_fit(self, focus_area: str, seed: str) -> str:
         """Generate why fit paragraph"""
         variations = [
-            f"I believe my technical background and enthusiasm for {research_area} make me a strong candidate for your lab.",
-            f"My combination of skills and genuine interest in {research_area} positions me to contribute meaningfully to your research.",
-            f"I'm excited about the possibility of applying my abilities to advance {research_area} research in your group.",
+            f"I believe my technical background and enthusiasm for {focus_area} make me a strong candidate for your team.",
+            f"My combination of skills and genuine interest in {focus_area} positions me to contribute meaningfully.",
+            f"I'm excited about the possibility of applying my abilities to advance {focus_area} work in your group.",
         ]
         idx = hash(seed + "_fit") % len(variations)
         return variations[idx]
     
-    def _personalize_opening(self, opening: str, professor_name: str, research_area: str) -> str:
+    def _personalize_opening(self, opening: str, contact_name: str, company: str, focus_area: str) -> str:
         """Personalize opening paragraph"""
         # Safely format the opening, handling missing keys
         try:
-            text = opening.format(research_area=research_area)
+            text = opening.format(focus_area=focus_area, company=company)
         except (KeyError, ValueError):
             # If format fails, use the opening as-is or use a safe fallback
             if "{" in opening:
-                text = opening.replace("{research_area}", research_area)
+                text = opening.replace("{focus_area}", focus_area).replace("{company}", company)
             else:
                 text = opening
         return text
     
-    def _personalize_research(self, research_mention: str, research_area: str, professor_name: str) -> str:
+    def _personalize_research(self, research_mention: str, focus_area: str) -> str:
         """Personalize research paragraph"""
-        # Clean up the research mention if it's malformed
-        if research_mention.startswith("I'm your"):
-            # This is a malformed variation, replace with proper mention
-            return f"I'm particularly interested in your work on {research_area}."
-        if "{" in research_mention:
-            return research_mention.format(research_area=research_area)
-        if research_mention.strip():
-            return f"I'm {research_mention}."
-        return f"I'm particularly interested in your work on {research_area}."
+        if not research_mention:
+            return ""
+        text = research_mention.strip()
+        # Clean up malformed variations
+        if text.startswith("I'm your"):
+            text = f"I'm particularly interested in {focus_area}"
+        if "{" in text:
+            try:
+                text = text.format(focus_area=focus_area)
+            except Exception:
+                text = text.replace("{focus_area}", focus_area)
+        text = text.strip()
+        if not text:
+            return ""
+        if text[-1] not in ".!?":
+            text += "."
+        return text
     
-    def _personalize_experience(self, connection: str, experience: str, research_area: str) -> str:
+    def _personalize_experience(self, connection: str, experience: str, focus_area: str) -> str:
         """Personalize experience paragraph"""
         parts = []
         if connection and not connection.startswith("I'm your"):
@@ -276,17 +285,50 @@ class AntiTemplatingEngine:
         """Personalize project paragraph"""
         return f"My projects demonstrate this: {project}"
     
-    def _generate_subject(self, research_area: str, seed: str) -> str:
+    def _generate_subject(self, company: str, focus_area: str, seed: str) -> str:
         """Generate varied subject line"""
         subjects = [
-            f"Research Internship Inquiry - {research_area}",
-            f"Prospective Researcher: {research_area} Interest",
-            f"Collaboration Interest: {research_area}",
-            f"Research Opportunity Inquiry - {research_area}",
-            f"Graduate Research Interest: {research_area}",
+            f"Application for {focus_area} at {company}",
+            f"Interest in {focus_area} opportunities at {company}",
+            f"{focus_area} opportunity inquiry - {company}",
+            f"Exploring {focus_area} roles at {company}",
+            f"{company} - {focus_area} application",
         ]
         idx = hash(seed + "_subject") % len(subjects)
         return subjects[idx]
+
+    def _build_salutation(self, contact_name: str) -> str:
+        """Build a salutation with a safe fallback."""
+        if contact_name:
+            first_name = contact_name.split()[0]
+            return f"Dear {first_name},"
+        return "Dear Hiring Manager,"
+
+    def _build_skill_variations(self) -> List[str]:
+        """Build a set of skill phrases from the profile."""
+        skills = self.profile.get("skills") or []
+        if isinstance(skills, dict):
+            flat = []
+            for values in skills.values():
+                if isinstance(values, list):
+                    flat.extend(values)
+            skills = flat
+
+        skills = [s for s in skills if isinstance(s, str)]
+        if not skills:
+            return [
+                "Python, SQL, and automation",
+                "data processing and reliable systems",
+                "API development and workflow optimization",
+            ]
+
+        top = ", ".join(skills[:3])
+        alt = ", ".join(skills[3:6]) if len(skills) > 3 else top
+        return [
+            top,
+            alt,
+            f"{top} and delivery-focused execution",
+        ]
     
     def _apply_synonym_variation(self, text: str, seed: str) -> str:
         """Apply synonym variation to reduce repetition"""
@@ -322,11 +364,12 @@ class AntiTemplatingEngine:
     
     def generate_html_email(
         self,
-        professor_name: str,
-        university: str,
-        research_area: str,
+        contact_name: str,
+        company: str,
+        focus_area: str,
         ai_personalization: Optional[Dict] = None,
-        seed: Optional[str] = None
+        seed: Optional[str] = None,
+        profile: Optional[Profile] = None
     ) -> Tuple[str, str]:
         """
         Generate complete HTML email.
@@ -334,8 +377,10 @@ class AntiTemplatingEngine:
         Returns:
             Tuple of (subject, html_body)
         """
+        if profile:
+            self.profile = profile
         email_data = self.generate_unique_email(
-            professor_name, university, research_area, ai_personalization, seed
+            contact_name, company, focus_area, ai_personalization, seed
         )
         
         # Build HTML
@@ -345,19 +390,40 @@ class AntiTemplatingEngine:
         body_paragraphs = []
         for section in order:
             if section in paragraphs and paragraphs[section]:
-                body_paragraphs.append(f"<p>{paragraphs[section]}</p>")
+                if section == "closing":
+                    continue
+                body_paragraphs.append(f"<p>{self._sanitize_paragraph(paragraphs[section])}</p>")
         
         # Add skills section
-        skills_html = """
-        <p><strong>Technical Skills:</strong> Python, PyTorch, TensorFlow, SQL, scalable ML pipelines, 
-        data visualization, Docker, AWS, MERN stack</p>
-        """
-        body_paragraphs.append(skills_html)
+        skills = self.profile.get("skills") or []
+        if isinstance(skills, dict):
+            flat = []
+            for values in skills.values():
+                if isinstance(values, list):
+                    flat.extend(values)
+            skills = flat
+        skills = [s for s in skills if isinstance(s, str)]
+        if skills:
+            skills_html = f"<p><strong>Core Skills:</strong> {', '.join(skills[:6])}</p>"
+            body_paragraphs.append(skills_html)
         
-        # Add closing
-        body_paragraphs.append(f"<p>{paragraphs['closing']}</p>")
+        # Add closing once
+        if paragraphs.get('closing'):
+            body_paragraphs.append(f"<p>{self._sanitize_paragraph(paragraphs['closing'])}</p>")
         body_paragraphs.append(f"<p>{email_data['signoff']}</p>")
+
+        # De-duplicate identical paragraphs
+        seen = set()
+        deduped = []
+        for para in body_paragraphs:
+            plain = re.sub(r'<[^>]+>', '', para).strip().lower()
+            if not plain or plain in seen:
+                continue
+            seen.add(plain)
+            deduped.append(para)
+        body_paragraphs = deduped
         
+        signature = self.profile.signature_html()
         html_body = f"""<!DOCTYPE html>
 <html>
 <head>
@@ -373,16 +439,26 @@ class AntiTemplatingEngine:
     {''.join(body_paragraphs)}
     <p>
         Best regards,<br><br>
-        <strong>Anamay Tripathy</strong><br>
-        B.Tech Data Science Engineering<br>
-        MIT Manipal, India<br>
-        tripathy.anamay23@gmail.com<br>
-        anamay.vercel.app
+        {signature}
     </p>
 </body>
 </html>"""
         
         return email_data['subject'], html_body
+
+    def _sanitize_paragraph(self, text: str) -> str:
+        """Clean up awkward AI phrasing and academic wording."""
+        if not text:
+            return text
+        cleaned = text.strip()
+        cleaned = re.sub(r"^I'm the\s+", "The ", cleaned, flags=re.IGNORECASE)
+        cleaned = re.sub(r"^I am the\s+", "The ", cleaned, flags=re.IGNORECASE)
+        cleaned = re.sub(r"\bprofessor\b", "", cleaned, flags=re.IGNORECASE)
+        cleaned = re.sub(r"\blab\b", "team", cleaned, flags=re.IGNORECASE)
+        cleaned = re.sub(r"\bresearch\b", "", cleaned, flags=re.IGNORECASE)
+        cleaned = re.sub(r"\s{2,}", " ", cleaned)
+        cleaned = re.sub(r"\.{2,}", ".", cleaned)
+        return cleaned.strip()
     
     def reset_tracking(self):
         """Reset phrase tracking for new campaign"""
@@ -408,12 +484,12 @@ if __name__ == "__main__":
     print("Testing Anti-Templating Engine")
     print("="*60)
     
-    # Test with same professor multiple times
+    # Test with same contact multiple times
     for i in range(3):
         subject, html = engine.generate_html_email(
-            professor_name="Dr. Jane Smith",
-            university="MIT",
-            research_area="Machine Learning",
+            contact_name="Jane Smith",
+            company="Example Corp",
+            focus_area="Machine Learning",
             seed=f"test_{i}"
         )
         

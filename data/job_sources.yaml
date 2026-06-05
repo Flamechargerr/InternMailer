@@ -1,0 +1,260 @@
+# Job Sources Configuration for InternMailer
+# ===========================================
+# This file contains all sources for job discovery
+
+# ATS (Applicant Tracking System) sources
+# These are company career pages with structured job data
+ats_sources:
+  - name: greenhouse
+    companies:
+      - "GitHub"
+      - "Shopify"
+      - "Stripe"
+      - "Airbnb"
+      - "Dropbox"
+      - "Pinterest"
+      - "Reddit"
+      - "Square"
+      - "Twitch"
+      - "Udemy"
+  
+  - name: lever
+    companies:
+      - "Discord"
+      - "Figma"
+      - "Notion"
+      - "Airtable"
+      - "Calendly"
+      - "Loom"
+      - "Miro"
+      - "Zoom"
+      - "Asana"
+      - "Trello"
+  
+  - name: workday
+    companies:
+      - "Google"
+      - "Microsoft"
+      - "Apple"
+      - "Meta"
+      - "Amazon"
+      - "Netflix"
+      - "Salesforce"
+      - "Adobe"
+      - "Intel"
+      - "NVIDIA"
+
+# Job board APIs (public APIs that return job listings)
+job_board_apis:
+  - name: remotive
+    url: https://remotive.com/api/remote-jobs
+    description: "Remote jobs API"
+    requires_key: false
+  
+  - name: arbeitnow
+    url: https://www.arbeitnow.com/api/job-board-api
+    description: "European job board API"
+    requires_key: false
+  
+  - name: github_jobs
+    url: https://jobs.github.com/positions.json
+    description: "GitHub Jobs API (deprecated but may still work)"
+    requires_key: false
+  
+  - name: muse
+    url: https://www.themuse.com/api/public/jobs
+    description: "The Muse job board API"
+    requires_key: false
+
+# Custom company career pages
+# These are direct links to company career pages that need web scraping
+custom_company_urls:
+  # Tech Companies
+  - https://careers.google.com/
+  - https://careers.microsoft.com/
+  - https://www.amazon.jobs/
+  - https://www.apple.com/careers/
+  - https://www.metacareers.com/
+  - https://careers.tiktok.com/
+  - https://careers.twitter.com/
+  - https://careers.snap.com/
+  - https://careers.spotify.com/
+  - https://careers.uber.com/
+  
+  # Semiconductor & Hardware
+  - https://www.nvidia.com/en-us/about-nvidia/careers/
+  - https://careers.oracle.com/
+  - https://www.ibm.com/careers/
+  - https://jobs.intel.com/
+  - https://jobs.cisco.com/
+  - https://jobs.dell.com/
+  - https://jobs.hp.com/
+  - https://www.qualcomm.com/company/careers
+  
+  # Software & Cloud
+  - https://careers.adobe.com/
+  - https://careers.salesforce.com/
+  - https://careers.servicenow.com/
+  - https://jobs.sap.com/
+  - https://careers.snowflake.com/
+  - https://careers.databricks.com/
+  - https://careers.mongodb.com/
+  - https://careers.confluent.io/
+  
+  # Finance & Banking
+  - https://careers.jpmorgan.com/
+  - https://www.goldmansachs.com/careers/
+  - https://www.morganstanley.com/people-opportunities
+  - https://jobs.citi.com/
+  - https://careers.bankofamerica.com/
+  - https://www.wellsfargojobs.com/
+  
+  # Consulting & Professional Services
+  - https://www.accenture.com/us-en/careers
+  - https://www2.deloitte.com/global/en/careers.html
+  - https://www.pwc.com/careers
+  - https://www.ey.com/en_in/careers
+  - https://kpmg.com/xx/en/careers.html
+  - https://www.mckinsey.com/careers
+  - https://www.bain.com/careers/
+  - https://careers.bcg.com/
+  
+  # Indian IT Services
+  - https://www.tcs.com/careers
+  - https://www.infosys.com/careers
+  - https://careers.wipro.com/
+  - https://www.hcltech.com/careers
+  - https://careers.techmahindra.com/
+  - https://www.capgemini.com/careers/
+  
+  # Automotive
+  - https://search-careers.gm.com/
+  - https://careers.ford.com/
+  - https://careers.toyota.com/
+  - https://careers.honda.com/
+  - https://www.tesla.com/careers
+  
+  # Retail & Consumer Goods
+  - https://careers.walmart.com/
+  - https://corporate.target.com/careers
+  - https://www.costco.com/jobs.html
+  - https://careers.homedepot.com/
+  - https://talent.lowes.com/
+  - https://jobs.nike.com/
+  - https://careers.starbucks.com/
+  
+  # Healthcare & Pharma
+  - https://careers.unitedhealthgroup.com/
+  - https://jobs.cvshealth.com/
+  - https://jobs.walgreens.com/
+  - https://www.jnj.com/careers
+  - https://www.pfizer.com/careers
+  - https://www.merck.com/careers/
+  
+  # Energy & Industrial
+  - https://corporate.exxonmobil.com/Careers
+  - https://careers.chevron.com/
+  - https://www.shell.com/careers.html
+  - https://www.bp.com/en/global/corporate/careers.html
+  - https://jobs.boeing.com/
+  - https://www.lockheedmartinjobs.com/
+  - https://careers.rtx.com/
+
+# Sources that require login (will be skipped if no credentials provided)
+login_required_sources:
+  - linkedin
+  - indeed
+  - glassdoor
+  - monster
+  - dice
+
+# Job search parameters (used when querying APIs)
+search_parameters:
+  # Keywords for internship searches
+  keywords:
+    - "intern"
+    - "internship"
+    - "co-op"
+    - "student"
+    - "graduate"
+    - "entry level"
+    - "new grad"
+  
+  # Locations (can be empty for remote)
+  locations:
+    - "Remote"
+    - "India"
+    - "United States"
+    - "Canada"
+    - "United Kingdom"
+    - "Germany"
+    - "Australia"
+  
+  # Job categories
+  categories:
+    - "Software Engineering"
+    - "Data Science"
+    - "Machine Learning"
+    - "Product Management"
+    - "UX/UI Design"
+    - "DevOps"
+    - "Cloud Engineering"
+    - "Cybersecurity"
+  
+  # Employment types
+  employment_types:
+    - "Internship"
+    - "Full-time"
+    - "Part-time"
+    - "Contract"
+
+# Rate limiting configuration
+rate_limits:
+  # Maximum requests per minute per source
+  requests_per_minute: 30
+  
+  # Delay between requests in seconds
+  delay_between_requests: 2.0
+  
+  # Maximum concurrent requests
+  max_concurrent: 5
+
+# Fallback configuration
+fallbacks:
+  # If primary sources fail, use these fallback sources
+  primary_fallback_sources:
+    - "remotive"
+    - "arbeitnow"
+  
+  # If all API sources fail, use these static company pages
+  static_fallback_urls:
+    - "https://careers.google.com/"
+    - "https://careers.microsoft.com/"
+    - "https://www.amazon.jobs/"
+  
+  # Maximum retries for failed sources
+  max_retries: 3
+  
+  # Retry delay in seconds
+  retry_delay: 5
+
+# Validation rules
+validation:
+  # Minimum required fields for a job posting to be valid
+  required_fields:
+    - "title"
+    - "company"
+    - "url"
+    - "location"
+  
+  # Fields that should be normalized
+  normalize_fields:
+    - "title"
+    - "company"
+    - "location"
+  
+  # Maximum age of job postings in days
+  max_age_days: 30
+  
+  # Minimum description length
+  min_description_length: 50

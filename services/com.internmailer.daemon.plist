@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.internmailer.daemon</string>
+    
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/bin/python3</string>
+        <string>REPLACE_WITH_PATH/core/enhanced_daemon.py</string>
+        <string>--start</string>
+        <string>--interval</string>
+        <string>5</string>
+    </array>
+    
+    <key>WorkingDirectory</key>
+    <string>REPLACE_WITH_PATH</string>
+    
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PYTHONPATH</key>
+        <string>REPLACE_WITH_PATH</string>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+        <key>ENVIRONMENT</key>
+        <string>production</string>
+    </dict>
+    
+    <!-- Run continuously -->
+    <key>KeepAlive</key>
+    <true/>
+    
+    <!-- Restart if crashes -->
+    <key>ThrottleInterval</key>
+    <integer>10</integer>
+    
+    <!-- Standard output/error logging -->
+    <key>StandardOutPath</key>
+    <string>REPLACE_WITH_PATH/logs/daemon.stdout.log</string>
+    
+    <key>StandardErrorPath</key>
+    <string>REPLACE_WITH_PATH/logs/daemon.stderr.log</string>
+    
+    <!-- Don't start automatically (use launchctl to control) -->
+    <key>RunAtLoad</key>
+    <false/>
+    
+    <!-- Nice value (lower priority) -->
+    <key>Nice</key>
+    <integer>10</integer>
+    
+    <!-- Process type -->
+    <key>ProcessType</key>
+    <string>Background</string>
+    
+    <!-- Low priority I/O -->
+    <key>LowPriorityIO</key>
+    <true/>
+    
+    <!-- Disable resource limits -->
+    <key>HardResourceLimits</key>
+    <dict>
+        <key>NumberOfFiles</key>
+        <integer>1024</integer>
+    </dict>
+    
+    <key>SoftResourceLimits</key>
+    <dict>
+        <key>NumberOfFiles</key>
+        <integer>1024</integer>
+    </dict>
+</dict>
+</plist>

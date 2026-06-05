@@ -1,0 +1,61 @@
+name: "Your Name"
+title: "Your Title"
+email: "your.email@example.com"
+phone: "+1-XXX-XXX-XXXX"
+location: "City, Country"
+linkedin: "https://linkedin.com/in/yourprofile"
+github: "https://github.com/yourhandle"
+portfolio: "https://your-portfolio.com"
+calendar_link: "https://cal.com/your-handle"
+signature_lines: []
+resume_paths:
+  - "resumes/resume.pdf"
+  - "resume.pdf"
+skills:
+  - "Python"
+  - "SQL"
+  - "Automation"
+  - "APIs"
+experience_highlights:
+  - "Built and automated data workflows to improve reliability and speed."
+  - "Collaborated across teams to deliver production-ready systems."
+project_highlights:
+  - "Delivered end-to-end project work including design, implementation, and testing."
+ats:
+  summary: "Results-driven professional with experience delivering reliable, scalable software and data solutions."
+  coursework:
+    - "Data Structures and Algorithms"
+    - "Machine Learning"
+    - "Database Systems"
+  education:
+    - school: "University Name"
+      degree: "B.S. in Computer Science"
+      dates: "2020 -- 2024"
+      details: "Relevant Coursework: Data Structures, Algorithms, Databases"
+  experience:
+    - company: "Company Name"
+      location: "City, Country"
+      role: "Role Title"
+      dates: "2022 -- 2023"
+      bullets:
+        - "Designed and delivered a key system feature improving performance by 25%."
+        - "Built automated tests and CI pipelines to improve release reliability."
+  projects:
+    - name: "Project Name"
+      tech: "Python, SQL"
+      year: "2024"
+      link: "https://github.com/yourhandle/project"
+      bullets:
+        - "Built a data pipeline to process and analyze large datasets."
+  skills:
+    Languages:
+      - "Python"
+      - "SQL"
+      - "JavaScript"
+    Tools:
+      - "Git"
+      - "Docker"
+      - "CI/CD"
+    Frameworks:
+      - "Flask"
+      - "FastAPI"

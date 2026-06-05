@@ -43,6 +43,11 @@ def print_menu():
 ║  11. Check configuration                                     ║
 ║  12. Install dependencies                                    ║
 ║                                                              ║
+║  🧭 JOBS                                                     ║
+║  ──────────────────────────────────────────────────────────  ║
+║  13. Discover jobs                                           ║
+║  14. Auto-apply to jobs                                      ║
+║                                                              ║
 ║  0. Exit                                                     ║
 ║                                                              ║
 ╚══════════════════════════════════════════════════════════════╝
@@ -93,7 +98,7 @@ def start_daemon():
     print("\n   Press Ctrl+C to stop\n")
     
     try:
-        subprocess.run([sys.executable, 'core/daemon.py', '--start'])
+        subprocess.run([sys.executable, 'core/enhanced_daemon.py', '--start'])
     except KeyboardInterrupt:
         print("\n⏹️  Daemon stopped")
 
@@ -101,7 +106,7 @@ def start_daemon():
 def test_cycle():
     """Run one automation cycle"""
     print("\n🧪 Running one automation cycle (test mode)...\n")
-    result = subprocess.run([sys.executable, 'core/daemon.py', '--test'])
+    result = subprocess.run([sys.executable, 'core/enhanced_daemon.py', '--cycle'])
     if result.returncode != 0:
         print("❌ Error running test cycle.")
 
@@ -109,7 +114,7 @@ def test_cycle():
 def check_status():
     """Check daemon status"""
     print("\n📊 Checking status...\n")
-    result = subprocess.run([sys.executable, 'core/daemon.py', '--status'])
+    result = subprocess.run([sys.executable, 'core/enhanced_daemon.py', '--status'])
     if result.returncode != 0:
         print("❌ Error checking status.")
 
@@ -124,7 +129,7 @@ def view_stats():
 
 def view_logs():
     """View recent logs"""
-    log_file = 'campaign_results/automation_log.txt'
+    log_file = '/tmp/internmailer_db/automation_log.txt'
     
     if not os.path.exists(log_file):
         print(f"\n❌ Log file not found: {log_file}")
@@ -187,8 +192,15 @@ def check_config():
         print("⚠️  Resume not found (will send without attachment)")
     
     # Check required files
-    required_files = ['email_system.py', 'daemon.py', 'inbox_monitor.py', 
-                      'reply_classifier.py', 'auto_action_engine.py', 'followup_scheduler.py']
+    required_files = [
+        'core/email_system.py', 
+        'core/enhanced_daemon.py', 
+        'core/inbox_monitor.py',
+        'core/reply_classifier.py', 
+        'core/gmail_agent.py',
+        'core/followup_scheduler.py',
+        'core/lead_discovery.py'
+    ]
     
     print("\n📁 Core files:")
     for file in required_files:
@@ -198,6 +210,30 @@ def check_config():
             print(f"   ❌ {file} (missing)")
     
     print()
+
+
+def discover_jobs():
+    """Run job discovery"""
+    print("\n🧭 Running job discovery...\n")
+    try:
+        from core.job_discovery import JobDiscovery
+        discovery = JobDiscovery()
+        result = discovery.run()
+        print(f"✅ Found {result['total_found']} jobs, saved {result['total_saved']}")
+    except Exception as e:
+        print(f"❌ Job discovery failed: {e}")
+
+
+def apply_jobs():
+    """Auto-apply to jobs"""
+    print("\n🤖 Auto-applying to jobs...\n")
+    try:
+        from core.job_pipeline import JobPipeline
+        pipeline = JobPipeline()
+        result = pipeline.apply_pending(limit=50)
+        print(f"✅ Attempted {result['attempted']} job applications")
+    except Exception as e:
+        print(f"❌ Job auto-apply failed: {e}")
 
 
 def install_deps():
@@ -214,7 +250,7 @@ def main():
     """Main menu loop"""
     while True:
         print_menu()
-        choice = input("Select option [0-12]: ").strip()
+        choice = input("Select option [0-14]: ").strip()
         
         if choice == "1":
             preview_emails()
@@ -240,6 +276,10 @@ def main():
             check_config()
         elif choice == "12":
             install_deps()
+        elif choice == "13":
+            discover_jobs()
+        elif choice == "14":
+            apply_jobs()
         elif choice == "0":
             print("\n👋 Goodbye!\n")
             sys.exit(0)

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Button Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        button { padding: 10px 20px; margin: 10px; font-size: 16px; cursor: pointer; }
+        .result { margin: 20px 0; padding: 10px; background: #f0f0f0; border-radius: 5px; }
+        .error { background: #ffebee; color: #c62828; }
+        .success { background: #e8f5e9; color: #2e7d32; }
+    </style>
+</head>
+<body>
+    <h1>InternMailer Button Test</h1>
+    
+    <div>
+        <button onclick="testSendEmails()">Test Send Emails</button>
+        <button onclick="testDiscoverJobs()">Test Discover Jobs</button>
+        <button onclick="testDaemonStart()">Test Start Daemon</button>
+        <button onclick="testDaemonStop()">Test Stop Daemon</button>
+    </div>
+    
+    <div id="result" class="result"></div>
+    
+    <script>
+        function showResult(message, isError = false) {
+            const div = document.getElementById('result');
+            div.textContent = message;
+            div.className = 'result ' + (isError ? 'error' : 'success');
+        }
+        
+        async function testSendEmails() {
+            try {
+                showResult('Sending request...');
+                const response = await fetch('/send-emails', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ count: 1 })
+                });
+                const data = await response.json();
+                showResult('✅ Send Emails: ' + JSON.stringify(data));
+            } catch (error) {
+                showResult('❌ Error: ' + error.message, true);
+            }
+        }
+        
+        async function testDiscoverJobs() {
+            try {
+                showResult('Sending request...');
+                const response = await fetch('/api/jobs/discover', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const data = await response.json();
+                showResult('✅ Discover Jobs: ' + JSON.stringify(data));
+            } catch (error) {
+                showResult('❌ Error: ' + error.message, true);
+            }
+        }
+        
+        async function testDaemonStart() {
+            try {
+                showResult('Sending request...');
+                const response = await fetch('/api/daemon/start', {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                showResult('✅ Start Daemon: ' + JSON.stringify(data));
+            } catch (error) {
+                showResult('❌ Error: ' + error.message, true);
+            }
+        }
+        
+        async function testDaemonStop() {
+            try {
+                showResult('Sending request...');
+                const response = await fetch('/api/daemon/stop', {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                showResult('✅ Stop Daemon: ' + JSON.stringify(data));
+            } catch (error) {
+                showResult('❌ Error: ' + error.message, true);
+            }
+        }
+    </script>
+</body>
+</html>

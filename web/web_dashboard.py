@@ -1,1031 +1,641 @@
 #!/usr/bin/env python3
-"""
-🌐 InternMailer Web Dashboard
-=============================
-Visual web interface for managing all InternMailer features:
-- Send emails with visual progress
-- Monitor inbox and replies
-- Run ATS Optimizer
-- View campaign statistics
-- Control the automation daemon
+"""InternMailer Flask API and React app host."""
 
-Usage:
-    python web_dashboard.py
-    
-Then open http://localhost:5000 in your browser
-"""
+from __future__ import annotations
 
-import os
-import sys
 import json
+import os
 import sqlite3
 import subprocess
+import sys
 import threading
-import time
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
-from functools import wraps
+from typing import Any, Callable, Optional
 
-from flask import Flask, render_template, jsonify, request, flash, redirect, url_for, send_file
-from flask import session
-from werkzeug.utils import secure_filename
+from flask import Flask, jsonify, request, send_from_directory
 
-# Add parent directory to path for imports
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-# Import InternMailer components
+from utils.bootstrap import bootstrap
+
+bootstrap()
+
+from utils.config import config
+
 try:
-    from core.email_system import EmailSystem
-    from web.ats_optimizer import ATSOptimizer
-    from core.unified_ai_provider import get_unified_ai_provider
-    EMAIL_SYSTEM_AVAILABLE = True
-except ImportError as e:
-    print(f"⚠️ Email system not available: {e}")
-    EMAIL_SYSTEM_AVAILABLE = False
+    from flask_cors import CORS
+except Exception:  # pragma: no cover - optional in constrained installs
+    CORS = None
 
-app = Flask(__name__, template_folder='../templates/web')
-app.secret_key = os.urandom(24)
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 
-# Global state
-daemon_process = None
-campaign_stats = {
-    'emails_sent': 0,
-    'emails_failed': 0,
-    'replies_received': 0,
-    'last_updated': None
-}
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+FRONTEND_DIST = PROJECT_ROOT / "frontend" / "dist"
+FRONTEND_ASSETS = FRONTEND_DIST / "assets"
+TCC_DB_DIR = Path("/tmp/internmailer_db")
 
-# ============== ROUTES ==============
+app = Flask(
+    __name__,
+    static_folder=str(FRONTEND_ASSETS) if FRONTEND_ASSETS.exists() else None,
+    static_url_path="/assets",
+)
+app.secret_key = config.SECRET_KEY
+app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024
 
-@app.route('/')
-def index():
-    """Main dashboard page"""
-    stats = get_campaign_stats()
-    
-    # Get daemon status
-    daemon_status_info = {
-        'running': False,
-        'pid': None
+if CORS:
+    CORS(app, resources={r"/api/*": {"origins": config.FRONTEND_ORIGIN}})
+
+
+daemon_process: Optional[subprocess.Popen] = None
+background_tasks: dict[str, dict[str, Any]] = {}
+
+
+def _now() -> str:
+    return datetime.now().isoformat(timespec="seconds")
+
+
+def _json_error(message: str, status_code: int = 500, **extra: Any):
+    payload = {"status": "error", "message": message, **extra}
+    return jsonify(payload), status_code
+
+
+def _row_to_dict(row: Optional[sqlite3.Row]) -> Optional[dict[str, Any]]:
+    return dict(row) if row is not None else None
+
+
+def _safe_count(db, query: str, params: tuple[Any, ...] = ()) -> int:
+    try:
+        row = db.fetch_one(query, params)
+        if row is None:
+            return 0
+        return int(row[0])
+    except Exception:
+        return 0
+
+
+def _run_background(name: str, target: Callable[[], dict[str, Any]]) -> dict[str, Any]:
+    task_id = f"{name}-{datetime.now().strftime('%Y%m%d%H%M%S')}"
+    background_tasks[task_id] = {
+        "id": task_id,
+        "name": name,
+        "status": "running",
+        "started_at": _now(),
+        "finished_at": None,
+        "result": None,
+        "error": None,
     }
-    if daemon_process and daemon_process.poll() is None:
-        daemon_status_info['running'] = True
-        daemon_status_info['pid'] = daemon_process.pid
-    
-    return render_template('dashboard.html', stats=stats, daemon_status=daemon_status_info)
 
-@app.route('/api/stats')
-def api_stats():
-    """Get current campaign statistics"""
-    return jsonify(get_campaign_stats())
-
-@app.route('/send-emails', methods=['POST'])
-def send_emails():
-    """Send emails via API"""
-    data = request.json
-    count = data.get('count', 10)
-    
-    def send_task():
+    def runner() -> None:
         try:
-            system = EmailSystem()
-            result = system.send_campaign(count=count)
-            campaign_stats['emails_sent'] += result.get('sent', 0)
-            campaign_stats['emails_failed'] += result.get('failed', 0)
-            campaign_stats['last_updated'] = datetime.now().isoformat()
-        except Exception as e:
-            print(f"Error sending emails: {e}")
-    
-    # Run in background thread
-    thread = threading.Thread(target=send_task)
-    thread.daemon = True
+            background_tasks[task_id]["result"] = target()
+            background_tasks[task_id]["status"] = "completed"
+        except Exception as exc:
+            background_tasks[task_id]["status"] = "failed"
+            background_tasks[task_id]["error"] = str(exc)
+        finally:
+            background_tasks[task_id]["finished_at"] = _now()
+
+    thread = threading.Thread(target=runner, daemon=True)
     thread.start()
-    
-    return jsonify({'status': 'started', 'count': count})
+    return background_tasks[task_id]
 
-@app.route('/preview-emails', methods=['GET'])
-def preview_emails():
-    """Get email previews"""
-    count = request.args.get('count', 3, type=int)
-    
-    try:
-        system = EmailSystem()
-        previews = system.preview(count=count)
-        return jsonify({'status': 'success', 'previews': previews})
-    except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)}), 500
 
-@app.route('/ats-optimizer', methods=['GET', 'POST'])
-def ats_optimizer_page():
-    """ATS Optimizer page"""
-    if request.method == 'POST':
-        job_description = request.form.get('job_description', '')
-        company_name = request.form.get('company_name', 'Company')
-        
-        if not job_description:
-            flash('Please enter a job description', 'error')
-            return redirect(url_for('ats_optimizer_page'))
-        
-        try:
-            optimizer = ATSOptimizer()
-            result = optimizer.optimize_for_job(job_description)
-            
-            return render_template('ats_result.html', 
-                                 result=result,
-                                 company=company_name)
-        except Exception as e:
-            flash(f'Error optimizing: {str(e)}', 'error')
-            return redirect(url_for('ats_optimizer_page'))
-    
-    return render_template('ats_optimizer.html')
+def _job_db():
+    from core.database_manager import get_job_discovery_db
 
-@app.route('/contacts')
-def contacts_page():
-    """Contacts management page"""
-    contacts = get_contacts()
-    stats = {
-        'total': len(contacts) if contacts else 0,
-        'sent': sum(1 for c in contacts if c.get('status') == 'sent') if contacts else 0,
-        'replies': sum(1 for c in contacts if c.get('status') == 'replied') if contacts else 0,
-        'followups': sum(1 for c in contacts if c.get('status') == 'followed_up') if contacts else 0
-    }
-    return render_template('contacts.html', contacts=contacts, stats=stats)
+    return get_job_discovery_db(config.JOBS_DB_PATH)
 
-@app.route('/replies')
-def replies_page():
-    """Replies monitoring page"""
-    replies = get_replies()
-    stats = {
-        'total': len(replies) if replies else 0,
-        'interested': sum(1 for r in replies if r.get('classification') == 'INTERESTED') if replies else 0,
-        'not_interested': sum(1 for r in replies if r.get('classification') == 'NOT_INTERESTED') if replies else 0,
-        'questions': sum(1 for r in replies if r.get('classification') == 'QUESTION') if replies else 0
-    }
-    return render_template('replies.html', replies=replies, stats=stats)
 
-@app.route('/settings')
-def settings_page():
-    """Settings page"""
-    config = get_current_config()
-    return render_template('settings.html', config=config)
-
-@app.route('/api/test-groq')
-def test_groq():
-    """Test Groq API connection"""
-    try:
-        from core.unified_ai_provider import get_unified_ai_provider
-        provider = get_unified_ai_provider()
-        
-        # Try a simple test call
-        groq_key = os.getenv('GROQ_API_KEY', '')
-        if groq_key:
-            return jsonify({
-                'status': 'success',
-                'message': 'Groq API key is configured',
-                'key_preview': groq_key[:10] + '...'
-            })
-        else:
-            return jsonify({
-                'status': 'error',
-                'message': 'Groq API key not found in environment'
-            })
-    except Exception as e:
-        return jsonify({
-            'status': 'error',
-            'message': str(e)
-        })
-
-@app.route('/api/daemon/start', methods=['POST'])
-def start_daemon():
-    """Start the automation daemon"""
-    global daemon_process
-    
-    if daemon_process and daemon_process.poll() is None:
-        return jsonify({'status': 'error', 'message': 'Daemon already running'})
-    
-    try:
-        daemon_process = subprocess.Popen(
-            [sys.executable, 'daemon.py', '--start'],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE
+def _get_jobs(limit: int = 50, status: Optional[str] = None) -> list[dict[str, Any]]:
+    db = _job_db()
+    limit = max(1, min(int(limit or 50), 250))
+    if status:
+        rows = db.fetch_all(
+            """
+            SELECT * FROM jobs
+            WHERE status = ?
+            ORDER BY score DESC, updated_at DESC, created_at DESC, id DESC
+            LIMIT ?
+            """,
+            (status, limit),
         )
-        return jsonify({'status': 'success', 'message': 'Daemon started'})
-    except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)})
-
-@app.route('/api/daemon/stop', methods=['POST'])
-def stop_daemon():
-    """Stop the automation daemon"""
-    global daemon_process
-    
-    if daemon_process:
-        daemon_process.terminate()
-        daemon_process = None
-        return jsonify({'status': 'success', 'message': 'Daemon stopped'})
-    
-    return jsonify({'status': 'error', 'message': 'Daemon not running'})
-
-@app.route('/api/daemon/status')
-def daemon_status():
-    """Get daemon status"""
-    global daemon_process
-    
-    if daemon_process and daemon_process.poll() is None:
-        return jsonify({'status': 'running'})
     else:
-        return jsonify({'status': 'stopped'})
+        rows = db.fetch_all(
+            """
+            SELECT * FROM jobs
+            ORDER BY score DESC, updated_at DESC, created_at DESC, id DESC
+            LIMIT ?
+            """,
+            (limit,),
+        )
+    return [dict(row) for row in rows]
 
-@app.route('/download/<path:filename>')
-def download_file(filename):
-    """Download optimized files"""
-    safe_filename = secure_filename(filename)
-    # Use parent directory's optimized_documents folder
-    file_path = Path(__file__).parent.parent / 'optimized_documents' / safe_filename
-    
-    if file_path.exists():
-        return send_file(str(file_path), as_attachment=True)
-    else:
-        return jsonify({'status': 'error', 'message': 'File not found'}), 404
 
-# ============== HELPER FUNCTIONS ==============
-
-def get_campaign_stats():
-    """Get campaign statistics from database"""
-    stats = {
-        'emails_sent': 0,
-        'emails_failed': 0,
-        'replies_received': 0,
-        'followups_sent': 0,
-        'contacts_total': 0,
-        'contacts_contacted': 0,
-        'last_updated': None
+def _job_stats() -> dict[str, int]:
+    db = _job_db()
+    return {
+        "total": _safe_count(db, "SELECT COUNT(*) FROM jobs"),
+        "new": _safe_count(db, "SELECT COUNT(*) FROM jobs WHERE status = 'new'"),
+        "applied": _safe_count(db, "SELECT COUNT(*) FROM jobs WHERE status = 'applied'"),
+        "needs_review": _safe_count(db, "SELECT COUNT(*) FROM jobs WHERE status = 'needs_review'"),
     }
-    
-    # Try to get from tracking database
-    try:
-        db_path = 'campaign_results/email_tracking.db'
-        if os.path.exists(db_path):
-            conn = sqlite3.connect(db_path)
-            cursor = conn.cursor()
-            
-            # Count sent emails
-            cursor.execute('SELECT COUNT(*) FROM sent_emails')
-            stats['emails_sent'] = cursor.fetchone()[0]
-            
-            # Count unique contacts
-            cursor.execute('SELECT COUNT(DISTINCT email) FROM sent_emails')
-            stats['contacts_contacted'] = cursor.fetchone()[0]
-            
-            conn.close()
-    except Exception as e:
-        print(f"Error getting stats: {e}")
-    
-    # Add in-memory stats
-    stats['emails_sent'] += campaign_stats['emails_sent']
-    stats['emails_failed'] += campaign_stats['emails_failed']
-    stats['replies_received'] += campaign_stats['replies_received']
-    
-    return stats
 
-def get_contacts():
-    """Get contacts from database"""
-    contacts = []
-    
-    try:
-        db_path = 'data/verified_professors.db'
-        if os.path.exists(db_path):
-            conn = sqlite3.connect(db_path)
-            cursor = conn.cursor()
-            
-            cursor.execute('''
-                SELECT name, email, affiliation, contacted 
-                FROM verified_contacts 
-                LIMIT 100
-            ''')
-            
-            for row in cursor.fetchall():
-                contacts.append({
-                    'name': row[0],
-                    'email': row[1],
-                    'company': row[2],
-                    'contacted': row[3] == 'yes'
-                })
-            
-            conn.close()
-    except Exception as e:
-        print(f"Error getting contacts: {e}")
-    
-    return contacts
 
-def get_replies():
-    """Get replies from inbox monitor"""
-    replies = []
-    
+def _reply_rows(limit: int = 50) -> list[dict[str, Any]]:
+    db_path = Path(config.INBOX_DB_PATH)
+    if not db_path.exists():
+        return []
+
     try:
-        db_path = 'campaign_results/inbox_monitor.db'
-        if os.path.exists(db_path):
-            conn = sqlite3.connect(db_path)
-            cursor = conn.cursor()
-            
-            cursor.execute('''
+        with sqlite3.connect(str(db_path)) as conn:
+            conn.row_factory = sqlite3.Row
+            table_names = {
+                row["name"]
+                for row in conn.execute("SELECT name FROM sqlite_master WHERE type='table'")
+            }
+            if "replies" not in table_names:
+                return []
+            rows = conn.execute(
+                """
                 SELECT sender, subject, received_date, category, sentiment
                 FROM replies
                 ORDER BY received_date DESC
-                LIMIT 50
-            ''')
-            
-            for row in cursor.fetchall():
-                replies.append({
-                    'sender': row[0],
-                    'subject': row[1],
-                    'date': row[2],
-                    'category': row[3],
-                    'sentiment': row[4]
-                })
-            
-            conn.close()
-    except Exception as e:
-        print(f"Error getting replies: {e}")
-    
-    return replies
+                LIMIT ?
+                """,
+                (limit,),
+            ).fetchall()
+            return [dict(row) for row in rows]
+    except Exception:
+        return []
 
-def get_current_config():
-    """Get current configuration"""
-    return {
-        'gmail_user': os.getenv('GMAIL_USER', ''),
-        'groq_key': os.getenv('GROQ_API_KEY', '')[:10] + '...' if os.getenv('GROQ_API_KEY') else '',
-        'max_emails_per_day': os.getenv('MAX_EMAILS_PER_DAY', '100'),
-        'followup_days': os.getenv('FOLLOWUP_DAYS', '7'),
+
+def _campaign_stats() -> dict[str, int]:
+    db_path = Path(config.DATABASE_PATH)
+    stats = {"emails_sent": 0, "emails_failed": 0, "contacts_contacted": 0}
+    if not db_path.exists():
+        return stats
+
+    try:
+        with sqlite3.connect(str(db_path)) as conn:
+            tables = {
+                row[0] for row in conn.execute("SELECT name FROM sqlite_master WHERE type='table'")
+            }
+            if "sent_emails" in tables:
+                stats["emails_sent"] = int(
+                    conn.execute("SELECT COUNT(*) FROM sent_emails").fetchone()[0]
+                )
+                stats["contacts_contacted"] = int(
+                    conn.execute("SELECT COUNT(DISTINCT email) FROM sent_emails").fetchone()[0]
+                )
+    except Exception:
+        pass
+    return stats
+
+
+def _daemon_status() -> dict[str, Any]:
+    if daemon_process and daemon_process.poll() is None:
+        return {"running": True, "pid": daemon_process.pid, "mode": "process"}
+
+    try:
+        result = subprocess.run(
+            [sys.executable, str(PROJECT_ROOT / "core" / "enhanced_daemon.py"), "--status"],
+            cwd=str(PROJECT_ROOT),
+            capture_output=True,
+            text=True,
+            timeout=8,
+        )
+        details = {}
+        if result.stdout.strip().startswith("{"):
+            details = json.loads(result.stdout)
+        return {
+            "running": False,
+            "pid": None,
+            "mode": "stopped",
+            "details": details,
+            "stderr": result.stderr.strip()[-500:],
+        }
+    except Exception as exc:
+        return {"running": False, "pid": None, "mode": "unavailable", "error": str(exc)}
+
+
+@app.get("/api/health")
+@app.get("/health")
+def api_health():
+    db_paths = {
+        "jobs": config.JOBS_DB_PATH,
+        "email": config.DATABASE_PATH,
+        "inbox": config.INBOX_DB_PATH,
+        "daemon": config.DAEMON_DB_PATH,
     }
+    return jsonify(
+        {
+            "status": "ok",
+            "service": "internmailer",
+            "timestamp": _now(),
+            "environment": config.ENV,
+            "frontend_built": (FRONTEND_DIST / "index.html").exists(),
+            "db_paths": db_paths,
+            "warnings": {
+                "resume_path": bool(config.RESUME_PATH),
+                "gmail_configured": bool(config.GMAIL_USER and config.GMAIL_APP_PASSWORD),
+                "ai_configured": bool(config.GROQ_API_KEY or config.OPENAI_API_KEY),
+            },
+        }
+    )
 
-# ============== TEMPLATE CREATION ==============
 
-def create_templates():
-    """Create HTML templates for the dashboard"""
-    # Get the correct templates directory relative to project root
-    base_dir = Path(__file__).parent.parent
-    templates_dir = base_dir / 'templates' / 'web'
-    templates_dir.mkdir(parents=True, exist_ok=True)
+@app.get("/metrics")
+def metrics():
+    stats = _job_stats() | _campaign_stats()
+    lines = [f"internmailer_{key} {value}" for key, value in stats.items()]
+    return "\n".join(lines) + "\n", 200, {"Content-Type": "text/plain; charset=utf-8"}
+
+
+@app.get("/api/stats")
+def api_stats():
+    jobs = _job_stats()
+    replies = _reply_rows(limit=200)
+    campaigns = _campaign_stats()
+    response_rate = 0
+    if campaigns["emails_sent"]:
+        response_rate = round((len(replies) / campaigns["emails_sent"]) * 100, 1)
+
+    return jsonify(
+        {
+            "status": "success",
+            "jobs": jobs,
+            "total_jobs": jobs["total"],
+            "queued": jobs["new"],
+            "applied": jobs["applied"],
+            "needs_review": jobs["needs_review"],
+            "emails": campaigns,
+            "emails_sent": campaigns["emails_sent"],
+            "replies": len(replies),
+            "response_rate": response_rate,
+            "daemon": _daemon_status(),
+            "tasks": list(background_tasks.values())[-10:],
+            "updated_at": _now(),
+        }
+    )
+
+
+@app.get("/api/jobs")
+def api_jobs():
+    limit = request.args.get("limit", 50, type=int)
+    status = request.args.get("status")
+    return jsonify({"status": "success", "jobs": _get_jobs(limit=limit, status=status), "stats": _job_stats()})
+
+
+@app.route("/api/jobs/discover", methods=["GET", "POST"])
+def api_jobs_discover():
+    if request.method == "GET":
+        return jsonify({"status": "success", "message": "Discover jobs endpoint is online. Use POST to trigger."}), 200
+
+    data = request.get_json(silent=True) or {}
+
+    def discover() -> dict[str, Any]:
+        from core.job_discovery import JobDiscovery
+
+        return JobDiscovery().run()
+
+    if data.get("sync"):
+        return jsonify({"status": "success", "result": discover()})
+
+    task = _run_background("job-discovery", discover)
+    return jsonify({"status": "started", "message": "Job discovery started", "task": task})
+
+
+@app.route("/api/jobs/apply", methods=["GET", "POST"])
+def api_jobs_apply():
+    if request.method == "GET":
+        return jsonify({"status": "success", "message": "Apply queue endpoint is online. Use POST to trigger."}), 200
+
+    data = request.get_json(silent=True) or {}
+    limit = max(1, min(int(data.get("limit", 25)), 100))
+
+    if not data.get("confirm"):
+        pending = len(_get_jobs(limit=limit, status="new"))
+        return jsonify(
+            {
+                "status": "needs_confirmation",
+                "message": "Auto-apply is armed but not executed. Send confirm=true to run.",
+                "pending": pending,
+                "limit": limit,
+            }
+        )
+
+    def apply() -> dict[str, Any]:
+        from core.job_pipeline import JobPipeline
+
+        return JobPipeline().apply_pending(limit=limit)
+
+    if data.get("sync"):
+        return jsonify({"status": "success", "result": apply()})
+
+    task = _run_background("job-apply", apply)
+    return jsonify({"status": "started", "message": "Apply queue started", "task": task})
+
+
+@app.post("/send-emails")
+def send_emails():
+    data = request.get_json(silent=True) or {}
+    count = max(1, min(int(data.get("count", 10)), 100))
+    dry_run = not bool(data.get("confirm")) or bool(data.get("dry_run", False))
+
+    try:
+        from core.email_system import EmailSystem
+
+        system = EmailSystem()
+        result = system.send_campaign(count=count, use_ai=bool(data.get("use_ai", True)), dry_run=dry_run)
+        return jsonify(
+            {
+                "status": "success",
+                "mode": "dry_run" if dry_run else "sent",
+                "message": "Preview run completed" if dry_run else "Email campaign completed",
+                "result": result,
+            }
+        )
+    except Exception as exc:
+        return _json_error(str(exc), 500)
+
+
+@app.get("/preview-emails")
+def preview_emails():
+    count = max(1, min(request.args.get("count", 3, type=int), 10))
+    try:
+        from core.email_system import EmailSystem
+
+        previews = EmailSystem().preview(count=count)
+        return jsonify({"status": "success", "previews": previews})
+    except Exception as exc:
+        return _json_error(str(exc), 500, previews=[])
+
+
+@app.get("/api/replies")
+def api_replies():
+    replies = _reply_rows(limit=request.args.get("limit", 50, type=int))
+    stats = {
+        "total": len(replies),
+        "interested": sum(1 for r in replies if str(r.get("category", "")).upper() == "INTERESTED"),
+        "questions": sum(1 for r in replies if str(r.get("category", "")).upper() == "QUESTION"),
+    }
+    return jsonify({"status": "success", "replies": replies, "stats": stats})
+
+
+@app.route("/api/contacts/discover", methods=["GET", "POST"])
+def api_contacts_discover():
+    if request.method == "GET":
+        return jsonify({"status": "success", "message": "Contact discovery endpoint is online. Use POST to trigger."}), 200
+
+    data = request.get_json(silent=True) or {}
+    daily_cap = max(1, min(int(data.get("cap", config.CONTACT_DISCOVERY_DAILY_CAP)), 250))
+
+    def discover() -> dict[str, Any]:
+        from core.lead_discovery import discover_leads
+
+        return discover_leads(daily_cap=daily_cap)
+
+    if data.get("sync"):
+        return jsonify({"status": "success", "result": discover()})
+
+    task = _run_background("contact-discovery", discover)
+    return jsonify({"status": "started", "message": "Contact discovery started", "task": task})
+
+
+@app.get("/api/contacts/available")
+def api_contacts_available():
+    try:
+        from core.email_system import EmailSystem
+        system = EmailSystem()
+        contacts = system.get_fresh_contacts(count=500)
+        return jsonify({
+            "status": "success",
+            "count": len(contacts),
+            "contacts": [{"name": c[0], "email": c[1], "company": c[2], "position": c[3]} for c in contacts[:25]]
+        })
+    except Exception as exc:
+        return _json_error(str(exc), 500)
+
+
+@app.get("/api/settings")
+def api_settings():
+    return jsonify(
+        {
+            "status": "success",
+            "settings": {
+                "gmail_user": config.GMAIL_USER,
+                "groq_key": f"{config.GROQ_API_KEY[:8]}..." if config.GROQ_API_KEY else "",
+                "max_emails_per_day": config.MAX_EMAILS_PER_DAY,
+                "followup_days": config.FOLLOWUP_DELAY_DAYS,
+                "resume_path": config.RESUME_PATH,
+                "job_sources_path": config.JOB_SOURCES_PATH,
+                "jobs_db_path": config.JOBS_DB_PATH,
+                "email_db_path": config.DATABASE_PATH,
+            },
+        }
+    )
+
+
+@app.post("/api/ai/analyze-resume")
+def api_ai_analyze_resume():
+    data = request.get_json(silent=True) or {}
+    job_description = data.get("job_description", "")
+    resume_text = data.get("resume_text", "")
     
-    # Base template
-    base_template = '''<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}InternMailer Dashboard{% endblock %}</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    try:
+        from web.ats_optimizer import ATSOptimizer
+        optimizer = ATSOptimizer()
         
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #f5f7fa;
-            color: #333;
-        }
+        keywords_data = optimizer.extract_keywords_with_ai(job_description)
+        keywords = keywords_data.get("ats_keywords", [])
+        if not keywords:
+            keywords = keywords_data.get("required_skills", [])
+            
+        matched = [word for word in keywords if word.lower() in resume_text.lower()]
+        score = optimizer.calculate_ats_score(resume_text, keywords)
+        missing = [word for word in keywords if word.lower() not in resume_text.lower()]
         
-        .navbar {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .navbar h1 {
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-        
-        .nav-links a {
-            color: rgba(255,255,255,0.9);
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            transition: all 0.3s;
-        }
-        
-        .nav-links a:hover, .nav-links a.active {
-            background: rgba(255,255,255,0.2);
-            color: white;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-        }
-        
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-        
-        .card h2 {
-            margin-bottom: 1rem;
-            color: #444;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        
-        .stat-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            text-align: center;
-        }
-        
-        .stat-card h3 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .stat-card p {
-            opacity: 0.9;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-        }
-        
-        .btn-secondary {
-            background: #6c757d;
-        }
-        
-        .btn-success {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-        }
-        
-        .btn-danger {
-            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
-        }
-        
-        .form-group {
-            margin-bottom: 1rem;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-        
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 1rem;
-        }
-        
-        .form-group textarea {
-            min-height: 150px;
-            resize: vertical;
-        }
-        
-        .alert {
-            padding: 1rem;
-            border-radius: 6px;
-            margin-bottom: 1rem;
-        }
-        
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .alert-error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        th, td {
-            padding: 0.75rem;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-        
-        th {
-            font-weight: 600;
-            color: #666;
-        }
-        
-        .status-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-        
-        .status-success {
-            background: #d4edda;
-            color: #155724;
-        }
-        
-        .status-warning {
-            background: #fff3cd;
-            color: #856404;
-        }
-        
-        .status-error {
-            background: #f8d7da;
-            color: #721c24;
-        }
-        
-        .progress-bar {
-            width: 100%;
-            height: 20px;
-            background: #e9ecef;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        
-        .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            transition: width 0.3s;
-        }
-    </style>
-    {% block extra_css %}{% endblock %}
-</head>
-<body>
-    <nav class="navbar">
-        <h1>🤖 InternMailer</h1>
-        <div class="nav-links">
-            <a href="{{ url_for('index') }}" class="{% if request.endpoint == 'index' %}active{% endif %}">Dashboard</a>
-            <a href="{{ url_for('ats_optimizer_page') }}" class="{% if request.endpoint == 'ats_optimizer_page' %}active{% endif %}">🎯 ATS Optimizer</a>
-            <a href="{{ url_for('contacts_page') }}" class="{% if request.endpoint == 'contacts_page' %}active{% endif %}">📇 Contacts</a>
-            <a href="{{ url_for('replies_page') }}" class="{% if request.endpoint == 'replies_page' %}active{% endif %}">📬 Replies</a>
-            <a href="{{ url_for('settings_page') }}" class="{% if request.endpoint == 'settings_page' %}active{% endif %}">⚙️ Settings</a>
-        </div>
-    </nav>
+        return jsonify({
+            "status": "success",
+            "analysis": {
+                "score": score,
+                "keywords": keywords[:30],
+                "matched_keywords": matched[:30],
+                "missing_keywords": missing[:30]
+            }
+        })
+    except Exception as exc:
+        logger.warning(f"ATS Optimizer failed, using fallback resume analysis: {exc}")
+        keywords = sorted(
+            {
+                token.lower()
+                for token in job_description.replace("/", " ").replace(",", " ").split()
+                if len(token) > 3 and token.isascii()
+            }
+        )[:30]
+        matched = [word for word in keywords if word in resume_text.lower()]
+        score = int((len(matched) / max(len(keywords), 1)) * 100)
+        return jsonify(
+            {
+                "status": "success",
+                "analysis": {
+                    "score": score,
+                    "keywords": keywords,
+                    "matched_keywords": matched,
+                    "missing_keywords": [word for word in keywords if word not in matched],
+                },
+            }
+        )
+
+
+@app.post("/api/ai/cover-letter")
+def api_ai_cover_letter():
+    data = request.get_json(silent=True) or {}
+    company = data.get("company") or "the company"
+    role = data.get("role") or data.get("position") or "the internship"
     
-    <div class="container">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
+    try:
+        from core.unified_ai_provider import get_unified_ai_provider
+        ai = get_unified_ai_provider()
         
-        {% block content %}{% endblock %}
-    </div>
-    
-    {% block extra_js %}{% endblock %}
-</body>
-</html>'''
-    
-    (templates_dir / 'base.html').write_text(base_template)
-    
-    # Dashboard template
-    dashboard_template = '''{% extends "base.html" %}
-
-{% block title %}Dashboard - InternMailer{% endblock %}
-
-{% block content %}
-<div class="stats-grid">
-    <div class="stat-card">
-        <h3>{{ stats.emails_sent }}</h3>
-        <p>Emails Sent</p>
-    </div>
-    <div class="stat-card">
-        <h3>{{ stats.replies_received }}</h3>
-        <p>Replies Received</p>
-    </div>
-    <div class="stat-card">
-        <h3>{{ stats.contacts_contacted }}</h3>
-        <p>Contacts Reached</p>
-    </div>
-    <div class="stat-card">
-        <h3>{{ stats.followups_sent }}</h3>
-        <p>Follow-ups Sent</p>
-    </div>
-</div>
-
-<div class="card">
-    <h2>📧 Quick Actions</h2>
-    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-        <button class="btn" onclick="sendEmails()">Send 10 Emails</button>
-        <button class="btn btn-secondary" onclick="previewEmails()">Preview Emails</button>
-        <button class="btn btn-success" onclick="startDaemon()">Start Daemon</button>
-        <button class="btn btn-danger" onclick="stopDaemon()">Stop Daemon</button>
-    </div>
-    <div id="status-message" style="margin-top: 1rem;"></div>
-</div>
-
-<div class="card">
-    <h2>🎯 ATS Optimizer</h2>
-    <p>Customize your resume and cover letter for specific job applications to maximize ATS scores.</p>
-    <a href="{{ url_for('ats_optimizer_page') }}" class="btn" style="margin-top: 1rem;">Open ATS Optimizer</a>
-</div>
-
-<div class="card">
-    <h2>📊 System Status</h2>
-    <table>
-        <tr>
-            <td>Email System</td>
-            <td><span class="status-badge status-success">✅ Available</span></td>
-        </tr>
-        <tr>
-            <td>AI Provider (Groq)</td>
-            <td><span class="status-badge status-success" id="groq-status">Checking...</span></td>
-        </tr>
-        <tr>
-            <td>Automation Daemon</td>
-            <td><span class="status-badge status-warning" id="daemon-status">Checking...</span></td>
-        </tr>
-    </table>
-</div>
-{% endblock %}
-
-{% block extra_js %}
-<script>
-function sendEmails() {
-    fetch('/send-emails', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({count: 10})
-    })
-    .then(r => r.json())
-    .then(data => {
-        document.getElementById('status-message').innerHTML = 
-            '<div class="alert alert-success">✅ ' + data.status + ': Sending ' + data.count + ' emails</div>';
-    })
-    .catch(e => {
-        document.getElementById('status-message').innerHTML = 
-            '<div class="alert alert-error">❌ Error: ' + e.message + '</div>';
-    });
-}
-
-function previewEmails() {
-    fetch('/preview-emails?count=3')
-    .then(r => r.json())
-    .then(data => {
-        if (data.status === 'success') {
-            let html = '<h3>Email Previews:</h3>';
-            data.previews.forEach((preview, i) => {
-                html += `<div style="margin: 1rem 0; padding: 1rem; background: #f8f9fa; border-radius: 6px;">
-                    <strong>Email ${i+1}:</strong><br>
-                    <pre style="margin-top: 0.5rem; white-space: pre-wrap;">${preview}</pre>
-                </div>`;
-            });
-            document.getElementById('status-message').innerHTML = html;
-        }
-    });
-}
-
-function startDaemon() {
-    fetch('/api/daemon/start', {method: 'POST'})
-    .then(r => r.json())
-    .then(data => {
-        document.getElementById('status-message').innerHTML = 
-            '<div class="alert alert-success">✅ ' + data.message + '</div>';
-        updateDaemonStatus();
-    });
-}
-
-function stopDaemon() {
-    fetch('/api/daemon/stop', {method: 'POST'})
-    .then(r => r.json())
-    .then(data => {
-        document.getElementById('status-message').innerHTML = 
-            '<div class="alert alert-success">✅ ' + data.message + '</div>';
-        updateDaemonStatus();
-    });
-}
-
-function updateDaemonStatus() {
-    fetch('/api/daemon/status')
-    .then(r => r.json())
-    .then(data => {
-        const badge = document.getElementById('daemon-status');
-        if (data.status === 'running') {
-            badge.className = 'status-badge status-success';
-            badge.textContent = '✅ Running';
-        } else {
-            badge.className = 'status-badge status-warning';
-            badge.textContent = '⏹️ Stopped';
-        }
-    });
-}
-
-function checkGroq() {
-    fetch('/api/test-groq')
-    .then(r => r.json())
-    .then(data => {
-        const badge = document.getElementById('groq-status');
-        if (data.status === 'success') {
-            badge.className = 'status-badge status-success';
-            badge.textContent = '✅ ' + data.message;
-        } else {
-            badge.className = 'status-badge status-error';
-            badge.textContent = '❌ ' + data.message;
-        }
-    });
-}
-
-// Update status on page load
-checkGroq();
-updateDaemonStatus();
-setInterval(updateDaemonStatus, 5000);
-</script>
-{% endblock %}'''
-    
-    (templates_dir / 'dashboard.html').write_text(dashboard_template)
-    
-    # ATS Optimizer template
-    ats_template = '''{% extends "base.html" %}
-
-{% block title %}ATS Optimizer - InternMailer{% endblock %}
-
-{% block content %}
-<div class="card">
-    <h2>🎯 ATS Optimizer</h2>
-    <p>Paste a job description below to automatically customize your resume and cover letter for maximum ATS compatibility.</p>
-</div>
-
-<div class="card">
-    <form method="POST">
-        <div class="form-group">
-            <label for="company_name">Company Name (optional)</label>
-            <input type="text" id="company_name" name="company_name" placeholder="e.g., Google">
-        </div>
+        prompt = f"Write a personalized, concise cover letter for Anamay Tripathy applying to the role of {role} at {company}."
+        system_prompt = (
+            "You are Anamay Tripathy, a Data Science Engineering student at MIT Manipal. "
+            "Write a standard, professional, concise cover letter (max 200 words) using your real background: "
+            "Led ML-powered systems (34% efficiency improvement) at YaanBarpe, processed 2.3M daily transactions at Intellect Design Arena. "
+            "Do NOT invent fake details. Focus on facts. Format with clean newlines."
+        )
+        response = ai.complete(prompt=prompt, system_prompt=system_prompt)
+        cover_letter = response.content
+        if "Error:" in cover_letter or not cover_letter.strip():
+            raise ValueError("AI generation failed or returned error")
+    except Exception as exc:
+        logger.warning(f"AI cover letter generation failed, using static template: {exc}")
+        cover_letter = (
+            f"Dear Hiring Team,\n\n"
+            f"I am excited to apply for {role} at {company}. My background in data science, "
+            "automation, and production-minded engineering has prepared me to contribute quickly "
+            "while continuing to learn from a strong team.\n\n"
+            "I would welcome the opportunity to discuss how my project experience and technical "
+            "skills align with this role.\n\n"
+            "Sincerely,\nAnamay Tripathy"
+        )
         
-        <div class="form-group">
-            <label for="job_description">Job Description *</label>
-            <textarea id="job_description" name="job_description" 
-                placeholder="Paste the full job description here..."></textarea>
-        </div>
+    return jsonify({"status": "success", "cover_letter": cover_letter})
+
+
+@app.post("/api/ai/interview-guide")
+def api_ai_interview_guide():
+    data = request.get_json(silent=True) or {}
+    role = data.get("role") or "internship"
+    
+    try:
+        from core.unified_ai_provider import get_unified_ai_provider
+        ai = get_unified_ai_provider()
         
-        <button type="submit" class="btn">🚀 Optimize Resume & Cover Letter</button>
-    </form>
-</div>
+        prompt = f"Create a concise interview preparation guide for the role of {role}."
+        system_prompt = (
+            "You are an expert technical interviewer. Output a list of 4 high-yield, specific preparation bullet points "
+            "for a candidate applying for this role. Each point should be technical and actionable. Output each point "
+            "on a new line without numbers or dashes."
+        )
+        response = ai.complete(prompt=prompt, system_prompt=system_prompt)
+        points = [p.strip() for p in response.content.split("\n") if p.strip()]
+        guide = [p.lstrip("1234567890.-* \t") for p in points[:5]]
+        if not guide:
+            raise ValueError("AI generation returned empty guide")
+    except Exception as exc:
+        logger.warning(f"AI interview guide generation failed, using static guide: {exc}")
+        guide = [
+            f"Prepare a concise story for why this {role} fits your goals.",
+            "Review one project where you owned debugging, tradeoffs, and measurable impact.",
+            "Practice explaining data structures, APIs, and deployment decisions out loud.",
+            "Prepare two company-specific questions about team workflow and intern ownership.",
+        ]
+        
+    return jsonify({"status": "success", "guide": guide})
 
-<div class="card">
-    <h3>How it works:</h3>
-    <ol style="margin-left: 1.5rem; line-height: 2;">
-        <li>AI extracts keywords from the job description</li>
-        <li>Your resume is customized with relevant keywords</li>
-        <li>A tailored cover letter is generated</li>
-        <li>ATS compatibility score is calculated (before/after)</li>
-        <li>Download optimized PDFs ready to submit</li>
-    </ol>
-</div>
-{% endblock %}'''
-    
-    (templates_dir / 'ats_optimizer.html').write_text(ats_template)
-    
-    # ATS Result template
-    ats_result_template = '''{% extends "base.html" %}
 
-{% block title %}ATS Results - InternMailer{% endblock %}
+@app.get("/api/daemon/status")
+def daemon_status():
+    return jsonify({"status": "success", "daemon": _daemon_status()})
 
-{% block content %}
-<div class="card">
-    <h2>✅ Optimization Complete</h2>
-    <p>Your resume and cover letter have been optimized for <strong>{{ result.company_name }}</strong></p>
-</div>
 
-<div class="stats-grid">
-    <div class="stat-card">
-        <h3>{{ result.ats_score_before }}</h3>
-        <p>ATS Score Before</p>
-    </div>
-    <div class="stat-card">
-        <h3>{{ result.ats_score_after }}</h3>
-        <p>ATS Score After</p>
-    </div>
-    <div class="stat-card">
-        <h3>+{{ result.ats_score_after - result.ats_score_before }}</h3>
-        <p>Points Improved</p>
-    </div>
-    <div class="stat-card">
-        <h3>{{ result.keywords_found|length }}</h3>
-        <p>Keywords Found</p>
-    </div>
-</div>
+@app.post("/api/daemon/start")
+def start_daemon():
+    global daemon_process
+    if daemon_process and daemon_process.poll() is None:
+        return jsonify({"status": "success", "message": "Daemon already running", "pid": daemon_process.pid})
 
-<div class="card">
-    <h2>📥 Download Files</h2>
-    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-        <a href="{{ url_for('download_file', filename=result.resume_path.split('/')[-1]) }}" class="btn">📄 Download Resume (.tex)</a>
-        <a href="{{ url_for('download_file', filename=result.cover_letter_path.split('/')[-1]) }}" class="btn">📄 Download Cover Letter (.tex)</a>
-        {% if result.pdf_resume_path %}
-        <a href="{{ url_for('download_file', filename=result.pdf_resume_path.split('/')[-1]) }}" class="btn btn-success">📕 Resume PDF</a>
-        {% endif %}
-        {% if result.pdf_cover_letter_path %}
-        <a href="{{ url_for('download_file', filename=result.pdf_cover_letter_path.split('/')[-1]) }}" class="btn btn-success">📕 Cover Letter PDF</a>
-        {% endif %}
-    </div>
-</div>
+    try:
+        daemon_process = subprocess.Popen(
+            [sys.executable, str(PROJECT_ROOT / "core" / "enhanced_daemon.py"), "--start"],
+            cwd=str(PROJECT_ROOT),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        return jsonify({"status": "success", "message": "Daemon started", "pid": daemon_process.pid})
+    except Exception as exc:
+        return _json_error(str(exc), 500)
 
-<div class="card">
-    <h2>🔑 Keywords Identified</h2>
-    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-        {% for keyword in result.keywords_found %}
-        <span style="background: #e9ecef; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.875rem;">{{ keyword }}</span>
-        {% endfor %}
-    </div>
-</div>
 
-<div class="card">
-    <h2>📊 Optimization Report</h2>
-    <p>A detailed report has been saved to <code>optimized_documents/optimization_report.md</code></p>
-    <a href="{{ url_for('ats_optimizer_page') }}" class="btn" style="margin-top: 1rem;">← Optimize Another Job</a>
-</div>
-{% endblock %}'''
-    
-    (templates_dir / 'ats_result.html').write_text(ats_result_template)
-    
-    # Contacts template
-    contacts_template = '''{% extends "base.html" %}
+@app.post("/api/daemon/stop")
+def stop_daemon():
+    global daemon_process
+    if daemon_process and daemon_process.poll() is None:
+        daemon_process.terminate()
+        daemon_process = None
+        return jsonify({"status": "success", "message": "Daemon stopped"})
+    daemon_process = None
+    return jsonify({"status": "success", "message": "Daemon was not running"})
 
-{% block title %}Contacts - InternMailer{% endblock %}
 
-{% block content %}
-<div class="card">
-    <h2>📇 Contacts</h2>
-    <p>Manage your contact list for email campaigns.</p>
-</div>
+@app.get("/api/tasks")
+def api_tasks():
+    return jsonify({"status": "success", "tasks": list(background_tasks.values())})
 
-<div class="card">
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Company</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for contact in contacts %}
-            <tr>
-                <td>{{ contact.name }}</td>
-                <td>{{ contact.email }}</td>
-                <td>{{ contact.company }}</td>
-                <td>
-                    {% if contact.contacted %}
-                    <span class="status-badge status-success">Contacted</span>
-                    {% else %}
-                    <span class="status-badge status-warning">Not Contacted</span>
-                    {% endif %}
-                </td>
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="4" style="text-align: center; color: #666;">No contacts found. Add contacts to your database.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
-{% endblock %}'''
-    
-    (templates_dir / 'contacts.html').write_text(contacts_template)
-    
-    # Replies template
-    replies_template = '''{% extends "base.html" %}
 
-{% block title %}Replies - InternMailer{% endblock %}
+@app.get("/download/<path:filename>")
+def download_file(filename: str):
+    safe_name = Path(filename).name
+    directory = PROJECT_ROOT / "optimized_documents"
+    target = directory / safe_name
+    if not target.exists():
+        return _json_error("File not found", 404)
+    return send_from_directory(str(directory), safe_name, as_attachment=True)
 
-{% block content %}
-<div class="card">
-    <h2>📬 Replies</h2>
-    <p>Monitor and manage replies to your email campaigns.</p>
-</div>
 
-<div class="card">
-    <table>
-        <thead>
-            <tr>
-                <th>From</th>
-                <th>Subject</th>
-                <th>Date</th>
-                <th>Category</th>
-                <th>Sentiment</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for reply in replies %}
-            <tr>
-                <td>{{ reply.sender }}</td>
-                <td>{{ reply.subject }}</td>
-                <td>{{ reply.date }}</td>
-                <td><span class="status-badge">{{ reply.category }}</span></td>
-                <td>{{ reply.sentiment }}</td>
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="5" style="text-align: center; color: #666;">No replies found yet.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
-{% endblock %}'''
-    
-    (templates_dir / 'replies.html').write_text(replies_template)
-    
-    # Settings template
-    settings_template = '''{% extends "base.html" %}
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def serve_react_app(path: str):
+    if path.startswith("api/"):
+        return _json_error("Endpoint not found", 404)
 
-{% block title %}Settings - InternMailer{% endblock %}
+    asset_path = FRONTEND_DIST / path
+    if path and asset_path.exists() and asset_path.is_file():
+        return send_from_directory(str(FRONTEND_DIST), path)
 
-{% block content %}
-<div class="card">
-    <h2>⚙️ Settings</h2>
-    <p>View and manage your InternMailer configuration.</p>
-</div>
+    index_path = FRONTEND_DIST / "index.html"
+    if index_path.exists():
+        return send_from_directory(str(FRONTEND_DIST), "index.html")
 
-<div class="card">
-    <h3>Current Configuration</h3>
-    <table>
-        <tr>
-            <td>Gmail User</td>
-            <td>{{ config.gmail_user or 'Not set' }}</td>
-        </tr>
-        <tr>
-            <td>Groq API Key</td>
-            <td>{{ config.groq_key or 'Not set' }}</td>
-        </tr>
-        <tr>
-            <td>Max Emails Per Day</td>
-            <td>{{ config.max_emails_per_day }}</td>
-        </tr>
-        <tr>
-            <td>Follow-up Days</td>
-            <td>{{ config.followup_days }}</td>
-        </tr>
-    </table>
-    
-    <div style="margin-top: 1.5rem;">
-        <p style="color: #666; margin-bottom: 1rem;">
-            To change settings, edit the <code>.env</code> file in your project directory and restart the dashboard.
-        </p>
-        <a href="{{ url_for('index') }}" class="btn">← Back to Dashboard</a>
-    </div>
-</div>
-{% endblock %}'''
-    
-    (templates_dir / 'settings.html').write_text(settings_template)
-    
-    print(f"✅ Created web dashboard templates in {templates_dir}")
+    return (
+        """
+        <!doctype html>
+        <html lang="en">
+          <head><meta charset="utf-8"><title>InternMailer</title></head>
+          <body style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif; padding: 40px;">
+            <h1>InternMailer API is running</h1>
+            <p>The React dashboard has not been built yet. Run <code>cd frontend && npm install && npm run build</code>.</p>
+            <p><a href="/api/health">API health</a></p>
+          </body>
+        </html>
+        """,
+        200,
+        {"Content-Type": "text/html; charset=utf-8"},
+    )
 
-# ============== MAIN ==============
 
-if __name__ == '__main__':
-    # Create templates
-    create_templates()
-    
-    print("=" * 60)
-    print("🌐 InternMailer Web Dashboard")
-    print("=" * 60)
-    print("\nStarting Flask server...")
-    print("Open http://localhost:5000 in your browser\n")
-    
-    # Run Flask app
-    app.run(host='0.0.0.0', port=5000, debug=True)
+if __name__ == "__main__":
+    app.run(host=config.FLASK_HOST, port=config.FLASK_PORT, debug=config.DEBUG)

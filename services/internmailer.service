@@ -1,0 +1,45 @@
+[Unit]
+Description=InternMailer Automation Daemon
+Documentation=https://github.com/yourusername/internmailer
+After=network.target
+
+[Service]
+Type=simple
+User=%I
+WorkingDirectory=/home/%I/internmailer
+Environment=PYTHONPATH=/home/%I/internmailer
+Environment=PATH=/home/%I/.local/bin:/usr/local/bin:/usr/bin:/bin
+Environment=ENVIRONMENT=production
+
+# Load environment variables from .env file
+EnvironmentFile=-/home/%I/internmailer/.env
+
+# Start command - uses enhanced daemon
+ExecStart=/usr/bin/python3 /home/%I/internmailer/core/enhanced_daemon.py --start --interval 5
+
+# Stop command
+ExecStop=/bin/kill -TERM $MAINPID
+
+# Restart policy
+Restart=always
+RestartSec=10
+StartLimitInterval=60
+StartLimitBurst=3
+
+# Graceful shutdown
+TimeoutStopSec=30
+KillSignal=SIGTERM
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=internmailer
+
+# Security hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/%I/internmailer/campaign_results /home/%I/internmailer/logs /home/%I/internmailer/data
+
+[Install]
+WantedBy=multi-user.target

@@ -10,10 +10,8 @@ import os
 from datetime import datetime, timedelta
 import sqlite3
 from typing import List, Dict, Tuple
-from dotenv import load_dotenv
 from core.reply_classifier import get_reply_classifier
-
-load_dotenv()
+from utils.config import config
 
 class InboxMonitor:
     """
@@ -21,10 +19,10 @@ class InboxMonitor:
     Uses IMAP to connect and process emails
     """
     
-    def __init__(self, db_path='campaign_results/inbox_monitor.db'):
+    def __init__(self, db_path='/tmp/internmailer_db/inbox_monitor.db'):
         self.db_path = db_path
-        self.email_address = os.getenv('EMAIL_ADDRESS')
-        self.password = os.getenv('EMAIL_PASSWORD')  # Gmail app password
+        self.email_address = config.EMAIL_ADDRESS
+        self.password = config.EMAIL_PASSWORD  # Gmail app password
         self.imap_server = 'imap.gmail.com'
         self.imap_port = 993
         self.classifier = get_reply_classifier()
@@ -358,7 +356,7 @@ def get_inbox_monitor():
     """Get singleton inbox monitor"""
     global _monitor_instance
     if _monitor_instance is None:
-        _monitor_instance = InboxMonitor()
+        _monitor_instance = InboxMonitor(db_path=config.INBOX_DB_PATH)
     return _monitor_instance
 
 # CLI

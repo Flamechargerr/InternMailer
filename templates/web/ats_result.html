@@ -1,102 +1,58 @@
 {% extends "base.html" %}
 
-{% block title %}ATS Optimization Results - InternMailer{% endblock %}
+{% block title %}ATS Results - InternMailer{% endblock %}
 
 {% block content %}
-<h2>✅ ATS Optimization Complete!</h2>
-<p style="margin-bottom: 20px; color: #666;">Your documents have been optimized for the job: <strong>{{ job_title
-        }}</strong> at <strong>{{ company }}</strong></p>
+<div class="card">
+    <h2>✅ Optimization Complete</h2>
+    <p>Your resume and cover letter have been optimized for <strong>{{ result.company_name }}</strong></p>
+</div>
 
 <div class="stats-grid">
     <div class="stat-card">
-        <h4>ATS Score</h4>
-        <div class="value">{{ ats_score }}%</div>
+        <h3>{{ result.ats_score_before }}</h3>
+        <p>ATS Score Before</p>
     </div>
     <div class="stat-card">
-        <h4>Keywords Found</h4>
-        <div class="value">{{ keywords|length }}</div>
+        <h3>{{ result.ats_score_after }}</h3>
+        <p>ATS Score After</p>
     </div>
     <div class="stat-card">
-        <h4>Resume Optimized</h4>
-        <div class="value">{% if resume_pdf %}✅{% else %}❌{% endif %}</div>
+        <h3>+{{ result.ats_score_after - result.ats_score_before }}</h3>
+        <p>Points Improved</p>
     </div>
     <div class="stat-card">
-        <h4>Cover Letter Optimized</h4>
-        <div class="value">{% if cover_letter_pdf %}✅{% else %}❌{% endif %}</div>
+        <h3>{{ result.keywords_found|length }}</h3>
+        <p>Keywords Found</p>
     </div>
 </div>
 
 <div class="card">
-    <h3>📥 Download Optimized Documents</h3>
-    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-        {% if resume_pdf %}
-        <a href="/download/{{ resume_pdf }}" class="btn btn-primary" download>📄 Download Resume (PDF)</a>
+    <h2>📥 Download Files</h2>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+        <a href="{{ url_for('download_file', filename=result.resume_path.split('/')[-1]) }}" class="btn">📄 Download Resume (.tex)</a>
+        <a href="{{ url_for('download_file', filename=result.cover_letter_path.split('/')[-1]) }}" class="btn">📄 Download Cover Letter (.tex)</a>
+        {% if result.pdf_resume_path %}
+        <a href="{{ url_for('download_file', filename=result.pdf_resume_path.split('/')[-1]) }}" class="btn btn-success">📕 Resume PDF</a>
         {% endif %}
-        {% if resume_tex %}
-        <a href="/download/{{ resume_tex }}" class="btn btn-secondary" download>📝 Download Resume (LaTeX)</a>
-        {% endif %}
-        {% if cover_letter_pdf %}
-        <a href="/download/{{ cover_letter_pdf }}" class="btn btn-primary" download>✉️ Download Cover Letter (PDF)</a>
-        {% endif %}
-        {% if cover_letter_tex %}
-        <a href="/download/{{ cover_letter_tex }}" class="btn btn-secondary" download>📝 Download Cover Letter
-            (LaTeX)</a>
+        {% if result.pdf_cover_letter_path %}
+        <a href="{{ url_for('download_file', filename=result.pdf_cover_letter_path.split('/')[-1]) }}" class="btn btn-success">📕 Cover Letter PDF</a>
         {% endif %}
     </div>
 </div>
 
 <div class="card">
-    <h3>🔑 Extracted Keywords</h3>
-    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px;">
-        {% for keyword in keywords %}
-        <span class="badge badge-info">{{ keyword }}</span>
+    <h2>🔑 Keywords Identified</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+        {% for keyword in result.keywords_found %}
+        <span style="background: #e9ecef; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.875rem;">{{ keyword }}</span>
         {% endfor %}
     </div>
 </div>
 
 <div class="card">
-    <h3>📊 Optimization Details</h3>
-    <table>
-        <tr>
-            <td><strong>Job Title:</strong></td>
-            <td>{{ job_title }}</td>
-        </tr>
-        <tr>
-            <td><strong>Company:</strong></td>
-            <td>{{ company }}</td>
-        </tr>
-        <tr>
-            <td><strong>AI Provider Used:</strong></td>
-            <td>{{ ai_provider }}</td>
-        </tr>
-        <tr>
-            <td><strong>Processing Time:</strong></td>
-            <td>{{ processing_time }}s</td>
-        </tr>
-        <tr>
-            <td><strong>Resume Template:</strong></td>
-            <td>{{ resume_template or 'Default' }}</td>
-        </tr>
-        <tr>
-            <td><strong>Cover Letter Template:</strong></td>
-            <td>{{ cover_letter_template or 'Default' }}</td>
-        </tr>
-    </table>
-</div>
-
-<div class="card">
-    <h3>💡 Recommendations</h3>
-    <ul style="margin-left: 20px; line-height: 1.8; color: #333;">
-        <li>Review the generated documents to ensure accuracy</li>
-        <li>Customize the cover letter with specific details about the company</li>
-        <li>Proofread both documents before submitting</li>
-        <li>Save the LaTeX files for future use with similar job descriptions</li>
-        <li>Consider creating multiple resume templates for different types of positions</li>
-    </ul>
-</div>
-
-<div class="card">
-    <h3>🔄 Optimize Another Job</h3>
-    <a href="/ats-optimizer" class="btn btn-success">Back to ATS Optimizer</a>
+    <h2>📊 Optimization Report</h2>
+    <p>A detailed report has been saved to <code>optimized_documents/optimization_report.md</code></p>
+    <a href="{{ url_for('ats_optimizer_page') }}" class="btn" style="margin-top: 1rem;">← Optimize Another Job</a>
 </div>
 {% endblock %}

@@ -1,0 +1,78 @@
+services:
+  web:
+    build: .
+    container_name: internmailer-web
+    ports:
+      - "5050:5050"
+    environment:
+      - FLASK_DEBUG=0
+      - PYTHONUNBUFFERED=1
+      - ENVIRONMENT=production
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./campaign_results:/app/campaign_results
+      - ./backups:/app/backups
+      - ./cache:/app/cache
+    env_file:
+      - .env
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "from middleware.health_check import get_health_checker; hc = get_health_checker(); exit(0 if hc.run_all_checks()['status'] == 'pass' else 1)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - internmailer-network
+
+  worker:
+    build: .
+    container_name: internmailer-worker
+    command: python -c "from core.enhanced_daemon import EnhancedAutomationDaemon; daemon = EnhancedAutomationDaemon(); daemon.start()"
+    environment:
+      - FLASK_DEBUG=0
+      - PYTHONUNBUFFERED=1
+      - ENVIRONMENT=production
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./campaign_results:/app/campaign_results
+      - ./backups:/app/backups
+      - ./cache:/app/cache
+    env_file:
+      - .env
+    restart: unless-stopped
+    depends_on:
+      - web
+    networks:
+      - internmailer-network
+
+  backup:
+    build: .
+    container_name: internmailer-backup
+    command: python -c "from utils.backup_scheduler import BackupScheduler; scheduler = BackupScheduler(); scheduler.run_automated_backups()"
+    environment:
+      - BACKUP_INTERVAL_HOURS=24
+      - BACKUP_RETENTION_DAYS=30
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./data:/app/data
+      - ./campaign_results:/app/campaign_results
+      - ./backups:/app/backups
+    env_file:
+      - .env
+    restart: unless-stopped
+    networks:
+      - internmailer-network
+
+networks:
+  internmailer-network:
+    driver: bridge
+
+volumes:
+  data:
+  logs:
+  campaign_results:
+  backups:
+  cache:

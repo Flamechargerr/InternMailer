@@ -37,6 +37,8 @@ except ImportError:
     AI_AVAILABLE = False
     print("⚠️ AI provider not available - using fallback keyword extraction")
 
+from utils.profile import get_profile
+
 
 @dataclass
 class ATSOptimizationResult:
@@ -103,15 +105,9 @@ class ATSOptimizer:
 \vspace{-20pt}
 
 \begin{center}
-{\fontsize{28}{32}\selectfont \textbf{Anamay Tripathy}}\\[2pt]
-
-{\small Udupi, Karnataka \;|\;
-\href{mailto:tripathy.anamay23@gmail.com}{tripathy.anamay23@gmail.com} \;|\;
-+91 9877454747}\\[1pt]
-
-\href{https://www.linkedin.com/in/anamay-tripathy-b53829296/}{LinkedIn} \;|\;
-\href{https://github.com/Flamechargerr}{GitHub} \;|\;
-\href{https://anamay.vercel.app/}{Portfolio}
+{\fontsize{28}{32}\selectfont \textbf{{{NAME}}}}\\[2pt]
+{{CONTACT_LINE}}\\[1pt]
+{{LINKS_LINE}}
 \end{center}
 \vspace{-2pt}
 
@@ -121,9 +117,7 @@ class ATSOptimizer:
 
 % ---------- Education ----------
 \section*{Education}
-\textbf{Manipal Institute of Technology} \hfill Aug 2023 -- Expected May 2027\\
-\textbf{B.Tech, Data Science Engineering} \hfill\\
-Relevant Coursework: {{COURSEWORK}}
+{{EDUCATION}}
 
 % ---------- Experience ----------
 \section*{Experience}
@@ -167,13 +161,11 @@ Relevant Coursework: {{COURSEWORK}}
 
 %---------------------- HEADER ----------------------%
 \begin{center}
-    \textbf{\Large Anamay Tripathy} \\[4pt]
+    \textbf{\Large {{NAME}}} \\[4pt]
     \textit{{{POSITION}}} \\
     {{LOCATION}} \\[4pt]
-    \href{mailto:tripathy.anamay23@gmail.com}{tripathy.anamay23@gmail.com}
-    \quad | \quad +91 9877454747 \\
-    \href{https://www.linkedin.com/in/anamay-tripathy-b53829296/}{linkedin.com/in/anamay-tripathy}
-    \quad | \quad \href{https://anamay.vercel.app/}{Portfolio}
+    {{CONTACT_LINE}} \\[2pt]
+    {{LINKS_LINE}}
 \end{center}
 
 \vspace{0.2cm}
@@ -200,9 +192,7 @@ Relevant Coursework: {{COURSEWORK}}
 
 \vspace{0.5cm}
 \textbf{Yours faithfully,} \\[6pt]
-Anamay Tripathy \\
-+91 9877454747 \\
-\href{mailto:tripathy.anamay23@gmail.com}{tripathy.anamay23@gmail.com}
+{{SIGNATURE_BLOCK}}
 
 \end{document}
 '''
@@ -224,6 +214,8 @@ Anamay Tripathy \\
                 self.ai_provider = get_unified_ai_provider()
             except Exception as e:
                 print(f"⚠️ Could not initialize AI provider: {e}")
+
+        self.profile = get_profile()
     
     def _ensure_templates_exist(self):
         """Create default templates if they don't exist"""
@@ -469,6 +461,86 @@ Focus on ATS-relevant keywords that should appear in the resume.'''
         matches = sum(1 for kw in keywords if kw.lower() in content_lower)
         score = int((matches / len(keywords)) * 100)
         return min(score, 100)
+
+    def _latex_escape(self, text: str) -> str:
+        """Escape LaTeX special characters."""
+        if not text:
+            return ""
+        replacements = {
+            "\\": r"\textbackslash{}",
+            "&": r"\&",
+            "%": r"\%",
+            "$": r"\$",
+            "#": r"\#",
+            "_": r"\_",
+            "{": r"\{",
+            "}": r"\}",
+            "~": r"\textasciitilde{}",
+            "^": r"\textasciicircum{}",
+        }
+        for char, replacement in replacements.items():
+            text = text.replace(char, replacement)
+        return text
+
+    def _build_contact_line(self) -> str:
+        """Build a LaTeX-ready contact line."""
+        parts = []
+        location = self.profile.get("location", "")
+        email = self.profile.get("email", "")
+        phone = self.profile.get("phone", "")
+        if location:
+            parts.append(self._latex_escape(location))
+        if email:
+            parts.append(rf"\href{{mailto:{email}}}{{{self._latex_escape(email)}}}")
+        if phone:
+            parts.append(self._latex_escape(phone))
+        return r" \;|\; ".join(parts) if parts else ""
+
+    def _build_links_line(self) -> str:
+        """Build a LaTeX-ready links line."""
+        parts = []
+        linkedin = self.profile.get("linkedin", "")
+        github = self.profile.get("github", "")
+        portfolio = self.profile.get("portfolio", "")
+        if linkedin:
+            parts.append(rf"\href{{{linkedin}}}{{LinkedIn}}")
+        if github:
+            parts.append(rf"\href{{{github}}}{{GitHub}}")
+        if portfolio:
+            parts.append(rf"\href{{{portfolio}}}{{Portfolio}}")
+        return r" \;|\; ".join(parts) if parts else ""
+
+    def _build_signature_block(self) -> str:
+        """Build a LaTeX signature block."""
+        lines = []
+        name = self.profile.get("name", "Your Name")
+        lines.append(self._latex_escape(name))
+        phone = self.profile.get("phone", "")
+        if phone:
+            lines.append(self._latex_escape(phone))
+        email = self.profile.get("email", "")
+        if email:
+            lines.append(rf"\href{{mailto:{email}}}{{{self._latex_escape(email)}}}")
+        return r" \\ ".join(lines)
+
+    def _build_education_block(self) -> str:
+        """Build LaTeX education section from profile."""
+        education = self.profile.get("ats", {}).get("education", [])
+        if not education:
+            return r"\textbf{University Name} \hfill 2020 -- 2024\\\textbf{Degree} \hfill\\Relevant Coursework: {{COURSEWORK}}"
+
+        blocks = []
+        for item in education:
+            school = self._latex_escape(item.get("school", "University Name"))
+            degree = self._latex_escape(item.get("degree", "Degree"))
+            dates = self._latex_escape(item.get("dates", ""))
+            details = self._latex_escape(item.get("details", ""))
+            line1 = rf"\textbf{{{school}}} \hfill {dates}\\"
+            line2 = rf"\textbf{{{degree}}} \hfill\\"
+            line3 = f"{details}" if details else ""
+            block = line1 + line2 + (f"{line3}" if line3 else "")
+            blocks.append(block)
+        return "\n\n".join(blocks)
     
     def optimize_resume(self, job_data: Dict, output_dir: Path) -> str:
         """
@@ -495,15 +567,23 @@ Focus on ATS-relevant keywords that should appear in the resume.'''
         
         # Build skills section with job-specific keywords
         skills = self._generate_skills(job_data)
+
+        contact_line = self._build_contact_line()
+        links_line = self._build_links_line()
+        education_block = self._build_education_block()
         
         # Replace placeholders
         optimized = template
         optimized = optimized.replace("{{DATE}}", date_str)
+        optimized = optimized.replace("{{NAME}}", self._latex_escape(self.profile.get("name", "Your Name")))
+        optimized = optimized.replace("{{CONTACT_LINE}}", contact_line)
+        optimized = optimized.replace("{{LINKS_LINE}}", links_line)
         optimized = optimized.replace("{{SUMMARY}}", summary)
         optimized = optimized.replace("{{COURSEWORK}}", coursework)
         optimized = optimized.replace("{{EXPERIENCE}}", experience)
         optimized = optimized.replace("{{PROJECTS}}", projects)
         optimized = optimized.replace("{{SKILLS}}", skills)
+        optimized = optimized.replace("{{EDUCATION}}", education_block)
         
         # Save optimized resume
         output_path = output_dir / f"resume_{job_data['company_name'].lower().replace(' ', '_')}.tex"
@@ -516,15 +596,28 @@ Focus on ATS-relevant keywords that should appear in the resume.'''
         position = job_data.get('position_title', 'the position')
         skills = job_data.get('required_skills', [])[:5]
         
-        summary = f"""Data Science student with \textbf{{hands-on experience building data pipelines, analytics solutions, and automated reporting systems}}. 
-Strong foundation in \textbf{{{', '.join(skills[:3]) if skills else 'Python, SQL, and data analysis'}}} with proven ability to extract insights from complex datasets. 
-Proficient in \textbf{{database design, ETL processes, and dashboard development}} to support data-driven decision making."""
-        
+        profile_summary = self.profile.get("ats", {}).get("summary", "").strip()
+        if profile_summary:
+            return profile_summary
+
+        core_skills = ', '.join(skills[:3]) if skills else 'Python, SQL, and automation'
+        summary = (
+            "Results-driven professional with hands-on experience delivering reliable systems and data workflows. "
+            f"Strong foundation in {core_skills} with a focus on measurable impact. "
+            "Proficient in building scalable solutions and collaborating across teams to deliver production-ready outcomes."
+        )
         return summary
     
     def _generate_coursework(self, job_data: Dict) -> str:
         """Generate relevant coursework section"""
-        base_courses = "Data Structures \\& Algorithms, Machine Learning, Database Systems"
+        coursework = self.profile.get("ats", {}).get("coursework", [])
+        if coursework:
+            if isinstance(coursework, list):
+                base_courses = ", ".join([self._latex_escape(c) for c in coursework])
+            else:
+                base_courses = self._latex_escape(str(coursework))
+        else:
+            base_courses = "Data Structures \\& Algorithms, Machine Learning, Database Systems"
         
         # Add job-specific courses
         if any(kw in job_data.get('ats_keywords', []) for kw in ['statistics', 'statistical']):
@@ -540,64 +633,79 @@ Proficient in \textbf{{database design, ETL processes, and dashboard development
     def _generate_experience(self, job_data: Dict) -> str:
         """Generate experience section with job-specific keywords"""
         keywords = job_data.get('ats_keywords', [])
-        
-        experience = r'''\textbf{Intellect Design Arena} -- Mumbai, India \hfill May 2025 -- Jul 2025\\
-\textit{Software Engineering Intern}
+        profile_experience = self.profile.get("ats", {}).get("experience", [])
+        if not profile_experience:
+            return r'''\textbf{Company Name} -- City, Country \hfill 2022 -- 2023\\
+\textit{Role Title}
 \begin{itemize}
-\item Built \textbf{EMI collection agent management platform} with frontend interface and data analytics dashboard using \textbf{Python and SQL}, implementing 150+ automated tests achieving \textbf{85\% code coverage} and \textbf{improving data accuracy by 30\%}.
-\item Developed \textbf{analytics dashboards} to track agent performance metrics and collection patterns, enabling data-driven decision making for operations teams.
-\item Implemented \textbf{CI/CD pipelines} using GitHub Actions for automated testing and deployment, \textbf{accelerating feature delivery by 40\%}.
-\end{itemize}
-
-\textbf{YaanBarpe} -- Manipal, India \hfill Oct 2024 -- Present\\
-\textit{Technical Head} \hfill \href{https://www.yaanbarpe.in/}{yaanbarpe.in}
-\begin{itemize}
-\item Built \textbf{cultural tourism platform for Tulu Nadu} serving \textbf{3,000+ users} with \textbf{99.5\% uptime} using \textbf{Node.js and MongoDB}, promoting regional heritage and tourist destinations with optimized database queries for sub-200ms performance.
-\item Developed \textbf{automated content workflows} using GitHub Actions, reducing manual publishing time by 50\% while leading team of 4 developers.
+\item Delivered key features that improved reliability and performance.
+\item Collaborated cross-functionally to ship production-ready systems.
 \end{itemize}'''
-        
-        # Inject job-specific keywords into experience
-        if 'python' in keywords and 'python' not in experience.lower():
-            experience = experience.replace("Python", "Python")
-        
-        return experience
+
+        blocks = []
+        for item in profile_experience:
+            company = self._latex_escape(item.get("company", "Company Name"))
+            location = self._latex_escape(item.get("location", "City, Country"))
+            role = self._latex_escape(item.get("role", "Role Title"))
+            dates = self._latex_escape(item.get("dates", ""))
+            link = item.get("link", "")
+            header = rf"\textbf{{{company}}} -- {location} \hfill {dates}\\"
+            role_line = rf"\textit{{{role}}}"
+            if link:
+                role_line += rf" \hfill \href{{{link}}}{{{self._latex_escape(link)}}}"
+
+            bullets = item.get("bullets", []) or []
+            bullet_lines = []
+            for bullet in bullets:
+                bullet_lines.append(rf"\item {self._latex_escape(str(bullet))}")
+            if keywords:
+                bullet_lines.append(rf"\item Relevant keywords: {self._latex_escape(', '.join(keywords[:5]))}")
+
+            block = "\n".join([
+                header,
+                role_line,
+                r"\begin{itemize}",
+                *bullet_lines,
+                r"\end{itemize}",
+            ])
+            blocks.append(block)
+
+        return "\n\n".join(blocks)
     
     def _generate_projects(self, job_data: Dict) -> str:
         """Generate projects section"""
-        keywords = job_data.get('ats_keywords', [])
-        
-        projects = r'''\textbf{MedRAG -- Medical RAG System for Accurate Responses} \hfill 2025 \\
-\textit{Python, LangChain, FAISS, Flask} \hfill
-\href{https://github.com/Flamechargerr}{GitHub}
+        projects_data = self.profile.get("ats", {}).get("projects", [])
+        if not projects_data:
+            return r'''\textbf{Project Name} \hfill 2024 \\
+\textit{Python, SQL, APIs} \hfill
+\href{https://github.com/yourhandle/project}{GitHub}
 \begin{itemize}
-\item Built \textbf{Retrieval-Augmented Generation (RAG) system} using \textbf{vector embeddings (FAISS)} to prevent hallucinations in medical queries, achieving \textbf{40\% improvement in accuracy} compared to standard ChatGPT responses.
-\item Implemented \textbf{Flask API} with efficient retrieval mechanisms, reducing response time compared to traditional LLM queries while ensuring factual accuracy through grounded medical database references.
-\end{itemize}
-
-\textbf{CrimeConnect -- Case Management Platform} \hfill 2025 \\
-\textit{SQL, Python, Node.js, PostgreSQL, React} \hfill
-\href{https://github.com/Flamechargerr/crime-connect-fbi}{GitHub}
-\begin{itemize}
-\item Built \textbf{analytics platform} with \textbf{automated ETL pipeline using Python}, processing 1000+ records with 82\% classification accuracy and reducing manual analysis time by 60\%.
-\item Designed \textbf{PostgreSQL database} with optimized schemas and complex SQL queries for analysis, creating \textbf{interactive dashboards} for data visualization and insights.
-\end{itemize}
-
-\textbf{Flora Fight Frenzy -- Plants vs Zombies Style Game} \hfill 2024 \\
-\textit{Java, Data Structures, JUnit} \hfill
-\href{https://github.com/Flamechargerr/flora-fight-frenzy}{GitHub}
-\begin{itemize}
-\item Developed \textbf{tower defense game with strategic gameplay mechanics} using \textbf{object-oriented design patterns}, implementing \textbf{AI enemy behavior using minimax algorithm} and optimizing game loop performance by 70\%.
-\item Built \textbf{comprehensive testing suite using JUnit} with 90\% code coverage, validating game state management across edge cases.
-\end{itemize}
-
-\textbf{HackOps -- Interactive Security Games Platform} \hfill 2024 \\
-\textit{MongoDB, Node.js, React} \hfill
-\href{https://github.com/Flamechargerr/HackOps}{GitHub}
-\begin{itemize}
-\item Created \textbf{gamified cybersecurity platform} with password cracking challenges and security puzzles serving 500+ users, designing MongoDB schemas for efficient data retrieval and implementing automated deployment.
+\item Built a system that automated data processing and improved turnaround time.
 \end{itemize}'''
-        
-        return projects
+
+        blocks = []
+        for item in projects_data:
+            name = self._latex_escape(item.get("name", "Project Name"))
+            year = self._latex_escape(item.get("year", ""))
+            tech = self._latex_escape(item.get("tech", ""))
+            link = item.get("link", "")
+            header = rf"\textbf{{{name}}} \hfill {year} \\"
+            tech_line = rf"\textit{{{tech}}}"
+            if link:
+                tech_line += rf" \hfill \href{{{link}}}{{GitHub}}"
+
+            bullets = item.get("bullets", []) or []
+            bullet_lines = [rf"\item {self._latex_escape(str(b))}" for b in bullets]
+            block = "\n".join([
+                header,
+                tech_line,
+                r"\begin{itemize}",
+                *bullet_lines,
+                r"\end{itemize}",
+            ])
+            blocks.append(block)
+
+        return "\n\n".join(blocks)
     
     def _generate_skills(self, job_data: Dict) -> str:
         """Generate skills section with job-specific keywords"""
@@ -756,7 +864,7 @@ Please find my r\'esum\'e attached. I would welcome the opportunity to further d
         print("   You can install MacTeX (macOS) or TeX Live (Linux/Windows)")
         return None
     
-    def optimize_for_job(self, job_description: str, output_dir: str = "optimized_documents") -> ATSOptimizationResult:
+    def optimize_for_job(self, job_description: str, output_dir: str = "optimized_documents", company_name: Optional[str] = None) -> ATSOptimizationResult:
         """
         Main method to optimize resume and cover letter for a job
         
@@ -822,6 +930,9 @@ Please find my r\'esum\'e attached. I would welcome the opportunity to further d
             print(f"   Resume PDF: {pdf_resume}")
         if pdf_cover:
             print(f"   Cover Letter PDF: {pdf_cover}")
+        
+        if company_name:
+            job_data['company_name'] = company_name
         
         return ATSOptimizationResult(
             resume_path=resume_path,

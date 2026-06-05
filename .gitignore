@@ -1,13 +1,11 @@
-# 🚀 InternMailing - Git Ignore Configuration
+# 🚀 InternMailer — Git Ignore Configuration
 # ==========================================
-# Comprehensive exclusions for Python project
 
 # 🔐 Environment and Secrets
 .env
-.env.*
-*.env
+.env.local
+.env.*.local
 secrets.json
-config.json
 credentials.json
 
 # 🐍 Python
@@ -28,37 +26,35 @@ parts/
 sdist/
 var/
 wheels/
-pip-wheel-metadata/
-share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
 MANIFEST
 
-# 📊 Database Files
+# 📊 Database Files (generated at runtime)
 *.db
+*.db-journal
+*.db-shm
+*.db-wal
 *.sqlite
 *.sqlite3
-*.db-journal
-data/
-*.csv
-*.xlsx
-*.json
 
-# 📧 Email Logs and Tracking
+# 📧 Logs and Runtime Output
 logs/
-email_logs/
-tracking/
-sent_emails/
-responses/
-analytics/
+*.log
+*.out
+*.err
+output/
+campaign_results/
 
 # ⚡ Cache and Temporary Files
+cache/
 .cache/
 *.tmp
 *.temp
 .tmp/
 .temp/
+tmp/
 
 # 🧪 Testing
 .tox/
@@ -67,12 +63,10 @@ analytics/
 .pytest_cache/
 .hypothesis/
 htmlcov/
-.cache
 nosetests.xml
 coverage.xml
 *.cover
 *.py,cover
-.hypothesis/
 
 # 🎯 IDE and Editors
 .vscode/
@@ -96,171 +90,59 @@ ehthumbs.db
 Thumbs.db
 desktop.ini
 
-# 🌐 Web and Browser
-.selenium/
-screenshots/
-*.png
-*.jpg
-*.jpeg
-*.gif
-
-# 📦 Package Managers
+# 📦 Node / Frontend
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# 🤖 AI and ML Models
-models/
-*.pkl
-*.joblib
-*.h5
-*.pt
-*.pth
-checkpoints/
-
-# 📈 Analytics and Reports
-reports/
-analytics/
-*.pdf
-*.docx
-
-# 🔧 Build Tools
+# 🔧 Virtual Environments
 .venv/
 venv/
 ENV/
 env/
-.env/
 
 # 📝 Documentation Build
 docs/_build/
 docs/build/
 site/
 
-# 🚀 Deployment
-.docker/
-Dockerfile.*
-docker-compose.*
-k8s/
-*.yaml
-*.yml
+# 🔄 Backup Files
+*.bak
+*.backup
+backups/
 
-# 📊 Data Science
-.ipynb_checkpoints/
-*.ipynb
-.jupyter/
+# 📊 Generated Documents
+optimized_documents/
 
-# 🔍 Search Indexes
-.whoosh_index/
-elastic_search/
-
-# 📞 Communication
-*.log
-*.out
-*.err
-
-# 🎪 Event Data
-events/
-conferences/
-*.ics
-
-# 💼 Corporate Data (Future)
-corporate_data/
-company_data/
-linkedin_data/
-apollo_data/
-zoominfo_data/
-
-# 🔒 Security
+# 🔐 SSL and Certificates
 *.pem
 *.key
 *.crt
 *.p12
 *.pfx
 
-# 📱 Mobile
-*.apk
-*.ipa
-
-# 🌐 Web Assets
-static/
-media/
-uploads/
-
-# 🔄 Backup Files
-*.bak
-*.backup
-*.old
-*_backup.*
-*_old.*
-
-# 📊 Excel and Office
-~$*
-*.xlsm
-*.pptx
-
-# 🎯 Email Templates (Keep tracked templates, ignore generated ones)
-generated_templates/
-temp_templates/
-
-# 🧪 Test Data
-test_data/
-sample_data/
-mock_data/
-
-# 📈 Performance Monitoring
+# 📈 Profiling
 *.prof
 *.profile
 
-# 🌍 Internationalization
-*.mo
-*.pot
-
-# 🔧 Configuration (Keep template configs, ignore instance configs)
-config_local.*
-local_settings.py
-instance/
-
-# 📱 Social Media Data
-twitter_data/
-linkedin_cache/
-facebook_data/
-
-# 🎪 Conference and Event Cache
-conference_cache/
-event_data/
-
-# 💾 Redis and Cache
-dump.rdb
-redis.conf
-
-# 📊 Monitoring and Metrics
-metrics/
-monitoring/
-grafana/
-prometheus/
-
-# 🔐 SSL and Certificates
-ssl/
-certs/
-certificates/
-
-# 🚀 CI/CD
+# 🚀 CI/CD local
 .github/workflows/local_*
 .gitlab-ci-local.yml
 
-# 📦 Distribution
-build/
-dist/
-*.tar.gz
-*.zip
+# 🤖 AI Agents state
+.kiro/
+.qoder/
+.ruff_cache/
 
-# 🎯 InternMailing Specific
-professor_data/
+# InternMailer-specific generated data
+data_recovery/
 email_cache/
 research_cache/
-university_data/
-verified_contacts_backup/
-email_templates_generated/
 
-# END OF .GITIGNORE
+# Keep these tracked (override earlier rules)
+!.env.example
+!.env.production.example
+!frontend/.env.example
+!data/profile.example.yaml
+!data/job_sources.example.yaml

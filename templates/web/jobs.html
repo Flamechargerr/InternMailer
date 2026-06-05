@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block page_title %}Jobs{% endblock %}
+{% block page_subtitle %}Discover, rank, and auto-apply to internship roles{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">🧭 Job Discovery</h2>
+        <p class="card-subtitle">Automated job search and application engine</p>
+    </div>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+        <button class="btn" onclick="runDiscovery()">Run Discovery</button>
+        <button class="btn btn-success" onclick="runApply()">Auto-Apply</button>
+    </div>
+    <div id="job-status" style="margin-top: 1rem;"></div>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <h3>{{ stats.total }}</h3>
+        <p>Total Jobs</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ stats.pending }}</h3>
+        <p>Pending</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ stats.applied }}</h3>
+        <p>Applied</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">📋 Job Applications</h2>
+        <p class="card-subtitle">Track the status of your sent applications</p>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Company</th>
+                <th>Role</th>
+                <th>Location</th>
+                <th>Score</th>
+                <th>Status</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for job in jobs %}
+            <tr>
+                <td>{{ job.company }}</td>
+                <td>{{ job.title }}</td>
+                <td>{{ job.location }}</td>
+                <td>{{ "%.2f"|format(job.score or 0) }}</td>
+                <td>{{ job.status }}</td>
+                <td><a href="{{ job.apply_url or job.url }}" target="_blank">Open</a></td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6" style="text-align:center; color:#666;">No jobs found yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function runDiscovery() {
+        fetch('/api/jobs/discover', { method: 'POST' })
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById('job-status').innerHTML =
+                    '<div class="alert alert-success">✅ Job discovery started</div>';
+            })
+            .catch(e => {
+                document.getElementById('job-status').innerHTML =
+                    '<div class="alert alert-error">❌ Error: ' + e.message + '</div>';
+            });
+    }
+
+    function runApply() {
+        fetch('/api/jobs/apply', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ limit: 50 })
+        })
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById('job-status').innerHTML =
+                    '<div class="alert alert-success">✅ Auto-apply started</div>';
+            })
+            .catch(e => {
+                document.getElementById('job-status').innerHTML =
+                    '<div class="alert alert-error">❌ Error: ' + e.message + '</div>';
+            });
+    }
+</script>
+{% endblock %}

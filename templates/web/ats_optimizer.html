@@ -3,84 +3,37 @@
 {% block title %}ATS Optimizer - InternMailer{% endblock %}
 
 {% block content %}
-<h2>🎯 ATS Resume & Cover Letter Optimizer</h2>
-<p style="margin-bottom: 20px; color: #666;">Optimize your LaTeX resume and cover letter for any job description to
-    maximize ATS score</p>
+<div class="card">
+    <h2>🎯 ATS Optimizer</h2>
+    <p>Paste a job description below to automatically customize your resume and cover letter for maximum ATS compatibility.</p>
+</div>
 
 <div class="card">
-    <h3>📝 Job Description</h3>
-    <form method="POST" action="/ats-optimizer" enctype="multipart/form-data">
+    <form method="POST">
+        {{ csrf_token_input|safe }}
         <div class="form-group">
-            <label for="job_title">Job Title</label>
-            <input type="text" id="job_title" name="job_title" placeholder="e.g., Software Engineer Intern" required>
+            <label for="company_name">Company Name (optional)</label>
+            <input type="text" id="company_name" name="company_name" placeholder="e.g., Google">
         </div>
-
+        
         <div class="form-group">
-            <label for="company">Company Name</label>
-            <input type="text" id="company" name="company" placeholder="e.g., Google">
+            <label for="job_description">Job Description *</label>
+            <textarea id="job_description" name="job_description" 
+                placeholder="Paste the full job description here..."></textarea>
         </div>
-
-        <div class="form-group">
-            <label for="job_description">Job Description</label>
-            <textarea id="job_description" name="job_description" placeholder="Paste the full job description here..."
-                required></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="resume_template">Resume Template (LaTeX .tex file)</label>
-            <input type="file" id="resume_template" name="resume_template" accept=".tex">
-            <small style="color: #666;">Leave empty to use default template</small>
-        </div>
-
-        <div class="form-group">
-            <label for="cover_letter_template">Cover Letter Template (LaTeX .tex file)</label>
-            <input type="file" id="cover_letter_template" name="cover_letter_template" accept=".tex">
-            <small style="color: #666;">Leave empty to use default template</small>
-        </div>
-
-        <div class="form-group">
-            <label>
-                <input type="checkbox" name="compile_pdf" checked>
-                Compile to PDF after optimization
-            </label>
-        </div>
-
-        <button type="submit" class="btn btn-primary">🚀 Optimize & Generate</button>
+        
+        <button type="submit" class="btn">🚀 Optimize Resume & Cover Letter</button>
     </form>
 </div>
 
 <div class="card">
-    <h3>💡 How It Works</h3>
-    <ol style="margin-left: 20px; line-height: 1.8; color: #333;">
-        <li>Paste the job description you're applying for</li>
-        <li>Optionally upload your own LaTeX resume/cover letter templates</li>
-        <li>Our AI extracts key skills, requirements, and keywords from the job description</li>
-        <li>We customize your templates with relevant keywords and phrases</li>
-        <li>LaTeX compiles the optimized documents to PDF</li>
-        <li>Download your ATS-optimized resume and cover letter!</li>
+    <h3>How it works:</h3>
+    <ol style="margin-left: 1.5rem; line-height: 2;">
+        <li>AI extracts keywords from the job description</li>
+        <li>Your resume is customized with relevant keywords</li>
+        <li>A tailored cover letter is generated</li>
+        <li>ATS compatibility score is calculated (before/after)</li>
+        <li>Download optimized PDFs ready to submit</li>
     </ol>
-</div>
-
-<div class="card">
-    <h3>✨ Features</h3>
-    <ul style="margin-left: 20px; line-height: 1.8; color: #333;">
-        <li><strong>AI-Powered Keyword Extraction:</strong> Uses Groq AI to identify the most important keywords</li>
-        <li><strong>Smart Template Customization:</strong> Intelligently inserts keywords into your LaTeX templates</li>
-        <li><strong>ATS Scoring:</strong> Estimates how well your resume matches the job description</li>
-        <li><strong>PDF Compilation:</strong> Automatically compiles LaTeX to professional PDFs</li>
-        <li><strong>Multiple AI Providers:</strong> Falls back to OpenRouter and GitHub Models if needed</li>
-        <li><strong>100% Free:</strong> Uses free AI APIs (Groq, OpenRouter, GitHub Models)</li>
-    </ul>
-</div>
-
-<div class="card">
-    <h3>📋 Tips for Best Results</h3>
-    <ul style="margin-left: 20px; line-height: 1.8; color: #333;">
-        <li>Use the full job description, not just a summary</li>
-        <li>Include both required and preferred qualifications</li>
-        <li>Make sure your LaTeX templates have clear placeholders for customization</li>
-        <li>Review the generated documents before submitting</li>
-        <li>Keep your original templates backed up</li>
-    </ul>
 </div>
 {% endblock %}

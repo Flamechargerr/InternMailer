@@ -1,0 +1,269 @@
+{
+  "endpoints": {
+    "/": {
+      "methods": [
+        "GET"
+      ],
+      "function": "index",
+      "line": 153
+    },
+    "/test-buttons": {
+      "methods": [
+        "GET"
+      ],
+      "function": "test_buttons",
+      "line": 169
+    },
+    "/api/stats": {
+      "methods": [
+        "GET"
+      ],
+      "function": "api_stats",
+      "line": 174
+    },
+    "/api/contacts/available": {
+      "methods": [
+        "GET"
+      ],
+      "function": "contacts_available",
+      "line": 179
+    },
+    "/health": {
+      "methods": [
+        "GET"
+      ],
+      "function": "health_check",
+      "line": 199
+    },
+    "/metrics": {
+      "methods": [
+        "GET"
+      ],
+      "function": "metrics",
+      "line": 205
+    },
+    "/send-emails": {
+      "methods": [
+        "POST"
+      ],
+      "function": "send_emails",
+      "line": 212
+    },
+    "/preview-emails": {
+      "methods": [
+        "GET"
+      ],
+      "function": "preview_emails",
+      "line": 254
+    },
+    "/api/ai/cover-letter": {
+      "methods": [
+        "POST",
+        "OPTIONS"
+      ],
+      "function": "ai_cover_letter",
+      "line": 268
+    },
+    "/api/ai/interview-guide": {
+      "methods": [
+        "POST",
+        "OPTIONS"
+      ],
+      "function": "ai_interview_guide",
+      "line": 304
+    },
+    "/api/ai/analyze-resume": {
+      "methods": [
+        "POST",
+        "OPTIONS"
+      ],
+      "function": "ai_analyze_resume",
+      "line": 338
+    },
+    "/api/ai/claire": {
+      "methods": [
+        "POST",
+        "OPTIONS"
+      ],
+      "function": "ai_claire",
+      "line": 380
+    },
+    "/ats-optimizer": {
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "function": "ats_optimizer_page",
+      "line": 410
+    },
+    "/contacts": {
+      "methods": [
+        "GET"
+      ],
+      "function": "contacts_page",
+      "line": 434
+    },
+    "/replies": {
+      "methods": [
+        "GET"
+      ],
+      "function": "replies_page",
+      "line": 446
+    },
+    "/settings": {
+      "methods": [
+        "GET"
+      ],
+      "function": "settings_page",
+      "line": 458
+    },
+    "/jobs": {
+      "methods": [
+        "GET"
+      ],
+      "function": "jobs_page",
+      "line": 464
+    },
+    "/api/jobs": {
+      "methods": [
+        "GET"
+      ],
+      "function": "api_jobs",
+      "line": 471
+    },
+    "/api/jobs/discover": {
+      "methods": [
+        "POST"
+      ],
+      "function": "api_jobs_discover",
+      "line": 478
+    },
+    "/api/jobs/apply": {
+      "methods": [
+        "POST"
+      ],
+      "function": "api_jobs_apply",
+      "line": 497
+    },
+    "/api/contacts/discover": {
+      "methods": [
+        "POST"
+      ],
+      "function": "api_discover_contacts",
+      "line": 518
+    },
+    "/api/test-groq": {
+      "methods": [
+        "GET"
+      ],
+      "function": "test_groq",
+      "line": 571
+    },
+    "/api/daemon/start": {
+      "methods": [
+        "POST"
+      ],
+      "function": "start_daemon",
+      "line": 597
+    },
+    "/api/daemon/stop": {
+      "methods": [
+        "POST"
+      ],
+      "function": "stop_daemon",
+      "line": 618
+    },
+    "/api/daemon/status": {
+      "methods": [
+        "GET"
+      ],
+      "function": "daemon_status",
+      "line": 630
+    },
+    "/api/core/verify": {
+      "methods": [
+        "GET"
+      ],
+      "function": "core_verify_endpoint",
+      "line": 640
+    },
+    "/api/activity": {
+      "methods": [
+        "GET"
+      ],
+      "function": "api_activity",
+      "line": 680
+    },
+    "/api/core/env-check": {
+      "methods": [
+        "GET"
+      ],
+      "function": "env_check",
+      "line": 713
+    },
+    "/download/<path:filename>": {
+      "methods": [
+        "GET"
+      ],
+      "function": "download_file",
+      "line": 763
+    }
+  },
+  "imports": {
+    "web.web_dashboard": {
+      "ok": true
+    },
+    "core.email_system": {
+      "ok": true
+    },
+    "core.job_discovery": {
+      "ok": true
+    },
+    "core.job_pipeline": {
+      "ok": true
+    },
+    "core.database_manager": {
+      "ok": true
+    },
+    "utils.config": {
+      "ok": true
+    },
+    "utils.security": {
+      "ok": true
+    },
+    "middleware.rate_limit": {
+      "ok": true
+    },
+    "middleware.health_check": {
+      "ok": true
+    },
+    "middleware.csrf": {
+      "ok": true
+    }
+  },
+  "functions": {
+    "web.web_dashboard.get_campaign_stats": {
+      "ok": true
+    },
+    "web.web_dashboard.get_contacts": {
+      "ok": true
+    },
+    "web.web_dashboard.get_replies": {
+      "ok": true
+    },
+    "web.web_dashboard.get_jobs": {
+      "ok": true
+    },
+    "utils.security.InputValidator": {
+      "ok": true
+    },
+    "utils.security.SecretMasker": {
+      "ok": true
+    }
+  },
+  "errors": [],
+  "warnings": [],
+  "info": [
+    "Total routes: 30"
+  ]
+}

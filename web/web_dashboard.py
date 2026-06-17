@@ -637,5 +637,271 @@ def serve_react_app(path: str):
     )
 
 
+@app.get("/api/enhanced/discover")
+def api_enhanced_discover():
+    """Enhanced job discovery with 20+ sources."""
+    def discover():
+        from core.enhanced_job_discovery import EnhancedJobDiscovery
+        return EnhancedJobDiscovery().run()
+    
+    task = _run_background("enhanced-discovery", discover)
+    return jsonify({"status": "started", "message": "Enhanced job discovery started (20+ sources)", "task": task})
+
+
+@app.route("/api/enhanced/tailor", methods=["GET", "POST"])
+def api_enhanced_tailor():
+    """AI resume tailoring for specific jobs."""
+    if request.method == "GET":
+        return jsonify({"status": "success", "message": "POST with job_id or job_description to tailor resume"})
+    
+    data = request.get_json(silent=True) or {}
+    job_id = data.get("job_id")
+    job_description = data.get("job_description", "")
+    company = data.get("company", "Unknown")
+    position = data.get("position", "Unknown")
+    
+    def tailor():
+        from core.resume_tailor import ResumeTailor
+        tailor = ResumeTailor()
+        if job_id:
+            db = _job_db()
+            row = db.fetch_one("SELECT * FROM jobs WHERE id = ?", (job_id,))
+            if row:
+                job_description = row.get("description", "")
+                company = row.get("company", "Unknown")
+                position = row.get("title", "Unknown")
+        
+        return tailor.tailor_resume(job_description, company, position).__dict__
+    
+    task = _run_background("enhanced-tailor", tailor)
+    return jsonify({"status": "started", "message": "AI resume tailoring started", "task": task})
+
+
+@app.route("/api/enhanced/batch-tailor", methods=["POST"])
+def api_enhanced_batch_tailor():
+    """Batch tailor resumes for multiple jobs."""
+    data = request.get_json(silent=True) or {}
+    job_ids = data.get("job_ids", [])
+    max_jobs = max(1, min(int(data.get("max", 25)), 50))
+    
+    def batch_tailor():
+        from core.resume_tailor import ResumeTailor
+        db = _job_db()
+        if job_ids:
+            rows = db.fetch_all(
+                "SELECT * FROM jobs WHERE id IN ({}) AND status = 'new' ORDER BY score DESC".format(
+                    ",".join("?" * len(job_ids))
+                ),
+                tuple(job_ids),
+            )
+        else:
+            rows = db.fetch_all(
+                "SELECT * FROM jobs WHERE status = 'new' ORDER BY score DESC LIMIT ?",
+                (max_jobs,),
+            )
+        
+        jobs = [dict(row) for row in rows]
+        tailor = ResumeTailor()
+        return tailor.batch_tailor(jobs, max_jobs=max_jobs)
+    
+    task = _run_background("batch-tailor", batch_tailor)
+    return jsonify({"status": "started", "message": f"Batch tailoring started for up to {max_jobs} jobs", "task": task})
+
+
+@app.route("/api/enhanced/mass-apply", methods=["GET", "POST"])
+def api_enhanced_mass_apply():
+    """Mass application orchestrator with rate limiting."""
+    if request.method == "GET":
+        return jsonify({
+            "status": "success",
+            "message": "POST with confirm=true to run mass apply. GET /api/enhanced/mass-apply/status for status.",
+        })
+    
+    data = request.get_json(silent=True) or {}
+    max_apply = max(1, min(int(data.get("max", 25)), 50))
+    submit_mode = data.get("submit_mode", "human_verified")
+    
+    if not data.get("confirm"):
+        pending = len(_get_jobs(limit=100, status="new"))
+        return jsonify({
+            "status": "needs_confirmation",
+            "message": "Mass application requires confirm=true",
+            "pending": pending,
+            "max": max_apply,
+            "submit_mode": submit_mode,
+        })
+    
+    def mass_apply():
+        from core.mass_apply_orchestrator import MassApplyOrchestrator
+        orchestrator = MassApplyOrchestrator(submit_mode=submit_mode)
+        return orchestrator.run_full_pipeline(max_apply=max_apply)
+    
+    task = _run_background("mass-apply", mass_apply)
+    return jsonify({"status": "started", "message": f"Mass apply started (max {max_apply})", "task": task})
+
+
+@app.get("/api/enhanced/mass-apply/status")
+def api_enhanced_mass_apply_status():
+    """Get mass apply orchestrator status and analytics."""
+    try:
+        from core.mass_apply_orchestrator import MassApplyOrchestrator
+        orchestrator = MassApplyOrchestrator()
+        return jsonify({"status": "success", "analytics": orchestrator.get_analytics()})
+    except Exception as exc:
+        return _json_error(str(exc), 500)
+
+
+@app.route("/api/enhanced/scheduler/start", methods=["POST"])
+def api_enhanced_scheduler_start():
+    """Start autonomous scheduler."""
+    data = request.get_json(silent=True) or {}
+    
+    try:
+        from core.autonomous_scheduler import AutonomousScheduler, SchedulerConfig
+        
+        config = SchedulerConfig(
+            discover_interval_hours=float(data.get("discover_interval", 6.0)),
+            apply_interval_hours=float(data.get("apply_interval", 4.0)),
+            max_jobs_per_apply=int(data.get("max_jobs_per_apply", 25)),
+            max_applications_per_hour=int(data.get("max_per_hour", 8)),
+            max_applications_per_day=int(data.get("max_per_day", 40)),
+            submit_mode=data.get("submit_mode", "human_verified"),
+            active_hours_start=int(data.get("active_start", 9)),
+            active_hours_end=int(data.get("active_end", 22)),
+            skip_weekends=bool(data.get("skip_weekends", True)),
+        )
+        
+        scheduler = AutonomousScheduler(config)
+        scheduler.start()
+        
+        return jsonify({
+            "status": "success",
+            "message": "Autonomous scheduler started",
+            "config": {
+                "discover_interval_hours": config.discover_interval_hours,
+                "apply_interval_hours": config.apply_interval_hours,
+                "active_hours": f"{config.active_hours_start}:00 - {config.active_hours_end}:00",
+            },
+        })
+    except Exception as exc:
+        return _json_error(str(exc), 500)
+
+
+@app.post("/api/enhanced/scheduler/stop")
+def api_enhanced_scheduler_stop():
+    """Stop autonomous scheduler."""
+    try:
+        from core.autonomous_scheduler import AutonomousScheduler
+        scheduler = AutonomousScheduler()
+        scheduler.stop()
+        return jsonify({"status": "success", "message": "Scheduler stopped"})
+    except Exception as exc:
+        return _json_error(str(exc), 500)
+
+
+@app.get("/api/enhanced/scheduler/status")
+def api_enhanced_scheduler_status():
+    """Get scheduler status."""
+    try:
+        from core.autonomous_scheduler import AutonomousScheduler
+        scheduler = AutonomousScheduler()
+        return jsonify({"status": "success", "scheduler": scheduler.get_status()})
+    except Exception as exc:
+        return _json_error(str(exc), 500)
+
+
+@app.get("/api/enhanced/scheduler/analytics")
+def api_enhanced_scheduler_analytics():
+    """Get comprehensive scheduler analytics."""
+    try:
+        from core.autonomous_scheduler import AutonomousScheduler
+        scheduler = AutonomousScheduler()
+        return jsonify({"status": "success", "analytics": scheduler.get_analytics()})
+    except Exception as exc:
+        return _json_error(str(exc), 500)
+
+
+@app.post("/api/enhanced/scheduler/run-now")
+def api_enhanced_scheduler_run_now():
+    """Trigger a manual scheduler run."""
+    data = request.get_json(silent=True) or {}
+    run_type = data.get("type", "full_pipeline")  # discover, apply, full_pipeline
+    
+    def run():
+        from core.autonomous_scheduler import AutonomousScheduler
+        scheduler = AutonomousScheduler()
+        if run_type == "discover":
+            return scheduler.discover().__dict__
+        elif run_type == "apply":
+            return scheduler.apply().__dict__
+        else:
+            return scheduler.full_pipeline().__dict__
+    
+    task = _run_background(f"scheduler-{run_type}", run)
+    return jsonify({"status": "started", "message": f"Scheduler run '{run_type}' started", "task": task})
+
+
+@app.get("/api/enhanced/jobs/sources")
+def api_enhanced_job_sources():
+    """Get job source breakdown."""
+    try:
+        db = _job_db()
+        sources = db.fetch_all(
+            "SELECT source, COUNT(*) as count, SUM(CASE WHEN status = 'applied' THEN 1 ELSE 0 END) as applied FROM jobs GROUP BY source ORDER BY count DESC"
+        )
+        return jsonify({"status": "success", "sources": [dict(r) for r in sources]})
+    except Exception as exc:
+        return _json_error(str(exc), 500)
+
+
+@app.get("/api/enhanced/jobs/high-match")
+def api_enhanced_high_match_jobs():
+    """Get high-match jobs (score >= 0.7)."""
+    try:
+        db = _job_db()
+        rows = db.fetch_all(
+            "SELECT * FROM jobs WHERE score >= 0.7 AND status = 'new' ORDER BY score DESC LIMIT 50"
+        )
+        return jsonify({"status": "success", "jobs": [dict(r) for r in rows], "count": len(rows)})
+    except Exception as exc:
+        return _json_error(str(exc), 500)
+
+
+@app.post("/api/enhanced/jobs/batch-apply")
+def api_enhanced_batch_apply():
+    """Apply to a batch of specific jobs."""
+    data = request.get_json(silent=True) or {}
+    job_ids = data.get("job_ids", [])
+    submit_mode = data.get("submit_mode", "human_verified")
+    
+    if not job_ids:
+        return _json_error("No job_ids provided", 400)
+    
+    if not data.get("confirm"):
+        return jsonify({
+            "status": "needs_confirmation",
+            "message": "Batch apply requires confirm=true",
+            "job_count": len(job_ids),
+        })
+    
+    def batch_apply():
+        from core.mass_apply_orchestrator import MassApplyOrchestrator
+        db = _job_db()
+        rows = db.fetch_all(
+            "SELECT * FROM jobs WHERE id IN ({})".format(",".join("?" * len(job_ids))),
+            tuple(job_ids),
+        )
+        jobs = [dict(row) for row in rows]
+        orchestrator = MassApplyOrchestrator(submit_mode=submit_mode)
+        return orchestrator.run_full_pipeline(jobs=jobs, max_apply=len(jobs))
+    
+    task = _run_background("batch-apply", batch_apply)
+    return jsonify({
+        "status": "started",
+        "message": f"Batch apply started for {len(job_ids)} jobs",
+        "task": task,
+    })
+
+
 if __name__ == "__main__":
     app.run(host=config.FLASK_HOST, port=config.FLASK_PORT, debug=config.DEBUG)

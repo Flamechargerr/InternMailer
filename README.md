@@ -24,7 +24,21 @@
 
 InternMailer is an **AI-powered job application automation platform** that discovers internships and jobs across **20+ sources**, auto-tailors your resume and cover letter with **ATS-level keyword optimization**, and submits applications — all while respecting rate limits and staying under the radar.
 
+---
+
+## Dashboard
+
+<p align="center">
+  <img src="docs/images/dashboard.png" alt="InternMailer Dashboard" width="85%">
+</p>
+
+---
+
 ## Features
+
+<p align="center">
+  <img src="docs/images/features.png" alt="Features" width="90%">
+</p>
 
 | Feature | Description |
 |---------|-------------|
@@ -37,6 +51,23 @@ InternMailer is an **AI-powered job application automation platform** that disco
 | **Inbox Monitoring** | Auto-checks Gmail for replies, classifies intent, schedules follow-ups |
 | **ATS Optimizer** | Scores and improves your resume against job descriptions for maximum ATS match |
 | **Production Ready** | Docker support, health checks, metrics, Gunicorn, comprehensive logging |
+
+---
+
+## Pipeline
+
+<p align="center">
+  <img src="docs/images/pipeline.png" alt="Pipeline" width="80%">
+</p>
+
+The autonomous scheduler runs this loop every 4–6 hours:
+1. **Discover** — Scrape 20+ job sources for new postings
+2. **Score** — Rank jobs by relevance to your profile (AI-powered)
+3. **Tailor** — Generate job-specific resume + cover letter
+4. **Apply** — Submit with human-like delays and stealth patterns
+5. **Track** — Log everything in the dashboard database
+
+---
 
 ## Quick Start
 
@@ -68,40 +99,41 @@ docker run -p 5050:5050 \
   ghcr.io/flamechargerr/internmailer:latest
 ```
 
+---
+
 ## Architecture
 
+<p align="center">
+  <img src="docs/images/architecture.png" alt="Architecture" width="85%">
+</p>
+
 ```
-core/                          # Core engine modules
-├── enhanced_job_discovery.py  # 20+ source job scraper
-├── resume_tailor.py          # AI resume/CV tailor
-├── mass_apply_orchestrator.py# Mass application engine
-├── autonomous_scheduler.py   # Pipeline scheduler
-├── job_apply.py              # Playwright auto-applier
-├── job_discovery.py          # Legacy ATS discovery
-├── email_system.py           # Email campaign engine
-├── inbox_monitor.py          # Gmail reply monitoring
-├── agents/                   # AI agent pipeline
+src/core/                          # Core engine modules
+├── enhanced_job_discovery.py     # 20+ source job scraper
+├── resume_tailor.py              # AI resume/CV tailor
+├── mass_apply_orchestrator.py    # Mass application engine
+├── autonomous_scheduler.py       # Pipeline scheduler
+├── job_apply.py                  # Playwright auto-applier
+├── email_system.py               # Email campaign engine
+├── inbox_monitor.py              # Gmail reply monitoring
+├── agents/                       # AI agent pipeline
 └── ...
-web/                           # Flask API + dashboard
-utils/                         # Configuration & utilities
-middleware/                    # Rate limiting, CSRF, health
-data/                          # Databases & job sources
+src/web/                           # Flask API & dashboard
+src/utils/                         # Configuration & utilities
+src/middleware/                    # Rate limiting, CSRF, health
+src/resume/                        # Resume parsing & generation
+data/                              # Databases & job sources
 ```
 
-### Pipeline
+---
 
-```
-DISCOVER ──▶ TAILOR ──▶ APPLY ──▶ TRACK
-   20+ sources   AI resume    Rate-limited    SQLite DB
-                    + cover letter
-```
+## Metrics & Analytics
 
-The autonomous scheduler runs this loop every 4–6 hours:
-1. **Discover** — Scrape 20+ job sources for new postings
-2. **Score** — Rank jobs by relevance to your profile (AI-powered)
-3. **Tailor** — Generate job-specific resume + cover letter
-4. **Apply** — Submit with human-like delays and stealth patterns
-5. **Track** — Log everything in the dashboard database
+<p align="center">
+  <img src="docs/images/metrics.png" alt="Metrics" width="85%">
+</p>
+
+---
 
 ## Configuration
 
@@ -117,6 +149,8 @@ The autonomous scheduler runs this loop every 4–6 hours:
 | `MAX_EMAILS_PER_DAY` | No | `100` | Daily email sending limit |
 | `FLASK_PORT` | No | `5050` | Dashboard port |
 | `ENVIRONMENT` | No | `development` | `development` / `production` |
+
+---
 
 ## Deployment
 
@@ -138,6 +172,8 @@ docker run -p 5050:5050 ghcr.io/flamechargerr/internmailer:latest
 python main.py --production-check   # Verify setup
 python main.py                      # Start with Gunicorn (auto-detected)
 ```
+
+---
 
 ## API
 
@@ -163,33 +199,40 @@ python main.py                      # Start with Gunicorn (auto-detected)
 | `/api/enhanced/mass-apply/status` | GET | Apply analytics |
 | `/api/enhanced/scheduler/analytics` | GET | Full scheduler stats |
 
+---
+
 ## Project Structure
 
 ```
 InternMailer/
-├── core/                  # Engine modules (discovery, apply, tailor, scheduler)
-├── web/                   # Flask API & dashboard
-├── utils/                 # Configuration, bootstrap, helpers
-├── frontend/              # React dashboard (Vite)
-├── config/                # .env examples, Docker Compose, service configs
-├── data/                  # Runtime databases, job sources, verification data
-├── docs/                  # Documentation & GitHub Pages site
-├── scripts/               # Utility scripts & verification tools
-├── tests/                 # Test suite (pytest)
-├── templates/             # Email & LaTeX templates
-├── resume/                # Resume storage
-├── middleware/            # Rate limiting, CSRF, health checks
-├── campaign_results/      # Campaign output
-├── optimized_documents/   # AI-generated tailored resumes
-├── main.py                # Entry point
-├── requirements.txt       # Dependencies
-├── Dockerfile             # Docker image
-└── README.md              # This file
+├── src/                     # All source code
+│   ├── core/                # Engine modules (discovery, apply, tailor, scheduler)
+│   ├── web/                 # Flask API & dashboard
+│   ├── utils/               # Configuration, bootstrap, helpers
+│   ├── middleware/          # Rate limiting, CSRF, health checks
+│   └── resume/              # Resume parsing & generation
+├── assets/                  # Templates (ATS, email, web)
+├── config/                  # .env examples, Docker Compose, service configs
+├── data/                    # Runtime databases, job sources
+├── deploy/                  # Deployment configs (systemd, plist, Render)
+├── docs/                    # Documentation, images, GitHub Pages site
+├── frontend/                # React dashboard (Vite)
+├── scripts/                 # Utility scripts & verification tools
+├── tests/                   # Test suite (pytest)
+├── main.py                  # Entry point
+├── requirements.txt         # Dependencies
+├── Dockerfile               # Docker image
+├── docker-compose.yml       # Docker Compose setup
+└── README.md                # This file
 ```
+
+---
 
 ## Guidelines
 
 **Use responsibly.** Always review applications before submission. Some companies prohibit automated applications — use at your own discretion. This tool is designed to help job seekers apply more efficiently, not to spam.
+
+---
 
 ## License
 

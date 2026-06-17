@@ -6,6 +6,8 @@
 [![Flask](https://img.shields.io/badge/Flask-2.3+-green.svg)](https://flask.palletsprojects.com)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey.svg)]()
+[![CI](https://github.com/Flamechargerr/InternMailer/actions/workflows/ci.yml/badge.svg)](https://github.com/Flamechargerr/InternMailer/actions/workflows/ci.yml)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker)](https://github.com/Flamechargerr/InternMailer/pkgs/container/internmailer)
 
 **InternMailer** is an autonomous job application system that discovers internships and jobs across 20+ sources, auto-tailors your resume and cover letter with AI, and applies on your behalf — all while respecting rate limits and staying under the radar.
 

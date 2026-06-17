@@ -29,7 +29,7 @@ InternMailer is an **AI-powered job application automation platform** that disco
 ## Dashboard
 
 <p align="center">
-  <img src="docs/images/dashboard.png" alt="InternMailer Dashboard" width="85%">
+  <img src="https://raw.githubusercontent.com/Flamechargerr/InternMailer/master/docs/images/dashboard.png" alt="InternMailer Dashboard" width="85%">
 </p>
 
 ---
@@ -37,7 +37,7 @@ InternMailer is an **AI-powered job application automation platform** that disco
 ## Features
 
 <p align="center">
-  <img src="docs/images/features.png" alt="Features" width="90%">
+  <img src="https://raw.githubusercontent.com/Flamechargerr/InternMailer/master/docs/images/features.png" alt="Features" width="90%">
 </p>
 
 | Feature | Description |
@@ -57,7 +57,7 @@ InternMailer is an **AI-powered job application automation platform** that disco
 ## Pipeline
 
 <p align="center">
-  <img src="docs/images/pipeline.png" alt="Pipeline" width="80%">
+  <img src="https://raw.githubusercontent.com/Flamechargerr/InternMailer/master/docs/images/pipeline.png" alt="Pipeline" width="80%">
 </p>
 
 The autonomous scheduler runs this loop every 4–6 hours:
@@ -104,7 +104,7 @@ docker run -p 5050:5050 \
 ## Architecture
 
 <p align="center">
-  <img src="docs/images/architecture.png" alt="Architecture" width="85%">
+  <img src="https://raw.githubusercontent.com/Flamechargerr/InternMailer/master/docs/images/architecture.png" alt="Architecture" width="85%">
 </p>
 
 ```
@@ -130,7 +130,7 @@ data/                              # Databases & job sources
 ## Metrics & Analytics
 
 <p align="center">
-  <img src="docs/images/metrics.png" alt="Metrics" width="85%">
+  <img src="https://raw.githubusercontent.com/Flamechargerr/InternMailer/master/docs/images/metrics.png" alt="Metrics" width="85%">
 </p>
 
 ---

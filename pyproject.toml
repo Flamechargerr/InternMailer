@@ -1,15 +1,39 @@
 [project]
 name = "internmailer"
-version = "1.0.0"
-description = "End-to-End Job Application Automation"
+version = "1.1.0"
+description = "Autonomous job application system — Find, Tailor, Apply"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+readme = "README.md"
+
+[project.urls]
+Homepage = "https://github.com/Flamechargerr/InternMailer"
+Documentation = "https://flamechargerr.github.io/InternMailer"
+Repository = "https://github.com/Flamechargerr/InternMailer"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-# Restrict collection to tests/ only — avoids TCC PermissionError on .DS_Store
-norecursedirs = [".venv", "node_modules", "frontend", ".git", "output", "cache", "backups", ".hypothesis", ".pytest_cache", ".ruff_cache", ".kiro", ".qoder", "data", "logs", "campaign_results", "tmp", "optimized_documents", "data_recovery"]
+norecursedirs = [
+    ".venv", "node_modules", "frontend", ".git", "output",
+    "cache", "backups", ".hypothesis", ".pytest_cache",
+    ".ruff_cache", ".kiro", ".qoder", "data", "logs",
+    "campaign_results", "tmp", "optimized_documents",
+    "data_recovery", "assets", "deploy", "docs", "scripts",
+]
 filterwarnings = [
     "ignore::urllib3.exceptions.NotOpenSSLWarning",
     "ignore::DeprecationWarning:pytest_asyncio",
 ]
 asyncio_mode = "auto"
 
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+ignore = ["E501"]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"

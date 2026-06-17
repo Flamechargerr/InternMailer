@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: internmailer
+    runtime: python
+    region: oregon
+    plan: starter
+    buildCommand: |
+      pip install -r requirements.txt gunicorn gevent
+      python -m playwright install --with-deps chromium
+    startCommand: python main.py
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: FLASK_ENV
+        value: production
+      - key: ENVIRONMENT
+        value: production
+      - key: FLASK_HOST
+        value: 0.0.0.0
+      - key: FLASK_PORT
+        value: "5050"
+      - key: GMAIL_USER
+        sync: false
+      - key: GMAIL_APP_PASSWORD
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: RESUME_PATH
+        sync: false
+    healthCheckPath: /api/health
+    autoDeploy: true

@@ -20,8 +20,10 @@ import os
 import signal
 import sys
 
-# Add current directory to path for imports
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+# Add src/ and current directory to path for imports
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(PROJECT_ROOT, "src"))
+sys.path.insert(0, PROJECT_ROOT)
 
 # Centralised TCC workarounds (psutil/certifi stubs, .env shadow-copy, SSL)
 from utils.bootstrap import bootstrap

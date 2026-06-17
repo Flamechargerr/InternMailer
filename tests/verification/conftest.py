@@ -4,10 +4,11 @@ from pathlib import Path
 
 import pytest
 
-# Ensure project root is on sys.path
-_root = str(Path(__file__).resolve().parent)
-if _root not in sys.path:
-    sys.path.insert(0, _root)
+_root = str(Path(__file__).resolve().parent.parent.parent)
+_src = str(Path(__file__).resolve().parent.parent.parent / "src")
+for p in [_src, _root]:
+    if p not in sys.path:
+        sys.path.insert(0, p)
 
 from utils.bootstrap import bootstrap  # noqa: E402
 bootstrap()

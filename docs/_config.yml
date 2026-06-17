@@ -1,0 +1,9 @@
+theme: jekyll-theme-cayman
+title: InternMailer
+name: InternMailer
+author: Anamay Tripathy
+description: "Autonomous Job Application System — Find, Tailor, Apply."
+baseurl: "/InternMailer"
+url: "https://flamechargerr.github.io"
+show_downloads: true
+show_repo: true

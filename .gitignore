@@ -1,19 +1,15 @@
-# 🚀 InternMailer — Git Ignore Configuration
-# ==========================================
-
-# 🔐 Environment and Secrets
+# Environment
 .env
 .env.local
 .env.*.local
 secrets.json
 credentials.json
 
-# 🐍 Python
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
-.Python
 build/
 develop-eggs/
 dist/
@@ -31,7 +27,7 @@ wheels/
 *.egg
 MANIFEST
 
-# 📊 Database Files (generated at runtime)
+# Database
 *.db
 *.db-journal
 *.db-shm
@@ -39,15 +35,14 @@ MANIFEST
 *.sqlite
 *.sqlite3
 
-# 📧 Logs and Runtime Output
+# Logs & Runtime
 logs/
 *.log
 *.out
 *.err
 output/
-campaign_results/
 
-# ⚡ Cache and Temporary Files
+# Cache
 cache/
 .cache/
 *.tmp
@@ -56,7 +51,7 @@ cache/
 .temp/
 tmp/
 
-# 🧪 Testing
+# Testing
 .tox/
 .nox/
 .coverage
@@ -68,7 +63,7 @@ coverage.xml
 *.cover
 *.py,cover
 
-# 🎯 IDE and Editors
+# IDE
 .vscode/
 .idea/
 *.swp
@@ -80,7 +75,7 @@ coverage.xml
 *.sublime-project
 *.sublime-workspace
 
-# 📱 Operating System
+# OS
 .DS_Store
 .DS_Store?
 ._*
@@ -90,59 +85,61 @@ ehthumbs.db
 Thumbs.db
 desktop.ini
 
-# 📦 Node / Frontend
+# Node
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+frontend/dist/
 
-# 🔧 Virtual Environments
+# Virtual Envs
 .venv/
 venv/
 ENV/
 env/
 
-# 📝 Documentation Build
+# Documentation Build
 docs/_build/
 docs/build/
 site/
 
-# 🔄 Backup Files
+# Backup
 *.bak
 *.backup
 backups/
 
-# 📊 Generated Documents
-optimized_documents/
+# Generated Documents
+assets/optimized_documents/
+assets/campaign_results/
 
-# 🔐 SSL and Certificates
+# SSL
 *.pem
 *.key
 *.crt
 *.p12
 *.pfx
 
-# 📈 Profiling
+# Profiling
 *.prof
 *.profile
 
-# 🚀 CI/CD local
+# CI/CD
 .github/workflows/local_*
 .gitlab-ci-local.yml
 
-# 🤖 AI Agents state
+# AI State
 .kiro/
 .qoder/
 .ruff_cache/
 
-# InternMailer-specific generated data
+# App-specific
 data_recovery/
 email_cache/
 research_cache/
 
-# Keep these tracked (override earlier rules)
-!.env.example
-!.env.production.example
+# Keep examples
+!config/.env.example
+!config/.env.production.example
 !frontend/.env.example
 !data/profile.example.yaml
 !data/job_sources.example.yaml

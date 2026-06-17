@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InternMailer — Autonomous Job Application System</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: #0f172a; color: #e2e8f0; line-height: 1.6; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    header { padding: 60px 0 40px; text-align: center; border-bottom: 1px solid #1e293b; }
+    .logo { font-size: 3rem; font-weight: 800; background: linear-gradient(135deg, #60a5fa, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 12px; }
+    .tagline { font-size: 1.25rem; color: #94a3b8; max-width: 600px; margin: 0 auto 24px; }
+    .cta { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+    .btn { padding: 12px 28px; border-radius: 8px; font-size: 1rem; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+    .btn-primary { background: #3b82f6; color: white; }
+    .btn-primary:hover { background: #2563eb; transform: translateY(-1px); }
+    .btn-secondary { background: #1e293b; color: #e2e8f0; border: 1px solid #334155; }
+    .btn-secondary:hover { background: #334155; }
+    .badges { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 24px; }
+    .badge { padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+    .badge-blue { background: #1e3a5f; color: #60a5fa; }
+    .badge-green { background: #1e3f2e; color: #4ade80; }
+    .badge-yellow { background: #3f3f1e; color: #facc15; }
+    .badge-purple { background: #3f1e3f; color: #c084fc; }
+    section { padding: 60px 0; }
+    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+    .card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 28px; transition: all 0.2s; }
+    .card:hover { border-color: #60a5fa; transform: translateY(-2px); }
+    .card-icon { font-size: 2rem; margin-bottom: 12px; }
+    .card h3 { font-size: 1.15rem; color: #f8fafc; margin-bottom: 8px; }
+    .card p { color: #94a3b8; font-size: 0.95rem; }
+    .pipeline { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; padding: 40px 0; }
+    .step { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px 28px; text-align: center; min-width: 160px; }
+    .step-arrow { font-size: 1.5rem; color: #60a5fa; }
+    .step-label { font-size: 0.85rem; color: #64748b; margin-top: 4px; }
+    .step-title { font-weight: 600; color: #f8fafc; }
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
+    .stat { background: #1e293b; border-radius: 12px; padding: 24px; }
+    .stat-number { font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, #60a5fa, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .stat-label { color: #94a3b8; font-size: 0.9rem; margin-top: 4px; }
+    .code-block { background: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 24px; overflow-x: auto; }
+    .code-block pre { font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 0.85rem; color: #e2e8f0; }
+    .code-block .comment { color: #64748b; }
+    .code-block .cmd { color: #60a5fa; }
+    footer { padding: 40px 0; text-align: center; border-top: 1px solid #1e293b; color: #64748b; font-size: 0.9rem; }
+    footer a { color: #60a5fa; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    @media (max-width: 768px) {
+      .logo { font-size: 2rem; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .pipeline { flex-direction: column; }
+      .step-arrow { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo">InternMailer</div>
+      <p class="tagline">Autonomous Job Application System — Find, Tailor, Apply.</p>
+      <div class="cta">
+        <a href="https://github.com/Flamechargerr/InternMailer" class="btn btn-primary">⭐ View on GitHub</a>
+        <a href="#quick-start" class="btn btn-secondary">🚀 Quick Start</a>
+      </div>
+      <div class="badges">
+        <span class="badge badge-blue">Python 3.10+</span>
+        <span class="badge badge-green">Flask</span>
+        <span class="badge badge-yellow">Playwright</span>
+        <span class="badge badge-purple">AI-Powered</span>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="container">
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-number">20+</div>
+          <div class="stat-label">Job Sources</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">AI</div>
+          <div class="stat-label">Resume Tailoring</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">40</div>
+          <div class="stat-label">Apps/Day Max</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Autonomous</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: #0b1120;">
+    <div class="container">
+      <h2 style="text-align: center; font-size: 1.8rem; margin-bottom: 40px; color: #f8fafc;">How It Works</h2>
+      <div class="pipeline">
+        <div class="step">
+          <div class="step-title">🔍 Discover</div>
+          <div class="step-label">20+ job sources</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step">
+          <div class="step-title">📝 Tailor</div>
+          <div class="step-label">AI resume & cover</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step">
+          <div class="step-title">📨 Apply</div>
+          <div class="step-label">Rate-limited stealth</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step">
+          <div class="step-title">📊 Track</div>
+          <div class="step-label">Real-time dashboard</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 style="text-align: center; font-size: 1.8rem; margin-bottom: 40px; color: #f8fafc;">Features</h2>
+      <div class="features">
+        <div class="card">
+          <div class="card-icon">🔍</div>
+          <h3>20+ Job Sources</h3>
+          <p>LinkedIn, Indeed, Glassdoor, AngelList, Greenhouse, Lever, Ashby, Workday, Remotive, WeWorkRemotely, Builtin, and more.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🤖</div>
+          <h3>AI Resume Tailoring</h3>
+          <p>Reads your PDF resume, extracts structured profile, and generates job-specific versions with ATS keyword optimization.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🚀</div>
+          <h3>Mass Application Engine</h3>
+          <p>Intelligent rate limiting (8/hr, 40/day), human-like delays, stealth browser patterns, and exponential backoff retries.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⏰</div>
+          <h3>Autonomous Scheduler</h3>
+          <p>Runs the full pipeline on loop: discover → tailor → apply. Respects active hours (9 AM–10 PM) and skips weekends.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📊</div>
+          <h3>Web Dashboard</h3>
+          <p>Real-time analytics, job queue management, application tracking, reply monitoring, and manual controls.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📧</div>
+          <h3>Email Outreach</h3>
+          <p>AI-generated personalized recruiter emails, inbox monitoring, reply classification, and automated follow-ups.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="quick-start" style="background: #0b1120;">
+    <div class="container">
+      <h2 style="text-align: center; font-size: 1.8rem; margin-bottom: 40px; color: #f8fafc;">Quick Start</h2>
+      <div class="code-block">
+        <pre><span class="comment"># 1. Clone & Install</span>
+<span class="cmd">git clone</span> https://github.com/Flamechargerr/InternMailer.git
+<span class="cmd">cd</span> InternMailer
+<span class="cmd">pip install</span> -r requirements.txt
+<span class="cmd">playwright install</span> chromium
+
+<span class="comment"># 2. Configure</span>
+<span class="cmd">cp</span> config/.env.example .env
+<span class="comment"># Edit .env with Gmail, Groq API key, resume path</span>
+
+<span class="comment"># 3. Run</span>
+<span class="cmd">python</span> main.py
+<span class="comment"># Open http://localhost:5050</span></pre>
+      </div>
+      <div style="text-align: center; margin-top: 24px;">
+        <p style="color: #64748b;">Or run with Docker:</p>
+      </div>
+      <div class="code-block" style="margin-top: 12px;">
+        <pre><span class="cmd">docker run</span> -p 5050:5050 ghcr.io/flamechargerr/internmailer:latest</pre>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 style="text-align: center; font-size: 1.8rem; margin-bottom: 40px; color: #f8fafc;">API Endpoints</h2>
+      <div class="code-block">
+        <pre><span class="comment"># Enhanced APIs</span>
+POST /api/enhanced/discover         <span class="comment"># 20-source job discovery</span>
+POST /api/enhanced/tailor           <span class="comment"># AI resume tailoring</span>
+POST /api/enhanced/mass-apply       <span class="comment"># Mass application</span>
+POST /api/enhanced/scheduler/start  <span class="comment"># Start autonomous scheduler</span>
+GET  /api/enhanced/scheduler/analytics  <span class="comment"># Full analytics</span>
+
+<span class="comment"># Core APIs</span>
+GET  /api/stats                     <span class="comment"># Dashboard statistics</span>
+GET  /api/jobs                      <span class="comment"># List discovered jobs</span>
+POST /api/jobs/discover             <span class="comment"># Trigger discovery</span>
+POST /api/jobs/apply                <span class="comment"># Trigger application</span></pre>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>Built with 💻 by <a href="https://github.com/Flamechargerr">Anamay Tripathy</a></p>
+      <p style="margin-top: 8px;"><a href="https://github.com/Flamechargerr/InternMailer">GitHub</a> · MIT License</p>
+    </div>
+  </footer>
+</body>
+</html>

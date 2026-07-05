@@ -37,12 +37,12 @@ class SchedulerConfig:
     max_jobs_to_tailor: int = 25
     min_score_threshold: float = 0.3
     auto_tailor: bool = True
-    submit_mode: str = "human_verified"
+    submit_mode: str = "full_auto"
     max_applications_per_hour: int = 8
     max_applications_per_day: int = 40
-    active_hours_start: int = 9  # 9 AM
-    active_hours_end: int = 22   # 10 PM
-    skip_weekends: bool = True
+    active_hours_start: int = 0   # 12 AM (24/7 mode)
+    active_hours_end: int = 24    # 12 AM next day (24/7 mode)
+    skip_weekends: bool = False
     enabled: bool = True
 
 

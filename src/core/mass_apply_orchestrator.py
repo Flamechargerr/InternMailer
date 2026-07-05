@@ -131,7 +131,7 @@ class MassApplyOrchestrator:
         self,
         max_per_hour: int = 8,
         max_per_day: int = 40,
-        submit_mode: str = "human_verified",
+        submit_mode: str = "full_auto",
         auto_tailor: bool = True,
         min_score: float = 0.3,
     ):
@@ -167,14 +167,17 @@ class MassApplyOrchestrator:
                 (self.min_score,),
             )
             for row in rows:
+                r = dict(row)
                 self.applications.append(ApplicationRecord(
-                    job_id=row["id"],
-                    company=row.get("company", ""),
-                    position=row.get("title", ""),
-                    apply_url=row.get("apply_url", row.get("url", "")),
-                    score=row.get("score", 0.0),
+                    job_id=r["id"],
+                    company=r.get("company", ""),
+                    position=r.get("title", ""),
+                    apply_url=r.get("apply_url", r.get("url", "")),
+                    score=r.get("score", 0.0),
                 ))
             self.stats["queued"] = len(self.applications)
+            if self.applications:
+                print(f"   📥 Loaded {len(self.applications)} pending jobs from DB")
         except Exception as e:
             logger.warning(f"Failed to load state: {e}")
     
@@ -423,6 +426,16 @@ class MassApplyOrchestrator:
             logger.error(f"Analytics error: {e}")
             return {"error": str(e)}
     
+    def reload_from_db(self) -> int:
+        """Reset and reload pending jobs from the database. Returns count of loaded jobs."""
+        self.applications.clear()
+        self.stats = {
+            "queued": 0, "tailored": 0, "applied": 0,
+            "failed": 0, "needs_review": 0, "skipped": 0,
+        }
+        self._load_state()
+        return len(self.applications)
+
     def run_full_pipeline(
         self,
         jobs: Optional[List[Dict[str, Any]]] = None,
@@ -434,10 +447,13 @@ class MassApplyOrchestrator:
         print("🚀 MASS APPLICATION PIPELINE")
         print("=" * 60)
         
-        # Step 1: Queue jobs
+        # Step 1: Queue jobs (reload from DB if none passed)
         if jobs:
             queued = self.queue_jobs(jobs)
             print(f"📥 Queued {queued} jobs")
+        else:
+            loaded = self.reload_from_db()
+            print(f"📥 Reloaded {loaded} jobs from database")
         
         # Step 2: Tailor resumes
         if self.auto_tailor and self.tailor:

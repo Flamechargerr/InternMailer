@@ -98,7 +98,8 @@ class ConfigurationManager:
         if shadow_env.exists():
             self.env_file = str(shadow_env)
         else:
-            project_root = Path(__file__).resolve().parent.parent
+            # Resolve to the actual project root (internmailer-repo/)
+            project_root = Path(__file__).resolve().parent.parent.parent
             self.env_file = str(project_root / env_file)
         self.config: Optional[SystemConfiguration] = None
         self.raw_env_vars: Dict[str, str] = {}

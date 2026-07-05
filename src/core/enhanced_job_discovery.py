@@ -71,17 +71,11 @@ class EnhancedJobPosting:
             "description": self.description[:5000],  # Limit description size
             "employment_type": self.employment_type,
             "posted_at": self.posted_at,
-            "salary_range": self.salary_range,
-            "requirements": json.dumps(self.requirements),
-            "skills": json.dumps(self.skills),
-            "experience_level": self.experience_level,
             "visa_sponsorship": int(self.visa_sponsorship),
             "relocation_support": int(self.relocation_support),
             "score": self.score,
-            "match_reason": self.match_reason,
             "metadata": json.dumps(self.metadata),
             "status": "new",
-            "discovered_at": datetime.now().isoformat(),
         }
 
 

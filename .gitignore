@@ -110,7 +110,9 @@ backups/
 
 # Generated Documents
 assets/optimized_documents/
+optimized_documents/
 assets/campaign_results/
+
 
 # SSL
 *.pem
